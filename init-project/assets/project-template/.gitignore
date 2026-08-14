@@ -1,0 +1,52 @@
+# 依赖与产物
+node_modules/
+dist/
+build/
+out/
+target/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 环境与密钥（绝不提交）
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*_secret*
+secrets/
+
+# 私有目录（个人/开发期文件；内部子 git 管理，不进 GitHub）
+private/
+
+# 编辑器与系统
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 语言/工具
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+*.tsbuildinfo
+.eslintcache
+
+# 临时
+tmp/
+temp/
+*.tmp
+*~

@@ -1,0 +1,83 @@
+# Release — 推送 main 后自动发布 GitHub Release（版本递增由 agent 本地执行）
+# 规则（与根 AGENTS.md「版本管理」一致）：
+#   - VERSION 文件为单一事实来源；**版本递增由 agent 本地完成**
+#     （scripts/bump-version.ps1，会同步 package.json / Cargo.toml 若存在，
+#     并同步更新 private/dev/CHANGELOG.md——private/ 不进 GitHub，CI 无法代劳）。
+#   - 当前 VERSION 尚无对应 tag → 自动打 tag vX.Y.Z 并创建 Release；
+#   - 当前 VERSION 已有 tag → 跳过（等待 agent 递增版本后再次推送）；
+#   - 仓库尚无任何 tag 且由 push 触发 → 跳过（初始搭建期，可用 workflow_dispatch
+#     或本地 gh release 手动发布首个版本）。
+# 注意：private/ 不进 GitHub，CI 中不可用；发布说明由提交记录自动生成。
+#       push 触发与 workflow_dispatch 可能并发，Release 步骤按幂等处理。
+
+name: Release
+
+on:
+  push:
+    branches:
+      - "{{DEFAULT_BRANCH}}"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Decide version
+        id: decide
+        shell: pwsh
+        run: |
+          $v = (Get-Content VERSION -Raw -Encoding UTF8).Trim()
+          $tags = git tag
+          if (-not $tags -and $env:GITHUB_EVENT_NAME -eq 'push') {
+            "should_release=false" >> $env:GITHUB_OUTPUT
+            "reason=initial setup (no tags yet); release manually via workflow_dispatch or gh" >> $env:GITHUB_OUTPUT
+            exit 0
+          }
+          $tagged = git tag -l "v$v"
+          if ($tagged) {
+            "should_release=false" >> $env:GITHUB_OUTPUT
+            "reason=v$v already tagged; bump VERSION locally (bump-version.ps1) and push" >> $env:GITHUB_OUTPUT
+            exit 0
+          }
+          "should_release=true" >> $env:GITHUB_OUTPUT
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        if: steps.decide.outputs.should_release == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Idempotent: push and workflow_dispatch can race; reuse existing tag/release.
+          $v = "${{ steps.decide.outputs.version }}"
+          git tag "v$v" 2>$null
+          git push origin "v$v" 2>$null
+          $attach = @()
+          if (Test-Path dist) {
+            Get-ChildItem dist -Recurse -File | ForEach-Object { $attach += "--attach"; $attach += $_.FullName }
+          }
+          gh release create "v$v" --title "v$v" --generate-notes @attach 2>&1 | Out-Null
+          if ($LASTEXITCODE -ne 0) {
+            gh release view "v$v" 2>&1 | Out-Null
+            if ($LASTEXITCODE -ne 0) {
+              Write-Error "gh release create failed for v$v"
+              exit 1
+            }
+            Write-Host "release already exists: v$v"
+          }
+
+      # --- 按项目追加构建产物步骤（示例） ---
+      # - name: Build artifacts
+      #   run: npm run build
+      # - name: Upload artifacts to release
+      #   if: steps.decide.outputs.should_release == 'true'
+      #   run: gh release upload "v${{ steps.decide.outputs.version }}" dist/**/*.zip

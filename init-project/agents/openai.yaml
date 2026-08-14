@@ -1,0 +1,4 @@
+interface:
+  display_name: "Init Project from Universal Template"
+  short_description: "Initialize a project folder from the universal project template."
+  default_prompt: "Initialize the project folder with the universal project template."
