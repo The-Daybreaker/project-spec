@@ -41,7 +41,7 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
      `--no-git` 仅复制文件（不建 git，需用户另行决定）。
 2. **git 收尾**（脚本已做时跳过）：主仓库 `git init -b <branch>` + 首次提交
    `chore: init from universal project template`；`git -C private init` + 提交
-   `docs: private v0.1.0 - init`。**未获用户确认前不 `git push`**（远端未配置
+   `docs: private v0.0.1 - init`。**未获用户确认前不 `git push`**（远端未配置
    时不推送；配置了远端也先征得同意）。
 3. **回读校验**（按 `references/init-steps.md` 的校验清单）：
    - 占位符已全部替换（`git grep -n -E '\{\{[A-Z_]+\}\}'` 应无残留；GitHub
@@ -49,7 +49,7 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
    - `private/.git` 存在、主仓库 `.git` 存在；
    - `git status`（主）与 `git -C private status`（子）均干净；
    - 根 `AGENTS.md` 与 `private/AGENTS.md` 可读且内容正确；
-   - `VERSION` 为 `0.1.0`。
+   - `VERSION` 为 `0.0.1`。
 4. **收尾与汇报**：确认 `.gitignore` 生效（`git check-ignore private/` 应命中）；
    向用户汇报：初始化位置、两个 git 仓库、下一步建议（填写 README 与
    `private/AGENTS.md` 的「本机环境」「用户决策」，配置远端后推送）。

@@ -43,12 +43,14 @@
    - 变更分级、删除纪律、回读校验、相似检查、密钥安全、文档同步等 12 条。
 5. **开发工作流**：需求提出 → 讨论对齐（复述需求）→ 确认开工 → 实施（改动完成即
    文档就绪）→ 自动审计 → 验证（ci-check + TEST-REPORT）→ 展示与提交（先 private
-   子 git）→ 发布（版本递增 + tag + Release）→ 汇报（附完成检查清单）。
-6. **版本管理与 CI/CD**：`VERSION` 单一事实来源 + git tag `vX.Y.Z`；版本递增由
-   agent 本地完成（`bump-version.ps1` 同步 `package.json` / `Cargo.toml` 与
-   CHANGELOG），推送 main 后 `.github/workflows/release.yml` 对尚无 tag 的当前版本
-   自动打 tag 并建 Release（不会二次递增，手动/自动发布二选一）；`.github/workflows/ci.yml`
-   提供 CI 检查入口。
+   子 git）→ 发布（版本递增 + tag + Release）→ **经验沉淀提醒**（架构变化/每次更新
+   后，提醒用户沉淀经验进知识库、可复用经验集成进项目模板）→ 汇报（附完成检查清单）。
+6. **版本管理与 CI/CD**：版本号**从 `0.0.1` 开始**，每次默认末位 +1，**前两位
+   （major/minor）增加必须向用户确认**；`VERSION` 单一事实来源 + git tag `vX.Y.Z`；
+   版本递增由 agent 本地完成（`bump-version.ps1` 同步 `package.json` / `Cargo.toml`
+   与 CHANGELOG），推送 main 后 `.github/workflows/release.yml` 对尚无 tag 的当前
+   版本自动打 tag 并建 Release（不会二次递增，手动/自动发布二选一）；
+   `.github/workflows/ci.yml` 提供 CI 检查入口。
 7. **不依赖任何 agent 与上下文**：AGENTS.md 自带 bootstrap（任何新对话从零接手）；
    脚本自洽（ASCII-only，Windows PowerShell 5.1 / 7 均可运行）；`private/AGENTS.md`
    是唯一常青开发记忆。
@@ -75,12 +77,12 @@ private 子 git 并完成首次提交 → 按清单回读校验。初始化是�
 # 复制模板
 Copy-Item -Recurse project-template <目标目录>
 # 替换占位符（{{PROJECT_NAME}} {{PROJECT_DESCRIPTION}} {{DEFAULT_BRANCH}}
-# {{AUTHOR}} {{YEAR}} {{VERSION}} {{LICENSE_NOTICE}}）
+# {{AUTHOR}} {{YEAR}} {{DATE}} {{VERSION}} {{LICENSE_NOTICE}}）
 # 初始化两个 git 仓库
 git -C <目标目录> init -b main
 git -C <目标目录> add -A -- . && git -C <目标目录> commit -m "chore: init"
 git -C <目标目录>\private init
-git -C <目标目录>\private add -A -- . && git -C <目标目录>\private commit -m "docs: private v0.1.0 - init"
+git -C <目标目录>\private add -A -- . && git -C <目标目录>\private commit -m "docs: private v0.0.1 - init"
 ```
 
 ### 3. 初始化后的下一步（模板内已写明）
@@ -100,7 +102,8 @@ git -C <目标目录>\private add -A -- . && git -C <目标目录>\private commi
   强制跟踪这些骨架文件；改动它们后提交时同样用 `-f`。
 - **skill 校验**：改完 skill 用 skill-creator 的 quick_validate 校验：
   `python <skill-creator>/scripts/quick_validate.py init-project`。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.0.0）。
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.0.1；
+  版本号见 `VERSION` 文件）。
 
 ## 经验来源
 

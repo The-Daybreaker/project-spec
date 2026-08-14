@@ -32,7 +32,7 @@
 | `{{DEFAULT_BRANCH}}` | 默认分支名 |
 | `{{AUTHOR}}` | 作者 |
 | `{{YEAR}}` / `{{DATE}}` | 当前年份 / 当前日期（YYYY-MM-DD，写入 CHANGELOG 与 TEST-REPORT） |
-| `{{VERSION}}` | `VERSION` 文件内容（初始 `0.1.0`） |
+| `{{VERSION}}` | `VERSION` 文件内容（初始 `0.0.1`，版本规则见模板 AGENTS.md「版本管理」） |
 | `{{LICENSE_NOTICE}}` | 许可声明（默认「本项目使用 MIT 许可，详见 LICENSE。」） |
 
 > 校验方法：初始化后在目标目录运行
@@ -58,7 +58,7 @@ python <skill>/scripts/init_project.py <目标目录> \
 3. 全文件替换占位符（UTF-8；二进制文件跳过）。
 4. 默认初始化 git：主仓库 `git init -b <branch>` + `git add -A` + 首次提交
    `chore: init from universal project template`；`git -C private init` + 提交
-   `docs: private v0.1.0 - init`。失败（git 不可用）时警告并继续，由 agent 收尾。
+   `docs: private v0.0.1 - init`。失败（git 不可用）时警告并继续，由 agent 收尾。
 5. 打印汇总与下一步。
 
 ## 4. git 收尾（脚本 `--no-git` 或 git 步骤失败时）
@@ -69,7 +69,7 @@ git add -A -- .
 git commit -m "chore: init from universal project template"
 git -C private init                   # private 子 git
 git -C private add -A -- .
-git -C private commit -m "docs: private v0.1.0 - init"
+git -C private commit -m "docs: private v0.0.1 - init"
 ```
 
 - 主仓库与 private 子 git **分别独立**（`private/.git` 是独立仓库，主仓库的
@@ -91,8 +91,8 @@ git -C private commit -m "docs: private v0.1.0 - init"
 - [ ] 主仓库 `git status` 干净；`git -C private status` 干净
 - [ ] `git check-ignore private/` 命中（`.gitignore` 生效）
 - [ ] 根 `AGENTS.md` 存在且 `{{PROJECT_NAME}}` 已替换
-- [ ] `private/AGENTS.md` 存在（版本为 `0.1.0`，待用户补充「本机环境」「用户决策」）
-- [ ] `VERSION` = `0.1.0`；`private/dev/CHANGELOG.md` 顶部 = `v0.1.0`
+- [ ] `private/AGENTS.md` 存在（版本为 `0.0.1`，待用户补充「本机环境」「用户决策」）
+- [ ] `VERSION` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
 - [ ] `scripts/ci-check.ps1` 可运行（`powershell -File scripts/ci-check.ps1` 退出码 0；
       PowerShell 7 环境用 `pwsh -File`）
 - [ ] `scripts/pre-release-check.ps1` 可运行（当前状态应提示「可以发布」或仅警告
