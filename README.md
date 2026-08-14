@@ -94,9 +94,13 @@ git -C <目标目录>\private add -A -- . && git -C <目标目录>\private commi
 - **改模板必同步**：修改 `project-template/` 后运行
   `powershell -File sync-template.ps1`，把改动镜像到
   `init-project/assets/project-template/`（skill 分发的是副本，两份必须一致）。
+- **private/ 骨架的跟踪**：模板自身的 `.gitignore` 会忽略 `private/`（这正是设计
+  目标——目标项目中的 private/ 永不进主仓库），因此本工作区仓库需要用
+  `git add -f project-template/private init-project/assets/project-template/private`
+  强制跟踪这些骨架文件；改动它们后提交时同样用 `-f`。
 - **skill 校验**：改完 skill 用 skill-creator 的 quick_validate 校验：
   `python <skill-creator>/scripts/quick_validate.py init-project`。
-- **版本**：本模板工作区自身建议用 git 管理并按同样规则打 tag（见「版本管理」）。
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.0.0）。
 
 ## 经验来源
 
