@@ -1,0 +1,23 @@
+# private 子 git 忽略规则（本目录由内部子 git 管理，不进 GitHub）
+
+# 生成物 / 可重建内容
+dist/
+build/
+out/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 测试生成物（按项目实际补充）
+test/**/.trash/
+test/**/.obsidian/
+test/**/.config/HTML-Export/
+test/**/.config/log/
+
+# 密钥（确需保留时也不提交；或加密后提交）
+secrets/
+*.key
+*.pem

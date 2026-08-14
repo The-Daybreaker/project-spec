@@ -1,0 +1,126 @@
+# AGENTS.md — {{PROJECT_NAME}} 开发指引（私有）
+
+> 本文件位于 `private/` 内，由 **private 子 git** 管理，仅本机/本工作区的开发 agent
+> 读取，**不进 GitHub**。承载项目开发与维护的完整规范、文件分类归属、本机环境与
+> 用户决策，是**唯一常青开发记忆**（任何新对话从零接手本项目都先读本文件）。
+> 与根 `AGENTS.md`（公开版）冲突时，本文件中的开发/机器/个人专属细节以本文件为准。
+
+## 项目状态与版本
+
+- **当前版本**：{{VERSION}}（`dev/CHANGELOG.md` 有完整历史）。
+- **版本规则**：默认只升最后一位（patch）；第一位/中间位（major/minor）仅用户要求
+  时升；破坏性变更必须用户确认并升主版本、说明迁移方案。
+- **发布策略**：每次改动完成后自动执行发布（提交、推送、tag/Release、分发/部署），
+  不再等待用户明确要求（如需关闭，见「用户确认的设计决策」）。
+
+## 仓库布局与文件分类归属（三区矩阵，开发强制要求）
+
+所有文件按以下三区归类，不得混淆；**新增文件必须先判区再落盘**。
+
+| 区 | 位置 | 内容 | 版本管理 |
+|---|---|---|---|
+| A. 公开 | 仓库根 + `src/` `docs/` `scripts/` `.github/` | README / LICENSE / CONTRIBUTING / 根 AGENTS.md（公开版）/ 运行时代码与资源 | 主仓库 git 跟踪，随 Release 发布 |
+| B. 私有 | `private/` | 本文件（AGENTS.md）、`dev/`（开发期文档：DESIGN / CHANGELOG / TEST-REPORT）、`test/`（本地测试素材） | private 子 git（本地、无远端） |
+| C. 不版本管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、打包产物 | 无（.gitignore 忽略） |
+
+归属判定规则：
+
+- 含**个人/机器专属信息**或**发布前不公开**内容 → B（private）；
+- **生成物/缓存/可重建**内容 → C；
+- 用户可见、可发布、无敏感信息 → A；
+- 密钥/凭据：绝不入库；确需保留只放 `private/`（不提交子 git 或加密后提交）；
+- 用户确认的设计决策只记录于开发文档（本目录），不写入公开文档。
+
+发布前检查：主仓库 `git status` 只应出现 A 区文件；`git -C private status` 负责
+B 区；C 区内容两者都不得出现。
+
+## 开发工作流（强制，每次需求都走完）
+
+1. **需求提出**：用户提出需求（功能 / 文档 / 重构 / 修复 / 发布）。
+2. **讨论对齐**：与用户讨论，理解意图与影响面（是否动公开内容、是否破坏性、是否
+   影响文档与用户视角），**复述需求**并列出方案要点。
+3. **确认开工**：用户明确确认后开始实施。**红线：未获确认不实施**。
+4. **实施**：按 AGENTS.md 与 DESIGN.md 规范修改；**同步更新受影响文档**
+   （CHANGELOG / DESIGN / TEST-REPORT / README / 根 AGENTS.md / 本文件 / 用户可见
+   文档），做到「改动完成即文档就绪」，不等发布前补救。
+5. **自动审计**：实施完成后、提交前必须审计——自审按 `../docs/audit-checklist.md`
+   逐项核对；**优先委托独立子 agent / 独立会话**（只看 `git diff` + 审计清单，
+   不共享本对话上下文）复审；修复全部发现后再继续。
+6. **验证**：运行检查命令（`scripts/ci-check.ps1`）与项目测试；结果记录到
+   `dev/TEST-REPORT.md`；**未通过不发布**。
+7. **展示与提交**：向用户展示成果 → **提交 private 子 git**（若 `private/` 有变动，
+   见「发布流程」第 3 步）→ 主仓库 commit + push。
+8. **发布**：按「发布流程」自动执行。
+9. **汇报**：汇总改动、版本、测试结果、Release 链接与回退方式，附「完成检查清单」。
+
+## 发布流程（每次改动完成后执行，md 驱动、agent 执行）
+
+1. **版本递增**：默认只升最后一位；运行 `scripts/bump-version.ps1`（同步
+   `VERSION`，若存在 `package.json` / `Cargo.toml` 一并同步），并更新
+   `dev/CHANGELOG.md` 顶部条目。
+2. **检查受影响文档**（改动完成即文档就绪）：CHANGELOG / DESIGN / TEST-REPORT /
+   README / 根 AGENTS.md / 本文件 / 用户可见文档。
+3. **提交 private 子 git（发布前必做）**：检查 `git -C private status --short`；
+   有变更先 `git -C private add -A -- .` 并提交（`docs: private v<version> - 描述`），
+   确认 `git -C private status --short` 干净后再进入主仓库发布。
+4. **主仓库提交推送**：`git add -A -- .` + commit（`feat:/fix:/docs: v<version> -
+   描述`）+ `git push`（origin、分支见「本机环境」）。
+5. **打标签与 Release**：`git tag v<version>` + `git push origin v<version>`；
+   创建 GitHub Release（`gh release create v<version> --title "v<version>"
+   --notes "<变更摘要>" --attach <发布产物>`；gh 未认证时请用户 `gh auth login`，
+   或网页手动上传）。推送 main 后 CI 也会自动完成第 5 步（仅当当前 VERSION 尚无
+   tag 时，不会二次递增版本；手动/自动二选一，见根 `AGENTS.md`「版本管理」）。
+6. **分发/安装/部署**：按项目实际执行（安装包、zip、文档站点等）。
+7. **汇报**：附「完成检查清单」。
+
+> `scripts/pre-release-check.ps1` 可一键完成发布前检查（private 子 git 同步、
+> 版本一致性、仓库状态、审计提醒）。
+
+## 完成检查清单（每次交付附在最终回复中）
+
+- [ ] 需求已复述并获用户确认
+- [ ] 受影响文档已同步更新（CHANGELOG / DESIGN / TEST-REPORT / README /
+      根 AGENTS.md / 本文件 / 用户可见文档）
+- [ ] 自动审计已完成（自审 + 独立 agent 审计），发现已修复
+- [ ] 检查命令与测试通过，TEST-REPORT 已记录
+- [ ] private 子 git 已提交且 `git -C private status --short` 干净
+- [ ] 版本号一致（VERSION / CHANGELOG 顶部 / 各版本文件）且递增规则正确
+- [ ] 已提交并推送（提交信息符合格式）
+- [ ] 已创建 GitHub Release（tag vX.Y.Z + 发布产物）
+- [ ] 分发/安装/部署完成
+- [ ] 已向用户展示成果、Release 链接与回退方式
+
+## 文档职责划分
+
+| 文档 | 位置 | 职责 |
+|---|---|---|
+| 根 `AGENTS.md` | 公开 | 公开入口（面向使用者/贡献者/接手 agent） |
+| 本文件 `AGENTS.md` | 私有 | 开发入口与当前状态（唯一常青开发记忆） |
+| `dev/DESIGN.md` | 私有 | 当前设计 + 开发工作流 + 开发规范 + 文件分类归属 |
+| `dev/CHANGELOG.md` | 私有 | 完整版本历史（每次发布必更新） |
+| `dev/TEST-REPORT.md` | 私有 | 当前测试记录与运行方式（每次发布必更新） |
+| `README.md` / `docs/` | 公开 | 面向使用者/贡献者 |
+| `docs/audit-checklist.md` | 公开 | 审计清单（自审与独立审计共用） |
+
+## 本机环境
+
+（按实际填写：工作区路径、工具链路径与版本、网络/镜像、沙箱限制、已知坑。
+示例见 KnowOps 项目的做法——机器专属信息只写在这里，不写进公开文档。）
+
+- 工作区：<填写>
+- 工具链：<填写>
+- 已知坑：<填写>
+
+## 安装目标 / 部署目标
+
+（按实际填写：各 agent 平台的 skill 目录、发布仓库、部署位置等。）
+
+## 用户确认的设计决策（仅记录于本文件，不写入公开文档）
+
+- （按实际追加：用户拍板的设计取舍、例外授权、长期约定。）
+
+## 删除纪律与数据安全
+
+- 删除默认走可恢复路径（回收站 / 版本控制）；确需永久删除必须用户确认。
+- 不代为 `git init`（用户的其他仓库）；保留用户未提交的改动，不擅自回滚。
+- 变更分级、回读校验等通用红线见根 `AGENTS.md` 与 `../docs/audit-checklist.md`。
