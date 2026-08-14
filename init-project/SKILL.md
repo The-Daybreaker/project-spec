@@ -44,7 +44,8 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
    `docs: private v0.1.0 - init`。**未获用户确认前不 `git push`**（远端未配置
    时不推送；配置了远端也先征得同意）。
 3. **回读校验**（按 `references/init-steps.md` 的校验清单）：
-   - 占位符已全部替换（全仓库搜索 `{{` 应无残留）；
+   - 占位符已全部替换（`git grep -n -E '\{\{[A-Z_]+\}\}'` 应无残留；GitHub
+     Actions 的 `${{ }}` 表达式属正常）；
    - `private/.git` 存在、主仓库 `.git` 存在；
    - `git status`（主）与 `git -C private status`（子）均干净；
    - 根 `AGENTS.md` 与 `private/AGENTS.md` 可读且内容正确；
