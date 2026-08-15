@@ -223,6 +223,8 @@ def main() -> int:
     print('  3. 请用户补充 private/AGENTS.md 的「本机环境」「安装目标/部署目标」')
     print('  4. 按项目技术栈实现 scripts/ci-check.ps1 与 .github/workflows/ci.yml')
     print('  5. 用户确认后配置远端并推送首个提交（首次 push 不自动发 Release）')
+    print('  6. 立项初期先调研: 与 agent 讨论项目思路/需求/架构/功能/产品时，'
+          '要求 agent 优先在 GitHub 调研现成参考并提醒「先调研再立项」（AGENTS.md 红线 13）')
     return 0
 
 

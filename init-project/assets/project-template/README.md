@@ -41,6 +41,8 @@ npm test
 ## 开发与发布
 
 - **Agent 协作**：见根 `AGENTS.md`（开发工作流、通用红线、发布流程）。
+- **立项调研先行**：与 agent 讨论项目思路/需求/架构/功能/产品时，agent 会优先在
+  GitHub 调研现成参考并提醒「先调研再立项」（见 `AGENTS.md` 红线 13）。
 - **人类贡献**：见 `CONTRIBUTING.md`。
 - **版本管理**：`VERSION` 文件 + git tag `vX.Y.Z`；CI 自动递增并发布
   （`.github/workflows/release.yml`）。

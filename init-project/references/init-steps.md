@@ -119,3 +119,6 @@ git -C private commit -m "docs: private v0.0.1 - init"
 3. 填写 `README.md`（功能、快速开始、项目结构）。
 4. 用户确认后配置远端并推送首个提交（首次 push 不自动发 Release，见
    `.github/workflows/release.yml` 说明）。
+5. **立项初期先调研**：之后与 agent 讨论项目思路/需求/架构/功能/产品等立项类
+   话题时，要求 agent 优先在 GitHub 调研现成参考并提醒「先调研再立项」（模板
+   AGENTS.md 红线 13），避免从零造轮子。
