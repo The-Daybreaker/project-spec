@@ -14,6 +14,15 @@
 - audit-checklist 新增「变更分级与质量门禁」（文档/常规/架构三级）。
 - docs/README 新增「文档地图」。
 
+## 未发版变更（v1.2.1 候选）
+
+- 流程提示补充「缩写附中文翻译」要求：模板 `private/AGENTS.md`「流程提示」新增
+  强制规则 + 「缩写对照」表（PRD=产品需求文档 / RFC=技术方案文档 /
+  ADR=架构决策记录 / RESEARCH=调研记录 / DESIGN=设计文档 / WORKLOG=工作进度日志 /
+  CHANGELOG=变更日志 / TEST-REPORT=测试报告 / CI=持续集成 / CD=持续交付）；
+  根/私有 AGENTS、DESIGN、WORKLOG 流程位置字段、agent-rules 工作流同步；
+  工作区 AGENTS 维护约定 #9 / README dogfood；六处副本重装（同版本内容更新）。
+
 ## v1.2.0（2026-08-26）
 
 > 本版为「项目开发前阶段」规范大版本：新增 PRD/RFC/ADR/RESEARCH 四登记册体系、
