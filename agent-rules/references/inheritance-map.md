@@ -8,9 +8,9 @@
 
 | 项 | 版本 |
 |---|---|
-| 模板 `template_version`（权威） | 1.1.1 |
-| `../SKILL.md` `metadata.version` | 1.1.1 |
-| 上次核对模板版本 | 1.1.1 |
+| 模板 `template_version`（权威） | 1.1.2 |
+| `../SKILL.md` `metadata.version` | 1.1.2 |
+| 上次核对模板版本 | 1.1.2 |
 
 ## 2. 模板红线覆盖（project-template/AGENTS.md「通用红线」）
 

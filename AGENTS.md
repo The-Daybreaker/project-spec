@@ -15,7 +15,7 @@
   `project-template/`（权威模板，同步到 skill 资产）、`init-project/`（skill：
   SKILL.md / references / scripts / assets）、`agent-rules/`（skill：精简版
   agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.1.1）+ git tag；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.1.2）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
@@ -56,6 +56,10 @@
 7. **经验自动沉淀**：每轮对话结束后**自动**把完整候选经验写入
    `docs/EXPERIENCE-TO-KB.md`（必做、不需询问，与模板红线 9 对齐）；沉淀与否、
    沉淀到哪由用户决定。
+8. **索引/未发版区段纪律（收尾核对）**：「新条目在前」的文档（如
+   `docs/EXPERIENCE-TO-KB.md` 索引与正文、`docs/CHANGELOG.md` 未发版区段），新增
+   条目必须**正文与索引同时置顶**；任务收尾/汇报前核对：索引顺序与正文一致、
+   「最后更新」日期与最新提交一致、未发版区段与 `git log <tag>..HEAD` 逐条比对。
 
 ## 【项目专用】本机环境
 
@@ -78,6 +82,13 @@
 - 工作区根补 `.gitattributes`（LF 归一化，与模板一致；P3 #6 落地）。
 - 模板【通用】模块补「项目归档/退役」流程与 `dist/` 发布产物目录约定
   （P3 #7 + 产物治理落地）。
+- 模板实体目录：`dist/`（C 区占位 `.gitkeep`）与 `archive/`（A 区归档说明
+  `ARCHIVE.md`）**随模板初始化即存在**，不搞懒加载/约定式；目录树、三区表、
+  归档流程显式引用。
+- 测试落地指引：新增 `project-template/docs/TESTING.md`（pytest 示例、覆盖率、
+  CI 接入、TEST-REPORT 对应），`ci_check.py` 内含接入示例注释。
+- agent 安装目标新增 `.qoder-cn`：安装表扩为六处（codex / dsh / workbuddy /
+  trae-cn / qoderworkcn / qoder-cn）。
 
 ## 文档职责
 

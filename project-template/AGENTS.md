@@ -26,7 +26,7 @@
 
 | 区 | 位置 | 内容 | 版本管理 |
 |---|---|---|---|
-| A. 公开 | 仓库根、`src/`、`docs/`、`scripts/`、`.github/` | 用户可见、可发布、无敏感信息 | 主仓库 git，发布到 GitHub |
+| A. 公开 | 仓库根、`src/`、`docs/`、`scripts/`、`.github/`、`archive/` | 用户可见、可发布、无敏感信息（含归档区） | 主仓库 git，发布到 GitHub |
 | B. 私有 | `private/` | 个人/机器专属信息、开发期文档（DESIGN/CHANGELOG/TEST-REPORT/WORKLOG/经验文档）、测试素材 | private 子 git（本地、无远端） |
 | C. 不管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、`_trash/` | 无（.gitignore 忽略） |
 
@@ -169,8 +169,9 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
      TEST-REPORT、审计、tag + Release），保证状态可复现；
   3. **归档标记**：README 顶部标注「⚠️ 已归档（只读）」+ 归档日期与原因；
      `private/AGENTS.md`「项目状态与版本」记录归档状态；
-  4. **产物归档**：最终发布产物（`dist/**`）随 Release 保留；如需本地存档，
-     复制到项目外存档目录（不提交 git）；
+  4. **产物归档**：最终发布产物（`dist/**`）随 Release 保留；归档说明与最终快照
+     放入 `archive/`（A 区，进 git，只读，见 `archive/ARCHIVE.md`）；如需本地存档
+     再复制到项目外（不提交 git）；
   5. **经验沉淀**：把可复用经验写入 `EXPERIENCE-TO-TEMPLATE.md` /
      `EXPERIENCE-TO-KB.md`，并提醒用户真正沉淀；
   6. **收尾**：主仓库与 private 子 git 均提交干净；仓库/数据删除只由用户决定。

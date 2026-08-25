@@ -15,6 +15,7 @@
 |---|---|
 | `DOCS.md` | 本文件：docs 目录说明与文档治理 |
 | `audit-checklist.md` | 实施后审计清单（自审与独立 agent 审计共用） |
+| `TESTING.md` | 测试落地指引（pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应） |
 | `UPGRADE.md` | 模板升级指南（只应用【通用】模块变更） |
 | `CONTRIBUTING.md` | 人类贡献者与 agent 的协作约定 |
 | （按项目补充：架构、API、使用手册等） | |

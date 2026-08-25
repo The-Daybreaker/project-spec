@@ -1,6 +1,7 @@
 # 依赖与产物
 node_modules/
-dist/
+dist/*
+!dist/.gitkeep
 build/
 out/
 target/

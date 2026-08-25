@@ -8,20 +8,18 @@
 
 ## 当前任务
 
-- 需求：① 补工作区根 `.gitattributes`（P3 #6）；② 模板补「项目归档/退役」流程
-  （P3 #7）；③ 模板补 `dist/` 发布产物约定；④ 全链路同步并验证提交；⑤ 输出
-  「模板能否支撑完整项目」专业评估。
-- 目标/验收：模板【通用】新增归档/退役 + dist 约定，根/私有 AGENTS、README、
-  DESIGN、audit-checklist、release.yml、init-project SKILL、inheritance-map
-  同步；sync / quick_validate / py_compile / 占位符与版本 grep 全过；阶段落盘 +
-  经验自动沉淀；提交。
+- 需求：① 模板实体化 `archive/` 与 `dist/` 目录（不懒加载，目录树/三区表/流程
+  全体现）；② 「新条目在前 = 正文与索引双置顶」写进维护约定收尾核对；③ 补测试
+  落地指引；④ 手工安装到全部 agent（新增 `.qoder-cn`，共六处）；⑤ 发版 v1.1.2。
 - 计划步骤：
-  1. 补工作区根 .gitattributes（与模板一致）
-  2. 模板补归档/退役流程（根/私有 AGENTS + README + DESIGN + audit-checklist）
-  3. 模板补 dist 产物约定（发布流程第 6 步 + DESIGN + README + release.yml）
-  4. 同步 init-project SKILL 摘要 + inheritance-map 不继承列表
-  5. 更新工作区文档（AGENTS / README / CHANGELOG / WORKLOG / EXP-KB）
-  6. 验证（sync / quick_validate / py_compile / grep）+ 提交 + 评估汇报
+  1. 模板实体化 archive/（ARCHIVE.md）与 dist/（.gitkeep + .gitignore 规则）
+  2. 维护约定新增 #8 双置顶纪律（AGENTS + README）
+  3. 测试落地指引（docs/TESTING.md + DESIGN/DOCS/README/ci_check/init SKILL）
+  4. 更新工作区文档（AGENTS / README / CHANGELOG / WORKLOG / EXP-KB）
+  5. 验证（sync / quick_validate / py_compile / grep / 冒烟）
+  6. 手工安装六处 agent skill 目录（含 .qoder-cn）+ 哈希校验
+  7. 发版 v1.1.2（版本递增 + CHANGELOG 正式条目 + 全局 grep + tag + 发布提交）
+  8. 汇报 + 预告下版讨论主题（开发前需求/架构/设计规范）
 
 ## 阶段记录
 
@@ -111,6 +109,17 @@
   release.yml）init-project/SKILL.md agent-rules/references/inheritance-map.md
   AGENTS.md README.md docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md |
   sync / quick_validate / py_compile / grep | 提交 + 评估汇报 |
+| 29 实体目录+双置顶+测试指引+六处安装+发版 | ✅ | 模板实体化 `archive/`（A 区
+  `ARCHIVE.md`）与 `dist/`（C 区 `.gitkeep`，`.gitignore` 改 `dist/*` +
+  `!dist/.gitkeep`）；维护约定 #8「索引/未发版区段纪律（双置顶）」；新增
+  `docs/TESTING.md` 测试落地指引；安装目标扩为六处（新增 `.qoder-cn`）；发版
+  v1.1.2（未发版区段并入正式条目 + 版本递增 1.1.1→1.1.2 + sync/quick_validate/
+  冒烟全过 + 六处副本哈希一致 + tag v1.1.2） |
+  project-template/（archive、dist、TESTING.md、.gitignore、AGENTS×2、README、
+  DESIGN、DOCS、audit-checklist、ci_check）init-project/SKILL.md AGENTS.md
+  README.md docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md +
+  六处 agent 目录 | sync / quick_validate / py_compile / grep / 冒烟 /
+  副本哈希 | 汇报 + 下版讨论 |
 
 ## 待办/遗留
 
@@ -123,7 +132,7 @@
 - [ ] 工作区无 git 远端，改动未推送（N/A 或用户决定）
 - [ ] 模板根其余 7 个文件（AGENTS/README/LICENSE/version.json/
       .gitignore/.gitattributes/.editorconfig）为入口与工具必需；如仍想精简需单独评估
-- [ ] 下次发版 v1.1.2：把「未发版变更」区段并入正式条目，并 bump version.json / 打 tag
+- [x] 下次发版 v1.1.2：把「未发版变更」区段并入正式条目，并 bump version.json / 打 tag
 - [x] P3 #1/#2/#3/#4/#5 已实施（UTF-8 输出、UPGRADE 澄清、CONTRIBUTING 措辞、
       EXP-KB 索引、版本单一来源 + sync 自动化校验）
 - [x] 本任务（P3 建议实施）15/15 完结
@@ -137,6 +146,9 @@
 
 ## 历史记录
 
+- 2026-08-26 模板 v1.1.2 发版：实体化 `archive/` / `dist/`、维护约定 #8 双置顶、
+  测试落地指引（TESTING.md）、六处 agent 安装（新增 `.qoder-cn`）；版本递增
+  1.1.1→1.1.2，已提交并打 tag（v1.1.2）。
 - 2026-08-26 模板生命周期补齐：工作区根 `.gitattributes`（P3 #6）+ 模板「项目
   归档/退役」流程（P3 #7）+ `dist/` 发布产物约定；全链路同步并提交。
 - 2026-08-26 删除纪律命名统一：`_trash/<agent名>` → `<agent产品名>_<日期>_<时分>`

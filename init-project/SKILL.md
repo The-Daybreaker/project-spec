@@ -1,7 +1,7 @@
 ---
 name: init-project
 metadata:
-  version: 1.1.1
+  version: 1.1.2
 description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（AGENTS.md 公开/私有拆分、private 子 git、.gitignore、CI/CD 工作流、自动化脚本、Agent+人协作开发工作流与通用红线），替换项目占位符，初始化主 git 与 private 子 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
 ---
 
@@ -38,6 +38,10 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
 - **发布产物与归档**：构建/打包产物统一输出 `dist/`（不进 git，Release 自动
   attach）；项目停止主动开发时按「项目归档/退役」流程执行（最终发布 + README
   归档标记 + 产物归档 + 经验沉淀，agent 不擅自删除）。
+- **实体目录**：`dist/`（发布产物，C 区占位）与 `archive/`（归档区，A 区进 git）
+  随模板初始化即存在，目录树/三区表/归档流程已显式引用。
+- **测试落地指引**：`docs/TESTING.md`（pytest 示例、覆盖率、CI 接入、TEST-REPORT
+  对应；`ci_check.py` 内含接入示例注释）。
 - **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
   `codex_2026-08-25_2330`），任务结束时用 `scripts/trash.py` 整体进回收站。
 - **模板版本与升级**：项目根 `version.json` 的 `template_version` 记录初始化时的

@@ -103,7 +103,9 @@ B 区；C 区内容两者都不得出现。
      审计、tag + Release），保证状态可复现；
   3. README 顶部标注「⚠️ 已归档（只读）」+ 日期/原因；本文件「项目状态与版本」
      记录归档状态；
-  4. 最终产物（`dist/**`）随 Release 保留；本地存档复制到项目外（不提交 git）；
+  4. 最终产物（`dist/**`）随 Release 保留；归档说明与最终快照放入 `archive/`
+     （A 区，进 git，只读，见 `archive/ARCHIVE.md`）；本地存档复制到项目外
+     （不提交 git）；
   5. 经验沉淀：写入 `dev/EXPERIENCE-TO-TEMPLATE.md` / `dev/EXPERIENCE-TO-KB.md`
      并提醒用户真正沉淀；
   6. 收尾：主仓库与 private 子 git 均提交干净；仓库/数据删除只由用户决定。

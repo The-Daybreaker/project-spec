@@ -22,9 +22,11 @@
 ├── project-template/         # 通用项目模板（权威副本，人类可读）
 │   ├── AGENTS.md             #   Agent 接手入口（公开版，随仓库发布）
 │   ├── README.md / LICENSE / version.json / .gitignore / .gitattributes / .editorconfig
-│   ├── docs/                 #   公开文档（DOCS.md / audit-checklist.md / UPGRADE.md / CONTRIBUTING.md）
+│   ├── docs/                 #   公开文档（DOCS.md / audit-checklist.md / UPGRADE.md / CONTRIBUTING.md / TESTING.md）
 │   ├── scripts/              #   自动化脚本 + version-sync.json
 │   ├── .github/workflows/    #   CI 检查 + 自动版本递增发布
+│   ├── dist/                 #   发布产物目录（C 区实体占位，Release 自动 attach）
+│   ├── archive/              #   归档区（A 区，归档/退役时放归档说明与快照）
 │   └── private/              #   私有区（不进 GitHub，内部子 git 管理）
 │       ├── PRIVATE.md        #     私有区说明与子 git 管理
 │       ├── AGENTS.md         #     开发指引（唯一常青开发记忆）
@@ -151,10 +153,11 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 | WorkBuddy | `<用户主目录>\.workbuddy\skills`（agent-rules / init-project） |
 | TraeWork（TRAE Work CN） | `<用户主目录>\.trae-cn\skills`（agent-rules / init-project） |
 | QoderWork（QoderWork CN） | `<用户主目录>\.qoderworkcn\skills`（agent-rules / init-project） |
+| Qoder（Qoder CN） | `<用户主目录>\.qoder-cn\skills`（agent-rules / init-project） |
 
 其他机器/agent：找到对应用户级 skill 目录（如 `~/.codex/skills`、`~/.dsh/skills`、
-`~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qoderworkcn/skills`），把
-`agent-rules/` 与 `init-project/` 复制进去即可。
+`~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qoderworkcn/skills`、
+`~/.qoder-cn/skills`），把 `agent-rules/` 与 `init-project/` 复制进去即可。
 
 ## 维护约定
 
@@ -180,8 +183,11 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
   `agent-rules` 继承矩阵版本/覆盖/指纹与 `project-template/version.json` 的
   `template_version` 一致（改模板/发版后运行 sync 即校验）。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.1；
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.2；
   版本号见 `version.json`）。
+- **索引/未发版区段纪律**：「新条目在前」的文档（EXP-KB 索引与正文、CHANGELOG
+  未发版区段）新增条目须**正文与索引同时置顶**；收尾核对索引顺序、日期、未发版
+  条目与 `git log` 一致。
 
 ## 经验来源
 

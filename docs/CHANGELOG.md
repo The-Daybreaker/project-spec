@@ -14,11 +14,10 @@
 - audit-checklist 新增「变更分级与质量门禁」（文档/常规/架构三级）。
 - docs/README 新增「文档地图」。
 
-## 未发版变更（v1.1.2 候选）
+## v1.1.2（2026-08-26）
 
-以下改动已完成并提交，尚未发版（`version.json` 的 `version` 仍 1.1.1）；
-发版 v1.1.2 时并入正式条目并同步 `version.json` / tag。
-（注：本区段不固定「当前 HEAD」引用，避免每次提交后过时；以提交记录为准。）
+以下为 v1.1.1 之后累积的全部变更（含工作区自身与模板【通用】模块），随本次发版
+正式发布；`version.json` 的 `version` / `template_version` 与 tag `v1.1.2` 对齐。
 
 - 目录结构：README 回根；工作区文档入 `docs/`、同步脚本入 `scripts/`。
 - 模板结构：`CONTRIBUTING.md` → `docs/`；`version-sync.json` → `scripts/`；
@@ -37,9 +36,21 @@
   发起；流程=对齐确认→最终发布→README 归档标记→产物归档→经验沉淀→收尾；
   归档后只读维护（P3 #7 落地）。
 - 模板补 `dist/` 发布产物约定：产物统一输出 `dist/`（C 区、不进 git、Release 自动
-  attach `dist/**`）；发布流程第 6 步 / DESIGN「打包与发布」/ README 项目结构 /
-  `release.yml` 注释同步；`init-project` SKILL 摘要加能力点；`agent-rules` 继承
-  矩阵「不继承」列表登记（项目机制不进入全局精简版）。
+   attach `dist/**`）；发布流程第 6 步 / DESIGN「打包与发布」/ README 项目结构 /
+   `release.yml` 注释同步；`init-project` SKILL 摘要加能力点；`agent-rules` 继承
+   矩阵「不继承」列表登记（项目机制不进入全局精简版）。
+- 模板实体目录：`dist/`（C 区占位 `.gitkeep`，`.gitignore` 改 `dist/*` +
+  `!dist/.gitkeep`）与 `archive/`（A 区：`archive/ARCHIVE.md` 归档说明 + 最终
+  快照）**随模板初始化即存在**；三区表 / 目录树 / 归档流程 / DESIGN /
+  audit-checklist 同步引用（不搞懒加载）。
+- 新增 `docs/TESTING.md` 测试落地指引（pytest 示例、覆盖率、CI 接入、TEST-REPORT
+  对应）；DESIGN「测试」/ DOCS 文档清单 / README / `ci_check.py` 注释同步；
+  init-project SKILL 摘要补能力点。
+- 维护约定新增「索引/未发版区段纪律」：「新条目在前」的文档（EXP-KB 索引与正文、
+  CHANGELOG 未发版区段）新增条目须**正文与索引同时置顶**，收尾核对索引顺序 /
+  日期 / 未发版条目与 `git log` 一致。
+- agent 安装目标新增 `.qoder-cn`：安装表扩为六处（codex / dsh / workbuddy /
+  trae-cn / qoderworkcn / qoder-cn）。
 - 发版同步：约定补充「全局 grep 新旧版本号」防版本字样残留。
 - 工作流收口：WORKLOG 生命周期纪律（任务开始切换当前任务、收尾校准硬事实）。
 - 经验自动沉淀：维护约定明确「每轮对话结束自动把完整候选经验写入

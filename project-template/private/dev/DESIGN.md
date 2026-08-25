@@ -94,6 +94,8 @@ WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归
 ## 【通用】测试（发布前必跑）
 
 1. **检查命令**：`scripts/ci_check.py`（lint / build / test，按项目实现）。
+   测试落地（pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应）见
+   `docs/TESTING.md`。
 2. **真实场景测试**（如有）：在 `../test/` 按场景清单实际执行并核对；记录到
    `TEST-REPORT.md`。
 3. **明文例外（仅此一种）**：本次改动不涉及运行时文件、且用户明确确认时，测试
@@ -108,7 +110,7 @@ WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归
   `.gitignore` 已忽略；`release.yml` 自动 attach `dist/**`；产物在别处时同步调整
   workflow 的 attach 路径）。
 - **归档/退役**：项目停止主动开发时按根 `AGENTS.md`「项目归档/退役」执行（最终发布、
-  README 归档标记、产物归档、经验沉淀；见 `../AGENTS.md` 同节）。
+  README 归档标记、`archive/` 归档说明与快照、经验沉淀；见 `../AGENTS.md` 同节）。
 
 ## 【项目专用】环境与已知坑
 

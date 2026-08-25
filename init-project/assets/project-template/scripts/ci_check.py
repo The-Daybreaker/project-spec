@@ -66,6 +66,12 @@ def main() -> int:
     print("    Rust example: cargo check --all-targets; cargo test")
     print("    After implementing real checks, remove the PLACEHOLDER_MARKER line")
     print("    and update the check table in private/dev/TEST-REPORT.md.")
+    print("    Guide: docs/TESTING.md (pytest setup, coverage, CI integration).")
+    # Python 项目接入示例（创建 tests/ 后取消注释并移除 PLACEHOLDER_MARKER）：
+    # r = _run(["python", "-m", "pytest"])
+    # if r.returncode != 0:
+    #     print("[error] pytest failed", file=sys.stderr)
+    #     return 1
 
     print("==> ci-check: passed (template placeholder)")
     return 0

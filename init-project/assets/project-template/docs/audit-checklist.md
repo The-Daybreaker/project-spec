@@ -91,7 +91,8 @@
       tag/Release），状态可复现
 - [ ] README 顶部已标注「⚠️ 已归档（只读）」+ 日期/原因；`private/AGENTS.md`
       「项目状态与版本」已记录归档状态
-- [ ] 最终产物（`dist/**`）随 Release 保留；本地存档已复制到项目外（如需要）
+- [ ] 最终产物（`dist/**`）随 Release 保留；归档说明与最终快照已放入 `archive/`
+      （进 git，只读）；本地存档已复制到项目外（如需要）
 - [ ] 本轮候选经验已写入 EXPERIENCE-TO-TEMPLATE / EXPERIENCE-TO-KB 并提醒用户沉淀
 - [ ] 主仓库与 private 子 git 均提交干净；归档后为只读维护
 
