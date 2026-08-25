@@ -15,6 +15,7 @@
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
+| 2026-08-25 | init-project 首次安装 + skill 目录位置复盘（qcoderworkcn） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | skill 触发语义变更的同步点清单（含用户直接改副本的处理） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | skill 派生自动化校验不覆盖摘要级过时（审计教训） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 多 agent 环境定位 skill 目录 + 派生规范安装的实操路径 | 经验方法/方案 | 待沉淀 |
@@ -112,7 +113,8 @@
      `WorkBuddy.lnk`；`WScript.Shell` 可解析快捷方式目标/工作目录；
   3. 产品数据目录：TraeWork → `<用户主目录>\.trae-cn\skills`（与 Trae CN
      共用用户目录，`<工作区路径>` 只是工作区）；QoderWork →
-     `<用户主目录>\.qoderwork\skills`（原目录不存在，安装时新建）；
+     `<用户主目录>\.qoderworkcn\skills`（真实用户目录为 qcoderworkcn，
+     早期误用 `.qoderwork`，经用户反馈后纠正并清理）；
      WorkBuddy → `.workbuddy/skills`；Codex → `.codex/skills`；DSH → `.dsh/skills`；
   4. 安装：沙箱无写权限 → 升级权限获批后 `Copy-Item -Recurse`，装完核对文件数与
      SKILL.md 哈希，确认不是「报错但显示 OK」的假成功（PowerShell 非终止错误 +
@@ -131,6 +133,36 @@
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/方案`；`domain=本机环境/Agent 工程实践`；
   `tags=[skill 安装, 多 agent, Windows, 目录定位, 沙箱权限]`；`project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
+
+## 2026-08-25 · init-project 首次安装 + skill 目录位置复盘（qcoderworkcn）
+
+- 来源项目/任务：通用项目模板工作区 init-project 同步安装
+- 背景与上下文：此前只把 agent-rules 装到了五个 agent，`init-project` 从未安装；
+  且 QoderWork 的 skill 目录误装在 `~/.qoderwork/skills`，用户反馈实际目录是
+  `~/.qoderworkcn/skills`（`<用户主目录>\.qoderworkcn` 存在且含空 `skills/`）。
+- 需求/问题：多 agent 场景下，同一套 skill（init-project / agent-rules）如何
+  一次性、可验证地分发到全部目标，且目录位置必须与各产品真实数据目录一致。
+- 做法与过程：
+  1. 先核对 `init-project` 在五个 skill 目录的存在性（全部 False），并确认
+     `.qoderworkcn` 为 QoderWork CN 真实用户目录（含 `skills/`、`projects/`、
+     `bin/` 等）；
+  2. 一次升级权限命令完成：init-project × 5（每处 33 文件）+ agent-rules 移至
+     `.qoderworkcn/skills` + 误装 `.qoderwork/skills` 移入 `_trash` 并进回收站；
+  3. 用「文件列表 + 哈希」对两个 skill × 五处逐一复核，确认与仓库一致。
+- 经验/教训：
+  - 「安装 skill 到各 agent」是**两个 skill 都要装**，别只装新做的那个；发版/
+    安装后应有一张「skill × agent × 位置」核对表（README 已更新为双 skill 表）；
+  - 用户对目录位置的反馈优先于自行推断：`.qoderwork` 与 `.qoderworkcn` 极易混淆，
+    安装前先向用户确认或直接列出候选让其指定；
+  - 已安装位置表写入 README 后，用户能一眼发现路径错误，是纠错最快途径。
+- 验证/效果：init-project / agent-rules 各五处哈希一致；误装目录已清理；
+  README 安装表更新为双 skill + 正确路径。
+- 相关文件：`README.md`（使用方法 4）、`docs/WORKLOG.md`、`docs/CHANGELOG.md`
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/教训`；`domain=本机环境/Agent 工程实践`；
+  `tags=[skill 安装, 多 agent, 目录纠错, qcoderworkcn]`；`project=通用项目模板`
 - 状态：待沉淀
 - 沉淀日期：
 

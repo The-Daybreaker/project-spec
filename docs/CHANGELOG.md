@@ -38,6 +38,9 @@
   （默认不自动发布）；init-steps 删除过时的「编码提示」（旧说明直接删除不留档）。
 - agent-rules 触发语义收紧（用户确认）：仅当对话不在任何项目/工作区内且非纯聊天
   时加载，项目内不加载；同步 README / AGENTS 表述与五个已安装副本。
+- init-project skill **首次安装**到五个 agent（codex / dsh / workbuddy /
+  trae-cn / qoderworkcn）；QoderWork skill 目录纠正为 `~/.qoderworkcn/skills`
+  （原误装 `~/.qoderwork/skills` 已清理进回收站）。
 - 发版同步约定增加「特性核对清单」：模板 CHANGELOG 能力点 ↔ 两 skill 摘要逐条
   对照（防摘要级过时复发）。
 

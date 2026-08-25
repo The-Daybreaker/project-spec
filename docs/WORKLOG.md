@@ -8,19 +8,17 @@
 
 ## 当前任务
 
-- 需求：实施审计修复清单（用户已确认）——① init-project SKILL 定位摘要补齐
-  v1.1.1 能力点 + 发布策略措辞修正；② init-steps「编码提示」直接删除（用户指示：
-  旧说明/废案不留档）；③ agent-rules 版本正文改引用版本对照表；④ 发版同步约定加
-  「特性核对清单」——并同步用户改动的 agent-rules 触发词（仅非项目且非纯聊天加载）
-  到 README / AGENTS / CHANGELOG 与五个已安装副本。
-- 目标/验收：修复+同步全部完成；sync / quick_validate / py_compile 全过；五处
-  已安装副本与仓库哈希一致；CHANGELOG 未发版区段登记；自动提交。
+- 需求：把 `init-project` skill **首次同步安装**到五个 agent（此前只装了
+  agent-rules）；纠正 QoderWork skill 目录为 `~/.qoderworkcn/skills`（用户反馈
+  实际目录是 qcoderworkcn），清理误装的 `~/.qoderwork/skills`。
+- 目标/验收：五个 agent 的 init-project 与 agent-rules 均与仓库哈希一致；误装
+  目录已清理；README / CHANGELOG / WORKLOG / EXPERIENCE-TO-KB 同步；自动提交。
 - 计划步骤：
-  1. init-project SKILL / init-steps 修复
-  2. agent-rules 版本正文改引用
-  3. 触发词同步（README / AGENTS / CHANGELOG / 维护约定）
-  4. 验证 + 重装五个副本
-  5. 落盘 + 提交
+  1. 确认 QoderWork 真实目录（`.qoderworkcn/skills`）与 init-project 未安装现状
+  2. 安装 init-project × 5 + agent-rules 移至 `.qoderworkcn/skills`
+  3. 清理误装 `~/.qoderwork/skills`（进回收站）
+  4. 哈希复核 + 文档同步（README / CHANGELOG / EXPERIENCE-TO-KB）
+  5. 提交
 
 ## 阶段记录
 
@@ -81,6 +79,11 @@
   init-project/SKILL.md init-project/references/init-steps.md agent-rules/SKILL.md
   README.md AGENTS.md docs/CHANGELOG.md + 5 处系统目录 | sync / quick_validate /
   py_compile / 副本哈希 全过 | 汇报 |
+| 25 安装·init-project+目录纠正 | ✅ | init-project 首次安装到五个 agent（每处
+  33 文件）；agent-rules 从误装 `~/.qoderwork/skills` 移到正确位置
+  `~/.qoderworkcn/skills`（用户反馈实际目录为 qcoderworkcn）；误装目录已进回收站；
+  两个 skill × 五处哈希全部一致 | README.md docs/CHANGELOG.md
+  docs/EXPERIENCE-TO-KB.md + 5 处系统目录 | 文件数+哈希复核 | 提交 |
 
 ## 待办/遗留
 

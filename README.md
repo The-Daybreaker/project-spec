@@ -126,28 +126,30 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 按技术栈实现 `scripts/ci_check.py` 与 `.github/workflows/ci.yml` → 用户确认后配置
 远端并推送（首个 push 不自动发 Release）。
 
-### 4. 安装 agent-rules 精简版全局规范 skill
+### 4. 安装 agent-rules 与 init-project 到各 agent
 
 `agent-rules/` 是从通用模板【通用】部分派生的**精简版 agent 全局行为规范**：
 **仅当对话不在任何项目/工作区内**（无项目 `AGENTS.md`、不属于已打开的工作区）
 **且非纯聊天**（编码、文档、分析、调研、规划、文件操作、事实性问答等）时加载；
 **项目内对话以项目自身 `AGENTS.md` 为准，不加载本 skill**。除项目专属的需求/规定
 外，模板要求一律继承（继承矩阵 + sync 自动化校验保证随模板版本同步，不漂移）。
+`init-project/` 是**项目初始化 skill**（用模板初始化新项目文件夹），同样建议装到
+每个 agent。
 
 安装：把 `agent-rules/` 整个目录复制到各 agent 的用户级 skill 目录（重启/刷新后
-生效）。本机已安装位置：
+生效）。本机已安装位置（两个 skill 都装在下列目录下）：
 
 | Agent | skill 目录 |
 |---|---|
-| Codex | `<用户主目录>\.codex\skills\agent-rules` |
-| DSH | `<用户主目录>\.dsh\skills\agent-rules` |
-| WorkBuddy | `<用户主目录>\.workbuddy\skills\agent-rules` |
-| TraeWork（TRAE Work CN） | `<用户主目录>\.trae-cn\skills\agent-rules` |
-| QoderWork（QoderWork CN） | `<用户主目录>\.qoderwork\skills\agent-rules` |
+| Codex | `<用户主目录>\.codex\skills`（agent-rules / init-project） |
+| DSH | `<用户主目录>\.dsh\skills`（agent-rules / init-project） |
+| WorkBuddy | `<用户主目录>\.workbuddy\skills`（agent-rules / init-project） |
+| TraeWork（TRAE Work CN） | `<用户主目录>\.trae-cn\skills`（agent-rules / init-project） |
+| QoderWork（QoderWork CN） | `<用户主目录>\.qoderworkcn\skills`（agent-rules / init-project） |
 
 其他机器/agent：找到对应用户级 skill 目录（如 `~/.codex/skills`、`~/.dsh/skills`、
-`~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qoderwork/skills`），复制
-`agent-rules/` 进去即可。
+`~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qoderworkcn/skills`），把
+`agent-rules/` 与 `init-project/` 复制进去即可。
 
 ## 维护约定
 
