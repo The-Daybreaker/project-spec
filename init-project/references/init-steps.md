@@ -92,6 +92,11 @@ git -C private commit -m "docs: private v0.0.1 - init"
       自动填写为初始化当天（`{{DATE}}` 占位被替换）
 - [ ] 主仓库 `git status` 干净；`git -C private status` 干净
 - [ ] `git check-ignore private/` 命中（`.gitignore` 生效）
+- [ ] `archive/ARCHIVE.md` 已生成（A 区归档区说明；未归档时保持默认内容）
+- [ ] `dist/.gitkeep` 已生成（C 区发布产物占位；`git check-ignore dist/<任意文件>`
+      命中、`git check-ignore dist/.gitkeep` 不命中）
+- [ ] `docs/TESTING.md` 已生成（测试落地指引：pytest 示例 / 覆盖率 / CI 接入 /
+      TEST-REPORT 对应）
 - [ ] 根 `AGENTS.md` 存在且 `{{PROJECT_NAME}}` 已替换
 - [ ] `private/AGENTS.md` 存在（版本为 `0.0.1`，待用户补充「本机环境」「用户决策」）
 - [ ] `version.json`：`version` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
@@ -127,7 +132,7 @@ git -C private commit -m "docs: private v0.0.1 - init"
 
 1. 填写 `private/AGENTS.md` 的「本机环境」「安装目标/部署目标」。
 2. 按项目技术栈实现 `scripts/ci_check.py` 与 `.github/workflows/ci.yml` 的检查
-   步骤，并更新 `private/dev/TEST-REPORT.md`。
+   步骤（测试落地见 `docs/TESTING.md`），并更新 `private/dev/TEST-REPORT.md`。
 3. 填写 `README.md`（功能、快速开始、项目结构）。
 4. 用户确认后配置远端并推送首个提交（首次 push 不自动发 Release，见
    `.github/workflows/release.yml` 说明）。

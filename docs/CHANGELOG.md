@@ -14,6 +14,13 @@
 - audit-checklist 新增「变更分级与质量门禁」（文档/常规/架构三级）。
 - docs/README 新增「文档地图」。
 
+## 未发版变更（v1.1.3 候选）
+
+- init-project 覆盖度修复：`references/init-steps.md` 校验清单补
+  `archive/ARCHIVE.md`、`dist/.gitkeep`（含 ignore 规则校验：`dist/<任意文件>`
+  命中、`.gitkeep` 不命中）与 `docs/TESTING.md` 生成检查；初始化后建议引用测试
+  落地指引。（v1.1.2 发版后发现的「校验清单未覆盖新实体」缺口）
+
 ## v1.1.2（2026-08-26）
 
 以下为 v1.1.1 之后累积的全部变更（含工作区自身与模板【通用】模块），随本次发版

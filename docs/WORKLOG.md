@@ -8,18 +8,18 @@
 
 ## 当前任务
 
-- 需求：① 模板实体化 `archive/` 与 `dist/` 目录（不懒加载，目录树/三区表/流程
-  全体现）；② 「新条目在前 = 正文与索引双置顶」写进维护约定收尾核对；③ 补测试
-  落地指引；④ 手工安装到全部 agent（新增 `.qoder-cn`，共六处）；⑤ 发版 v1.1.2。
+- 需求：诊断 init-project skill 在 v1.1.2 改造后是否覆盖到位（镜像一致性 /
+  SKILL 摘要 / init-steps 校验清单），发现缺项立即修复并全链路同步。
+- 目标/验收：sync 31 文件 0 差异；SKILL 摘要已覆盖新特性；init-steps 校验清单补
+  `archive/ARCHIVE.md`、`dist/.gitkeep`（含 ignore 规则）与 `docs/TESTING.md`
+  检查；CHANGELOG 未发版 v1.1.3 候选登记；六处副本重装并哈希一致；提交。
 - 计划步骤：
-  1. 模板实体化 archive/（ARCHIVE.md）与 dist/（.gitkeep + .gitignore 规则）
-  2. 维护约定新增 #8 双置顶纪律（AGENTS + README）
-  3. 测试落地指引（docs/TESTING.md + DESIGN/DOCS/README/ci_check/init SKILL）
-  4. 更新工作区文档（AGENTS / README / CHANGELOG / WORKLOG / EXP-KB）
-  5. 验证（sync / quick_validate / py_compile / grep / 冒烟）
-  6. 手工安装六处 agent skill 目录（含 .qoder-cn）+ 哈希校验
-  7. 发版 v1.1.2（版本递增 + CHANGELOG 正式条目 + 全局 grep + tag + 发布提交）
-  8. 汇报 + 预告下版讨论主题（开发前需求/架构/设计规范）
+  1. 诊断：sync 一致性 + SKILL/init-steps 覆盖度 grep
+  2. 修复 init-steps.md 校验清单与初始化后建议
+  3. 更新 CHANGELOG（未发版 v1.1.3 候选）/ WORKLOG / EXP-KB（经验自动沉淀）
+  4. 验证（quick_validate / sync / git status）
+  5. 重装六处 init-project 副本 + 哈希校验
+  6. 提交 + 汇报结论
 
 ## 阶段记录
 
@@ -120,6 +120,13 @@
   README.md docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md +
   六处 agent 目录 | sync / quick_validate / py_compile / grep / 冒烟 /
   副本哈希 | 汇报 + 下版讨论 |
+| 30 init-project 覆盖度修复 | ✅ | 诊断确认：sync 镜像与 SKILL 摘要已覆盖
+  v1.1.2，但 `references/init-steps.md` 校验清单缺 `archive/ARCHIVE.md`、
+  `dist/.gitkeep`（ignore 规则）与 `docs/TESTING.md` 生成检查（自动化校验不覆盖
+  清单级过时的实例）；已修复校验清单 + 初始化后建议引用；CHANGELOG 未发版
+  v1.1.3 候选登记；六处副本重装哈希一致 | init-project/references/init-steps.md
+  docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md + 六处 agent 目录 |
+  quick_validate / sync / git status / 副本哈希 | 汇报 |
 
 ## 待办/遗留
 
