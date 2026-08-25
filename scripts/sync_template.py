@@ -5,7 +5,7 @@
 Keep the two copies identical: project-template/ is the master (human-readable),
 init-project/assets/project-template/ is what the init-project skill ships.
 Run this after ANY change under project-template/ (or before packaging the skill).
-Usage: python sync_template.py
+Usage: python scripts/sync_template.py
 Exit code: 0 synced and verified; 1 failure.
 """
 
@@ -14,7 +14,7 @@ import shutil
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent  # scripts/ 的上一级 = 工作区根
 SRC = ROOT / "project-template"
 DST = ROOT / "init-project" / "assets" / "project-template"
 SKIP_NAMES = {".git", "__pycache__", ".DS_Store", "Thumbs.db"}

@@ -138,7 +138,7 @@ def main() -> int:
                     return 1
                 print(f"==> committed: {msg}")
             else:
-                print("==> private sub-git clean.")
+                print("[2/6] private sub-git clean.")
             after = _run(["git", "-C", "private", "status", "--short"])
             if after.stdout.strip():
                 print("[error] private sub-git still dirty; fix manually.", file=sys.stderr)

@@ -24,7 +24,7 @@
 
 | 区 | 位置 | 内容 | 版本管理 |
 |---|---|---|---|
-| A. 公开 | 仓库根 + `src/` `docs/` `scripts/` `.github/` | README / LICENSE / CONTRIBUTING / 根 AGENTS.md（公开版）/ 运行时代码与资源 | 主仓库 git 跟踪，随 Release 发布 |
+| A. 公开 | 仓库根 + `src/` `docs/` `scripts/` `.github/` | README / LICENSE / 根 AGENTS.md（公开版）/ docs/（audit-checklist、UPGRADE、CONTRIBUTING 等）/ 运行时代码与资源 | 主仓库 git 跟踪，随 Release 发布 |
 | B. 私有 | `private/` | 本文件（AGENTS.md）、`dev/`（开发期文档：DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档）、`test/`（本地测试素材） | private 子 git（本地、无远端） |
 | C. 不版本管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、打包产物、`_trash/` | 无（.gitignore 忽略） |
 
@@ -70,7 +70,7 @@ B 区；C 区内容两者都不得出现。
 ## 【通用】发布流程（每次发布时执行，md 驱动、agent 执行）
 
 1. **版本递增**：默认只升最后一位；运行 `scripts/bump_version.py`（按
-   `version-sync.json` 同步 `VERSION` 与 `package.json` / `Cargo.toml` /
+`scripts/version-sync.json` 同步 `VERSION` 与 `package.json` / `Cargo.toml` /
    `pyproject.toml` 等），并更新 `dev/CHANGELOG.md` 顶部条目。
 2. **检查受影响文档**（改动完成即文档就绪）：CHANGELOG / DESIGN / TEST-REPORT /
    WORKLOG / README / 根 AGENTS.md / 本文件 / 用户可见文档。

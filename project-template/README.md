@@ -4,7 +4,7 @@
 
 > 本项目由通用项目模板初始化。模板约定：根 `AGENTS.md` 为任何 agent 的接手入口；
 > 开发规范与个人/机器信息在 `private/`（不进 GitHub，private 子 git 管理）。
-> 使用模板规范前请先阅读 `AGENTS.md` 与 `CONTRIBUTING.md`。
+> 使用模板规范前请先阅读 `AGENTS.md` 与 `docs/CONTRIBUTING.md`。
 
 ## 功能特性
 
@@ -28,8 +28,7 @@ npm test
 ```text
 .
 ├── AGENTS.md                # Agent 接手入口（公开）
-├── CONTRIBUTING.md          # 协作约定（公开）
-├── docs/                    # 公开文档（audit-checklist.md / UPGRADE.md 等）
+├── docs/                    # 公开文档（audit-checklist.md / UPGRADE.md / CONTRIBUTING.md 等）
 ├── scripts/                 # 自动化脚本（bump_version / pre_release_check / ci_check / trash）
 ├── .github/workflows/       # CI 与自动发布
 ├── VERSION                  # 版本号（单一事实来源）
@@ -44,7 +43,7 @@ npm test
 - **Agent 协作**：见根 `AGENTS.md`（开发工作流、通用红线、发布流程）。
 - **立项调研先行**：与 agent 讨论项目思路/需求/架构/功能/产品时，agent 会优先在
   GitHub 调研现成参考并提醒「先调研再立项」（见 `AGENTS.md` 红线 13）。
-- **人类贡献**：见 `CONTRIBUTING.md`。
+- **人类贡献**：见 `docs/CONTRIBUTING.md`。
 - **版本管理**：`VERSION` 文件 + git tag `vX.Y.Z`；版本递增由 agent 本地执行
   （`scripts/bump_version.py`），CI 对尚无 tag 的当前版本自动打 tag 并发布
   （`.github/workflows/release.yml`）。

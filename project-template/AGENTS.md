@@ -121,7 +121,7 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
   （不带版本号）；**发布提交**（版本递增与发布前同步）带版本号
   `feat: vX.Y.Z - 描述`。
 - **发布机制**：版本递增由 agent **本地**执行（`scripts/bump_version.py` 按
-  `version-sync.json` 同步 `VERSION` 与 `package.json` / `Cargo.toml` /
+   `scripts/version-sync.json` 同步 `VERSION` 与 `package.json` / `Cargo.toml` /
   `pyproject.toml` 等，同时更新 CHANGELOG——`private/` 不进 GitHub，CI 无法代劳）；
   推送 main 后，若当前 `VERSION` 尚无对应 tag，CI（`.github/workflows/release.yml`）
   自动打 tag 并创建 GitHub Release。
@@ -177,7 +177,7 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | `private/dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
 | `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
 | `docs/` | 公开 | 通用（audit-checklist/UPGRADE 等） | 公开文档 |
-| `CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
+| `docs/CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
 | `TEMPLATE_VERSION` | 公开 | 通用 | 初始化/升级时的模板版本记录 |
 
 **文档维护清单**（变更类型 → 必须同步的文档）：
@@ -190,7 +190,7 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | 功能/接口实现 | DESIGN / README / docs（按项目实际） |
 | 测试/验证 | `private/dev/TEST-REPORT.md` |
 | 版本/发布 | `VERSION` / CHANGELOG / README / `TEMPLATE_VERSION` |
-| 用户视角/流程 | README / docs / CONTRIBUTING / 根 AGENTS.md |
+| 用户视角/流程 | README / docs（audit-checklist / UPGRADE / CONTRIBUTING 等）/ 根 AGENTS.md |
 | 模板升级 | 按 `docs/UPGRADE.md` 流程 + `TEMPLATE_VERSION` + CHANGELOG/WORKLOG |
 
 ## 【通用】许可

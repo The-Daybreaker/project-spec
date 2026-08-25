@@ -26,7 +26,6 @@
 > **非空目录**：目标目录已存在且非空时脚本**拒绝**执行（列出已有文件）——这是
 > 「不覆盖已有文件」红线的强制实现。处理方式：选择空目录，或先与用户确认保留
 > 清单、由 agent 把保留文件移出/合并后再初始化。**没有 --force 开关**。
-| 许可 | 否 | MIT | 模板内置 MIT；其他许可需用户确认后另行替换 |
 
 ## 2. 占位符清单（脚本自动替换）
 
@@ -101,7 +100,7 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - [ ] 根 `AGENTS.md` 存在且 `{{PROJECT_NAME}}` 已替换
 - [ ] `private/AGENTS.md` 存在（版本为 `0.0.1`，待用户补充「本机环境」「用户决策」）
 - [ ] `VERSION` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
-- [ ] `TEMPLATE_VERSION` 存在且与 skill/模板版本一致（当前 1.1.0）
+- [ ] `TEMPLATE_VERSION` 存在且与 skill/模板版本一致（当前 1.1.1）
 - [ ] `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
       已生成（阶段落盘与经验沉淀载体）
 - [ ] `private/AGENTS.md`「发布策略」已按所选模式生成（默认不自动发布；

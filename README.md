@@ -9,15 +9,20 @@
 ```text
 通用项目模板/
 ├── AGENTS.md                 # 本项目（工作区）专属规范入口
-├── WORKLOG.md                # 工作区阶段落盘日志
-├── CHANGELOG.md              # 模板版本变更历史（升级比对依据）
 ├── README.md                 # 本文件
-├── sync_template.py          # 同步脚本：project-template/ → init-project/assets/
+├── VERSION                   # 版本号（单一事实来源）
+├── .gitignore                # 工作区忽略规则
+├── docs/                     # 工作区自身文档
+│   ├── CHANGELOG.md          # 模板版本变更历史（升级比对依据）
+│   ├── WORKLOG.md            # 工作区阶段落盘日志
+│   └── EXPERIENCE-TO-KB.md   # 可沉淀进知识库的经验（不混入模板内部）
+├── scripts/
+│   └── sync_template.py      # 同步脚本：project-template/ → init-project/assets/
 ├── project-template/         # 通用项目模板（权威副本，人类可读）
 │   ├── AGENTS.md             #   Agent 接手入口（公开版，随仓库发布）
-│   ├── README.md / LICENSE / CONTRIBUTING.md / VERSION / TEMPLATE_VERSION / .gitignore
-│   ├── docs/                 #   公开文档（audit-checklist.md / UPGRADE.md）
-│   ├── scripts/              #   自动化脚本（bump_version / ci_check / pre_release_check / trash）
+│   ├── README.md / LICENSE / VERSION / TEMPLATE_VERSION / .gitignore / .gitattributes / .editorconfig
+│   ├── docs/                 #   公开文档（audit-checklist.md / UPGRADE.md / CONTRIBUTING.md）
+│   ├── scripts/              #   自动化脚本 + version-sync.json
 │   ├── .github/workflows/    #   CI 检查 + 自动版本递增发布
 │   └── private/              #   私有区（不进 GitHub，内部子 git 管理）
 │       ├── AGENTS.md         #     开发指引（唯一常青开发记忆）
@@ -54,7 +59,7 @@
    EXPERIENCE-TO-KB，并提醒用户真正沉淀）→ 汇报（附完成检查清单）。
 6. **版本管理与 CI/CD**：版本号**从 `0.0.1` 开始**，每次默认末位 +1，**前两位
    （major/minor）增加必须向用户确认**；`VERSION` 单一事实来源 + git tag `vX.Y.Z`；
-   版本递增由 agent 本地完成（`bump_version.py` 按 `version-sync.json` 同步
+   版本递增由 agent 本地完成（`bump_version.py` 按 `scripts/version-sync.json` 同步
    `package.json` / `Cargo.toml` / `pyproject.toml` 等与 CHANGELOG），推送 main 后
    `.github/workflows/release.yml` 对尚无 tag 的当前版本自动打 tag 并建 Release
    （不会二次递增，手动/自动发布二选一）；
@@ -111,7 +116,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 ## 维护约定
 
 - **改模板必同步**：修改 `project-template/` 后运行
-  `python sync_template.py`，把改动镜像到
+  `python scripts/sync_template.py`，把改动镜像到
   `init-project/assets/project-template/`（skill 分发的是副本，两份必须一致）。
 - **private/ 骨架的跟踪**：模板自身的 `.gitignore` 会忽略 `private/`（这正是设计
   目标——目标项目中的 private/ 永不进主仓库），因此本工作区仓库需要用
@@ -121,7 +126,10 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   `python <skill-creator>/scripts/quick_validate.py init-project`
   （中文 Windows 默认 GBK 编码下若报 UnicodeDecodeError，先设置 `PYTHONUTF8=1`）。
 - **发版同步**：版本递增时同步更新 `VERSION`、`project-template/TEMPLATE_VERSION`、
-  根 `CHANGELOG.md`、`SKILL.md metadata.version`，再走模板发布流程。
+  `docs/CHANGELOG.md`、`SKILL.md metadata.version`，并**全局 grep 新旧版本号**
+  （如 `1.1.0` / `1.1.1`）核对所有文档内嵌版本字样（`SKILL.md`、
+  `references/init-steps.md` 等；模板内部文件一律用占位符、不写死版本），
+  确认无残留后再走模板发布流程。
 - **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.1；
   版本号见 `VERSION` 文件）。
 

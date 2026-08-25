@@ -9,11 +9,12 @@
 2. **获取模板变更历史**：读模板仓库根 `CHANGELOG.md`（本地路径或 GitHub URL）。
 3. **比对变更**：列出 `TEMPLATE_VERSION` → 目标版本之间所有变更条目。
 4. **只应用【通用】模块**：根/私有 AGENTS.md、`docs/`、`scripts/`、`.github/`、
-   模板资产（`.gitignore` / `.editorconfig` / `.gitattributes` / `version-sync.json` 等）；
+  模板资产（`.gitignore` / `.editorconfig` / `.gitattributes` 等；
+  `scripts/version-sync.json` 位于 `scripts/`）；
    **【项目专用】模块**（README、DESIGN 的项目内容、CHANGELOG/TEST-REPORT/WORKLOG、
    经验文档、本机环境、用户决策等）**绝不覆盖**。
-5. **应用方式**：逐条人工/agent 合并；模板仓库可用 `python sync_template.py` 验证副本，
-   项目内按需手工复制对应文件后调整。
+5. **应用方式**：逐条人工/agent 合并；模板仓库可用
+   `python scripts/sync_template.py` 验证副本，项目内按需手工复制对应文件后调整。
 6. **回读校验**：占位符无残留（`git grep -n -E '\{\{[A-Z_]+\}\}'`）；脚本可运行
    （`python scripts/ci_check.py` 退出码 0）；`python scripts/pre_release_check.py`
    通过。

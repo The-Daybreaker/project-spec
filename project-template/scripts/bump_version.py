@@ -9,7 +9,7 @@ Usage:
 Behavior:
   - read VERSION (X.Y.Z), bump by --part, write back (UTF-8, no BOM);
   - best-effort sync of version fields in package.json / Cargo.toml /
-    pyproject.toml / src-tauri/*; targets come from version-sync.json (optional,
+  pyproject.toml / src-tauri/*; targets come from scripts/version-sync.json (optional,
     entries merge over the built-in defaults; {"skip": true} disables a built-in
     target). Sync failure only warns, never aborts.
 Exit code: 0 success; 1 failure.
@@ -77,7 +77,7 @@ def _bump(version: str, part: str) -> str:
 
 
 def _load_config() -> dict:
-    config_file = REPO_ROOT / "version-sync.json"
+    config_file = REPO_ROOT / "scripts" / "version-sync.json"
     if not config_file.exists():
         return {}
     try:

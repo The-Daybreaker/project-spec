@@ -61,7 +61,7 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
    - `private/.git` 存在、主仓库 `.git` 存在；
    - `git status`（主）与 `git -C private status`（子）均干净；
    - 根 `AGENTS.md` 与 `private/AGENTS.md` 可读且内容正确；
-   - `VERSION` 为 `0.0.1`；`TEMPLATE_VERSION` 与 skill/模板版本一致（当前 1.1.0）；
+   - `VERSION` 为 `0.0.1`；`TEMPLATE_VERSION` 与 skill/模板版本一致（当前 1.1.1）；
    - `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
      已生成；
    - `python scripts/trash.py --help` 退出码 0。
