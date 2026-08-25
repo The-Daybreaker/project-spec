@@ -14,6 +14,19 @@
 - audit-checklist 新增「变更分级与质量门禁」（文档/常规/架构三级）。
 - docs/README 新增「文档地图」。
 
+## 未发版变更（v1.1.2 候选）
+
+以下改动已完成并提交（HEAD 733065f），尚未发版（`version.json` 的 `version` 仍
+1.1.1）；发版 v1.1.2 时并入正式条目并同步 `version.json` / tag。
+
+- 目录结构：README 回根；工作区文档入 `docs/`、同步脚本入 `scripts/`。
+- 模板结构：`CONTRIBUTING.md` → `docs/`；`version-sync.json` → `scripts/`；
+  子目录 README 改名（`docs/DOCS.md`、`private/PRIVATE.md`、`private/test/TEST.md`）。
+- 版本机制：`VERSION` / `TEMPLATE_VERSION` 合并为根 `version.json`
+  （`version` + `template_version` 字段）；脚本/CI/skill 全部改读 `version.json`。
+- 发版同步：约定补充「全局 grep 新旧版本号」防版本字样残留。
+- 工作流收口：WORKLOG 生命周期纪律（任务开始切换当前任务、收尾校准硬事实）。
+
 ## v1.1.0（2026-08-25）
 
 - PowerShell 脚本迁移为 Python：`bump_version.py` / `ci_check.py` / `pre_release_check.py`

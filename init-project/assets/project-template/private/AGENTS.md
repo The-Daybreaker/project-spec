@@ -97,7 +97,8 @@ B 区；C 区内容两者都不得出现。
 - [ ] 需求已复述并获用户确认
 - [ ] 受影响文档已同步更新（CHANGELOG / DESIGN / TEST-REPORT / WORKLOG / README /
       根 AGENTS.md / 本文件 / 用户可见文档）
-- [ ] **阶段落盘已完成**（每个小阶段后 WORKLOG 与受影响文档已更新，红线 14）
+- [ ] **阶段落盘已完成**（每个小阶段后 WORKLOG 与受影响文档已更新，红线 14；
+      当前任务已切换、阶段记录硬事实与实际一致）
 - [ ] 自动审计已完成（自审 + 独立 agent 审计），发现已修复
 - [ ] 检查命令与测试通过，TEST-REPORT 已记录
 - [ ] **本轮候选经验已完整写入 EXPERIENCE-TO-TEMPLATE / EXPERIENCE-TO-KB（如有）**

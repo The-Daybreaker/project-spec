@@ -8,37 +8,39 @@
 
 ## 当前任务
 
-- 需求：两个 version 文件合并为一个 JSON——
-  工作区根与模板骨架统一使用 `version.json`（`version` + `template_version` 两字段），
-  删除 `VERSION` / `TEMPLATE_VERSION`，脚本、CI、skill 与全部文档引用同步更新。
-- 目标/验收：全工作区无 `VERSION` / `TEMPLATE_VERSION` 文件与引用残留（历史除外）；
-  bump_version / pre_release_check / release.yml / init_project 均读 `version.json`；
-  sync 0 差异；quick_validate 通过；初始化冒烟通过；自动提交。
+- 需求：修复全面审计发现的 P2 文档维护问题并排查根因——
+  ① WORKLOG 硬事实校准（sync 为 28 文件）；② 当前任务切换（上一任务已完结）；
+  ③ CHANGELOG 补充未发版变更区段；④ 根因：WORKLOG 生命周期缺两个收口
+  （任务开始切换当前任务、收尾校准硬事实），对应规则补强。
+- 目标/验收：WORKLOG 阶段记录硬事实与实际一致（28 文件）；当前任务=本次；
+  CHANGELOG 含「未发版变更（v1.1.2 候选）」区段；模板规则补强并 sync 0 差异；
+  quick_validate 通过；自动提交。
 - 计划步骤：
-  1. 创建 version.json（工作区 + 模板），删除 VERSION / TEMPLATE_VERSION
-  2. 改造脚本与 CI（bump_version / pre_release_check / release.yml / init_project）
-  3. 更新全部文档引用（模板 AGENTS / 私有 AGENTS / README / UPGRADE / audit-checklist /
-     CONTRIBUTING / DESIGN / CHANGELOG / SKILL / init-steps / 工作区文档）
-  4. sync + 校验 + 冒烟 + 自动提交 + 汇报
+  1. 修复 WORKLOG 硬事实（29→28）+ 切换当前任务
+  2. CHANGELOG 补未发版变更区段
+  3. 规则补强（工作区 AGENTS 维护约定 + 模板 WORKLOG 使用规则/完成清单/audit-checklist）
+  4. sync + 校验 + 自动提交 + 汇报
 
 ## 阶段记录
 
 | 阶段 | 状态 | 完成内容 | 变更文件 | 验证 | 下一步 |
 |---|---|---|---|---|---|
-| 1 文件替换 | ✅ | 工作区 + 模板新建 version.json；删除 VERSION / TEMPLATE_VERSION | version.json ×2 + 删除 3 文件 | 结构检查 | 脚本改造 |
-| 2 脚本/CI | ✅ | bump_version / pre_release_check / release.yml / init_project 读 version.json | 4 文件 | py_compile + 冒烟 | 文档更新 |
-| 3 文档更新 | ✅ | 模板 AGENTS / 私有 AGENTS / README / UPGRADE / audit-checklist / CONTRIBUTING / DESIGN / CHANGELOG / SKILL / init-steps / 工作区文档 | 13 文件 | grep 残留核对 | sync+校验 |
-| 4 sync+校验+提交 | ✅ | sync 29 文件 0 差异；quick_validate；py_compile；初始化冒烟；git add + commit | 全部 | 通过 | 汇报 |
+| 1 WORKLOG 修复 | ✅ | 阶段记录 29→28；当前任务切换为本次；旧任务归档历史 | docs/WORKLOG.md | 回读核对 | CHANGELOG |
+| 2 CHANGELOG | ✅ | 新增「未发版变更（v1.1.2 候选）」区段（近 4 轮改动） | docs/CHANGELOG.md | 内容核对 | 规则补强 |
+| 3 规则补强 | ✅ | 工作区 AGENTS 维护约定第 6 条；模板 WORKLOG 使用规则 / 完成清单 / audit-checklist | 4 文件 | 引用核对 | sync+校验 |
+| 4 sync+校验+提交 | ✅ | sync 28 文件 0 差异；quick_validate；py_compile；git add + commit | 全部 | 通过 | 汇报 |
 
 ## 待办/遗留
 
 - [x] 上一任务（模板 v1.1.0 第二轮改造）9/9 完结
 - [x] 上一任务（文档治理经验吸收）6/6 完结
 - [x] 上一任务（A–G 经验合入 v1.1.1，提交 1e02c3e + tag v1.1.1）完结
-- [x] 本任务（审计修复 + 目录整理 + 模板结构整理 + 子目录 README 改名 + version.json 合并）完结
+- [x] 上一任务（version.json 合并，提交 733065f）完结（阶段记录已归档）
+- [x] 本任务（P2 修复 + WORKLOG 生命周期收口）4/4 完结
 - [ ] 工作区无 git 远端，改动未推送（N/A 或用户决定）
 - [ ] 模板根其余 7 个文件（AGENTS/README/LICENSE/version.json/
       .gitignore/.gitattributes/.editorconfig）为入口与工具必需；如仍想精简需单独评估
+- [ ] 下次发版 v1.1.2：把「未发版变更」区段并入正式条目，并 bump version.json / 打 tag
 
 ## 历史记录
 
@@ -55,6 +57,9 @@
   private/test/TEST.md（避免与项目根 README 混淆、便于索引），全部引用同步更新并提交。
 - 2026-08-25 版本文件合并：`VERSION` / `TEMPLATE_VERSION` 合并为根 `version.json`
   （`version` + `template_version` 两字段），脚本/CI/skill/文档全部更新，提交。
+- 2026-08-25 P2 修复 + 根因：WORKLOG 硬事实 29→28、当前任务切换、CHANGELOG 补
+  未发版变更区段；根因=WORKLOG 生命周期缺两个收口（任务开始切换当前任务、收尾
+  校准硬事实），规则补强（工作区维护约定 + 模板 WORKLOG/完成清单/audit-checklist）。
 - 2026-08-25 模板 v1.1.0 第二轮改造：阶段落盘（WORKLOG）、双模块、【通用】/【项目专用】
   标注、经验文档×2（完整条目）、删除纪律（_trash + trash.py）、模板升级机制
   （TEMPLATE_VERSION + CHANGELOG + UPGRADE）、红线 13→15（阶段落盘、上下文恢复重读）。
