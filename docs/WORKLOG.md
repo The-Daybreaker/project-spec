@@ -11,10 +11,12 @@
 - 需求：修复全面审计发现的 P2 文档维护问题并排查根因——
   ① WORKLOG 硬事实校准（sync 为 28 文件）；② 当前任务切换（上一任务已完结）；
   ③ CHANGELOG 补充未发版变更区段；④ 根因：WORKLOG 生命周期缺两个收口
-  （任务开始切换当前任务、收尾校准硬事实），对应规则补强。
+  （任务开始切换当前任务、收尾校准硬事实），对应规则补强；
+  ⑤ 经验自动沉淀（必做）：根因经验追加到 `docs/EXPERIENCE-TO-KB.md`，
+     维护约定明确「每轮对话结束自动沉淀、不询问」。
 - 目标/验收：WORKLOG 阶段记录硬事实与实际一致（28 文件）；当前任务=本次；
   CHANGELOG 含「未发版变更（v1.1.2 候选）」区段；模板规则补强并 sync 0 差异；
-  quick_validate 通过；自动提交。
+  经验已自动追加；维护约定含「经验自动沉淀」；quick_validate 通过；自动提交。
 - 计划步骤：
   1. 修复 WORKLOG 硬事实（29→28）+ 切换当前任务
   2. CHANGELOG 补未发版变更区段
@@ -29,6 +31,7 @@
 | 2 CHANGELOG | ✅ | 新增「未发版变更（v1.1.2 候选）」区段（近 4 轮改动） | docs/CHANGELOG.md | 内容核对 | 规则补强 |
 | 3 规则补强 | ✅ | 工作区 AGENTS 维护约定第 6 条；模板 WORKLOG 使用规则 / 完成清单 / audit-checklist | 4 文件 | 引用核对 | sync+校验 |
 | 4 sync+校验+提交 | ✅ | sync 28 文件 0 差异；quick_validate；py_compile；git add + commit | 全部 | 通过 | 汇报 |
+| 5 经验自动沉淀 | ✅ | 根因经验追加到 docs/EXPERIENCE-TO-KB.md；维护约定明确自动沉淀（不询问） | 3 文件 | 回读核对 | 汇报 |
 
 ## 待办/遗留
 
@@ -36,7 +39,7 @@
 - [x] 上一任务（文档治理经验吸收）6/6 完结
 - [x] 上一任务（A–G 经验合入 v1.1.1，提交 1e02c3e + tag v1.1.1）完结
 - [x] 上一任务（version.json 合并，提交 733065f）完结（阶段记录已归档）
-- [x] 本任务（P2 修复 + WORKLOG 生命周期收口）4/4 完结
+- [x] 本任务（P2 修复 + WORKLOG 生命周期收口 + 经验自动沉淀）5/5 完结
 - [ ] 工作区无 git 远端，改动未推送（N/A 或用户决定）
 - [ ] 模板根其余 7 个文件（AGENTS/README/LICENSE/version.json/
       .gitignore/.gitattributes/.editorconfig）为入口与工具必需；如仍想精简需单独评估
