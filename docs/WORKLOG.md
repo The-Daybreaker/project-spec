@@ -8,21 +8,19 @@
 
 ## 当前任务
 
-- 需求：发版 v1.2.1（维护收口 patch）——版本递增 + 全量同步 + 六处重装 +
-  tag + 汇报。
-- 流程位置：15/16 · 发布（S 档：01 需求提出 → 10 确认开工 直达）；已完成：01-15
-  （版本全量同步 → 校验 → 冒烟 → 六处重装 → 发布提交 946b8ac + 附注 tag
-  v1.2.1）；下一步：16 沉淀汇报。
+- 需求：第六轮全面审计（子代理通道阻塞，按用户指示由主 Agent 亲自执行）——
+  复核 v1.2.1 发版后全流程缺口/清晰度/硬事实一致性。
+- 流程位置：14/16 · 展示与提交（S 档：01 需求提出 → 10 确认开工 直达）；
+  已完成：01-13（子代理通道阻塞改自审 → 自动化验证全绿 → 发现并修复 agent-rules
+  六副本漂移 → 文档生命周期核对）；下一步：16 沉淀汇报（15 发版 v1.2.1 已完成）。
 - 计划步骤：
-  1. 版本递增（进行中）：根 version.json 1.2.0→1.2.1（注意：母项目不能用
-     bump_version.py——它把 project-template/ 当仓库根，误升模板骨架 version
-     0.0.1→0.0.2 已回退，按发版同步约定手工改）
-  2. 版本全量同步：project-template/version.json（version=0.0.1 不变、
-     template_version=1.2.1）、SKILL metadata.version ×2、继承矩阵版本对照
-  3. CHANGELOG 未发版区段转正式 v1.2.1 条目；WORKLOG 切换；EXP-KB 沉淀
-  4. 校验：sync / quick_validate×2 / py_compile / 冒烟（template_version=1.2.1）/
-     版本号全局 grep / 六处重装哈希复核
-  5. 发布提交（feat: v1.2.1）+ 附注 tag v1.2.1 + 汇报
+  1. 终止阻塞的子代理（✅：interrupt ×3）
+  2. 自动化验证：sync / quick_validate×2 / py_compile / 冒烟 / 版本+占位符 grep /
+     副本哈希 / git 状态与 tag
+  3. 文档生命周期核对：WORKLOG 当前任务与阶段硬事实 / CHANGELOG 新在前 /
+     EXP-KB 双置顶 / 日期一致
+  4. 全流程缺口与清晰度复核（v1.2.1 后状态）
+  5. 阶段落盘 + 经验沉淀 + 提交 + 汇报
 
 ## 阶段记录
 
@@ -284,6 +282,16 @@
   SKILL.md ×2、inheritance-map.md、CHANGELOG、AGENTS、README、UPGRADE（assets
   经 sync）、WORKLOG、EXP-KB）+ 六处 agent 目录 | 全过 | 发布提交 + tag v1.2.1
   + 汇报 |
+| 47 第六轮全面审计（自审） | ✅ | 子代理通道阻塞（fork_turns=none / followup
+  消息未送达、子代理递归派生），按用户指示主 Agent 亲自执行；自动化全绿（sync
+  36 文件 0 差异、quick_validate×2、py_compile、冒烟 template_version=1.2.1、
+  版本+占位符 grep 无残留、git 干净、tag v1.2.1→946b8ac、无 pycache、private
+  骨架 14+14 强制跟踪）；文档生命周期核对通过（CHANGELOG 新在前、EXP-KB
+  索引/正文双置顶、日期一致）；**发现并修复发版重装漏项**：六处 agent-rules
+  仍为 1.2.0（缺「缩写附中文翻译」正文与继承矩阵 1.2.1 版本）→ 补装六处 +
+  全量 4 文件哈希一致；init-project 六副本 40 文件哈希一致 | docs/WORKLOG.md
+  docs/EXPERIENCE-TO-KB.md + 六处 agent-rules 目录 | sync / quick_validate /
+  py_compile / 冒烟 / 哈希 全过 | 汇报 |
 
 ## 待办/遗留
 
@@ -316,9 +324,13 @@
 - [x] 本任务（T1 升级路径修复）完结：提交 344b423；sync + 六处重装哈希复核
 - [x] 本任务（P3 批量修复 T2-T8，T5 跳过）完结：提交 3b8d3d4；sync + 冒烟 +
       六处重装哈希复核
+- [x] 本任务（发版 v1.2.1）完结：提交 946b8ac + 附注 tag v1.2.1；六处重装哈希
+      一致（收尾提交 b1607fc）
 
 ## 历史记录
 
+- 2026-08-26 第六轮全面审计（自审）：自动化全绿；发现并补装 v1.2.1 发版漏项的
+  六处 agent-rules 副本（1.2.0→1.2.1），全量哈希一致。
 - 2026-08-26 模板 v1.2.1 发版：维护收口（UPGRADE B 区骨架迁移 + P3 批量修复 +
   流程展示/初始化流程增强）；版本递增 1.2.0→1.2.1，提交 946b8ac + 附注 tag
   v1.2.1；六处重装哈希一致。
