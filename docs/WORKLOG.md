@@ -8,23 +8,20 @@
 
 ## 当前任务
 
-- 需求：全面了解并审计本工作区（通用项目模板母项目）——全流程是否规范、生命周期
-  是否完整、通用性/规范性等方方面面。
-- 目标/验收：通读全部规范与实现；自动化验证（同步哈希 / quick_validate /
-  py_compile / 版本号 grep / 占位符 / 编码 / git 跟踪）；端到端冒烟（初始化 +
-  校验清单 + 脚本行为 + 非空拒绝）；输出审计结论；按规则修复发现的状态文档过时
-  （CHANGELOG 未发版区段 HEAD 引用/缺条目、WORKLOG 当前任务切换）；经验自动沉淀；
-  清理测试产物；自动提交。
+- 需求：按用户注释反馈实施全面审计 P3 建议——① init_project.py UTF-8 输出；
+  ② UPGRADE.md 澄清 sync_template 仅存在于模板母项目；③ CONTRIBUTING 对齐意图
+  措辞修正（并确认承载文档）；④ EXPERIENCE-TO-KB 索引与正文顺序统一；
+  ⑤ SKILL/init-steps 版本号单一来源（改引用 version.json + sync 自动化校验）。
+- 目标/验收：5 项全部实施；模板改动已 sync 0 差异；quick_validate / py_compile /
+  初始化冒烟通过；版本号仅 `SKILL.md metadata.version` 保留 1.1.1；经验自动沉淀；
+  自动提交。
 - 计划步骤：
-  1. 通读规范与文档（根 AGENTS / 模板 AGENTS×2 / WORKLOG / CHANGELOG / README /
-     docs / scripts / skill）
-  2. 自动化验证（sync 哈希、quick_validate、py_compile、版本号 grep、占位符、
-     行尾/BOM、git 跟踪）
-  3. 端到端冒烟（init_project 初始化 + 校验清单 + ci_check / pre_release /
-     bump_version / trash / 非空目录拒绝）
-  4. 汇总审计结论 + 修复 P2（CHANGELOG 未发版区段 HEAD 过时/缺条目、
-     WORKLOG 当前任务切换）
-  5. 经验自动沉淀 + 清理测试产物（__pycache__ / _ftest）+ 自动提交 + 汇报
+  1. init_project.py 增加 `_configure_utf8`（对齐其他脚本）
+  2. UPGRADE.md 澄清 + CONTRIBUTING 措辞修正
+  3. EXPERIENCE-TO-KB 索引顺序统一
+  4. SKILL/init-steps 版本号改引用 + sync_template.py 新增 metadata.version
+     一致性校验
+  5. 同步 + 校验 + 冒烟 + 经验沉淀 + 清理 + 自动提交 + 汇报
 
 ## 阶段记录
 
@@ -39,6 +36,12 @@
 | 7 审计·自动化验证 | ✅ | sync 28 文件 0 差异；quick_validate 通过；py_compile 通过；版本号 grep 无残留；占位符 9 类全覆盖；无 BOM、索引均 LF；git 跟踪齐全（private 骨架 20 文件） | 无 | 全部通过 | 冒烟测试 |
 | 8 审计·端到端冒烟 | ✅ | init_project 初始化（28 文件/13 替换）+ 校验清单全过；ci_check / trash / pre_release（含占位拦截）/ bump_version / 非空目录拒绝 行为符合文档 | _ftest/（已清理） | 通过 | 汇总修复 |
 | 9 修复+沉淀+提交 | ✅ | CHANGELOG 未发版区段移除 HEAD 固定引用+补条目；WORKLOG 当前任务切换；EXPERIENCE-TO-KB 追加本轮经验；清理 __pycache__ / _ftest；自动提交 | docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | 回读核对+git status | 汇报 |
+| 10 P3·UTF-8 输出 | ✅ | init_project.py 增加 `_configure_utf8`（main 入口调用）；冒烟输出无乱码 | init-project/scripts/init_project.py | 初始化冒烟通过 | UPGRADE |
+| 11 P3·UPGRADE 澄清 | ✅ | 「应用方式」注明 sync_template.py 仅存在于模板母项目、目标项目不运行 | project-template/docs/UPGRADE.md（已 sync） | 引用核对 | CONTRIBUTING |
+| 12 P3·CONTRIBUTING 措辞 | ✅ | 「新需求先对齐意图」改为 DESIGN + 用户决策 + WORKLOG 承载，移除 CHANGELOG 误述 | project-template/docs/CONTRIBUTING.md（已 sync） | 内容核对 | EXP-KB 索引 |
+| 13 P3·EXP-KB 索引 | ✅ | 索引顺序与正文一致（新条目在前） | docs/EXPERIENCE-TO-KB.md | 回读核对 | 版本单一来源 |
+| 14 P3·版本单一来源 | ✅ | SKILL/init-steps 正文移除硬编码 1.1.1 改引用 version.json；sync_template.py 新增 metadata.version==template_version 校验（实测通过）；维护约定同步 | 5 文件 | sync / quick_validate / py_compile 通过 | 收尾 |
+| 15 收尾 | ✅ | 清理测试产物；经验自动沉淀；sync 失败路径实测（9.9.9 拦截）；自动提交 | docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | 回读核对+git status | 汇报 |
 
 ## 待办/遗留
 
@@ -52,14 +55,18 @@
 - [ ] 模板根其余 7 个文件（AGENTS/README/LICENSE/version.json/
       .gitignore/.gitattributes/.editorconfig）为入口与工具必需；如仍想精简需单独评估
 - [ ] 下次发版 v1.1.2：把「未发版变更」区段并入正式条目，并 bump version.json / 打 tag
-- [ ] P3 建议清单待用户决策：init_project.py UTF-8 输出；工作区根补
-      .gitattributes（行尾归一化）；模板示例引用 KnowOps 是否改中性表述；
-      SKILL.md/init-steps.md 内嵌版本号 1.1.1 的单一来源；UPGRADE.md「sync_template」
-      表述；CONTRIBUTING「CHANGELOG 对齐意图」措辞；项目归档/退役环节缺失；
-      EXPERIENCE-TO-KB 索引顺序
+- [x] P3 #1/#2/#3/#4/#5 已实施（UTF-8 输出、UPGRADE 澄清、CONTRIBUTING 措辞、
+      EXP-KB 索引、版本单一来源 + sync 自动化校验）
+- [x] 本任务（P3 建议实施）15/15 完结
+- [ ] P3 #6 工作区根补 .gitattributes（行尾归一化）、#7 模板补「项目归档/退役」
+      环节：未决策，待用户确认
 
 ## 历史记录
 
+- 2026-08-25 P3 建议实施（按注释反馈）：init_project.py UTF-8 输出；UPGRADE.md
+  澄清 sync_template 归属（目标项目无此脚本）；CONTRIBUTING 对齐意图措辞
+  （DESIGN / 用户决策 / WORKLOG 承载）；EXPERIENCE-TO-KB 索引统一；SKILL/init-steps
+  版本号单一来源（正文改引用 version.json + sync 自动化校验 metadata.version）。
 - 2026-08-25 全面审计（第二次）：通读全部规范/实现 + 自动化验证 + 端到端冒烟全部
   通过（sync 28 文件 0 差异、quick_validate 通过、初始化校验清单全过）；发现
   P2×2（CHANGELOG 未发版区段 HEAD 引用过时 733065f→3006b97 且缺「经验自动沉淀」

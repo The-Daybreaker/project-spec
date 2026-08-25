@@ -15,7 +15,9 @@
 
 ## 【通用】改动流程（简要）
 
-1. 新需求先在 `private/dev/CHANGELOG.md` 与 `private/dev/DESIGN.md` 对齐意图；
+1. 新需求先对齐意图：方案要点与设计记录在 `private/dev/DESIGN.md`；用户确认的
+   决策记入 `private/AGENTS.md`「用户确认的设计决策」；计划与进度在
+   `private/dev/WORKLOG.md`（`CHANGELOG.md` 只记录变更历史，不对齐意图）；
 2. 实施 + 同步更新受影响文档（「改动完成即文档就绪」）；**每完成一小阶段先更新
    `private/dev/WORKLOG.md` 与受影响文档再继续（阶段落盘）**；
 3. 运行 `scripts/ci_check.py`（lint / build / test）并记录到

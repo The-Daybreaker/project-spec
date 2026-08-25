@@ -13,8 +13,10 @@
   `scripts/version-sync.json` 位于 `scripts/`）；
    **【项目专用】模块**（README、DESIGN 的项目内容、CHANGELOG/TEST-REPORT/WORKLOG、
    经验文档、本机环境、用户决策等）**绝不覆盖**。
-5. **应用方式**：逐条人工/agent 合并；模板仓库可用
-   `python scripts/sync_template.py` 验证副本，项目内按需手工复制对应文件后调整。
+5. **应用方式**：逐条人工/agent 合并（把新模板对应文件复制进本项目后按需调整）。
+   「模板仓库」指通用项目模板工作区（母项目）：它在修改模板后运行
+   `python scripts/sync_template.py` 保证两份副本一致；**目标项目内没有该脚本**，
+   升级时直接复制新模板文件即可，无需也不能运行它。
 6. **回读校验**：占位符无残留（`git grep -n -E '\{\{[A-Z_]+\}\}'`）；脚本可运行
    （`python scripts/ci_check.py` 退出码 0）；`python scripts/pre_release_check.py`
    通过。

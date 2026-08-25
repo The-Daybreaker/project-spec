@@ -47,6 +47,15 @@ PLACEHOLDERS = [
 ]
 
 
+def _configure_utf8() -> None:
+    """Windows 默认代码页（GBK）下把控制台输出切为 UTF-8，避免中文乱码。"""
+    try:
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except AttributeError:
+        pass
+
+
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description='根据通用项目模板初始化目标项目文件夹（仅标准库）。'
@@ -190,6 +199,7 @@ def git_init_repo(repo: Path, branch: str, commit_msg: str, remote: str = '') ->
 
 
 def main() -> int:
+    _configure_utf8()
     args = parse_args()
     target = Path(args.target).resolve()
 

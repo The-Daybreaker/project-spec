@@ -34,8 +34,12 @@
 4. **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
    （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
    `SKILL.md metadata.version`，并**全局 grep 新旧版本号**（如 `1.1.0` / `1.1.1`）
-   核对所有文档内嵌版本字样（`SKILL.md`、`references/init-steps.md` 等；模板内部
-   文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
+   核对所有文档内嵌版本字样（`SKILL.md` 仅 `metadata.version`；
+   `references/init-steps.md` 已改为引用 `version.json`；模板内部文件一律用
+   占位符、不写死版本），确认无残留后再走模板发布流程。
+   `scripts/sync_template.py` 会自动校验 `SKILL.md metadata.version` 与
+   `project-template/version.json` 的 `template_version` 一致（改模板/发版后运行
+   sync 即校验）。
 5. **删除纪律**：对话内删除先移入 `_trash/<agent名>_<YYYY-MM-DD>_<HHMM>/`，
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），
    避免小文件堆积。

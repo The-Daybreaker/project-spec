@@ -15,9 +15,43 @@
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
-| 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
-| 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
+| 2026-08-25 | skill 版本号单一来源：正文引用 version.json + 工具自动化校验 | 经验方法/方案 | 待沉淀 |
 | 2026-08-25 | 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步） | 经验方法/教训 | 待沉淀 |
+| 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
+| 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
+
+## 2026-08-25 · skill 版本号单一来源：正文引用 version.json + 工具自动化校验
+
+- 来源项目/任务：通用项目模板工作区 P3 建议实施（全面审计注释反馈）
+- 背景与上下文：`init-project/SKILL.md` 的 `metadata.version` 与
+  `references/init-steps.md` 正文都硬编码模板版本 1.1.1；skill 清单要求 frontmatter
+  静态版本（`quick_validate.py` 只校验 frontmatter 键，不校验版本一致性），发版时
+  需手动维护多处，靠「全局 grep」兜底。
+- 需求/问题：内嵌版本号如何在「skill 元数据必须静态」与「避免多处手工维护漂移」
+  之间取得平衡。
+- 做法与过程：
+  1. 保留 `SKILL.md metadata.version`（skill 清单必需、静态）；
+  2. 文档正文（SKILL.md 校验清单、init-steps.md 校验清单）不再写死版本号，改为
+     引用 `assets/project-template/version.json` 的 `template_version` 字段
+     （单一事实来源）；
+  3. 在 `scripts/sync_template.py` 中新增校验：`SKILL.md metadata.version` 必须等于
+     `project-template/version.json` 的 `template_version`，不一致则 sync 失败——
+     把「人工 grep 核对」升级为「工具强制校验」。
+- 经验/教训：
+  - 「单一来源」不必追求字面上只有一处：对**必须静态**的元数据（如 skill
+    frontmatter），保留静态值 + 用**自动化校验**保证其与权威来源一致，比在正文里
+    到处引用更可靠；
+  - 版本/元数据一致性检查应挂在现有工具链入口（sync/CI）上，而不是只靠文档约定；
+  - 文档正文优先写「到哪里查」而不是「当前值」，可显著减少硬事实过时。
+- 验证/效果：改后 `grep 1.1.1` 在 SKILL/init-steps 仅剩 metadata.version；sync 实测
+  通过（1.1.1==1.1.1）；人为改错版本时 sync 会失败（校验生效）。
+- 相关文件：`scripts/sync_template.py`、`init-project/SKILL.md`、
+  `init-project/references/init-steps.md`、根 `AGENTS.md`、`README.md`
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/方案`；`domain=项目管理/工程实践`；
+  `tags=[版本管理, 单一来源, 自动化校验, skill]`；`project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
 
 ## 2026-08-25 · 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步）
 

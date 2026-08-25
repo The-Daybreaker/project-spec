@@ -100,7 +100,8 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - [ ] 根 `AGENTS.md` 存在且 `{{PROJECT_NAME}}` 已替换
 - [ ] `private/AGENTS.md` 存在（版本为 `0.0.1`，待用户补充「本机环境」「用户决策」）
 - [ ] `version.json`：`version` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
-- [ ] `version.json`：`template_version` 与 skill/模板版本一致（当前 1.1.1）
+- [ ] `version.json`：`template_version` 与 skill/模板版本一致（以
+      `assets/project-template/version.json` 的 `template_version` 字段为准）
 - [ ] `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
       已生成（阶段落盘与经验沉淀载体）
 - [ ] `private/AGENTS.md`「发布策略」已按所选模式生成（默认不自动发布；
