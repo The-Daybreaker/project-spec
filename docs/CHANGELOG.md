@@ -16,7 +16,7 @@
 
 ## 未发版变更（v1.1.2 候选）
 
-以下改动已完成并提交（HEAD 733065f），尚未发版（`version.json` 的 `version` 仍
+以下改动已完成并提交（HEAD 3006b97），尚未发版（`version.json` 的 `version` 仍
 1.1.1）；发版 v1.1.2 时并入正式条目并同步 `version.json` / tag。
 
 - 目录结构：README 回根；工作区文档入 `docs/`、同步脚本入 `scripts/`。
@@ -26,6 +26,8 @@
   （`version` + `template_version` 字段）；脚本/CI/skill 全部改读 `version.json`。
 - 发版同步：约定补充「全局 grep 新旧版本号」防版本字样残留。
 - 工作流收口：WORKLOG 生命周期纪律（任务开始切换当前任务、收尾校准硬事实）。
+- 经验自动沉淀：维护约定明确「每轮对话结束自动把完整候选经验写入
+  `docs/EXPERIENCE-TO-KB.md`（必做、不需询问）」，并追加根因经验条目。
 
 ## v1.1.0（2026-08-25）
 
