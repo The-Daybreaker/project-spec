@@ -4,7 +4,8 @@
 
 用法:
   python init_project.py <目标目录> [--name NAME] [--desc DESC] [--remote URL]
-      [--branch main] [--author NAME] [--no-git] [--template PATH]
+      [--branch main] [--author NAME] [--license mit] [--license-file PATH]
+      [--auto-release] [--no-git] [--template PATH]
 
 行为（按顺序）:
   1. 校验目标目录：不存在则创建；**非空时报错并列出已有文件**（不覆盖任何
@@ -12,17 +13,19 @@
   2. 复制模板（默认 <skill>/assets/project-template/）到目标目录，
      跳过 .git / __pycache__ / .DS_Store 等。
   3. 全文件替换占位符 {{PROJECT_NAME}} {{PROJECT_DESCRIPTION}} {{DEFAULT_BRANCH}}
-     {{AUTHOR}} {{YEAR}} {{DATE}} {{VERSION}} {{LICENSE_NOTICE}}
+     {{AUTHOR}} {{YEAR}} {{DATE}} {{VERSION}} {{LICENSE_NOTICE}} {{AUTO_RELEASE}}
      （UTF-8 文本；二进制文件跳过）。
-  4. 默认初始化 git：主仓库（-b <branch>）与 private 子 git，各完成首次提交；
+  4. 许可：默认 MIT；--license-file 用自定义 LICENSE 替换模板文件。
+  5. 默认初始化 git：主仓库（-b <branch>）与 private 子 git，各完成首次提交；
      配置远端（--remote，仅 add 不 push）。--no-git 跳过本步。
-  5. 打印汇总与下一步（不自动 push；推送需另行征得用户同意）。
+  6. 打印汇总与下一步（不自动 push；推送需另行征得用户同意）。
 
 仅依赖 Python 标准库；退出码 0 成功，1 失败（git 不可用时警告并继续）。
 """
 
 import argparse
 import datetime
+import re
 import shutil
 import subprocess
 import sys
@@ -39,6 +42,7 @@ PLACEHOLDERS = [
     'DATE',
     'VERSION',
     'LICENSE_NOTICE',
+    'AUTO_RELEASE',
 ]
 
 
@@ -52,10 +56,49 @@ def parse_args() -> argparse.Namespace:
     p.add_argument('--remote', default='', help='git 远端 URL（仅 add remote，不推送）')
     p.add_argument('--branch', default='main', help='默认分支名（默认 main）')
     p.add_argument('--author', default='', help='作者（默认取 git 全局 user.name）')
+    p.add_argument('--license', default='mit',
+                   help='许可（当前内置: mit；其他可用 --license-file 提供）')
+    p.add_argument('--license-file', default='',
+                   help='自定义 LICENSE 文件路径（替换模板 LICENSE，其中 {{YEAR}}/{{AUTHOR}} '
+                        '占位符同样会被替换）')
+    p.add_argument('--auto-release', action='store_true',
+                   help='开启「每次改动完成后自动发布」（默认不自动发布，用户确认后发布）')
     p.add_argument('--no-git', action='store_true', help='只复制+替换，不初始化 git')
     p.add_argument('--template', default='',
                    help='模板目录（默认 <skill>/assets/project-template/）')
     return p.parse_args()
+
+
+def _valid_name(name: str) -> bool:
+    """kebab-case：小写字母/数字开头，后续段以单个连字符分隔。"""
+    return bool(re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', name))
+
+
+def _valid_branch(branch: str) -> bool:
+    """git 分支名基本合法性检查（不保证与所有 git 版本完全一致）。"""
+    if not branch or branch.startswith('-') or branch.endswith('/') or branch.endswith('.'):
+        return False
+    if '..' in branch or '@{' in branch or '//' in branch or ' ' in branch:
+        return False
+    return bool(re.fullmatch(r'[A-Za-z0-9._/-]+', branch))
+
+
+def _read_git_user_name(cwd: Path) -> str:
+    """读取 git 全局 user.name，按字节流尝试 UTF-8 / GBK 解码（中文 Windows 兼容）。"""
+    try:
+        r = subprocess.run(['git', 'config', '--global', 'user.name'],
+                           cwd=str(cwd), capture_output=True)
+    except FileNotFoundError:
+        return ''
+    if r.returncode != 0:
+        return ''
+    raw = r.stdout
+    for enc in ('utf-8', 'gbk', 'latin-1'):
+        try:
+            return raw.decode(enc).strip()
+        except UnicodeDecodeError:
+            continue
+    return raw.decode('utf-8', errors='replace').strip()
 
 
 def run_git(args: list, cwd: Path):
@@ -158,21 +201,43 @@ def main() -> int:
         print(f'[错误] 模板目录不存在: {template}')
         return 1
 
-    # 2. 参数默认值
+    # 2. 参数默认值与校验
     name = args.name.strip() or target.name
+    if args.name.strip() and not _valid_name(name):
+        print(f'[错误] --name 必须是 kebab-case（小写字母/数字/连字符）: {name}')
+        return 1
+    if not _valid_name(name):
+        print(f'[警告] 项目名不是 kebab-case（将按原样使用，建议后续改名为 kebab-case）: {name}')
+    if not _valid_branch(args.branch):
+        print(f'[错误] --branch 不是合法 git 分支名: {args.branch}')
+        return 1
     desc = args.desc.strip() or name
     author = args.author.strip()
     if not author:
         # 注意：此时目标目录可能尚未创建，cwd 必须用已存在的目录（模板目录）
-        r = run_git(['config', '--global', 'user.name'], template)
-        if r is not None and r.returncode == 0:
-            author = r.stdout.strip()
+        author = _read_git_user_name(template)
     if not author:
         author = 'Your Name'  # 占位，用户可稍后修改 LICENSE
+
+    license_name = 'MIT'
+    license_notice = '本项目使用 MIT 许可，详见 LICENSE。'
+    if args.license_file:
+        lf = Path(args.license_file).resolve()
+        if not lf.is_file():
+            print(f'[错误] LICENSE 文件不存在: {lf}')
+            return 1
+        license_name = '自定义'
+        license_notice = '本项目使用自定义许可，详见 LICENSE。'
+    elif args.license != 'mit':
+        print(f'[错误] 未内置许可: {args.license}（当前支持: mit；其他可用 --license-file 提供）')
+        return 1
 
     # 3. 复制
     print(f'[1/4] 复制模板 -> {target}')
     copied = copy_tree(template, target)
+
+    if args.license_file:
+        shutil.copyfile(Path(args.license_file).resolve(), target / 'LICENSE')
 
     # 4. 替换占位符
     print('[2/4] 替换占位符')
@@ -189,7 +254,15 @@ def main() -> int:
         'YEAR': str(today.year),
         'DATE': f'{today.year}-{today.month:02d}-{today.day:02d}',
         'VERSION': version,
-        'LICENSE_NOTICE': f'本项目使用 MIT 许可，详见 LICENSE。',
+        'LICENSE_NOTICE': license_notice,
+        'AUTO_RELEASE': (
+            '每次改动完成后自动执行发布（提交、推送、tag/Release、分发/部署），不再等待'
+            '用户明确要求（如需关闭，见「用户确认的设计决策」）。'
+            if args.auto_release else
+            '默认不自动发布：每次改动完成后先展示与确认，用户明确要求发布时才执行发布'
+            '流程（提交、推送、tag/Release、分发/部署；如需改为自动发布，见「用户确认'
+            '的设计决策」）。'
+        ),
     }
     changed = replace_all(target, values)
     print(f'  复制 {copied} 个文件，替换 {changed} 个文件')
@@ -212,7 +285,8 @@ def main() -> int:
 
     # 6. 汇总
     print('[4/4] 完成')
-    print(f'  项目: {name}（{desc}）  版本: {version}  分支: {args.branch}')
+    print(f'  项目: {name}（{desc}）  版本: {version}  分支: {args.branch}  '
+          f'许可: {license_name}  发布: {"自动" if args.auto_release else "手动确认"}')
     print(f'  位置: {target}')
     if args.remote:
         print(f'  远端已配置: {args.remote}（未推送；推送前请征得用户同意）')
@@ -221,7 +295,7 @@ def main() -> int:
     print('  1. 回读校验: git grep -n -E "\\{\\{[A-Z_]+\\}\\}" 应无残留；git status 与 git -C private status 应干净')
     print('  2. git check-ignore private/ 应命中（.gitignore 生效）')
     print('  3. 请用户补充 private/AGENTS.md 的「本机环境」「安装目标/部署目标」')
-    print('  4. 按项目技术栈实现 scripts/ci-check.ps1 与 .github/workflows/ci.yml')
+    print('  4. 按项目技术栈实现 scripts/ci_check.py 与 .github/workflows/ci.yml')
     print('  5. 用户确认后配置远端并推送首个提交（首次 push 不自动发 Release）')
     print('  6. 立项初期先调研: 与 agent 讨论项目思路/需求/架构/功能/产品时，'
           '要求 agent 优先在 GitHub 调研现成参考并提醒「先调研再立项」（AGENTS.md 红线 13）')

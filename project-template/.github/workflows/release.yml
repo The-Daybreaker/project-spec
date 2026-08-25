@@ -1,8 +1,9 @@
 # Release — 推送 main 后自动发布 GitHub Release（版本递增由 agent 本地执行）
 # 规则（与根 AGENTS.md「版本管理」一致）：
 #   - VERSION 文件为单一事实来源；**版本递增由 agent 本地完成**
-#     （scripts/bump-version.ps1，会同步 package.json / Cargo.toml 若存在，
-#     并同步更新 private/dev/CHANGELOG.md——private/ 不进 GitHub，CI 无法代劳）。
+#     （scripts/bump_version.py，按 version-sync.json 同步 package.json /
+#     Cargo.toml / pyproject.toml 等，并同步更新 private/dev/CHANGELOG.md——
+#     private/ 不进 GitHub，CI 无法代劳）。
 #   - 当前 VERSION 尚无对应 tag → 自动打 tag vX.Y.Z 并创建 Release；
 #   - 当前 VERSION 已有 tag → 跳过（等待 agent 递增版本后再次推送）；
 #   - 仓库尚无任何 tag 且由 push 触发 → 跳过（初始搭建期，可用 workflow_dispatch
@@ -31,49 +32,61 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Decide version
         id: decide
-        shell: pwsh
+        shell: python
         run: |
-          $v = (Get-Content VERSION -Raw -Encoding UTF8).Trim()
-          $tags = git tag
-          if (-not $tags -and $env:GITHUB_EVENT_NAME -eq 'push') {
-            "should_release=false" >> $env:GITHUB_OUTPUT
-            "reason=initial setup (no tags yet); release manually via workflow_dispatch or gh" >> $env:GITHUB_OUTPUT
-            exit 0
-          }
-          $tagged = git tag -l "v$v"
-          if ($tagged) {
-            "should_release=false" >> $env:GITHUB_OUTPUT
-            "reason=v$v already tagged; bump VERSION locally (bump-version.ps1) and push" >> $env:GITHUB_OUTPUT
-            exit 0
-          }
-          "should_release=true" >> $env:GITHUB_OUTPUT
-          "version=$v" >> $env:GITHUB_OUTPUT
+          import os
+          import subprocess
+
+          v = open("VERSION", encoding="utf-8").read().strip()
+          tags = subprocess.run(["git", "tag"], capture_output=True, text=True).stdout.split()
+
+          lines = []
+          if not tags and os.environ.get("GITHUB_EVENT_NAME") == "push":
+              lines.append("should_release=false")
+              lines.append("reason=initial setup (no tags yet); release manually via workflow_dispatch or gh")
+          else:
+              tagged = subprocess.run(
+                  ["git", "tag", "-l", "v" + v], capture_output=True, text=True
+              ).stdout.strip()
+              if tagged:
+                  lines.append("should_release=false")
+                  lines.append("reason=v" + v + " already tagged; bump VERSION locally (bump_version.py) and push")
+              else:
+                  lines.append("should_release=true")
+                  lines.append("version=" + v)
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write("\n".join(lines) + "\n")
 
       - name: Create GitHub Release
         if: steps.decide.outputs.should_release == 'true'
-        shell: pwsh
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Idempotent: push and workflow_dispatch can race; reuse existing tag/release.
-          $v = "${{ steps.decide.outputs.version }}"
-          git tag "v$v" 2>$null
-          git push origin "v$v" 2>$null
-          $attach = @()
-          if (Test-Path dist) {
-            Get-ChildItem dist -Recurse -File | ForEach-Object { $attach += "--attach"; $attach += $_.FullName }
-          }
-          gh release create "v$v" --title "v$v" --generate-notes @attach 2>&1 | Out-Null
-          if ($LASTEXITCODE -ne 0) {
-            gh release view "v$v" 2>&1 | Out-Null
-            if ($LASTEXITCODE -ne 0) {
-              Write-Error "gh release create failed for v$v"
+          set -e
+          v="${{ steps.decide.outputs.version }}"
+          git tag "v$v" 2>/dev/null || true
+          git push origin "v$v" 2>/dev/null || true
+          attach=()
+          if [ -d dist ]; then
+            while IFS= read -r -d '' f; do attach+=("--attach" "$f"); done < <(find dist -type f -print0)
+          fi
+          if ! gh release create "v$v" --title "v$v" --generate-notes "${attach[@]}" >/dev/null 2>&1; then
+            if ! gh release view "v$v" >/dev/null 2>&1; then
+              echo "gh release create failed for v$v" >&2
               exit 1
-            }
-            Write-Host "release already exists: v$v"
-          }
+            fi
+            echo "release already exists: v$v"
+          fi
 
       # --- 按项目追加构建产物步骤（示例） ---
       # - name: Build artifacts

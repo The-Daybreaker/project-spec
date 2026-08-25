@@ -15,6 +15,14 @@ yarn-error.log*
 !.env.example
 *.key
 *.pem
+*.pfx
+*.jks
+*.p12
+*.keystore
+id_rsa
+id_ed25519
+id_ecdsa
+credentials
 *_secret*
 secrets/
 
@@ -48,5 +56,6 @@ venv/
 # 临时
 tmp/
 temp/
+_trash/
 *.tmp
 *~

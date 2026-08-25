@@ -1,4 +1,4 @@
-# CI — 持续集成检查（本地与 CI 共用 scripts/ci-check.ps1 入口）
+# CI — 持续集成检查（本地与 CI 共用 scripts/ci_check.py 入口）
 # 按项目技术栈在此追加工具链与检查步骤（见下方注释示例）。
 
 name: CI
@@ -10,6 +10,7 @@ on:
   pull_request:
     branches:
       - "{{DEFAULT_BRANCH}}"
+  workflow_dispatch:
 
 jobs:
   check:
@@ -19,9 +20,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Run project checks
-        shell: pwsh
-        run: ./scripts/ci-check.ps1
+        run: python scripts/ci_check.py
 
       # --- 按项目技术栈追加（示例） ---
       # Node 项目：
@@ -38,10 +43,6 @@ jobs:
       #   run: npm test
       #
       # Python 项目：
-      # - name: Setup Python
-      #   uses: actions/setup-python@v5
-      #   with:
-      #     python-version: '3.12'
       # - name: Install dependencies
       #   run: pip install -r requirements-dev.txt
       # - name: Test

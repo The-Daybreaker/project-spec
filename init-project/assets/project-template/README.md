@@ -29,13 +29,14 @@ npm test
 .
 ├── AGENTS.md                # Agent 接手入口（公开）
 ├── CONTRIBUTING.md          # 协作约定（公开）
-├── docs/                    # 公开文档（含 audit-checklist.md）
-├── scripts/                 # 自动化脚本（bump-version / pre-release-check / ci-check）
+├── docs/                    # 公开文档（audit-checklist.md / UPGRADE.md 等）
+├── scripts/                 # 自动化脚本（bump_version / pre_release_check / ci_check / trash）
 ├── .github/workflows/       # CI 与自动发布
 ├── VERSION                  # 版本号（单一事实来源）
+├── TEMPLATE_VERSION         # 初始化/升级时的模板版本记录
 └── private/                 # 私有区：个人/开发期文件（不进 GitHub）
     ├── AGENTS.md            # 开发入口与当前状态（唯一常青开发记忆）
-    └── dev/                 # DESIGN / CHANGELOG / TEST-REPORT
+    └── dev/                 # DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
 ```
 
 ## 开发与发布
@@ -44,8 +45,13 @@ npm test
 - **立项调研先行**：与 agent 讨论项目思路/需求/架构/功能/产品时，agent 会优先在
   GitHub 调研现成参考并提醒「先调研再立项」（见 `AGENTS.md` 红线 13）。
 - **人类贡献**：见 `CONTRIBUTING.md`。
-- **版本管理**：`VERSION` 文件 + git tag `vX.Y.Z`；CI 自动递增并发布
+- **版本管理**：`VERSION` 文件 + git tag `vX.Y.Z`；版本递增由 agent 本地执行
+  （`scripts/bump_version.py`），CI 对尚无 tag 的当前版本自动打 tag 并发布
   （`.github/workflows/release.yml`）。
+- **阶段落盘**：任务中每完成一小阶段先更新 `private/dev/WORKLOG.md` 与受影响文档
+  （红线 14），防止上下文压缩丢失进度。
+- **模板升级**：项目根 `TEMPLATE_VERSION` 记录模板版本；升级按 `docs/UPGRADE.md`
+  只应用【通用】模块变更。
 - **私有区**：个人/开发期文件放 `private/`，主仓库 `.gitignore` 已忽略；
   private 子 git 内部管理，发布前自动同步（见 AGENTS.md「发布流程」）。
 

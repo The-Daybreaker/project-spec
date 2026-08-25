@@ -15,7 +15,7 @@
 
 | 项目 | 命令 | 结果 |
 |---|---|---|
-| 基础检查 | `powershell -File scripts/ci-check.ps1`（或 `pwsh -File`） | ✅ / ❌ |
+| 基础检查 | `python scripts/ci_check.py` | ✅ / ❌ |
 
 ### 测试项
 

@@ -11,13 +11,16 @@ GitHub** 的内容。
   - 查看变动：`git -C private status --short`。
   - 提交：`git -C private add -A -- . && git -C private commit -m "docs: private vX.Y.Z - 描述"`。
 - **发布前必须同步**：任何发布动作前，先检查并提交 private 子 git 的变动
-  （见根 `AGENTS.md`「发布流程」第 3 步；`scripts/pre-release-check.ps1` 自动执行）。
+  （见根 `AGENTS.md`「发布流程」第 3 步；`scripts/pre_release_check.py` 自动执行）。
 
 ## 内容
 
 | 路径 | 内容 |
 |---|---|
 | `AGENTS.md` | 开发入口与当前状态（唯一常青开发记忆） |
+| `dev/WORKLOG.md` | 工作进度日志（阶段落盘，每完成一小阶段更新） |
+| `dev/EXPERIENCE-TO-TEMPLATE.md` | 可沉淀进通用项目模板的经验（完整条目） |
+| `dev/EXPERIENCE-TO-KB.md` | 可沉淀进知识库的经验（完整条目） |
 | `dev/` | 开发期文档：DESIGN（设计）/ CHANGELOG（变更历史）/ TEST-REPORT（测试记录） |
 | `test/` | 本地测试素材（测试库、测试项目等） |
 | （按需） | 个人笔记、未公开素材、密钥（密钥不提交子 git 或加密后提交） |

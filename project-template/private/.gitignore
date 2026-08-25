@@ -21,3 +21,11 @@ test/**/.config/log/
 secrets/
 *.key
 *.pem
+*.pfx
+*.jks
+*.p12
+*.keystore
+id_rsa
+id_ed25519
+id_ecdsa
+credentials

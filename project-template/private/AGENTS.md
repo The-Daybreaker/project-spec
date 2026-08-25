@@ -1,28 +1,32 @@
 # AGENTS.md — {{PROJECT_NAME}} 开发指引（私有）
 
+> 模块：混合（【通用】= 工作流/发布/红线/清单；【项目专用】= 状态/环境/决策/记录）。
 > 本文件位于 `private/` 内，由 **private 子 git** 管理，仅本机/本工作区的开发 agent
 > 读取，**不进 GitHub**。承载项目开发与维护的完整规范、文件分类归属、本机环境与
 > 用户决策，是**唯一常青开发记忆**（任何新对话从零接手本项目都先读本文件）。
 > 与根 `AGENTS.md`（公开版）冲突时，本文件中的开发/机器/个人专属细节以本文件为准。
+> **新对话/上下文压缩后必须先重读本文件、根 `AGENTS.md`、`dev/WORKLOG.md` 与
+> DESIGN/CHANGELOG/TEST-REPORT 后再继续（红线 15）。**
 
-## 项目状态与版本
+## 【项目专用】项目状态与版本
 
 - **当前版本**：{{VERSION}}（`dev/CHANGELOG.md` 有完整历史）。
+- **模板版本**：根 `TEMPLATE_VERSION`（初始化/升级时的通用项目模板版本；升级见
+  根 `AGENTS.md`「模板升级」与 `../docs/UPGRADE.md`）。
 - **版本规则**：版本号**从 `0.0.1` 开始**；每次默认只升最后一位（patch）；
   **前两位（major/minor）增加必须向用户确认**；破坏性变更必须用户确认并升主版本、
   说明迁移方案。
-- **发布策略**：每次改动完成后自动执行发布（提交、推送、tag/Release、分发/部署），
-  不再等待用户明确要求（如需关闭，见「用户确认的设计决策」）。
+- **发布策略**：{{AUTO_RELEASE}}
 
-## 仓库布局与文件分类归属（三区矩阵，开发强制要求）
+## 【通用】仓库布局与文件分类归属（三区矩阵，开发强制要求）
 
 所有文件按以下三区归类，不得混淆；**新增文件必须先判区再落盘**。
 
 | 区 | 位置 | 内容 | 版本管理 |
 |---|---|---|---|
 | A. 公开 | 仓库根 + `src/` `docs/` `scripts/` `.github/` | README / LICENSE / CONTRIBUTING / 根 AGENTS.md（公开版）/ 运行时代码与资源 | 主仓库 git 跟踪，随 Release 发布 |
-| B. 私有 | `private/` | 本文件（AGENTS.md）、`dev/`（开发期文档：DESIGN / CHANGELOG / TEST-REPORT）、`test/`（本地测试素材） | private 子 git（本地、无远端） |
-| C. 不版本管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、打包产物 | 无（.gitignore 忽略） |
+| B. 私有 | `private/` | 本文件（AGENTS.md）、`dev/`（开发期文档：DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档）、`test/`（本地测试素材） | private 子 git（本地、无远端） |
+| C. 不版本管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、打包产物、`_trash/` | 无（.gitignore 忽略） |
 
 归属判定规则：
 
@@ -35,7 +39,7 @@
 发布前检查：主仓库 `git status` 只应出现 A 区文件；`git -C private status` 负责
 B 区；C 区内容两者都不得出现。
 
-## 开发工作流（强制，每次需求都走完）
+## 【通用】开发工作流（强制，每次需求都走完）
 
 1. **需求提出**：用户提出需求（功能 / 文档 / 重构 / 修复 / 发布）。
 2. **讨论对齐**：与用户讨论，理解意图与影响面（是否动公开内容、是否破坏性、是否
@@ -44,34 +48,38 @@ B 区；C 区内容两者都不得出现。
    GitHub 调研现成参考并提醒用户**「先调研再立项」**。
 3. **确认开工**：用户明确确认后开始实施。**红线：未获确认不实施**。
 4. **实施**：按 AGENTS.md 与 DESIGN.md 规范修改；**同步更新受影响文档**
-   （CHANGELOG / DESIGN / TEST-REPORT / README / 根 AGENTS.md / 本文件 / 用户可见
-   文档），做到「改动完成即文档就绪」，不等发布前补救。
+   （CHANGELOG / DESIGN / TEST-REPORT / WORKLOG / README / 根 AGENTS.md / 本文件 /
+   用户可见文档），做到「改动完成即文档就绪」；**每完成一小阶段先更新
+   `dev/WORKLOG.md` 与受影响文档再继续（红线 14 阶段落盘）**，不等到任务结束。
 5. **自动审计**：实施完成后、提交前必须审计——自审按 `../docs/audit-checklist.md`
    逐项核对；**优先委托独立子 agent / 独立会话**（只看 `git diff` + 审计清单，
    不共享本对话上下文）复审；修复全部发现后再继续。
-6. **验证**：运行检查命令（`scripts/ci-check.ps1`）与项目测试；结果记录到
+6. **验证**：运行检查命令（`scripts/ci_check.py`）与项目测试；结果记录到
    `dev/TEST-REPORT.md`；**未通过不发布**。
 7. **展示与提交**：向用户展示成果 → **提交 private 子 git**（若 `private/` 有变动，
    见「发布流程」第 3 步）→ 主仓库 commit + push。
-8. **发布**：按「发布流程」自动执行。
-9. **经验沉淀（每次更新后必做提醒）**：每次**项目架构发生改变**（无论是否发布）
-   以及**项目每次更新（发布）之后**，提醒用户沉淀经验：经验/教训/决策沉淀进
-   个人知识库（Obsidian / KnowOps 等）；**可复用的经验集成进通用项目模板**；
-   沉淀与否、沉淀到哪里由用户决定，agent 只负责提醒与协助。
+8. **发布**：按「发布流程」执行。
+9. **经验沉淀（每轮对话后必做）**：每轮对话结束时，将本轮**完整候选经验**写入
+   `dev/EXPERIENCE-TO-TEMPLATE.md`（可复用进通用项目模板）与
+   `dev/EXPERIENCE-TO-KB.md`（可进知识库）——**沉淀时以这两份文档为唯一依据，不需要
+   重读整个项目**；每次**项目架构发生改变**（无论是否发布）以及**项目每次更新
+   （发布）之后**，提醒用户真正沉淀（模板经验集成进通用项目模板；知识库经验按
+   knowops 等规范沉淀）；沉淀与否、沉淀到哪里由用户决定，agent 负责记录候选与提醒。
 10. **汇报**：汇总改动、版本、测试结果、Release 链接与回退方式，附「完成检查清单」。
 
-## 发布流程（每次改动完成后执行，md 驱动、agent 执行）
+## 【通用】发布流程（每次发布时执行，md 驱动、agent 执行）
 
-1. **版本递增**：默认只升最后一位；运行 `scripts/bump-version.ps1`（同步
-   `VERSION`，若存在 `package.json` / `Cargo.toml` 一并同步），并更新
-   `dev/CHANGELOG.md` 顶部条目。
+1. **版本递增**：默认只升最后一位；运行 `scripts/bump_version.py`（按
+   `version-sync.json` 同步 `VERSION` 与 `package.json` / `Cargo.toml` /
+   `pyproject.toml` 等），并更新 `dev/CHANGELOG.md` 顶部条目。
 2. **检查受影响文档**（改动完成即文档就绪）：CHANGELOG / DESIGN / TEST-REPORT /
-   README / 根 AGENTS.md / 本文件 / 用户可见文档。
+   WORKLOG / README / 根 AGENTS.md / 本文件 / 用户可见文档。
 3. **提交 private 子 git（发布前必做）**：检查 `git -C private status --short`；
    有变更先 `git -C private add -A -- .` 并提交（`docs: private v<version> - 描述`），
    确认 `git -C private status --short` 干净后再进入主仓库发布。
-4. **主仓库提交推送**：`git add -A -- .` + commit（`feat:/fix:/docs: v<version> -
-   描述`）+ `git push`（origin、分支见「本机环境」）。
+4. **主仓库提交推送**：`git add -A -- .` + commit（普通提交
+   `feat:/fix:/docs:/chore:/refactor: - 描述`；**发布提交**带版本号
+   `feat: v<version> - 描述`）+ `git push`（origin、分支见「本机环境」）。
 5. **打标签与 Release**：`git tag v<version>` + `git push origin v<version>`；
    创建 GitHub Release（`gh release create v<version> --title "v<version>"
    --notes "<变更摘要>" --attach <发布产物>`；gh 未认证时请用户 `gh auth login`，
@@ -80,40 +88,65 @@ B 区；C 区内容两者都不得出现。
 6. **分发/安装/部署**：按项目实际执行（安装包、zip、文档站点等）。
 7. **汇报**：附「完成检查清单」。
 
-> `scripts/pre-release-check.ps1` 可一键完成发布前检查（private 子 git 同步、
-> 版本一致性、仓库状态、审计提醒）。
+> `scripts/pre_release_check.py` 可一键完成发布前检查（private 子 git 同步、
+> 版本一致性、泄漏扫描、ci_check 实现检查、文档一致性）。
 
-## 完成检查清单（每次交付附在最终回复中）
+## 【通用】完成检查清单（每次交付附在最终回复中）
 
 - [ ] 需求已复述并获用户确认
-- [ ] 受影响文档已同步更新（CHANGELOG / DESIGN / TEST-REPORT / README /
+- [ ] 受影响文档已同步更新（CHANGELOG / DESIGN / TEST-REPORT / WORKLOG / README /
       根 AGENTS.md / 本文件 / 用户可见文档）
+- [ ] **阶段落盘已完成**（每个小阶段后 WORKLOG 与受影响文档已更新，红线 14）
 - [ ] 自动审计已完成（自审 + 独立 agent 审计），发现已修复
 - [ ] 检查命令与测试通过，TEST-REPORT 已记录
+- [ ] **本轮候选经验已完整写入 EXPERIENCE-TO-TEMPLATE / EXPERIENCE-TO-KB（如有）**
 - [ ] private 子 git 已提交且 `git -C private status --short` 干净
 - [ ] 版本号一致（VERSION / CHANGELOG 顶部 / 各版本文件）且递增规则正确
-- [ ] 已提交并推送（提交信息符合格式）
+- [ ] 已提交并推送（提交信息符合格式：普通提交不带版本号，发布提交带 vX.Y.Z）
 - [ ] 已创建 GitHub Release（tag vX.Y.Z + 发布产物）
 - [ ] 分发/安装/部署完成
 - [ ] **已提醒用户沉淀经验**（架构变化/更新发布后：知识库沉淀 + 可复用经验
       集成进项目模板）
+- [ ] **本轮 `_trash/` 临时删除文件夹已整体移入回收站（如有删除）**
 - [ ] 立项类话题（思路/需求/架构/功能/产品）已做 GitHub 调研并提醒用户
       「先调研再立项」（根 AGENTS.md 红线 13；如适用）
 - [ ] 已向用户展示成果、Release 链接与回退方式
 
-## 文档职责划分
+## 【通用】模板升级（详见 `../docs/UPGRADE.md`）
 
-| 文档 | 位置 | 职责 |
-|---|---|---|
-| 根 `AGENTS.md` | 公开 | 公开入口（面向使用者/贡献者/接手 agent） |
-| 本文件 `AGENTS.md` | 私有 | 开发入口与当前状态（唯一常青开发记忆） |
-| `dev/DESIGN.md` | 私有 | 当前设计 + 开发工作流 + 开发规范 + 文件分类归属 |
-| `dev/CHANGELOG.md` | 私有 | 完整版本历史（每次发布必更新） |
-| `dev/TEST-REPORT.md` | 私有 | 当前测试记录与运行方式（每次发布必更新） |
-| `README.md` / `docs/` | 公开 | 面向使用者/贡献者 |
-| `docs/audit-checklist.md` | 公开 | 审计清单（自审与独立审计共用） |
+- 模板发布新版本时：读模板仓库 `CHANGELOG.md` → 比对根 `TEMPLATE_VERSION` →
+  **只应用【通用】模块变更**（【项目专用】绝不覆盖）→ 回读校验 → 更新
+  `TEMPLATE_VERSION` → 记录 CHANGELOG/WORKLOG。
 
-## 本机环境
+## 【通用】文档职责划分
+
+| 文档 | 位置 | 模块 | 职责 |
+|---|---|---|---|
+| 根 `AGENTS.md` | 公开 | 混合 | 公开入口（面向使用者/贡献者/接手 agent） |
+| 本文件 `AGENTS.md` | 私有 | 混合 | 开发入口与当前状态（唯一常青开发记忆） |
+| `dev/WORKLOG.md` | 私有 | 项目专用 | 阶段落盘（每完成一小阶段更新） |
+| `dev/EXPERIENCE-TO-TEMPLATE.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进模板的经验（完整条目） |
+| `dev/EXPERIENCE-TO-KB.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进知识库的经验（完整条目） |
+| `dev/DESIGN.md` | 私有 | 混合 | 当前设计 + 开发规范（引用不重复） |
+| `dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
+| `dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
+| `README.md` / `docs/` | 公开 | 项目专用 / 通用 | 面向使用者/贡献者；通用文档（audit-checklist/UPGRADE） |
+| `TEMPLATE_VERSION` | 公开 | 通用 | 初始化/升级时的模板版本记录 |
+
+## 【通用】文档治理（正文即当前状态）
+
+1. **正文 = 当前有效状态**：决策被修改时直接覆盖原文，不保留旧决策段落，禁止写
+   「⚠️ 已取代 by …」这类历史标注。
+2. **禁止 AI 追加历史**：AI 改决策时，不得自动在正文里追加大段历史决策说明。
+3. **追溯用一行记录**：确需留痕时，只在 `dev/CHANGELOG.md` 记一行摘要
+   （如 `vX.Y.Z：决策 A → B`），由用户决定是否记录，不进决策正文。
+4. **废案/临时内容**：按用户意愿直接删除，不强制留痕；删除走
+   `_trash/<agent>_<日期>_<时分>/` → `scripts/trash.py` → 回收站，保证可恢复即可。
+5. **可恢复性由删除机制保证**，不由「正文留废案」保证。
+
+（细则见 `../docs/README.md`「文档治理」。）
+
+## 【项目专用】本机环境
 
 （按实际填写：工作区路径、工具链路径与版本、网络/镜像、沙箱限制、已知坑。
 示例见 KnowOps 项目的做法——机器专属信息只写在这里，不写进公开文档。）
@@ -122,16 +155,21 @@ B 区；C 区内容两者都不得出现。
 - 工具链：<填写>
 - 已知坑：<填写>
 
-## 安装目标 / 部署目标
+## 【项目专用】安装目标 / 部署目标
 
 （按实际填写：各 agent 平台的 skill 目录、发布仓库、部署位置等。）
 
-## 用户确认的设计决策（仅记录于本文件，不写入公开文档）
+## 【项目专用】用户确认的设计决策（仅记录于本文件，不写入公开文档）
 
 - （按实际追加：用户拍板的设计取舍、例外授权、长期约定。）
 
-## 删除纪律与数据安全
+## 【通用】删除纪律与数据安全
 
-- 删除默认走可恢复路径（回收站 / 版本控制）；确需永久删除必须用户确认。
+- 对话内删除先移动到项目本地 `_trash/<agent名>_<YYYY-MM-DD>_<HHMM>/`（临时删除区），
+  对话任务结束时用 `python scripts/trash.py` 将整轮文件夹**整体**移入回收站
+  （避免小文件堆积；Windows 原生进回收站，macOS/Linux 用 trash/gio）。
+- 删除默认走可恢复路径（`_trash/` → 回收站 / 版本控制）；确需永久删除必须用户确认。
 - 不代为 `git init`（用户的其他仓库）；保留用户未提交的改动，不擅自回滚。
+- **上下文压缩/新对话后必须重读根 `AGENTS.md`、本文件、`WORKLOG.md` 与相关文档
+  再继续（红线 15）。**
 - 变更分级、回读校验等通用红线见根 `AGENTS.md` 与 `../docs/audit-checklist.md`。
