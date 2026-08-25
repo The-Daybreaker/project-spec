@@ -83,11 +83,6 @@ git -C private commit -m "docs: private v0.0.1 - init"
   `--branch` 指定的分支名（默认 `main`）。
 - 配置远端（用户确认后）：`git remote add origin <URL>`；**推送必须另行征得同意**。
 
-> **编码提示**：模板脚本（`bump_version.py` / `pre_release_check.py` /
-> `ci_check.py`）会自动把输出设为 UTF-8；`init_project.py` 在 Windows 默认代码页
-> （GBK）控制台可能乱码，这是显示问题，文件内容为正确 UTF-8。校验请以文件读取/
-> `git grep` 结果为准，不要依赖控制台显示；必要时可设 `PYTHONUTF8=1`。
-
 ## 5. 校验清单（初始化后必做）
 
 - [ ] `private/.git` 与主仓库 `.git` 均存在（除非 `--no-git`）

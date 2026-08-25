@@ -14,17 +14,27 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
 不依赖本次对话上下文。模板自带：
 
 - **AGENTS.md 拆分**：根目录公开版（发布到 GitHub）+ `private/AGENTS.md` 私有版
-  （个人/机器信息，不进 GitHub）。
+  （个人/机器信息，不进 GitHub）；冲突时私有版优先。
 - **private 子 git**：`private/` 整体被主仓库 `.gitignore` 忽略，内部独立 git 管理；
 发布前自动检查变动并提交（`scripts/pre_release_check.py`）。
-- **开发工作流与红线**：先对齐需求与计划、获确认后实施；实施后自动审计（推荐
-  独立子 agent 审计）；验证后发布。
+- **开发工作流与红线（15 条）**：先对齐需求与计划、获确认后实施；实施后自动审计
+  （推荐独立子 agent 审计）；阶段落盘、上下文恢复重读；验证后发布。
+- **立项调研先行**：讨论立项类话题时先 GitHub 调研并提醒「先调研再立项」（红线 13）。
+- **文档双模块与治理**：文档标注【通用】/【项目专用】，升级只应用【通用】；正文 =
+  当前有效状态（覆盖旧决策、禁 AI 追加历史、留痕一行）。
 - **版本管理与 CI/CD**：`version.json` 单一事实来源 + git tag；`.github/workflows/`
-  自动 CI 检查与自动版本递增发布。
+  自动 CI 检查；**版本递增由 agent 本地执行**（`scripts/bump_version.py`），
+  **默认不自动发布**（用户确认后走发布流程，可用 `--auto-release` 开启）；CI 对
+  尚无 tag 的当前版本自动打 tag 并建 Release。
 - **自动化脚本**：`scripts/bump_version.py`、`pre_release_check.py`、`ci_check.py`
-  （仅依赖 Python 标准库，Python 3.9+ 跨平台运行）。
+  、`trash.py`（仅依赖 Python 标准库，Python 3.9+ 跨平台运行，UTF-8）。
 - **阶段落盘与经验沉淀**：`private/dev/WORKLOG.md`（每完成一小阶段更新）+ 
   `EXPERIENCE-TO-TEMPLATE.md` / `EXPERIENCE-TO-KB.md`（每轮对话后写入完整候选经验）。
+- **私有开发指引**：`private/AGENTS.md` 含本机环境、用户确认的设计决策、定案清单、
+  必须询问人类清单；`private/dev/` 承载 DESIGN / CHANGELOG / TEST-REPORT / WORKLOG /
+  经验文档。
+- **质量门禁**：文档 / 常规代码 / 架构变更三级门禁；发布前自测（产物可运行、关键
+  文件齐全、无密钥/运行时数据混入）。
 - **删除纪律**：对话内删除先移入 `_trash/<agent>_<日期>_<时分>/`，任务结束时用
   `scripts/trash.py` 整体进回收站。
 - **模板版本与升级**：项目根 `version.json` 的 `template_version` 记录初始化时的

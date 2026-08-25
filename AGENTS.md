@@ -14,7 +14,7 @@
   WORKLOG / EXPERIENCE-TO-KB）、`scripts/sync_template.py`（同步脚本）、
   `project-template/`（权威模板，同步到 skill 资产）、`init-project/`（skill：
   SKILL.md / references / scripts / assets）、`agent-rules/`（skill：精简版
-  agent 全局行为规范，任何非纯聊天对话加载）。
+  agent 全局行为规范，仅非项目且非纯聊天对话加载）。
 - **版本**：根 `version.json`（当前 1.1.1）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
@@ -43,7 +43,9 @@
    模板内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
    `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
    `agent-rules` 继承矩阵版本/覆盖/指纹与 `project-template/version.json` 的
-   `template_version` 一致（改模板/发版后运行 sync 即校验）。
+   `template_version` 一致（改模板/发版后运行 sync 即校验）；另按**特性核对清单**
+   逐条对照模板 CHANGELOG 能力点与 `init-project/`、`agent-rules/` 摘要（自动化
+   校验不覆盖摘要级过时，需人工比对）。
 5. **删除纪律**：对话内删除先移入 `_trash/<agent名>_<YYYY-MM-DD>_<HHMM>/`，
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），
    避免小文件堆积。
@@ -84,5 +86,5 @@
 | `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → init-project/assets/） |
 | `project-template/` | 通用 | 权威模板（同步到 `init-project/assets/`） |
 | `init-project/` | 通用 | skill（SKILL.md / references / scripts / assets） |
-| `agent-rules/SKILL.md` | 项目专用 | 精简版 agent 全局行为规范（任何非纯聊天对话加载） |
+| `agent-rules/SKILL.md` | 项目专用 | 精简版 agent 全局行为规范（仅非项目且非纯聊天对话加载） |
 | `agent-rules/references/inheritance-map.md` | 项目专用 | 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（sync 校验依据） |

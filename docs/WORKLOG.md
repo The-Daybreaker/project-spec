@@ -8,16 +8,19 @@
 
 ## 当前任务
 
-- 需求：审计本项目两个 skill（`init-project` / `agent-rules`），重点检查
-  `init-project` 是否随模板演进而过时（用户反馈「似乎很久没有更新」）。
-- 目标/验收：自动化校验 + 内容比对 + 冒烟测试完成；输出过时项清单与修复建议；
-  不擅自修复（先对齐后实施，待用户确认）。
+- 需求：实施审计修复清单（用户已确认）——① init-project SKILL 定位摘要补齐
+  v1.1.1 能力点 + 发布策略措辞修正；② init-steps「编码提示」直接删除（用户指示：
+  旧说明/废案不留档）；③ agent-rules 版本正文改引用版本对照表；④ 发版同步约定加
+  「特性核对清单」——并同步用户改动的 agent-rules 触发词（仅非项目且非纯聊天加载）
+  到 README / AGENTS / CHANGELOG 与五个已安装副本。
+- 目标/验收：修复+同步全部完成；sync / quick_validate / py_compile 全过；五处
+  已安装副本与仓库哈希一致；CHANGELOG 未发版区段登记；自动提交。
 - 计划步骤：
-  1. 重读两份 skill 与当前仓库状态
-  2. 自动化校验（sync / quick_validate / py_compile / 版本 grep / 占位符 / 路径引用）
-  3. 内容比对（SKILL 摘要与 init-steps vs 当前模板特性）
-  4. init_project 冒烟 + 已安装 agent-rules 副本一致性
-  5. 输出审计报告 + 修复建议清单 + 落盘
+  1. init-project SKILL / init-steps 修复
+  2. agent-rules 版本正文改引用
+  3. 触发词同步（README / AGENTS / CHANGELOG / 维护约定）
+  4. 验证 + 重装五个副本
+  5. 落盘 + 提交
 
 ## 阶段记录
 
@@ -71,6 +74,13 @@
   「编码提示」未随 P3 UTF-8 修复更新；agent-rules 仅 1 条 P3 建议（正文硬编码
   「当前 1.1.1」） | docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | 全过+回读核对 |
   待用户确认修复清单 |
+| 24 修复+触发词同步 | ✅ | ① init-project SKILL 摘要补 v1.1.1 能力点+发布策略措辞
+  修正；② init-steps 编码提示删除（用户指示旧说明不留档）；③ agent-rules 版本正文
+  改引用；④ 发版同步约定加特性核对清单；⑤ 用户改动的触发词（仅非项目且非纯聊天
+  加载）同步到 README / AGENTS / CHANGELOG；五处已安装副本重装并哈希一致 |
+  init-project/SKILL.md init-project/references/init-steps.md agent-rules/SKILL.md
+  README.md AGENTS.md docs/CHANGELOG.md + 5 处系统目录 | sync / quick_validate /
+  py_compile / 副本哈希 全过 | 汇报 |
 
 ## 待办/遗留
 
