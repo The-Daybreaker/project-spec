@@ -48,7 +48,8 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   模板骨架；S 档可跳过）；`scripts/check_dev_docs.py` 自动校验登记册一致性
   （编号连续/状态机/INDEX 同步），已并入 `ci_check.py` 与发布前检查。
 - **流程提示**：每次对话展示流程位置（当前节点/已完成/下一步，16 节点两阶段
-  清单），以 `private/dev/WORKLOG.md`「流程位置」为单一真相。
+  清单），以 `private/dev/WORKLOG.md`「流程位置」为单一真相；展示时缩写附中文
+  翻译（对照表见模板 `private/AGENTS.md`「缩写对照」）。
 - **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
   `codex_2026-08-25_2330`），任务结束时用 `scripts/trash.py` 整体进回收站。
 - **模板版本与升级**：项目根 `version.json` 的 `template_version` 记录初始化时的

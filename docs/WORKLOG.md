@@ -8,26 +8,20 @@
 
 ## 当前任务
 
-- 需求：①「流程展示时缩写附中文翻译」要求写入模板文档（含缩写对照表）；
-  ② 流程图补充「文档更新流程」（文档就绪 / 发布前文档检查 / 状态收口）。
-- 流程位置：11/16 · 实施（S 档：01 需求提出 → 10 确认开工 直达）；
-  已完成：01-13；下一步：14 提交 → 16 沉淀汇报（发版 v1.2.1 由用户决定）。
+- 需求：全面审计（v1.2.0 发版 + `386813b` 之后）：自动化验证 + 独立子代理审计
+  + 人工文档核对 + 修复。
+- 流程位置：14/16 · 展示与提交（S 档：01 需求提出 → 10 确认开工 直达）；
+  已完成：01-13（含 v1.2.0 发版、「缩写中文翻译」任务、全面审计与修复）；
+  下一步：16 沉淀汇报（15 发版 v1.2.1 由用户决定）。
 - 计划步骤：
-  1. 方案设计（✅ 已完成）：四目录实体化（prd/rfc/adr/research 各含 INDEX.md）、
-     状态机、开发前门禁、S/M/L 档位、与现有文档衔接、同步面清单、实施步骤；
-     已细化：调研落点（research/）+ 后续新增需求机制（PRD 登记册/新 PRD 取代/
-     门禁贯穿生命周期/发布引用编号）；第二轮细化：RESEARCH 允许追加更新（发现
-     记录只追加、结论可覆盖）、PRD 优先级字段（P0-P3）、四份 INDEX.md 骨架草案；
-     第三轮细化：状态机三层约束（流程强制/完成清单+审计清单/check_dev_docs.py
-     工具校验 + 状态变更权限）；第四轮细化：流程提示（16 节点两阶段清单/展示
-     格式/WORKLOG「流程位置」字段/触发时机/三层约束接入）
-  2. 用户已确认：S/M/L 跳过规则、PRD 默认私有、ADR 正文不可变/状态元数据可改、
-     发版版本 v1.2.0（minor）、索引排序/P0-P3 定义/骨架无示例值；待确认：
-     状态机约束方案（三层：流程/清单/工具）与流程提示设计
-  3. 实施：模板新增 4 文件（prd/rfc/adr/research 各含 INDEX.md）+ 新增
-     scripts/check_dev_docs.py + 规范正文/审计清单/init-project/agent-rules
-     同步 + sync_template 覆盖列表更新
-  4. 验证 + 六处重装 + 发版 v1.2.0
+  1. 自动化验证（✅ 已完成）：sync 36 文件 0 差异 / quick_validate×2 / py_compile /
+     init 冒烟 / check_dev_docs / 版本与占位符 grep / 六处副本哈希 全绿
+  2. 独立子代理审计（进行中）：只看 diff + audit-checklist，不共享上下文
+  3. 人工文档核对（✅ 已完成）：发现并确认 4 处问题——P1：WORKLOG 当前任务陈旧、
+     P1：CHANGELOG 版本非新在前；P2：维护约定 9 排在 8 前；P3：init-project
+     SKILL 摘要缺「缩写中文翻译」
+  4. 修复 + 复检
+  5. 阶段落盘 + 提交 + 审计结论汇报
 
 ## 阶段记录
 
@@ -210,16 +204,27 @@
   文件，全量 SHA-256 哈希一致）；`_trash/codex_2026-08-26_0245`（负向测试脚本）
   经 trash.py 进回收站；git 工作树干净 | 六处系统目录 | 哈希复核全过 |
   收尾汇报 |
-| 40 流程展示要求+流程图补文档更新 | ✅ | 模板文档新增「缩写附中文翻译」强制
+| 40 流程展示要求+文档更新流程补实 | ✅ | 模板文档新增「缩写附中文翻译」强制
   规则 + 「缩写对照」表（private/AGENTS 流程提示、根 AGENTS、DESIGN、WORKLOG、
-  agent-rules 工作流）；工作区 AGENTS 维护约定 #9 / README / CHANGELOG 未发版
-  v1.2.1 候选同步；修正工作区维护约定编号冲突（流程提示误编 8 → 9，索引纪律
-  保持 8）；流程图补充文档更新流程（文档就绪 / 发布前文档检查 / 状态文档收口 /
-  文档治理注释） | project-template/private/AGENTS.md、project-template/AGENTS.md、
+  agent-rules 工作流）；16 节点清单新增「文档更新流程（贯穿全程）」小节（文档
+  就绪 / 发布前文档检查 / 状态文档收口 / 文档治理注释；审计 P1 补实——此前仅
+  对话 mermaid 展示未落库）；工作区 AGENTS 维护约定 #9 / README / CHANGELOG
+  未发版 v1.2.1 候选同步；修正工作区维护约定编号冲突（流程提示误编 8 → 9，
+  索引纪律保持 8） | project-template/private/AGENTS.md、project-template/AGENTS.md、
   project-template/private/dev/DESIGN.md、WORKLOG.md、agent-rules/SKILL.md、
-  AGENTS.md、README.md、docs/CHANGELOG.md | sync 36 文件 0 差异 / quick_validate
-  ×2 / py_compile / 六处副本哈希一致 | 14 提交 → 16 沉淀汇报（15 待发版 v1.2.1，
-  用户决定） |
+  AGENTS.md、README.md、docs/CHANGELOG.md、docs/EXPERIENCE-TO-KB.md
+  （资产镜像经 sync） | sync 36 文件 0 差异 / quick_validate ×2 / py_compile /
+  六处副本哈希一致 | 全面审计 → 发版 v1.2.1（用户决定） |
+| 41 全面审计（第四轮） | ✅ | 自动化验证全绿（sync/quick_validate×2/py_compile/
+  冒烟/check_dev_docs/版本+占位符 grep/六处哈希）；独立子代理审计（不共享上下文）
+  结论：不通过（P1×1）→ 修复 4+1 项：① P1 补实「文档更新流程（贯穿全程）」
+  持久小节；② P1 WORKLOG 当前任务陈旧（流程位置 11 与已完成 01-13 矛盾、计划
+  步骤残留 v1.2.0 旧任务）→ 切换为审计任务；③ P1 CHANGELOG 版本非新在前
+  （v1.1.1 排在 v1.2.0 上方）→ 重排为未发版→v1.2.0→v1.1.2→v1.1.1→…；④ P2
+  维护约定 9 排在 8 前 → 顺序修正；⑤ P3 init-project SKILL 摘要缺「缩写中文
+  翻译」→ 补充。复检：CHANGELOG 新在前 / 维护约定 1-9 / DOCS 地图 / 职责表 /
+  audit §1-10 / 治理无残留 | 见修复清单 | sync / quick_validate / 六处哈希全过 |
+  14 提交 → 16 汇报（15 待发版 v1.2.1） |
 
 ## 待办/遗留
 

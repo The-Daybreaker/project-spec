@@ -116,6 +116,18 @@ B 区；C 区内容两者都不得出现。
 | TEST-REPORT | 测试报告 |
 | CI / CD | 持续集成 / 持续交付 |
 
+### 文档更新流程（贯穿全程，与 16 节点并行）
+
+- **文档就绪**：每完成一小阶段/节点，同步受影响文档（DESIGN / CHANGELOG /
+  TEST-REPORT / WORKLOG / README / 根 AGENTS.md / 本文件）与登记册状态、索引
+  （「改动完成即文档就绪」，根 `AGENTS.md` 红线 12）。
+- **发布前文档检查**：`scripts/pre_release_check.py`（发布前检查）校验 CHANGELOG
+  顶部版本一致 + `scripts/check_dev_docs.py` 登记册一致性，未通过不发布。
+- **状态文档收口**：任务收尾/汇报前校准 WORKLOG（当前任务/流程位置/硬事实）与
+  索引（双置顶核对，见「完成检查清单」与 `../docs/audit-checklist.md` §7）。
+- **文档治理**：正文=当前状态（决策修改直接覆盖）；PRD/RFC/ADR/RESEARCH 为
+  历史文档区（允许留史，按各自 INDEX.md 状态机维护）。
+
 ## 【通用】发布流程（每次发布时执行，md 驱动、agent 执行）
 
 1. **版本递增**：默认只升最后一位；运行 `scripts/bump_version.py`（按
