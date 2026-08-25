@@ -75,6 +75,9 @@
 - 母项目不设 EXPERIENCE-TO-TEMPLATE 暂存：可复用进模板的经验直接改进
   `project-template/` 与 `init-project/`；可进知识库的经验记于
   `docs/EXPERIENCE-TO-KB.md`，不混入模板内部。
+- 工作区根补 `.gitattributes`（LF 归一化，与模板一致；P3 #6 落地）。
+- 模板【通用】模块补「项目归档/退役」流程与 `dist/` 发布产物目录约定
+  （P3 #7 + 产物治理落地）。
 
 ## 文档职责
 

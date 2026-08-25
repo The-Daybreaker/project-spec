@@ -31,6 +31,15 @@
   （移除 CHANGELOG 误述）；`EXPERIENCE-TO-KB` 索引顺序规则（与正文一致、新条目
   在前）；版本单一来源（SKILL/init-steps 正文改引用 `version.json` +
   `sync_template.py` 自动校验 `metadata.version`）。
+- 工作区根补 `.gitattributes`（LF 归一化，与模板一致；P3 #6 落地）。
+- 模板补「项目归档/退役」流程（【通用】模块）：根/私有 `AGENTS.md` 新增小节 +
+  README 归档说明 + DESIGN + `audit-checklist` 第 9 节归档前检查；触发=用户明确
+  发起；流程=对齐确认→最终发布→README 归档标记→产物归档→经验沉淀→收尾；
+  归档后只读维护（P3 #7 落地）。
+- 模板补 `dist/` 发布产物约定：产物统一输出 `dist/`（C 区、不进 git、Release 自动
+  attach `dist/**`）；发布流程第 6 步 / DESIGN「打包与发布」/ README 项目结构 /
+  `release.yml` 注释同步；`init-project` SKILL 摘要加能力点；`agent-rules` 继承
+  矩阵「不继承」列表登记（项目机制不进入全局精简版）。
 - 发版同步：约定补充「全局 grep 新旧版本号」防版本字样残留。
 - 工作流收口：WORKLOG 生命周期纪律（任务开始切换当前任务、收尾校准硬事实）。
 - 经验自动沉淀：维护约定明确「每轮对话结束自动把完整候选经验写入

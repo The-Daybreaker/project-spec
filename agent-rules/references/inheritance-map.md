@@ -49,6 +49,7 @@
 ## 4. 不继承（项目机制；项目内由项目 AGENTS.md 覆盖）
 
 - `version.json` / bump / CI-CD / Release / tag / 模板升级流程
+- `dist/` 发布产物目录与 Release attach、项目归档/退役流程
 - private 子 git、三区文件归属、WORKLOG/DESIGN/CHANGELOG/TEST-REPORT 文件体系
 - 具体脚本（`pre_release_check.py` / `trash.py` 等）
 - 项目概览、技术栈、本机环境、用户决策、定案清单、必须询问清单

@@ -12,6 +12,7 @@
 ├── README.md                 # 本文件
 ├── version.json              # 版本（version）与模板版本（template_version）单一事实来源
 ├── .gitignore                # 工作区忽略规则
+├── .gitattributes            # 工作区行尾归一化（LF，与模板一致）
 ├── docs/                     # 工作区自身文档
 │   ├── CHANGELOG.md          # 模板版本变更历史（升级比对依据）
 │   ├── WORKLOG.md            # 工作区阶段落盘日志
@@ -92,6 +93,9 @@ agent-rules/                     # skill：Agent 通用行为规范（精简版�
 11. **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
     `codex_2026-08-25_2330`；不设固定 agent 列表），任务结束时用 `scripts/trash.py`
     整体进回收站（避免小文件堆积）。
+12. **发布产物与归档**：构建/打包产物统一输出 `dist/`（C 区、不进 git、Release
+    自动 attach）；项目停止主动开发时有「项目归档/退役」流程（最终发布 + README
+    归档标记 + 产物归档 + 经验沉淀，agent 不擅自删除）。
 
 ## 使用方法
 

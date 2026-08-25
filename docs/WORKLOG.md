@@ -8,21 +8,20 @@
 
 ## 当前任务
 
-- 需求：全面审计当前项目（结构 / git 状态与 tag / 版本一致性 / 同步与校验 /
-  红线落地 / 安全扫描 / 文档硬事实），专业输出审计报告。
-- 目标/验收：自动化校验全绿（sync / quick_validate / py_compile / 端到端冒烟 /
-  五副本哈希）+ 人工核对硬事实；发现项按严重度分级列出；维护级文档问题就地修复；
-  阶段落盘 + 经验自动沉淀；提交。
+- 需求：① 补工作区根 `.gitattributes`（P3 #6）；② 模板补「项目归档/退役」流程
+  （P3 #7）；③ 模板补 `dist/` 发布产物约定；④ 全链路同步并验证提交；⑤ 输出
+  「模板能否支撑完整项目」专业评估。
+- 目标/验收：模板【通用】新增归档/退役 + dist 约定，根/私有 AGENTS、README、
+  DESIGN、audit-checklist、release.yml、init-project SKILL、inheritance-map
+  同步；sync / quick_validate / py_compile / 占位符与版本 grep 全过；阶段落盘 +
+  经验自动沉淀；提交。
 - 计划步骤：
-  1. 通读工作区规范与模板规范/文档（AGENTS ×3、README、WORKLOG、CHANGELOG、
-     EXPERIENCE-TO-KB、两 skill、模板 docs/private/dev、全部脚本与 CI）
-  2. 自动化验证：sync 28 文件 / quick_validate ×2 / py_compile / init 冒烟 /
-     tag 指向 / 五副本全量哈希
-  3. 硬事实与安全扫描：版本 grep、占位符、BOM/换行、秘密扫描、README 路径、
-     提交信息格式、`git status --ignored`
-  4. 修复维护级发现（EXP-KB 索引/正文顺序、日期陈旧、CHANGELOG 未发版区段缺
-     P3 条目、WORKLOG 33→32 校准）+ 阶段落盘 + 经验自动沉淀
-  5. 复核（sync / quick_validate / git status）+ 提交 + 汇报
+  1. 补工作区根 .gitattributes（与模板一致）
+  2. 模板补归档/退役流程（根/私有 AGENTS + README + DESIGN + audit-checklist）
+  3. 模板补 dist 产物约定（发布流程第 6 步 + DESIGN + README + release.yml）
+  4. 同步 init-project SKILL 摘要 + inheritance-map 不继承列表
+  5. 更新工作区文档（AGENTS / README / CHANGELOG / WORKLOG / EXP-KB）
+  6. 验证（sync / quick_validate / py_compile / grep）+ 提交 + 评估汇报
 
 ## 阶段记录
 
@@ -102,6 +101,16 @@
   条目、WORKLOG 阶段 25 文件数 33→32 校准；当前任务切换 + 经验自动沉淀 |
   docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md docs/CHANGELOG.md | sync /
   quick_validate / git status | 汇报 |
+| 28 P3 #6/#7 + dist 落地 | ✅ | 工作区根补 `.gitattributes`（LF 归一化，P3 #6）；
+  模板【通用】补「项目归档/退役」流程（根/私有 AGENTS 小节 + README 说明 + DESIGN +
+  audit-checklist 第 9 节）；补 `dist/` 发布产物约定（发布流程第 6 步 + DESIGN +
+  README 结构 + release.yml 注释）；init-project SKILL 摘要 + inheritance-map
+  不继承列表同步；工作区 AGENTS/README/CHANGELOG/EXP-KB 同步；sync /
+  quick_validate ×2 / py_compile / 占位符 grep 全过；init 冒烟确认无残留 |
+  .gitattributes project-template/（AGENTS×2、README、DESIGN、audit-checklist、
+  release.yml）init-project/SKILL.md agent-rules/references/inheritance-map.md
+  AGENTS.md README.md docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md |
+  sync / quick_validate / py_compile / grep | 提交 + 评估汇报 |
 
 ## 待办/遗留
 
@@ -118,8 +127,9 @@
 - [x] P3 #1/#2/#3/#4/#5 已实施（UTF-8 输出、UPGRADE 澄清、CONTRIBUTING 措辞、
       EXP-KB 索引、版本单一来源 + sync 自动化校验）
 - [x] 本任务（P3 建议实施）15/15 完结
-- [ ] P3 #6 工作区根补 .gitattributes（行尾归一化）、#7 模板补「项目归档/退役」
-      环节：未决策，待用户确认
+- [x] P3 #6 工作区根补 .gitattributes（行尾归一化）、#7 模板补「项目归档/退役」
+      环节：已实施（随本任务提交）
+- [x] 本任务（P3 #6/#7 + dist 产物约定补齐）完结
 - [x] 新需求（精简版 agent 全局规范 skill，agent-rules）：方案已确认，已实施
       （skill 创建 + sync 校验 + 文档同步 + 安装到五个 agent）；随 v1.1.2 发版时
       同步版本
@@ -127,6 +137,8 @@
 
 ## 历史记录
 
+- 2026-08-26 模板生命周期补齐：工作区根 `.gitattributes`（P3 #6）+ 模板「项目
+  归档/退役」流程（P3 #7）+ `dist/` 发布产物约定；全链路同步并提交。
 - 2026-08-26 删除纪律命名统一：`_trash/<agent名>` → `<agent产品名>_<日期>_<时分>`
   （只举例不设列表），正文 9 处 + 继承矩阵红线 4 指纹更新 + 五副本重装，已提交
   （0fbec33）。

@@ -15,6 +15,7 @@
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
+| 2026-08-26 | 模板生命周期补齐：dist 产物约定 + 项目归档/退役流程 | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | 全面审计第三轮：自动化全绿下仍复发的维护级缺陷（审计教训） | 经验方法/教训 | 待沉淀 |
 | 2026-08-26 | 删除纪律命名统一为产品名（只举例不设列表） | 经验方法/方案 | 待沉淀 |
 | 2026-08-25 | skill 触发语义变更的同步点清单（含用户直接改副本的处理） | 经验方法/教训 | 待沉淀 |
@@ -26,6 +27,46 @@
 | 2026-08-25 | 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
+
+## 2026-08-26 · 模板生命周期补齐：dist 产物约定 + 项目归档/退役流程（方案设计）
+
+- 来源项目/任务：通用项目模板工作区（.gitattributes / dist / 归档补齐）
+- 背景与上下文：全面审计后用户决策补两块——工作区根 `.gitattributes`（P3 #6
+  悬置）；模板【通用】模块补「项目归档/退役」（P3 #7）与「`dist/` 发布产物」约定。
+  模板此前只有 `.gitignore` 忽略 `dist/` 与 `release.yml` attach `dist/**`，但文档/
+  流程未显式定义产物目录与项目生命周期收尾环节。
+- 需求/问题：发布产物目录与项目生命周期终止如何成为模板的显式约定，而不是散落在
+  `.gitignore` / workflow 里的隐式实现？
+- 做法与过程：
+  1. **dist 约定**：发布流程第 6 步（根/私有 AGENTS.md）明确「产物统一输出
+     `dist/`、C 区不进 git、Release 自动 attach `dist/**`」；DESIGN「打包与发布」、
+     README 项目结构、release.yml 注释同步；init-project SKILL 摘要加能力点；
+     agent-rules 继承矩阵「不继承」列表登记（项目机制不进入全局精简版）；
+  2. **归档流程**：根/私有 AGENTS.md 新增「项目归档/退役」小节（触发=用户明确
+     发起；流程=对齐确认→最终发布→README 归档标记→产物归档→经验沉淀→收尾；
+     归档后=只读维护）；README 加归档说明；audit-checklist 新增第 9 节归档前检查；
+  3. **工作区 .gitattributes**：补根级行尾归一化（LF），与模板一致（P3 #6 落地）。
+- 经验/教训：
+  - 模板机制（dist/、release attach）一旦存在，就应在流程文档中显式化——隐式实现
+    是文档缺口的主要来源（与「已修复但文档仍写旧行为」同类）；
+  - 生命周期缺口（归档/退役）比功能缺口更隐蔽：模板覆盖「创建→开发→发布」，
+    缺「终止」环节，补上后体系才闭环；
+  - 项目机制类能力不进全局精简版（agent-rules），但在继承矩阵「不继承」列表登记，
+    防止后续误继承或误删；
+  - 工作区 .gitattributes 补齐后，git 按 LF 归一化，避免工作树 CRLF 与索引不一致
+    的零散问题。
+- 验证/效果：sync 通过（模板镜像一致）；quick_validate ×2；py_compile；初始化
+  冒烟确认 README/AGENTS 无占位符残留；提交。
+- 相关文件：`.gitattributes`、`project-template/AGENTS.md`、
+  `project-template/private/AGENTS.md`、`project-template/README.md`、
+  `project-template/private/dev/DESIGN.md`、`project-template/docs/audit-checklist.md`、
+  `project-template/.github/workflows/release.yml`、`init-project/SKILL.md`、
+  `agent-rules/references/inheritance-map.md`
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/方案`；`domain=项目管理/文档治理`；
+  `tags=[模板, 发布产物, 归档, 生命周期, dist]`；`project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
 
 ## 2026-08-26 · 全面审计第三轮：自动化全绿下仍复发的维护级缺陷（审计教训）
 

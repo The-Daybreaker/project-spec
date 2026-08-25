@@ -8,6 +8,8 @@
 #   - 当前 version 已有 tag → 跳过（等待 agent 递增版本后再次推送）；
 #   - 仓库尚无任何 tag 且由 push 触发 → 跳过（初始搭建期，可用 workflow_dispatch
 #     或本地 gh release 手动发布首个版本）。
+#   - 发布产物约定：构建/打包产物统一输出到 dist/（不进 git，见 .gitignore），
+#     Release 自动 attach dist/**；产物在别处时调整下方 attach 逻辑。
 # 注意：private/ 不进 GitHub，CI 中不可用；发布说明由提交记录自动生成。
 #       push 触发与 workflow_dispatch 可能并发，Release 步骤按幂等处理。
 

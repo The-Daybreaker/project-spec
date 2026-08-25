@@ -32,6 +32,7 @@ npm test
 ├── scripts/                 # 自动化脚本（bump_version / pre_release_check / ci_check / trash）
 ├── .github/workflows/       # CI 与自动发布
 ├── version.json             # 版本（version）与模板版本（template_version）单一事实来源
+├── dist/                    # 发布产物（构建/打包输出，不进 git，Release 自动 attach）
 └── private/                 # 私有区：个人/开发期文件（不进 GitHub）
     ├── PRIVATE.md           # 私有区说明与子 git 管理
     ├── AGENTS.md            # 开发入口与当前状态（唯一常青开发记忆）
@@ -51,6 +52,8 @@ npm test
   （红线 14），防止上下文压缩丢失进度。
 - **模板升级**：项目根 `version.json` 的 `template_version` 记录模板版本；升级按 `docs/UPGRADE.md`
   只应用【通用】模块变更。
+- **归档/退役**：项目停止主动开发时按根 `AGENTS.md`「项目归档/退役」执行
+  （最终发布 + README 归档标记 + 产物归档 + 经验沉淀）。
 - **私有区**：个人/开发期文件放 `private/`，主仓库 `.gitignore` 已忽略；
   private 子 git 内部管理，发布前自动同步（见 AGENTS.md「发布流程」）。
 
