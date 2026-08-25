@@ -15,6 +15,7 @@
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
+| 2026-08-26 | v1.2.1 发版 + 母项目发版不能用 bump_version.py 的教训 | 经验方法/教训 | 待沉淀 |
 | 2026-08-26 | P3 批量修复：文档/配置/脚本一致性收口（T2-T8，T5 跳过） | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | T1 升级路径修复 + 同步面约束机制根因（UPGRADE B 区骨架迁移） | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | 全流程审计（第五轮）：升级路径/初始化输出面/一致性硬事实核对 | 经验方法/教训 | 待沉淀 |
@@ -38,6 +39,43 @@
 | 2026-08-25 | 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
+
+## 2026-08-26 · v1.2.1 发版 + 母项目发版不能用 bump_version.py 的教训
+
+- 来源项目/任务：通用项目模板工作区（用户指示发版 v1.2.1）
+- 背景与上下文：v1.2.1 为维护收口（UPGRADE B 区骨架迁移 + P3 批量修复 + 流程
+  展示/初始化流程增强）；发版前未发版区段已积累 6 条候选。
+- 需求/问题：母项目（模板仓库）发版时版本全量同步的正确姿势；bump_version.py
+  能否用于母项目自身。
+- 做法与过程：
+  1. 先用 `python project-template/scripts/bump_version.py` 递增——脚本
+     `REPO_ROOT = parents[1]` 指向 `project-template/`，误升模板骨架
+     `version 0.0.1→0.0.2`（骨架 version 应恒为 0.0.1），立即回退；
+  2. 按发版同步约定**手工**同步：根 version.json（version + template_version
+     =1.2.1）、project-template/version.json（version=0.0.1 不变、
+     template_version=1.2.1）、init-project/agent-rules SKILL metadata.version
+     ×2、继承矩阵版本对照 ×3、CHANGELOG 未发版区段转正式条目、AGENTS/README
+     当前版本字样、UPGRADE 追加 v1.2.1 已知迁移要点（新机制 dogfood）；
+  3. 全链路验证：sync / quick_validate×2 / py_compile / 冒烟（template_version
+     =1.2.1）/ 版本号全局 grep / 六处重装 40 文件逐文件哈希。
+- 经验/教训：
+  - **母项目发版不要用 bump_version.py**：它把所在目录当项目根；模板仓库自身
+    的版本递增按「发版同步约定」手工改即可；
+  - 版本全量同步面清单要包含「当前版本字样」类文档（AGENTS/README）与
+    「迁移要点」类文档（UPGRADE）——后者是 v1.2.1 新增的同步面，发版时先给
+    自己 dogfood；
+  - 发版验证链固定为：sync → quick_validate ×2 → py_compile → 冒烟 → 版本
+    grep → 六处重装哈希，任何一环不过都不打 tag。
+- 验证/效果：全部验证通过；tag v1.2.1；六处重装哈希一致。
+- 相关文件：version.json、project-template/version.json、init-project/SKILL.md、
+  agent-rules/SKILL.md、agent-rules/references/inheritance-map.md、
+  docs/CHANGELOG.md、project-template/docs/UPGRADE.md、AGENTS.md、README.md
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/教训`；`domain=版本管理/发布`；
+  `tags=[发版, bump_version, 版本同步, 母项目, 迁移要点, dogfood]`；
+  `project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
 
 ## 2026-08-26 · P3 批量修复：文档/配置/脚本一致性收口（T2-T8，T5 跳过）
 

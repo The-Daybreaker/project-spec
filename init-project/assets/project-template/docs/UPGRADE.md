@@ -73,6 +73,12 @@
   `scripts/check_dev_docs.py`（属 `scripts/`【通用】，自动应用）；未迁移时
   `ci_check` / `pre_release_check` 会因缺登记册/流程位置字段失败，按「B 区私有
   骨架迁移」补齐即可。
+- **v1.2.1**（维护收口）：UPGRADE.md 补「B 区私有骨架迁移」规则与「升级迁移
+  检查表」（应用本文件即可）；`.gitattributes` `*.ps1` / `*.bat` 行尾改 LF（与
+  `.editorconfig` 一致）；`scripts/ci_check.py` / `pre_release_check.py` 子进程
+  改 `sys.executable`（属 `scripts/`【通用】，自动应用）；`private/.gitignore`
+  补 `test/**/staging-repo/`（B 区骨架合并）；根 `AGENTS.md` 版本管理补「自动
+  发布视为发布/推送预授权」说明（【通用】应用）。
 - （后续版本在此追加；模板 CHANGELOG 为权威）
 
 > 注意：major 版本（如 2.0.0）升级前，先读新模板的 `AGENTS.md` 了解破坏性变更与迁移

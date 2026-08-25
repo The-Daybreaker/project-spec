@@ -4,7 +4,11 @@
 > 记录模板自身每次发版变更，与根 `version.json` 与 git tag 对齐；项目升级时据此比对
 > （见 `project-template/docs/UPGRADE.md`）。
 
-## 未发版变更（v1.2.1 候选）
+## v1.2.1（2026-08-26）
+
+> 维护收口版本（patch）：升级路径补齐（B 区私有骨架迁移）+ P3 批量修复 + 流程
+> 展示/初始化流程增强；`version.json` 的 `version` / `template_version` 与 tag
+> `v1.2.1` 对齐。
 
 - P3 批量修复（全面审计第五轮后续；T5 属约束增强，按用户要求跳过）：
   ① T2 `project-template/private/.gitignore` 补 `test/**/staging-repo/`（与

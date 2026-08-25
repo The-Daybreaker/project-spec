@@ -1,7 +1,7 @@
 ---
 name: init-project
 metadata:
-  version: 1.2.0
+  version: 1.2.1
 description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（AGENTS.md 公开/私有拆分、private 子 git、.gitignore、CI/CD 工作流、自动化脚本、Agent+人协作开发工作流与通用红线），替换项目占位符，初始化主 git 与 private 子 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
 ---
 

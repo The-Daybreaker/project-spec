@@ -8,21 +8,21 @@
 
 ## 当前任务
 
-- 需求：P3 批量修复（T2/T3/T4/T6/T7/T8；T5 属约束增强按用户要求跳过）——文档/
-  配置/脚本一致性收口，并把六处副本与工作区 pycache 清理干净。
+- 需求：发版 v1.2.1（维护收口 patch）——版本递增 + 全量同步 + 六处重装 +
+  tag + 汇报。
 - 流程位置：14/16 · 展示与提交（S 档：01 需求提出 → 10 确认开工 直达）；
-  已完成：01-13（T2-T4/T6-T8 修复 → sync/quick_validate/py_compile → 冒烟 →
-  六处重装哈希复核）；下一步：16 沉淀汇报（15 发版 v1.2.1 由用户决定）。
+  已完成：01-13（版本字段同步 → sync/quick_validate → 冒烟 → 六处重装哈希
+  复核）；下一步：15 发布（tag v1.2.1）→ 16 沉淀汇报。
 - 计划步骤：
-  1. T2-T4/T6-T8 修复（✅）：staging-repo 忽略规则、auto-release 预授权衔接、
-     FAQ 表述纠正、.gitattributes 行尾统一、sys.executable 子进程调用、pycache
-     清理
-  2. sync + 校验（✅）：sync 36 文件 0 差异；quick_validate ×2 valid；
-     py_compile OK
-  3. 冒烟（✅）：init --auto-release → ci_check / pre_release（sys.executable
-     生效）、预授权文案、staging-repo 规则、LF 行尾 全部符合
-  4. 六处重装 + 哈希复核（✅）：各 40 文件逐文件一致、无 pycache
-  5. 落盘 + 提交 + 汇报（进行中）
+  1. 版本递增（进行中）：根 version.json 1.2.0→1.2.1（注意：母项目不能用
+     bump_version.py——它把 project-template/ 当仓库根，误升模板骨架 version
+     0.0.1→0.0.2 已回退，按发版同步约定手工改）
+  2. 版本全量同步：project-template/version.json（version=0.0.1 不变、
+     template_version=1.2.1）、SKILL metadata.version ×2、继承矩阵版本对照
+  3. CHANGELOG 未发版区段转正式 v1.2.1 条目；WORKLOG 切换；EXP-KB 沉淀
+  4. 校验：sync / quick_validate×2 / py_compile / 冒烟（template_version=1.2.1）/
+     版本号全局 grep / 六处重装哈希复核
+  5. 发布提交（feat: v1.2.1）+ 附注 tag v1.2.1 + 汇报
 
 ## 阶段记录
 
@@ -271,6 +271,19 @@
   docs/CHANGELOG.md、docs/WORKLOG.md、docs/EXPERIENCE-TO-KB.md + 六处 agent 目录 |
   sync / quick_validate / py_compile / 冒烟 / 副本哈希 全过 | 提交 → 汇报（15
   发版 v1.2.1 由用户决定） |
+| 46 发版 v1.2.1 | ✅ | 版本递增 1.2.0→1.2.1（按发版同步约定手工同步：根
+  version.json / project-template/version.json（version=0.0.1 不变、
+  template_version=1.2.1）/ SKILL metadata.version ×2 / 继承矩阵版本对照 /
+  CHANGELOG 未发版区段转正式 v1.2.1 条目 / AGENTS+README 当前版本字样 /
+  UPGRADE 追加 v1.2.1 已知迁移要点）；sync 36 文件 0 差异
+  （template_version=1.2.1）；quick_validate ×2 valid；py_compile OK；冒烟
+  （初始化 template_version=1.2.1、version=0.0.1、check_dev_docs 0 issue）；
+  版本号全局 grep 无残留；六处重装 40 文件逐文件哈希一致、无 pycache；
+  注意：母项目发版不能用 bump_version.py（REPO_ROOT=project-template，误升
+  模板骨架 version 0.0.1→0.0.2，已回退并记入经验） | 多文件（version.json ×2、
+  SKILL.md ×2、inheritance-map.md、CHANGELOG、AGENTS、README、UPGRADE（assets
+  经 sync）、WORKLOG、EXP-KB）+ 六处 agent 目录 | 全过 | 发布提交 + tag v1.2.1
+  + 汇报 |
 
 ## 待办/遗留
 
@@ -301,9 +314,14 @@
 - [x] 本任务（全面审计第五轮）完结：审计结论汇报已交付，P2/P3 修复建议待用户
       确认（P2·T1 已由新任务实施）
 - [x] 本任务（T1 升级路径修复）完结：提交 344b423；sync + 六处重装哈希复核
+- [x] 本任务（P3 批量修复 T2-T8，T5 跳过）完结：提交 3b8d3d4；sync + 冒烟 +
+      六处重装哈希复核
 
 ## 历史记录
 
+- 2026-08-26 模板 v1.2.1 发版：维护收口（UPGRADE B 区骨架迁移 + P3 批量修复 +
+  流程展示/初始化流程增强）；版本递增 1.2.0→1.2.1，发布提交 + 附注 tag v1.2.1；
+  六处重装哈希一致。
 - 2026-08-26 P3 批量修复（T2-T8，T5 跳过）：文档/配置/脚本一致性收口 +
   pycache 清理；sync / quick_validate / 冒烟 / 六处重装哈希复核全过。
 - 2026-08-26 T1 升级路径修复：UPGRADE.md 补「B 区私有骨架迁移」+「升级迁移
