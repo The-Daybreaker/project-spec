@@ -8,21 +8,16 @@
 
 ## 当前任务
 
-- 需求：实施「精简版 agent 全局规范 skill（agent-rules）」（方案已获用户确认；
-  注释指示：安装说明并入工作区 README、继承矩阵加正文指纹复核、实施后安装到
-  traework / workbuddy / codex / dsh / qcoderwork 五个 agent）。
-- 目标/验收：`agent-rules/` 四文件创建；`sync_template.py` 新增 agent-rules 校验
-  （版本/覆盖/指纹）且破坏性测试通过；AGENTS / README / CHANGELOG 同步；
-  sync / quick_validate / py_compile 全过；五个 agent skill 目录安装完成；
-  经验沉淀；自动提交。
+- 需求：审计本项目两个 skill（`init-project` / `agent-rules`），重点检查
+  `init-project` 是否随模板演进而过时（用户反馈「似乎很久没有更新」）。
+- 目标/验收：自动化校验 + 内容比对 + 冒烟测试完成；输出过时项清单与修复建议；
+  不擅自修复（先对齐后实施，待用户确认）。
 - 计划步骤：
-  1. 定位五个 agent skill 目录
-  2. 创建 agent-rules skill（SKILL.md / inheritance-map / audit-lite / openai.yaml）
-  3. 扩展 sync_template.py（版本 + 矩阵覆盖 + 红线正文指纹校验）
-  4. 更新 AGENTS.md / README.md / CHANGELOG.md
-  5. 验证（sync / quick_validate / py_compile / 破坏性测试）
-  6. 安装到五个 agent（无权限则报告用户开权限）
-  7. 经验沉淀 + 自动提交 + 汇报
+  1. 重读两份 skill 与当前仓库状态
+  2. 自动化校验（sync / quick_validate / py_compile / 版本 grep / 占位符 / 路径引用）
+  3. 内容比对（SKILL 摘要与 init-steps vs 当前模板特性）
+  4. init_project 冒烟 + 已安装 agent-rules 副本一致性
+  5. 输出审计报告 + 修复建议清单 + 落盘
 
 ## 阶段记录
 
@@ -67,6 +62,15 @@
   权限获批）：codex / dsh / workbuddy / trae-cn（TRAE Work CN）/ qoderwork
   （QoderWork CN，新建 skills 目录）；每处 4 文件、SKILL.md 哈希一致 |
   5 处系统目录 | 复制后文件数+哈希核对 | 经验沉淀+提交 |
+| 23 审计·双 skill | ✅ | 自动化校验全过：sync 28 文件 0 差异 + agent-rules verified；
+  quick_validate×2 valid；py_compile 6 脚本；占位符 9/9 全覆盖；版本号无残留；
+  路径引用无过时；init 冒烟（28 文件/13 替换/双 git 干净/check-ignore 命中）；
+  五处 agent-rules 副本哈希一致。发现 init-project 过时项：SKILL 定位摘要缺
+  v1.1.1 新特性（文档双模块/三级门禁/WORKLOG 生命周期/定案询问清单/发布前自测/
+  红线 15 编号）+「自动版本递增发布」表述与默认手动确认策略有出入；init-steps
+  「编码提示」未随 P3 UTF-8 修复更新；agent-rules 仅 1 条 P3 建议（正文硬编码
+  「当前 1.1.1」） | docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | 全过+回读核对 |
+  待用户确认修复清单 |
 
 ## 待办/遗留
 
