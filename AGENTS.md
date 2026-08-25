@@ -13,7 +13,8 @@
 - **目录**：`README.md`（面向使用者的说明）+ `docs/`（工作区自身文档：CHANGELOG /
   WORKLOG / EXPERIENCE-TO-KB）、`scripts/sync_template.py`（同步脚本）、
   `project-template/`（权威模板，同步到 skill 资产）、`init-project/`（skill：
-  SKILL.md / references / scripts / assets）。
+  SKILL.md / references / scripts / assets）、`agent-rules/`（skill：精简版
+  agent 全局行为规范，任何非纯聊天对话加载）。
 - **版本**：根 `version.json`（当前 1.1.1）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
@@ -26,20 +27,23 @@
 ## 【项目专用】维护约定（强制）
 
 1. **改模板必同步**：修改 `project-template/` 后运行
-   `python scripts/sync_template.py`（同步 + 哈希校验），两份副本必须一致。
+   `python scripts/sync_template.py`（同步 + 哈希校验），两份副本必须一致；
+   模板【通用】变更还需同步 `agent-rules/`（精简版全局规范正文或继承矩阵指纹复核），
+   sync 会一并校验（版本一致性 + 矩阵覆盖 + 红线正文指纹）。
 2. **private 骨架强制跟踪**：模板自身 `.gitignore` 忽略 `private/`，提交用
    `git add -f project-template/private init-project/assets/project-template/private`。
 3. **skill 校验**：`PYTHONUTF8=1 python <skill-creator>/scripts/quick_validate.py
    init-project`（中文 Windows 默认 GBK 需 PYTHONUTF8=1）。
 4. **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
    （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
-   `SKILL.md metadata.version`，并**全局 grep 新旧版本号**（如 `1.1.0` / `1.1.1`）
-   核对所有文档内嵌版本字样（`SKILL.md` 仅 `metadata.version`；
-   `references/init-steps.md` 已改为引用 `version.json`；模板内部文件一律用
-   占位符、不写死版本），确认无残留后再走模板发布流程。
-   `scripts/sync_template.py` 会自动校验 `SKILL.md metadata.version` 与
-   `project-template/version.json` 的 `template_version` 一致（改模板/发版后运行
-   sync 即校验）。
+   `SKILL.md metadata.version`、`agent-rules/SKILL.md metadata.version` 与
+   `agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧版本号**
+   （如 `1.1.0` / `1.1.1`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+   `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；
+   模板内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
+   `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
+   `agent-rules` 继承矩阵版本/覆盖/指纹与 `project-template/version.json` 的
+   `template_version` 一致（改模板/发版后运行 sync 即校验）。
 5. **删除纪律**：对话内删除先移入 `_trash/<agent名>_<YYYY-MM-DD>_<HHMM>/`，
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），
    避免小文件堆积。
@@ -80,3 +84,5 @@
 | `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → init-project/assets/） |
 | `project-template/` | 通用 | 权威模板（同步到 `init-project/assets/`） |
 | `init-project/` | 通用 | skill（SKILL.md / references / scripts / assets） |
+| `agent-rules/SKILL.md` | 项目专用 | 精简版 agent 全局行为规范（任何非纯聊天对话加载） |
+| `agent-rules/references/inheritance-map.md` | 项目专用 | 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（sync 校验依据） |

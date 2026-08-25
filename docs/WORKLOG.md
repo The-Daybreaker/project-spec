@@ -8,20 +8,21 @@
 
 ## 当前任务
 
-- 需求：按用户注释反馈实施全面审计 P3 建议——① init_project.py UTF-8 输出；
-  ② UPGRADE.md 澄清 sync_template 仅存在于模板母项目；③ CONTRIBUTING 对齐意图
-  措辞修正（并确认承载文档）；④ EXPERIENCE-TO-KB 索引与正文顺序统一；
-  ⑤ SKILL/init-steps 版本号单一来源（改引用 version.json + sync 自动化校验）。
-- 目标/验收：5 项全部实施；模板改动已 sync 0 差异；quick_validate / py_compile /
-  初始化冒烟通过；版本号仅 `SKILL.md metadata.version` 保留 1.1.1；经验自动沉淀；
-  自动提交。
+- 需求：实施「精简版 agent 全局规范 skill（agent-rules）」（方案已获用户确认；
+  注释指示：安装说明并入工作区 README、继承矩阵加正文指纹复核、实施后安装到
+  traework / workbuddy / codex / dsh / qcoderwork 五个 agent）。
+- 目标/验收：`agent-rules/` 四文件创建；`sync_template.py` 新增 agent-rules 校验
+  （版本/覆盖/指纹）且破坏性测试通过；AGENTS / README / CHANGELOG 同步；
+  sync / quick_validate / py_compile 全过；五个 agent skill 目录安装完成；
+  经验沉淀；自动提交。
 - 计划步骤：
-  1. init_project.py 增加 `_configure_utf8`（对齐其他脚本）
-  2. UPGRADE.md 澄清 + CONTRIBUTING 措辞修正
-  3. EXPERIENCE-TO-KB 索引顺序统一
-  4. SKILL/init-steps 版本号改引用 + sync_template.py 新增 metadata.version
-     一致性校验
-  5. 同步 + 校验 + 冒烟 + 经验沉淀 + 清理 + 自动提交 + 汇报
+  1. 定位五个 agent skill 目录
+  2. 创建 agent-rules skill（SKILL.md / inheritance-map / audit-lite / openai.yaml）
+  3. 扩展 sync_template.py（版本 + 矩阵覆盖 + 红线正文指纹校验）
+  4. 更新 AGENTS.md / README.md / CHANGELOG.md
+  5. 验证（sync / quick_validate / py_compile / 破坏性测试）
+  6. 安装到五个 agent（无权限则报告用户开权限）
+  7. 经验沉淀 + 自动提交 + 汇报
 
 ## 阶段记录
 
@@ -42,6 +43,30 @@
 | 13 P3·EXP-KB 索引 | ✅ | 索引顺序与正文一致（新条目在前） | docs/EXPERIENCE-TO-KB.md | 回读核对 | 版本单一来源 |
 | 14 P3·版本单一来源 | ✅ | SKILL/init-steps 正文移除硬编码 1.1.1 改引用 version.json；sync_template.py 新增 metadata.version==template_version 校验（实测通过）；维护约定同步 | 5 文件 | sync / quick_validate / py_compile 通过 | 收尾 |
 | 15 收尾 | ✅ | 清理测试产物；经验自动沉淀；sync 失败路径实测（9.9.9 拦截）；自动提交 | docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | 回读核对+git status | 汇报 |
+| 16 审计+方案 | ✅ | 全面通读 + 自动化校验全部通过（sync 28 文件 0 差异、quick_validate
+  valid、py_compile 5 脚本 OK、git 干净、private 骨架 10 文件强制跟踪、无远端）；
+  交付精简版 agent 全局规范 skill（agent-rules）方案与实施清单 | docs/WORKLOG.md
+  docs/EXPERIENCE-TO-KB.md | 回读核对 | 待用户确认方案后实施 |
+| 17 实施·目录定位 | ✅ | 定位五个 agent skill 目录：codex（.codex/skills）、dsh
+  （.dsh/skills）、workbuddy（.workbuddy/skills）、traework（TRAE Work CN →
+  .trae-cn/skills）、qcoderwork（QoderWork CN → .qoderwork/skills，安装时创建） | 无
+  （只读探查） | 回读核对 | agent-rules 创建 |
+| 18 实施·skill 创建 | ✅ | 创建 agent-rules/ 四文件：SKILL.md（15 条红线通用化 +
+  6 步工作流 + 审计/完成清单 + 触发规则）、inheritance-map.md（版本对照 + 红线覆盖
+  矩阵 + 指纹）、audit-checklist-lite.md、agents/openai.yaml | agent-rules/ 4 新文件 |
+  内容核对 | sync 扩展 |
+| 19 实施·sync 扩展 | ✅ | sync_template.py 新增 agent-rules 校验：metadata.version、
+  继承矩阵版本对照、矩阵覆盖完整性、红线正文指纹；破坏性测试 3/3 按预期拦截
+  （指纹/版本/缺行） | scripts/sync_template.py | py_compile + 实测 | 文档同步 |
+| 20 实施·文档同步 | ✅ | AGENTS.md 维护约定 1/4 + 目录 + 文档职责表；README 目录树 +
+  使用方法 4（安装说明并入工作区 README）+ 维护约定；CHANGELOG 未发版区段登记 |
+  AGENTS.md README.md docs/CHANGELOG.md | 回读核对 | 验证 |
+| 21 实施·验证 | ✅ | sync 通过（28 文件 0 差异 + agent-rules verified）；quick_validate
+  agent-rules valid；py_compile 通过 | 无 | 全过 | 安装到五个 agent |
+| 22 实施·安装 | ✅ | 安装 agent-rules 到五个 agent skill 目录（沙箱无权限 → 升级
+  权限获批）：codex / dsh / workbuddy / trae-cn（TRAE Work CN）/ qoderwork
+  （QoderWork CN，新建 skills 目录）；每处 4 文件、SKILL.md 哈希一致 |
+  5 处系统目录 | 复制后文件数+哈希核对 | 经验沉淀+提交 |
 
 ## 待办/遗留
 
@@ -60,6 +85,9 @@
 - [x] 本任务（P3 建议实施）15/15 完结
 - [ ] P3 #6 工作区根补 .gitattributes（行尾归一化）、#7 模板补「项目归档/退役」
       环节：未决策，待用户确认
+- [x] 新需求（精简版 agent 全局规范 skill，agent-rules）：方案已确认，已实施
+      （skill 创建 + sync 校验 + 文档同步 + 安装到五个 agent）；随 v1.1.2 发版时
+      同步版本
 
 ## 历史记录
 

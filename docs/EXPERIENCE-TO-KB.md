@@ -15,10 +15,87 @@
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
+| 2026-08-25 | 多 agent 环境定位 skill 目录 + 派生规范安装的实操路径 | 经验方法/方案 | 待沉淀 |
+| 2026-08-25 | 从完整模板派生全局精简版 agent 规范 skill（继承矩阵+版本校验） | 经验方法/方案 | 待沉淀 |
 | 2026-08-25 | skill 版本号单一来源：正文引用 version.json + 工具自动化校验 | 经验方法/方案 | 待沉淀 |
 | 2026-08-25 | 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
+
+## 2026-08-25 · 多 agent 环境定位 skill 目录 + 派生规范安装的实操路径
+
+- 来源项目/任务：通用项目模板工作区 agent-rules skill 实施与安装
+- 背景与上下文：用户要求把新 skill 安装到五个 agent：traework、workbuddy、codex、
+  dsh、qcoderwork。`<用户主目录>` 根目录枚举被拒，直接按 App 名猜路径均失败。
+- 需求/问题：如何可靠定位各 agent 的用户级 skill 目录，以及沙箱写权限受限时如何
+  完成安装。
+- 做法与过程：
+  1. 从已授权可读的子目录入手（`.codex`、`.dsh`、`.workbuddy`、`AppData\Roaming`）；
+  2. **Start Menu 快捷方式是关键线索**：`*.lnk` 文件名揭示真实产品名——
+     `TRAE Work CN.lnk`（traework）、`QoderWork CN.lnk`（qcoderwork）、
+     `WorkBuddy.lnk`；`WScript.Shell` 可解析快捷方式目标/工作目录；
+  3. 产品数据目录：TraeWork → `<用户主目录>\.trae-cn\skills`（与 Trae CN
+     共用用户目录，`<工作区路径>` 只是工作区）；QoderWork →
+     `<用户主目录>\.qoderwork\skills`（原目录不存在，安装时新建）；
+     WorkBuddy → `.workbuddy/skills`；Codex → `.codex/skills`；DSH → `.dsh/skills`；
+  4. 安装：沙箱无写权限 → 升级权限获批后 `Copy-Item -Recurse`，装完核对文件数与
+     SKILL.md 哈希，确认不是「报错但显示 OK」的假成功（PowerShell 非终止错误 +
+     try/catch 会误报 OK，必须用文件数/哈希验证）。
+- 经验/教训：
+  - 定位未知应用的数据目录：优先看 Start Menu 快捷方式（真实产品名）→ 解析目标 →
+    再按 `~/.<product>` 与 `AppData\Roaming\<Product>` 排查，比盲目猜路径高效；
+  - 同系列产品可能共用用户目录（TRAE Work 与 Trae CN 共用 `.trae-cn`），不要按
+    字面名猜目录；
+  - PowerShell `Copy-Item` 的访问拒绝是非终止错误，try/catch 不会捕获——安装类
+    操作成功与否必须以「文件数 + 哈希」复核，不能只看 OK 输出；
+  - 全局规范类 skill 安装到多 agent 时，把「安装位置表」写进工作区 README，
+    便于复现与后续更新。
+- 验证/效果：五处均安装 4 文件、SKILL.md 哈希一致；quick_validate 通过。
+- 相关文件：`agent-rules/`、`README.md`（使用方法 4）、`docs/WORKLOG.md`
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/方案`；`domain=本机环境/Agent 工程实践`；
+  `tags=[skill 安装, 多 agent, Windows, 目录定位, 沙箱权限]`；`project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
+
+## 2026-08-25 · 从完整模板派生全局精简版 agent 规范 skill（继承矩阵+版本校验）
+
+- 来源项目/任务：通用项目模板工作区新需求方案设计（agent-rules 精简版要求 skill）
+- 背景与上下文：通用项目模板的规范体系完整但体量庞大（两份 AGENTS + docs/ +
+  scripts/ + private/dev 文档体系），面向「项目」场景。用户希望给**每个 agent 的
+  所有非纯聊天对话**提供一份精简版要求 skill：不依赖项目结构、随模板每版本更新、
+  除项目专属规定外一律继承。
+- 需求/问题：如何从「项目级完整规范」派生「全局精简规范」，并保证两者不漂移——
+  精简版既不能只是机械摘抄（大量【通用】内容是项目机制：private 子 git、
+  version.json、CI/CD、WORKLOG 等文件体系，非项目场景不适用），也不能手工维护
+  导致漏更。
+- 做法与过程（方案设计）：
+  1. 边界划分：**继承原则、裁剪机制**——15 条红线/工作流/文档治理/审计/完成清单
+     以「原则」形式继承并通用化（如阶段落盘从「更新 private/dev/WORKLOG.md」改为
+     「更新项目进度文档或向用户落盘」）；private 子 git、版本发布、CI/CD、模板
+     升级等**项目机制**不进入精简版（在项目内由项目 AGENTS.md 覆盖）；
+  2. 独立 skill 目录（`agent-rules/`，与 init-project 平级），SKILL.md 自包含
+     规范正文 + 触发规则（非纯聊天即加载）+ 冲突优先级（项目规范优先）；
+  3. **继承矩阵**（references/inheritance-map.md）作为唯一维护依据：模板红线/
+     章节 ↔ 精简条目 ↔ 是否通用化改写 ↔ 核对版本；
+  4. **版本一致性校验挂到 sync_template.py**：metadata.version == template_version
+     + 继承矩阵覆盖完整性（模板红线条数/编号变更 → sync 失败），把「随版本更新」
+     从人工约定升级为工具强制。
+- 经验/教训：
+  - 派生/精简类规范的核心风险是**漂移**：解决靠「显式继承矩阵 + 自动化校验」，
+    而不是复制粘贴时的手工小心；
+  - 「继承」要区分**原则**与**机制**：项目机制裁剪掉，但机制背后的原则
+    （进度落盘、可恢复删除、先对齐后实施）保留并通用化，才是真正的继承；
+  - 全局 skill 的触发规则要写进 description 且覆盖面广（「非纯聊天」），
+    并让项目级规范声明优先级，避免双规范冲突。
+- 验证/效果：方案阶段（待用户确认后实施验证）；审计确认当前 sync/校验机制可扩展。
+- 相关文件：`project-template/AGENTS.md`、`project-template/private/AGENTS.md`、
+  `docs/audit-checklist.md`、`scripts/sync_template.py`、`docs/WORKLOG.md`
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/方案`；`domain=项目管理/Agent 工程实践`；
+  `tags=[skill, 规范派生, 继承矩阵, 版本同步, 自动化校验]`；`project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
 
 ## 2026-08-25 · skill 版本号单一来源：正文引用 version.json + 工具自动化校验
 

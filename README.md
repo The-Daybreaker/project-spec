@@ -35,6 +35,17 @@
     └── assets/project-template/     # 模板副本（skill 分发用，与 project-template/ 同步）
 ```
 
+另含 `agent-rules/`（见「使用方法 3」）：
+
+```text
+agent-rules/                     # skill：Agent 通用行为规范（精简版，全局基线）
+├── SKILL.md                     # 规范正文（自包含）+ 触发规则（非纯聊天对话加载）
+├── references/
+│   ├── inheritance-map.md       # 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（防漂移）
+│   └── audit-checklist-lite.md  # 精简审计清单（自审/独立审计共用）
+└── agents/openai.yaml           # agent 平台接口描述
+```
+
 ## 模板设计要点
 
 1. **AGENTS.md 拆分**：根目录 `AGENTS.md`（公开，可发布到 GitHub，不写进
@@ -115,11 +126,36 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 按技术栈实现 `scripts/ci_check.py` 与 `.github/workflows/ci.yml` → 用户确认后配置
 远端并推送（首个 push 不自动发 Release）。
 
+### 4. 安装 agent-rules 精简版全局规范 skill
+
+`agent-rules/` 是从通用模板【通用】部分派生的**精简版 agent 全局行为规范**：任何
+**非纯聊天对话**（编码、文档、分析、调研、规划、文件操作、事实性问答等）都应加载
+并遵守；在项目内工作时项目自身 `AGENTS.md` 优先（增量覆盖），非项目对话以它为准。
+除项目专属的需求/规定外，模板要求一律继承（继承矩阵 + sync 自动化校验保证随模板
+版本同步，不漂移）。
+
+安装：把 `agent-rules/` 整个目录复制到各 agent 的用户级 skill 目录（重启/刷新后
+生效）。本机已安装位置：
+
+| Agent | skill 目录 |
+|---|---|
+| Codex | `<用户主目录>\.codex\skills\agent-rules` |
+| DSH | `<用户主目录>\.dsh\skills\agent-rules` |
+| WorkBuddy | `<用户主目录>\.workbuddy\skills\agent-rules` |
+| TraeWork（TRAE Work CN） | `<用户主目录>\.trae-cn\skills\agent-rules` |
+| QoderWork（QoderWork CN） | `<用户主目录>\.qoderwork\skills\agent-rules` |
+
+其他机器/agent：找到对应用户级 skill 目录（如 `~/.codex/skills`、`~/.dsh/skills`、
+`~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qoderwork/skills`），复制
+`agent-rules/` 进去即可。
+
 ## 维护约定
 
 - **改模板必同步**：修改 `project-template/` 后运行
   `python scripts/sync_template.py`，把改动镜像到
-  `init-project/assets/project-template/`（skill 分发的是副本，两份必须一致）。
+  `init-project/assets/project-template/`（skill 分发的是副本，两份必须一致）；
+  模板【通用】变更还需同步 `agent-rules/`（精简版全局规范正文或继承矩阵指纹复核），
+  sync 会一并校验（版本一致性 + 矩阵覆盖 + 红线正文指纹）。
 - **private/ 骨架的跟踪**：模板自身的 `.gitignore` 会忽略 `private/`（这正是设计
   目标——目标项目中的 private/ 永不进主仓库），因此本工作区仓库需要用
   `git add -f project-template/private init-project/assets/project-template/private`
@@ -129,13 +165,14 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （中文 Windows 默认 GBK 编码下若报 UnicodeDecodeError，先设置 `PYTHONUTF8=1`）。
 - **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
   （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
-  `SKILL.md metadata.version`，并**全局 grep 新旧版本号**（如 `1.1.0` / `1.1.1`）
-  核对所有文档内嵌版本字样（`SKILL.md` 仅 `metadata.version`；
-  `references/init-steps.md` 已改为引用 `version.json`；模板内部文件一律用
-  占位符、不写死版本），确认无残留后再走模板发布流程。
-  `scripts/sync_template.py` 会自动校验 `SKILL.md metadata.version` 与
-  `project-template/version.json` 的 `template_version` 一致（改模板/发版后运行
-  sync 即校验）。
+  `SKILL.md metadata.version`、`agent-rules/SKILL.md metadata.version` 与
+  `agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧版本号**
+  （如 `1.1.0` / `1.1.1`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+  `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；模板
+  内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
+  `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
+  `agent-rules` 继承矩阵版本/覆盖/指纹与 `project-template/version.json` 的
+  `template_version` 一致（改模板/发版后运行 sync 即校验）。
 - **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.1；
   版本号见 `version.json`）。
 
