@@ -310,9 +310,13 @@ def main() -> int:
     print('  1. 回读校验: git grep -n -E "\\{\\{[A-Z_]+\\}\\}" 应无残留；git status 与 git -C private status 应干净')
     print('  2. git check-ignore private/ 应命中（.gitignore 生效）')
     print('  3. 请用户补充 private/AGENTS.md 的「本机环境」「安装目标/部署目标」')
-    print('  4. 按项目技术栈实现 scripts/ci_check.py 与 .github/workflows/ci.yml')
-    print('  5. 用户确认后配置远端并推送首个提交（首次 push 不自动发 Release）')
-    print('  6. 立项初期先调研: 与 agent 讨论项目思路/需求/架构/功能/产品时，'
+    print('  4. 开发前登记册: 首个 M/L 需求按 private/dev/{prd,rfc,adr,research}/'
+          'INDEX.md 走开发前门禁（S 档可跳过）')
+    print('  5. 流程提示: 每次对话展示流程位置（当前节点/已完成/下一步，以 '
+          'private/dev/WORKLOG.md「流程位置」为准；缩写附中文翻译）')
+    print('  6. 按项目技术栈实现 scripts/ci_check.py 与 .github/workflows/ci.yml')
+    print('  7. 用户确认后配置远端并推送首个提交（首次 push 不自动发 Release）')
+    print('  8. 立项初期先调研: 与 agent 讨论项目思路/需求/架构/功能/产品时，'
           '要求 agent 优先在 GitHub 调研现成参考并提醒「先调研再立项」（AGENTS.md 红线 13）')
     return 0
 

@@ -99,6 +99,8 @@ git -C private commit -m "docs: private v0.0.1 - init"
       TEST-REPORT 对应）
 - [ ] 根 `AGENTS.md` 存在且 `{{PROJECT_NAME}}` 已替换
 - [ ] `private/AGENTS.md` 存在（版本为 `0.0.1`，待用户补充「本机环境」「用户决策」）
+- [ ] 根/私有 `AGENTS.md` 含「流程提示」与「缩写对照」（v1.2.0 特性：每次对话
+      展示流程位置、缩写附中文翻译）
 - [ ] `version.json`：`version` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
 - [ ] `version.json`：`template_version` 与 skill/模板版本一致（以
       `assets/project-template/version.json` 的 `template_version` 字段为准）
@@ -154,6 +156,9 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - `private/dev/prd/INDEX.md` / `rfc/INDEX.md` / `adr/INDEX.md` /
   `research/INDEX.md`：模板自带登记册（状态机/编号/模板骨架）；首个 M/L 需求时
   按它创建文档（S 档可跳过）。
+- 「流程提示」：每次对话展示流程位置（当前节点/已完成/下一步），以
+  `private/dev/WORKLOG.md`「流程位置」为单一真相；展示时缩写附中文翻译
+  （对照表见 `private/AGENTS.md`「缩写对照」）。
 
 ### 阶段 2 · 首个功能开发前（实现 CI，一次做完）
 

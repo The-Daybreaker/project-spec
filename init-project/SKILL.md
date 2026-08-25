@@ -59,7 +59,8 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
 
 1. 若目标项目尚在**立项/思路阶段**（用户要讨论项目思路、需求、架构、功能、产品
    等），先按模板红线 13 在 GitHub 调研现成参考（相似项目、方案、库），向用户
-   展示调研结果并提醒**「先调研再立项」**，用户确认后再继续收集参数。
+   展示调研结果并提醒**「先调研再立项」**，用户确认后再继续收集参数；正式调研
+   结果落 `private/dev/research/RESEARCH-XXXX`（或内嵌 PRD/RFC 对应节）。
 2. 与用户确认目标目录（必须为空目录，或仅含用户声明保留的文件；**不覆盖已有
    非模板文件**）。
 3. 收集参数：项目名（英文/拼音，kebab-case）、一句话描述、GitHub 远端 URL
@@ -90,10 +91,15 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
      （以 `assets/project-template/version.json` 的 `template_version` 字段为准）；
    - `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
      已生成；
+   - `private/dev/{prd,rfc,adr,research}/INDEX.md` 已生成（开发前四登记册）；
+   - `private/dev/WORKLOG.md`「当前任务」含「流程位置」字段；
+   - `python scripts/check_dev_docs.py` 退出码 0（空登记册应通过）；
    - `python scripts/trash.py --help` 退出码 0。
 4. **收尾与汇报**：确认 `.gitignore` 生效（`git check-ignore private/` 应命中）；
    向用户汇报：初始化位置、两个 git 仓库、下一步建议（填写 README 与
-   `private/AGENTS.md` 的「本机环境」「用户决策」，配置远端后推送）。
+   `private/AGENTS.md` 的「本机环境」「用户决策」；首个 M/L 需求走开发前门禁
+   ——需求/方案/决策/调研落 `private/dev/{prd,rfc,adr,research}/`；每次对话
+   展示流程位置；配置远端后推送）。
 
 ## 执行红线
 

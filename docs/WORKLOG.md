@@ -8,11 +8,12 @@
 
 ## 当前任务
 
-- 需求：全面审计（v1.2.0 发版 + `386813b` 之后）：自动化验证 + 独立子代理审计
-  + 人工文档核对 + 修复。
+- 需求：init-project skill 初始化流程更新（审计后续）：`init_project.py` 下一步
+  提示 + SKILL 执行流程/前置确认 + init-steps 校验清单/落地路线图补 v1.2.0
+  特性（开发前登记册 / 流程提示 / 缩写翻译 / check_dev_docs）。
 - 流程位置：14/16 · 展示与提交（S 档：01 需求提出 → 10 确认开工 直达）；
-  已完成：01-13（含 v1.2.0 发版、「缩写中文翻译」任务、全面审计与修复）；
-  下一步：16 沉淀汇报（15 发版 v1.2.1 由用户决定）。
+  已完成：01-13（含全面审计与修复）；下一步：16 沉淀汇报（15 发版 v1.2.1
+  由用户决定）。
 - 计划步骤：
   1. 自动化验证（✅ 已完成）：sync 36 文件 0 差异 / quick_validate×2 / py_compile /
      init 冒烟 / check_dev_docs / 版本与占位符 grep / 六处副本哈希 全绿
@@ -225,6 +226,16 @@
   翻译」→ 补充。复检：CHANGELOG 新在前 / 维护约定 1-9 / DOCS 地图 / 职责表 /
   audit §1-10 / 治理无残留 | 见修复清单 | sync / quick_validate / 六处哈希全过 |
   14 提交 → 16 汇报（15 待发版 v1.2.1） |
+| 42 init-project 初始化流程更新 | ✅ | 用户指出 init-project 初始化流程也应
+  更新；取证确认缺口：`init_project.py` 打印「下一步」仍为 v1.1 心智（无开发前
+  登记册/流程提示）、SKILL 执行流程校验清单缺四登记册/check_dev_docs/流程位置、
+  前置确认缺调研落点、init-steps 缺特性核对。修复：init_project.py 下一步扩为
+  8 条（补登记册/流程提示/缩写翻译）；SKILL 执行流程第 3 步补 3 项校验、第 4
+  步收尾建议补开发前门禁；前置确认 1 补调研落点 RESEARCH；init-steps 校验清单
+  补「流程提示/缩写对照」、阶段 1 补流程提示说明；CHANGELOG 未发版登记 |
+  init-project/scripts/init_project.py、init-project/SKILL.md、
+  init-project/references/init-steps.md、docs/CHANGELOG.md | 待 py_compile/
+  quick_validate/冒烟/重装 | 14 提交 → 16 汇报（15 待发版 v1.2.1） |
 
 ## 待办/遗留
 
