@@ -8,9 +8,9 @@
 
 | 项 | 版本 |
 |---|---|
-| 模板 `template_version`（权威） | 1.1.2 |
-| `../SKILL.md` `metadata.version` | 1.1.2 |
-| 上次核对模板版本 | 1.1.2 |
+| 模板 `template_version`（权威） | 1.2.0 |
+| `../SKILL.md` `metadata.version` | 1.2.0 |
+| 上次核对模板版本 | 1.2.0 |
 
 ## 2. 模板红线覆盖（project-template/AGENTS.md「通用红线」）
 
@@ -30,7 +30,7 @@
 | 红线 9 | private 目录纪律 | SKILL 规范 9 | 通用化 | 8666e79b114a |
 | 红线 10 | 发布前验证 | SKILL 规范 10 | 通用化 | ed98f8b269a8 |
 | 红线 11 | 密钥安全 | SKILL 规范 9 | 通用化 | f888e9170915 |
-| 红线 12 | 文档同步与治理 | SKILL 规范 11 | 原样 | 73f0ca0b27a1 |
+| 红线 12 | 文档同步与治理 | SKILL 规范 11 | 原样 | 32658e418578 |
 | 红线 13 | 立项调研先行 | SKILL 规范 12 | 原样 | ccc5f372d29d |
 | 红线 14 | 阶段落盘 | SKILL 规范 13 | 通用化 | d715235c5ea1 |
 | 红线 15 | 上下文恢复重读 | SKILL 规范 14 | 原样 | 2950352ae8b6 |
@@ -45,12 +45,17 @@
 | private/AGENTS.md「完成检查清单」 | 交付清单 | SKILL 第 5 节 | 精简 |
 | 模板「版本管理」提交信息 | 提交/分支格式 | SKILL 第 4 节 | 原样 |
 | 模板「经验沉淀」 | 每轮对话后写候选经验 | SKILL 规范 15 | 原样 |
+| 模板「开发工作流·流程提示」 | 每次汇报展示当前节点/已完成/下一步 | SKILL 第 3 节 | 通用化 |
 
 ## 4. 不继承（项目机制；项目内由项目 AGENTS.md 覆盖）
 
 - `version.json` / bump / CI-CD / Release / tag / 模板升级流程
 - `dist/` 发布产物目录与 Release attach、项目归档/退役流程
 - private 子 git、三区文件归属、WORKLOG/DESIGN/CHANGELOG/TEST-REPORT 文件体系
+- PRD/RFC/ADR/RESEARCH 四登记册文件体系（`private/dev/{prd,rfc,adr,research}/`）
+- `scripts/check_dev_docs.py` 登记册校验脚本（并入项目 ci_check/pre_release_check）
+- WORKLOG「流程位置」字段（项目机制；「长流程任务每次汇报展示进度位置」的原则
+  已继承进 SKILL 第 3 节）
 - 具体脚本（`pre_release_check.py` / `trash.py` 等）
 - 项目概览、技术栈、本机环境、用户决策、定案清单、必须询问清单
 

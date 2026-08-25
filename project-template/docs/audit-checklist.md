@@ -96,6 +96,21 @@
 - [ ] 本轮候选经验已写入 EXPERIENCE-TO-TEMPLATE / EXPERIENCE-TO-KB 并提醒用户沉淀
 - [ ] 主仓库与 private 子 git 均提交干净；归档后为只读维护
 
+## 10. 开发前文档一致性（涉及 PRD/RFC/ADR/RESEARCH 时执行）
+
+- [ ] 涉及 M/L 需求：PRD 已定稿且字段齐全（背景/用户场景/需求范围/验收标准/
+      不在范围/优先级）；S 档已在 WORKLOG 记录档位与跳过理由
+- [ ] 架构级决策有 ADR；ADR 编号连续无缺口；正文未被修改（`git log` 核对 ADR
+      文件提交历史）
+- [ ] PRD/RFC/ADR/RESEARCH 的 INDEX 状态与文档头部一致；索引排序符合各自
+      INDEX.md 规则（PRD 按状态+优先级、RFC/RESEARCH 新条目在前、ADR 编号升序）
+- [ ] 已实现 PRD 填了实现版本；CHANGELOG 对应版本条目引用 PRD/RFC/ADR 编号
+- [ ] RESEARCH 发现记录带日期/来源（追加式）；「结论与建议」为当前有效状态；
+      已过期调研有取代目标
+- [ ] `private/AGENTS.md` D-xxx 的 `详见 ADR-XXXX` 引用存在（单一真相）
+- [ ] `scripts/check_dev_docs.py` 通过（发布前必跑；pre_release_check 已集成）
+- [ ] 回复/收尾已展示流程位置，且与 `WORKLOG.md`「流程位置」一致
+
 ## 审计结论
 
 - 审计方式：自审 / 独立审计（审计人：____，时间：____）

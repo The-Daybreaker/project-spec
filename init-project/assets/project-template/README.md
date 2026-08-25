@@ -37,12 +37,23 @@ npm test
 └── private/                 # 私有区：个人/开发期文件（不进 GitHub）
     ├── PRIVATE.md           # 私有区说明与子 git 管理
     ├── AGENTS.md            # 开发入口与当前状态（唯一常青开发记忆）
-    └── dev/                 # DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
+    └── dev/
+        ├── prd/             # 需求登记册（PRD-XXXX，开发前门禁）
+        ├── rfc/             # 方案登记册（RFC-XXXX，评审后冻结）
+        ├── adr/             # 决策登记册（ADR-XXXX，只增不改）
+        ├── research/        # 调研登记册（RESEARCH-XXXX，红线 13 结果）
+        └── DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
 ```
 
 ## 开发与发布
 
 - **Agent 协作**：见根 `AGENTS.md`（开发工作流、通用红线、发布流程）。
+- **开发前规范**：M/L 需求先走开发前门禁——需求（PRD）、方案（RFC）、调研
+  （RESEARCH）、架构决策（ADR）分别落 `private/dev/{prd,rfc,adr,research}/`
+  （S 档可跳过；登记册状态机与模板见各 `INDEX.md`）；定稿方案吸收进
+  `private/dev/DESIGN.md`。
+- **流程提示**：每次对话展示流程位置（当前节点/已完成/下一步），以
+  `private/dev/WORKLOG.md`「流程位置」为准。
 - **立项调研先行**：与 agent 讨论项目思路/需求/架构/功能/产品时，agent 会优先在
   GitHub 调研现成参考并提醒「先调研再立项」（见 `AGENTS.md` 红线 13）。
 - **人类贡献**：见 `docs/CONTRIBUTING.md`。

@@ -1,7 +1,7 @@
 ---
 name: init-project
 metadata:
-  version: 1.1.2
+  version: 1.2.0
 description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（AGENTS.md 公开/私有拆分、private 子 git、.gitignore、CI/CD 工作流、自动化脚本、Agent+人协作开发工作流与通用红线），替换项目占位符，初始化主 git 与 private 子 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
 ---
 
@@ -42,6 +42,13 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   随模板初始化即存在，目录树/三区表/归档流程已显式引用。
 - **测试落地指引**：`docs/TESTING.md`（pytest 示例、覆盖率、CI 接入、TEST-REPORT
   对应；`ci_check.py` 内含接入示例注释）。
+- **开发前规范（PRD/RFC/ADR/RESEARCH 四登记册）**：M/L 需求先走开发前门禁——
+  需求（PRD）、方案（RFC）、调研（RESEARCH）、架构决策（ADR）分别落
+  `private/dev/{prd,rfc,adr,research}/`（各含 `INDEX.md`：状态机/编号规则/
+  模板骨架；S 档可跳过）；`scripts/check_dev_docs.py` 自动校验登记册一致性
+  （编号连续/状态机/INDEX 同步），已并入 `ci_check.py` 与发布前检查。
+- **流程提示**：每次对话展示流程位置（当前节点/已完成/下一步，16 节点两阶段
+  清单），以 `private/dev/WORKLOG.md`「流程位置」为单一真相。
 - **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
   `codex_2026-08-25_2330`），任务结束时用 `scripts/trash.py` 整体进回收站。
 - **模板版本与升级**：项目根 `version.json` 的 `template_version` 记录初始化时的

@@ -14,16 +14,52 @@
 - audit-checklist 新增「变更分级与质量门禁」（文档/常规/架构三级）。
 - docs/README 新增「文档地图」。
 
-## 未发版变更（v1.1.3 候选）
+## v1.2.0（2026-08-26）
 
-- init-project 覆盖度修复：`references/init-steps.md` 校验清单补
+> 本版为「项目开发前阶段」规范大版本：新增 PRD/RFC/ADR/RESEARCH 四登记册体系、
+> 状态机三层约束、流程提示；`version.json` 的 `version` / `template_version` 与
+> tag `v1.2.0` 对齐（minor 升版，用户已确认）。
+
+- **开发前规范（PRD/RFC/ADR/RESEARCH 四登记册）**：模板新增
+  `private/dev/{prd,rfc,adr,research}/`（各含 INDEX.md：状态机/编号规则/模板骨架/
+  索引），覆盖「开发前」阶段——需求（PRD：背景/范围/验收/优先级 P0-P3，定稿
+  门禁）、方案（RFC：候选对比，评审后冻结）、决策（ADR：Nygard 模板，只增不改）、
+  调研（RESEARCH：红线 13 结果，发现记录追加+结论可覆盖）；编号跨版本连续不重用；
+  PRD INDEX=需求登记册（草稿=待办/已定稿=排期/已实现=完成/已废弃=放弃，按状态+
+  优先级排序）；已定稿 PRD 变更开新 PRD 取代；开发前门禁贯穿每个 M/L 需求
+  （S 档可跳过）。
+- **文档治理扩展**：`private/dev/prd|rfc|adr|research/` 为**历史文档区**（唯一
+  允许正文留史；PRD/RFC 定稿冻结、ADR 只增不改、RESEARCH 发现记录只追加）；
+  其余正文仍「即当前状态」；根/私有 AGENTS、DOCS、DESIGN、CONTRIBUTING、
+  audit-checklist（新增第 10 节）、PRIVATE、README 同步。
+- **状态机三层约束**：流程层（工作流显式状态更新动作 + 状态变更权限：定稿/采纳/
+  废弃须用户确认，已实现由 agent 自动更新）；检查层（完成清单 + audit-checklist
+  开发前文档一致性）；工具层（新增 `scripts/check_dev_docs.py`：编号连续/元数据
+  枚举/状态机规则/INDEX 与正文一致/D-xxx→ADR 交叉引用/WORKLOG 流程位置字段；
+  并入 `ci_check.py` 与 `pre_release_check.py` 发布前必跑）。
+- **流程提示**：16 节点两阶段清单（开发前 01-09 / 实施交付 10-16）；每次实质
+  回复/阶段落盘/上下文恢复/收尾展示流程位置（当前节点/已完成/下一步），以
+  `private/dev/WORKLOG.md`「流程位置」为单一真相；模板 WORKLOG 新增该字段；
+  agent-rules 工作流补「长流程任务每次汇报展示进度位置」通用原则。
+- init-project 同步：SKILL 摘要补开发前规范/流程提示；`init-steps.md` 校验清单
+  补四登记册 INDEX 与 `check_dev_docs.py` 生成检查、落地路线图阶段 3 升级为
+  「开发前门禁」、文档时机速查表补登记册行。
+- agent-rules 同步：规范 11 补「历史文档区例外」原则；继承矩阵红线 12 指纹更新、
+  「不继承」列表登记四登记册/`check_dev_docs.py`/WORKLOG 流程位置字段。
+- sync 校验扩展：`INIT_STEPS_COVERAGE` 新增四登记册 INDEX 与 `check_dev_docs.py`
+  五条路径。
+- 工作区同步：根 `AGENTS.md` / README 版本号校准为 1.2.0（发版同步）；工作区
+  WORKLOG 新增「流程位置」字段（dogfood）。
+
+- init-project 覆盖度修复（v1.1.2 发版后审计发现）：`references/init-steps.md`
+  校验清单补
   `archive/ARCHIVE.md`、`dist/.gitkeep`（含 ignore 规则校验：`dist/<任意文件>`
   命中、`.gitkeep` 不命中）与 `docs/TESTING.md` 生成检查；初始化后建议引用测试
-  落地指引。（v1.1.2 发版后发现的「校验清单未覆盖新实体」缺口）
+  落地指引。
 - 工作流缺陷修复：`scripts/sync_template.py` 新增 `INIT_STEPS_COVERAGE` 校验——
   模板关键文件未同步到 `init-steps.md`（校验清单/常见问题/落地路线图）时 sync
   直接失败，把「改模板 → 同步 skill 承载文档」从人工特性核对升级为工具强制；
-  `init-steps.md` 第 7 节升级为「初始化后落地路线图」（阶段 1 文档填空 / 阶段 2
+   `init-steps.md` 第 7 节升级为「初始化后落地路线图」（阶段 1 文档填空 / 阶段 2
   实现 CI / 阶段 3 首个需求 / 阶段 4 首次发布 / 阶段 5 立项调研 + 文档时机速查表），
   明确「何时写/何时更新各模板文档」与「实现 CI 的时机与步骤」。
 

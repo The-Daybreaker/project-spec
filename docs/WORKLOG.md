@@ -10,7 +10,11 @@
 
 - 需求：为模板补「项目开发前阶段」规范（需求讨论、定架构、定设计方案，含调研
   落点与后续新增需求机制）。用户选定 C 档（PRD + RFC + ADR 三层体系）；当前
-  已完成方案设计并细化，待用户确认后实施。
+  已确认全部方案，进入实施（发版 v1.2.0）。
+- 流程位置：11/16 · 实施；已完成：01 需求提出 → 02 调研 → 03 PRD 草稿 →
+  04 PRD 评审 → 05 PRD 定稿 → 06 RFC 草稿 → 07 RFC 评审 → 08 ADR 记录 →
+  09 DESIGN 吸收 → 10 确认开工；下一步：12 自动审计 → 13 验证 → 14 提交 →
+  15 发布 → 16 经验沉淀与汇报。
 - 计划步骤：
   1. 方案设计（✅ 已完成）：四目录实体化（prd/rfc/adr/research 各含 INDEX.md）、
      状态机、开发前门禁、S/M/L 档位、与现有文档衔接、同步面清单、实施步骤；
@@ -190,6 +194,20 @@
   除外）；S 档 N1→N10 直达；约束=工作流规则+完成清单+审计清单+check_dev_docs
   校验 WORKLOG 字段存在；母项目同步 dogfood | docs/WORKLOG.md
   docs/EXPERIENCE-TO-KB.md | 回读核对 | 待用户确认流程提示设计后实施 |
+| 37 开发前规范·实施 | ✅ | 用户确认开始实施。模板新增 4 个登记册 INDEX.md
+  （prd/rfc/adr/research）+ `scripts/check_dev_docs.py`；规范正文同步（根/私有
+  AGENTS×2、WORKLOG 流程位置字段、DESIGN、DOCS、CONTRIBUTING、README、PRIVATE、
+  audit-checklist 第 10 节）；pre_release_check/ci_check 接入 check_dev_docs；
+  init-project SKILL/init-steps、agent-rules SKILL 内容同步；sync 覆盖列表 +
+  工作区 AGENTS/README/CHANGELOG/WORKLOG dogfood | 见变更文件清单 |
+  待验证 | 12 自动审计 → 13 验证 → 14 提交 → 15 发版 v1.2.0 |
+| 38 开发前规范·验证+发版准备 | ✅ | 全链路验证全绿：sync 36 文件 0 差异
+  （template_version=1.2.0）；quick_validate ×2 valid；py_compile OK；
+  check_dev_docs 正/负向测试 4/4（缺定稿日期拦截、补齐通过、ADR 自取代拦截、
+  编号缺口拦截；期间修复解析 bug×2：同行 `|` 分隔字段截断、`>` 块引用前缀
+  剥离）；init 冒烟全过（36 文件/四登记册/流程位置字段/模板版本 1.2.0/
+  check_dev_docs/ci_check/pre_release）；版本号全局 grep 无残留（仅历史）；
+  占位符仅模板合法 | 无（只读验证） | 全过 | 提交 + tag v1.2.0 + 六处重装 |
 
 ## 待办/遗留
 

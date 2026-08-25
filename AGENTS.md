@@ -15,7 +15,7 @@
   `project-template/`（权威模板，同步到 skill 资产）、`init-project/`（skill：
   SKILL.md / references / scripts / assets）、`agent-rules/`（skill：精简版
   agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.1.2）+ git tag；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.2.0）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
@@ -62,6 +62,9 @@
 7. **经验自动沉淀**：每轮对话结束后**自动**把完整候选经验写入
    `docs/EXPERIENCE-TO-KB.md`（必做、不需询问，与模板红线 9 对齐）；沉淀与否、
    沉淀到哪由用户决定。
+8. **流程提示（dogfood）**：工作区汇报/阶段落盘/收尾展示流程位置（当前节点/
+   已完成/下一步），以 `docs/WORKLOG.md`「当前任务 → 流程位置」为单一真相；
+   WORKLOG 当前任务须含「流程位置」字段（与模板 v1.2.0 对齐）。
 8. **索引/未发版区段纪律（收尾核对）**：「新条目在前」的文档（如
    `docs/EXPERIENCE-TO-KB.md` 索引与正文、`docs/CHANGELOG.md` 未发版区段），新增
    条目必须**正文与索引同时置顶**；任务收尾/汇报前核对：索引顺序与正文一致、

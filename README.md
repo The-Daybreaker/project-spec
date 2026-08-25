@@ -30,7 +30,7 @@
 │   └── private/              #   私有区（不进 GitHub，内部子 git 管理）
 │       ├── PRIVATE.md        #     私有区说明与子 git 管理
 │       ├── AGENTS.md         #     开发指引（唯一常青开发记忆）
-│       └── dev/              #     DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
+│       └── dev/              #     PRD/RFC/ADR/RESEARCH 登记册 + DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
 └── init-project/             # skill：根据模板初始化指定项目文件夹
     ├── SKILL.md
     ├── references/init-steps.md     # 初始化执行细节
@@ -98,6 +98,12 @@ agent-rules/                     # skill：Agent 通用行为规范（精简版�
 12. **发布产物与归档**：构建/打包产物统一输出 `dist/`（C 区、不进 git、Release
     自动 attach）；项目停止主动开发时有「项目归档/退役」流程（最终发布 + README
     归档标记 + 产物归档 + 经验沉淀，agent 不擅自删除）。
+13. **开发前规范与流程提示**：M/L 需求先走开发前门禁——需求（PRD）/方案（RFC）/
+    调研（RESEARCH）/架构决策（ADR）四登记册
+    （`private/dev/{prd,rfc,adr,research}/`，各含 INDEX.md 状态机/编号/模板骨架，
+    S 档可跳过）；`scripts/check_dev_docs.py` 自动校验登记册一致性（并入
+    ci_check 与发布前检查）；每次对话展示流程位置（当前节点/已完成/下一步，
+    以 `private/dev/WORKLOG.md`「流程位置」为单一真相）。
 
 ## 使用方法
 
@@ -186,8 +192,10 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （`INIT_STEPS_COVERAGE`，缺失即拦截）；改模板/发版后按「skill 覆盖度复查」核对
   SKILL 摘要 / init-steps 校验清单与路线图 / agent-rules（如涉红线）/
   全部已安装副本重装并哈希复核。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.2；
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.2.0；
   版本号见 `version.json`）。
+- **流程提示**：工作区汇报/阶段落盘/收尾展示流程位置（以 docs/WORKLOG.md
+  「流程位置」为准）。
 - **索引/未发版区段纪律**：「新条目在前」的文档（EXP-KB 索引与正文、CHANGELOG
   未发版区段）新增条目须**正文与索引同时置顶**；收尾核对索引顺序、日期、未发版
   条目与 `git log` 一致。

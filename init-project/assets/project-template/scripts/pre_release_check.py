@@ -119,7 +119,7 @@ def main() -> int:
             f"[warning] --version ({args.version}) differs from version.json "
             f"({version}); using file value."
         )
-    print(f"[1/6] current version: v{version}")
+    print(f"[1/7] current version: v{version}")
 
     # --- 2. private sub-git sync (required before release) ---
     if not args.skip_subgit:
@@ -143,7 +143,7 @@ def main() -> int:
                     return 1
                 print(f"==> committed: {msg}")
             else:
-                print("[2/6] private sub-git clean.")
+                print("[2/7] private sub-git clean.")
             after = _run(["git", "-C", "private", "status", "--short"])
             if after.stdout.strip():
                 print("[error] private sub-git still dirty; fix manually.", file=sys.stderr)
@@ -151,10 +151,10 @@ def main() -> int:
         else:
             print("[warning] private/ is not a git repo (sub-git not initialized).")
     else:
-        print("[2/6] private sub-git sync skipped (--skip-subgit).")
+        print("[2/7] private sub-git sync skipped (--skip-subgit).")
 
     # --- 3. main repo status + safety scan ---
-    print("[3/6] main repo status:")
+    print("[3/7] main repo status:")
     pairs = _status_paths()
     if pairs:
         print("    uncommitted changes (commit before release):")
@@ -199,7 +199,7 @@ def main() -> int:
             print(f"[error] CHANGELOG top ({top}) does not match version.json (v{version}).")
             fail = True
         elif top:
-            print(f"[4/6] CHANGELOG top matches version.json: v{version}")
+            print(f"[4/7] CHANGELOG top matches version.json: v{version}")
         else:
             print(
                 f"[error] no '## v' entry found in "
@@ -231,7 +231,7 @@ def main() -> int:
             )
             fail = True
     else:
-        print("[5/6] ci_check.py implemented (no placeholder marker).")
+        print("[5/7] ci_check.py implemented (no placeholder marker).")
 
     # --- 6. doc consistency (lightweight) ---
     root_agents = REPO_ROOT / "AGENTS.md"
@@ -250,12 +250,37 @@ def main() -> int:
         fail = True
         doc_ok = False
     if doc_ok:
-        print("[6/6] doc consistency ok (root/private AGENTS.md present, pointer intact).")
+        print("[6/7] doc consistency ok (root/private AGENTS.md present, pointer intact).")
+
+    # --- 7. pre-development doc registers (PRD/RFC/ADR/RESEARCH) ---
+    check_dev_docs = REPO_ROOT / "scripts" / "check_dev_docs.py"
+    if not check_dev_docs.exists():
+        print(
+            "[error] scripts/check_dev_docs.py missing (must exist for release).",
+            file=sys.stderr,
+        )
+        fail = True
+    else:
+        r = _run(["python", str(check_dev_docs)])
+        if r.returncode != 0:
+            print(
+                "[error] check_dev_docs.py failed "
+                "(pre-development doc registers drift):"
+            )
+            for line in (r.stdout + r.stderr).splitlines():
+                print(f"    {line}")
+            fail = True
+        else:
+            print(
+                "[7/7] check_dev_docs.py ok "
+                "(PRD/RFC/ADR/RESEARCH registers consistent)."
+            )
 
     # --- reminders ---
     print("========== reminders ==========")
     print("1. auto-audit: check docs/audit-checklist.md; prefer an independent sub-agent to review git diff.")
     print("2. docs ready: CHANGELOG / DESIGN / TEST-REPORT / README / root AGENTS.md / private/AGENTS.md.")
+    print("   dev docs: PRD/RFC/ADR/RESEARCH registers consistent (scripts/check_dev_docs.py).")
     print("3. checks & tests passed and recorded in private/dev/TEST-REPORT.md (no pass, no release).")
     print("4. commit format: normal commits feat:/fix:/docs:/chore:/refactor: - description;")
     print("   release commit carries version: feat: v<version> - description")

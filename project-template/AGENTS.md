@@ -27,7 +27,7 @@
 | 区 | 位置 | 内容 | 版本管理 |
 |---|---|---|---|
 | A. 公开 | 仓库根、`src/`、`docs/`、`scripts/`、`.github/`、`archive/` | 用户可见、可发布、无敏感信息（含归档区） | 主仓库 git，发布到 GitHub |
-| B. 私有 | `private/` | 个人/机器专属信息、开发期文档（DESIGN/CHANGELOG/TEST-REPORT/WORKLOG/经验文档）、测试素材 | private 子 git（本地、无远端） |
+| B. 私有 | `private/` | 个人/机器专属信息、开发期文档（PRD/RFC/ADR/RESEARCH 登记册、DESIGN/CHANGELOG/TEST-REPORT/WORKLOG/经验文档）、测试素材 | private 子 git（本地、无远端） |
 | C. 不管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、`_trash/` | 无（.gitignore 忽略） |
 
 **归属判定规则**（新增文件必须先判区再落盘）：
@@ -48,7 +48,9 @@
    （唯一常青开发记忆），含完整工作流、发布流程、版本、本机环境、用户决策。
 2. 查看两个仓库状态：`git status`（主仓库）、`git -C private status`（私有子 git）。
 3. 读 `version.json` 与 `private/dev/CHANGELOG.md` 顶部，确认当前版本与最近变更。
-4. 读 `private/dev/DESIGN.md`（设计）与 `private/dev/TEST-REPORT.md`（测试记录）。
+4. 读 `private/dev/DESIGN.md`（设计）与 `private/dev/TEST-REPORT.md`（测试记录）；
+   有进行中的需求/方案/决策时读 `private/dev/{prd,rfc,adr,research}/INDEX.md`
+   （登记册状态，见「开发工作流」）。
 5. 读 `private/dev/WORKLOG.md`（恢复进行中进度）；若旧任务已完结或内容膨胀，
    **先询问用户是否清理**（归档到「历史记录」或移入 `_trash/`），确认后才清理。
 6. **上下文压缩后或任何新对话开始时，必须先完成以上重读（红线 15），不得凭记忆
@@ -57,10 +59,17 @@
 
 ## 【通用】开发工作流（摘要；完整版见 `private/AGENTS.md`「开发工作流」）
 
-**先对齐 → 确认开工 → 实施（每完成一小阶段先落盘更新 WORKLOG 与受影响文档，红线 14）
-→ 自动审计 → 验证 → 展示与提交（先 private 子 git）→ 发布 → 经验沉淀（每轮对话
-结束把完整候选经验写入 `private/dev/EXPERIENCE-TO-TEMPLATE.md` /
-`private/dev/EXPERIENCE-TO-KB.md`）→ 汇报。**
+**开发前（M/L 需求必走；S 档直达「确认开工」）：需求提出 → 调研（红线 13，结果落
+`RESEARCH-XXXX` 或内嵌）→ PRD 定稿（门禁 1）→ RFC 评审（可选）→ ADR 记录
+（架构级，门禁 2）→ DESIGN 吸收 → 确认开工 → 实施（每完成一小阶段先落盘更新
+WORKLOG 与受影响文档，红线 14）→ 自动审计 → 验证 → 展示与提交（先 private
+子 git）→ 发布 → 经验沉淀（每轮对话结束把完整候选经验写入
+`private/dev/EXPERIENCE-TO-TEMPLATE.md` / `private/dev/EXPERIENCE-TO-KB.md`）→
+汇报。**
+
+**流程提示（每次对话强制）**：实质回复/阶段落盘/上下文恢复/收尾/用户询问进度时，
+展示流程位置——当前节点（16 节点两阶段，见 `private/AGENTS.md`「流程提示」）、
+已完成链、下一步；以 `private/dev/WORKLOG.md`「当前任务 → 流程位置」为单一真相。
 
 涉及**立项类话题**（项目思路/需求/架构/功能/产品）时，先按「通用红线」第 13 条在
 GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
@@ -100,8 +109,10 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
     **发现过时立即修（不论是否本轮引入），无变更时也须校准状态文档**（如 WORKLOG
     「当前做到哪里」）；**文档正文 = 当前有效状态**——决策修改时直接覆盖原文、禁止
     保留旧段落或「已取代」标注、禁止 AI 在正文追加大段历史说明，确需留痕只在
-    `private/dev/CHANGELOG.md` 记一行摘要；废案直接删除（走 `_trash/` → `trash.py`），
-    可恢复性由删除机制保证。
+    `private/dev/CHANGELOG.md` 记一行摘要；**例外：`private/dev/prd|rfc|adr|research/`
+    为历史文档区，允许正文留史**（PRD/RFC 定稿后冻结、ADR 只增不改、RESEARCH
+    发现记录只追加，按各自 `INDEX.md` 状态机维护）；废案直接删除（走 `_trash/` →
+    `trash.py`），可恢复性由删除机制保证。
 13. **立项调研先行**：讨论项目思路/需求/架构/功能/产品等**立项类话题**时，
     **优先在 GitHub 调研现成参考**（相似项目、方案、库），并向用户展示调研结果、
     提醒用户**「先调研再立项」**；未经调研不引导用户立项，不把「从零造轮子」
@@ -198,6 +209,10 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进模板的经验（完整条目） |
 | `private/dev/EXPERIENCE-TO-KB.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进知识库的经验（完整条目） |
 | `private/dev/DESIGN.md` | 私有 | 混合 | 当前设计 + 开发规范（引用不重复） |
+| `private/dev/prd/` | 私有 | 项目专用 | 需求登记册（PRD：为什么做/做什么/验收/优先级；定稿后冻结） |
+| `private/dev/rfc/` | 私有 | 项目专用 | 方案登记册（RFC：怎么做/候选对比/推荐；评审后冻结） |
+| `private/dev/adr/` | 私有 | 项目专用 | 决策登记册（ADR：决定了什么/为什么；只增不改） |
+| `private/dev/research/` | 私有 | 项目专用 | 调研登记册（RESEARCH：红线 13 结果；发现记录追加、结论可覆盖） |
 | `private/dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
 | `private/dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
 | `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
@@ -210,6 +225,8 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | 变更类型 | 必须同步的文档 |
 |---|---|
 | 决策/选型/红线类 | `private/AGENTS.md`「用户确认的设计决策」（覆盖原文）+ CHANGELOG 一行摘要 |
+| 需求/方案/调研 | `private/dev/prd|rfc|research/`（登记册状态+索引同步）+ DESIGN（定稿吸收） |
+| 架构决策 | `private/dev/adr/`（只增不改）+ `private/AGENTS.md` D-xxx 一行摘要 + `详见 ADR-XXXX` + CHANGELOG 一行摘要 |
 | 进度/状态/环境 | `private/dev/WORKLOG.md`（当前做到哪里）+ 受影响文档 |
 | 设计/架构/数据流 | `private/dev/DESIGN.md` |
 | 功能/接口实现 | DESIGN / README / docs（按项目实际） |

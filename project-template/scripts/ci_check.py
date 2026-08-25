@@ -60,6 +60,15 @@ def main() -> int:
             )
             return 1
 
+    print("==> ci-check: pre-development doc registers (PRD/RFC/ADR/RESEARCH)")
+    # 模板自带：校验开发前文档登记册（编号/状态机/索引一致性），建议保留。
+    r = _run(["python", "scripts/check_dev_docs.py"])
+    if r.returncode != 0:
+        print(r.stdout, end="", file=sys.stderr)
+        print(r.stderr, end="", file=sys.stderr)
+        print("[error] check_dev_docs.py failed", file=sys.stderr)
+        return 1
+
     print("==> ci-check: TODO - implement lint / build / test for this project")
     print("    Node example: npm ci; npm run build; npm test")
     print("    Python example: python -m pytest")

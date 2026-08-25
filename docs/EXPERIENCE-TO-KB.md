@@ -15,6 +15,7 @@
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
+| 2026-08-26 | 开发前规范实施落地：四登记册 + check_dev_docs + 流程提示（v1.2.0） | 经验方法/教训 | 待沉淀 |
 | 2026-08-26 | 开发前规范（PRD/RFC/ADR）C 档方案设计 | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | 工作流缺陷修复：sync 覆盖校验 + 初始化落地路线图 | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | init-steps 校验清单未覆盖新实体（发版后遗漏检查实例） | 经验方法/教训 | 待沉淀 |
@@ -31,6 +32,52 @@
 | 2026-08-25 | 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
+
+## 2026-08-26 · 开发前规范实施落地：四登记册 + check_dev_docs + 流程提示（v1.2.0）
+
+- 来源项目/任务：通用项目模板工作区（开发前规范 C 档方案实施 + v1.2.0 发版）
+- 背景与上下文：经过四轮方案细化（C 档、调研落点 research/、增量需求机制、
+  优先级 P0-P3、状态机三层约束、流程提示），用户确认开始实施并随 v1.2.0 发版。
+- 需求/问题：把方案落成模板实体——四登记册 INDEX.md + 校验脚本 + 规范正文同步
+  + skill 同步 + 发版 + 六处重装。
+- 做法与过程：
+  1. 模板新增 `private/dev/{prd,rfc,adr,research}/INDEX.md`（实体化：用途/状态机/
+     编号规则/模板骨架/索引；**索引表不预填示例行**）；
+  2. 新增 `scripts/check_dev_docs.py`（stdlib 只读，空登记册通过）：文件名/
+     编号连续、头部元数据（按 `|` 分段解析 `> key：value`）、状态机规则
+     （PRD 定稿/实现字段、RFC 采纳日期、ADR 自取代拦截、RESEARCH 最近更新）、
+     INDEX 行与文件/状态一致、D-xxx→ADR 交叉引用、WORKLOG 流程位置字段；
+     并入 `ci_check.py` 与 `pre_release_check.py` 第 7 步；
+  3. 规范正文 11 处同步（根/私有 AGENTS、WORKLOG、DESIGN、DOCS、CONTRIBUTING、
+     README、PRIVATE、audit-checklist 第 10 节）；红线 12 加「历史文档区例外」
+     → 指纹更新 + agent-rules 规范 11 同步；
+  4. init-project SKILL/init-steps、agent-rules、`sync_template.py`
+     `INIT_STEPS_COVERAGE` +5 条、工作区 dogfood（AGENTS 维护约定 #9 /
+     WORKLOG 流程位置 / CHANGELOG / README）；
+  5. 验证：sync 36 文件 0 差异、quick_validate×2、py_compile、check_dev_docs
+     正/负向 4/4、init 冒烟、版本号全局 grep、占位符核对；
+  6. 发版 v1.2.0 + 六处重装 + 哈希复核。
+- 经验/教训：
+  - **文档状态机必须三层约束**（流程显式步骤 + 完成/审计清单 + 工具校验），
+    纯约定必然漂移；
+  - 头部元数据解析的坑：`> 状态：草稿 | 优先级：P2 | …` 同行分隔时，第一段带
+    `>` 块引用前缀、其余字段不在行首——解析须**先剥离 `>` 再按 `|` 分段**，
+    否则状态解析不到 → 状态机规则全部被跳过 → **假通过**（负向用例抓出）；
+  - 校验脚本的「空登记册通过」让新项目零负担，但 INDEX 里**不能放示例行**
+    （会被当作「无文件的行」而失败）；
+  - 正/负向用例是校验脚本可靠性的关键：4 组用例抓出 2 个解析 bug；
+  - PowerShell 内联中文 + here-string 会把 UTF-8 弄成 GBK 乱码：含中文的测试
+    脚本/内容要用 apply_patch 或文件方式生成，避免在 shell 命令里直接写中文。
+- 验证/效果：全链路全绿；v1.2.0 发版完成（tag + 六处副本哈希一致）。
+- 相关文件：project-template/private/dev/{prd,rfc,adr,research}/INDEX.md、
+  project-template/scripts/check_dev_docs.py、project-template/AGENTS.md 等
+  11 处、init-project/、agent-rules/、scripts/sync_template.py、docs/*
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/教训`；`domain=工程实践/文档治理/Agent 工程实践`；
+  `tags=[PRD, RFC, ADR, RESEARCH, 状态机, 校验脚本, 流程提示, v1.2.0]`；
+  `project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
 
 ## 2026-08-26 · 开发前规范（PRD/RFC/ADR）C 档方案设计（方案设计）
 

@@ -29,6 +29,10 @@
 | 根 `AGENTS.md` | Agent 入口：红线摘要、必读顺序、文档职责、维护清单 |
 | `private/AGENTS.md` | 开发规范全集、当前状态、环境、决策、定案/询问清单 |
 | `private/dev/DESIGN.md` | 怎么做：设计、关键不变量、影响面 |
+| `private/dev/prd/` | 为什么做/做什么：需求登记册（状态+优先级，定稿门禁） |
+| `private/dev/rfc/` | 怎么做：方案登记册（候选对比/评审结果，采纳后冻结） |
+| `private/dev/adr/` | 决定了什么/为什么：决策登记册（只增不改，历史追溯） |
+| `private/dev/research/` | 调研过什么：调研登记册（发现记录追加+当前结论） |
 | `private/dev/WORKLOG.md` | 做到哪了：当前任务、阶段进度、下次从这里继续 |
 | `private/dev/CHANGELOG.md` | 变过什么：版本历史 |
 | `private/dev/TEST-REPORT.md` | 验证过什么：测试记录 |
@@ -47,6 +51,9 @@
 
 ## 文档治理（正文即当前状态）
 
+0. **历史文档区例外**：`private/dev/prd|rfc|adr|research/` 是唯一允许正文留史的
+   位置（PRD/RFC 定稿后冻结、ADR 只增不改、RESEARCH 发现记录只追加），按各自
+   `INDEX.md` 状态机维护；其余文档一律遵守第 1-5 条。
 1. **正文 = 当前有效状态**：决策被修改时**直接覆盖原文**，不保留旧决策段落，禁止写
    「⚠️ 已取代 by …」这类历史标注。
 2. **禁止 AI 追加历史**：AI 改决策时，不得自动在正文里追加大段历史决策说明

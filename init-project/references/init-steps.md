@@ -104,9 +104,15 @@ git -C private commit -m "docs: private v0.0.1 - init"
       `assets/project-template/version.json` 的 `template_version` 字段为准）
 - [ ] `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
       已生成（阶段落盘与经验沉淀载体）
+- [ ] `private/dev/prd/INDEX.md`、`private/dev/rfc/INDEX.md`、
+      `private/dev/adr/INDEX.md`、`private/dev/research/INDEX.md` 已生成
+      （开发前四登记册：状态机/编号规则/模板骨架）
+- [ ] `private/dev/WORKLOG.md`「当前任务」含「流程位置」字段
 - [ ] `private/AGENTS.md`「发布策略」已按所选模式生成（默认不自动发布；
       `--auto-release` 为自动发布）
 - [ ] `scripts/ci_check.py` 可运行（`python scripts/ci_check.py` 退出码 0）
+- [ ] `scripts/check_dev_docs.py` 可运行（`python scripts/check_dev_docs.py`
+      退出码 0；空登记册应通过）
 - [ ] `scripts/pre_release_check.py` 可运行（当前状态应提示「可以发布」或仅警告
        CHANGELOG 已就绪后通过；占位检查未实现时会失败，可用 `--allow-placeholder`
        临时放行）
@@ -145,6 +151,9 @@ git -C private commit -m "docs: private v0.0.1 - init"
   脚本已生成骨架；每轮对话结束写入完整候选经验。
 - `docs/audit-checklist.md` / `docs/UPGRADE.md` / `docs/DOCS.md`：模板自带，
   按需阅读使用（实施后审计 / 模板升级 / 文档治理）。
+- `private/dev/prd/INDEX.md` / `rfc/INDEX.md` / `adr/INDEX.md` /
+  `research/INDEX.md`：模板自带登记册（状态机/编号/模板骨架）；首个 M/L 需求时
+  按它创建文档（S 档可跳过）。
 
 ### 阶段 2 · 首个功能开发前（实现 CI，一次做完）
 
@@ -158,8 +167,11 @@ git -C private commit -m "docs: private v0.0.1 - init"
 
 ### 阶段 3 · 首个需求（走开发工作流）
 
-对齐需求 → 决策记入 `private/AGENTS.md`（D-001）→ `private/dev/WORKLOG.md` 切换
-当前任务 → 实施（阶段落盘）→ 按 `docs/audit-checklist.md` 审计 → 提交。
+档位判定（S/M/L，与用户确认）→ M/L 档走**开发前门禁**：调研（`RESEARCH-XXXX`
+或内嵌）→ PRD 定稿（`private/dev/prd/PRD-0001-*.md`）→ RFC 评审（可选）→
+ADR 记录（架构级）→ DESIGN 吸收 → `private/AGENTS.md` D-001 摘要 +
+`详见 ADR-XXXX` → `private/dev/WORKLOG.md` 切换当前任务并记录「流程位置」→
+实施（阶段落盘）→ 按 `docs/audit-checklist.md` 审计 → 提交。
 
 ### 阶段 4 · 首次发布
 
@@ -172,6 +184,7 @@ git -C private commit -m "docs: private v0.0.1 - init"
 
 与 agent 讨论项目思路/需求/架构/功能/产品时，要求 agent 优先在 GitHub 调研现成
 参考并提醒「先调研再立项」（模板 `AGENTS.md` 红线 13），避免从零造轮子。
+正式调研结果落 `private/dev/research/RESEARCH-XXXX`（或内嵌 PRD/RFC 对应节）。
 
 ### 文档时机速查
 
@@ -184,5 +197,6 @@ git -C private commit -m "docs: private v0.0.1 - init"
 | `private/dev/CHANGELOG.md` | v0.0.1 条目 | — | 变更要点 | **顶部新增条目** |
 | `private/dev/TEST-REPORT.md` | 初始化条目 | 记 CI 落地结果 | 测试变化时更新 | **必更新** |
 | `private/dev/EXPERIENCE-TO-*.md` | 骨架 | — | **每轮对话结束写入** | 提醒沉淀 |
+| `private/dev/prd/INDEX.md` 等四登记册 | 模板自带 | 阅读登记册规则 | 每个 M/L 需求按状态机维护 | 核对（`check_dev_docs.py`） |
 | `docs/TESTING.md` | 模板自带 | 按它落地测试 | 测试体系变化时更新 | 核对 |
 | `version.json` | 0.0.1 / 模板版本 | — | — | **bump** |
