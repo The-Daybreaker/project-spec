@@ -131,7 +131,7 @@ B 区；C 区内容两者都不得出现。
 | `dev/DESIGN.md` | 私有 | 混合 | 当前设计 + 开发规范（引用不重复） |
 | `dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
 | `dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
-| `README.md` / `docs/` | 公开 | 项目专用 / 通用 | 面向使用者/贡献者；通用文档（audit-checklist/UPGRADE） |
+| `README.md` / `docs/` | 公开 | 项目专用 / 通用 | 面向使用者/贡献者；通用文档（DOCS / audit-checklist / UPGRADE） |
 | `TEMPLATE_VERSION` | 公开 | 通用 | 初始化/升级时的模板版本记录 |
 
 ## 【通用】文档治理（正文即当前状态）
@@ -145,7 +145,7 @@ B 区；C 区内容两者都不得出现。
    `_trash/<agent>_<日期>_<时分>/` → `scripts/trash.py` → 回收站，保证可恢复即可。
 5. **可恢复性由删除机制保证**，不由「正文留废案」保证。
 
-（细则见 `../docs/README.md`「文档治理」。）
+（细则见 `../docs/DOCS.md`「文档治理」。）
 
 ## 【项目专用】本机环境
 

@@ -176,7 +176,7 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | `private/dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
 | `private/dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
 | `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
-| `docs/` | 公开 | 通用（audit-checklist/UPGRADE 等） | 公开文档 |
+| `docs/` | 公开 | 通用（DOCS / audit-checklist / UPGRADE 等） | 公开文档 |
 | `docs/CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
 | `TEMPLATE_VERSION` | 公开 | 通用 | 初始化/升级时的模板版本记录 |
 

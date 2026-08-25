@@ -31,7 +31,7 @@
 - [ ] 本轮候选经验已完整写入 `EXPERIENCE-TO-TEMPLATE.md` / `EXPERIENCE-TO-KB.md`
       （如有；沉淀时以该文档为唯一依据）
 - [ ] 根 `AGENTS.md` / `private/AGENTS.md` 已同步（若入口/状态/流程有变化）
-- [ ] `README.md` / `docs/`（audit-checklist / UPGRADE / CONTRIBUTING 等）已同步
+- [ ] `README.md` / `docs/`（DOCS / audit-checklist / UPGRADE / CONTRIBUTING 等）已同步
       （若用户视角有变化）
 - [ ] **经验沉淀已提醒**：本次为架构变化或更新（发布）时，已提醒用户沉淀经验
       （知识库沉淀 + 可复用经验集成进项目模板，由用户决定是否执行）

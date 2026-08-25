@@ -21,10 +21,11 @@
 ├── project-template/         # 通用项目模板（权威副本，人类可读）
 │   ├── AGENTS.md             #   Agent 接手入口（公开版，随仓库发布）
 │   ├── README.md / LICENSE / VERSION / TEMPLATE_VERSION / .gitignore / .gitattributes / .editorconfig
-│   ├── docs/                 #   公开文档（audit-checklist.md / UPGRADE.md / CONTRIBUTING.md）
+│   ├── docs/                 #   公开文档（DOCS.md / audit-checklist.md / UPGRADE.md / CONTRIBUTING.md）
 │   ├── scripts/              #   自动化脚本 + version-sync.json
 │   ├── .github/workflows/    #   CI 检查 + 自动版本递增发布
 │   └── private/              #   私有区（不进 GitHub，内部子 git 管理）
+│       ├── PRIVATE.md        #     私有区说明与子 git 管理
 │       ├── AGENTS.md         #     开发指引（唯一常青开发记忆）
 │       └── dev/              #     DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
 └── init-project/             # skill：根据模板初始化指定项目文件夹
@@ -73,7 +74,7 @@
 9. **文档双模块 + 治理**：每份文档标注【通用】/【项目专用】；通用模块改动可沉淀回
    模板，项目专用模块不受模板更新覆盖；**正文 = 当前有效状态**（决策修改直接覆盖、
    禁止 AI 在正文追加历史、留痕只在 CHANGELOG 一行；详见模板
-   `docs/README.md`「文档治理」）。
+   `project-template/docs/DOCS.md`「文档治理」）。
 10. **模板升级机制**：项目根 `TEMPLATE_VERSION` 记录模板版本；模板 `CHANGELOG.md`
     记录版本变更历史；升级按 `docs/UPGRADE.md` 只应用【通用】模块。
 11. **删除纪律**：对话内删除先移入 `_trash/<agent>_<日期>_<时分>/`，任务结束时用

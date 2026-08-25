@@ -13,6 +13,7 @@
 
 | 文档 | 职责 |
 |---|---|
+| `DOCS.md` | 本文件：docs 目录说明与文档治理 |
 | `audit-checklist.md` | 实施后审计清单（自审与独立 agent 审计共用） |
 | `UPGRADE.md` | 模板升级指南（只应用【通用】模块变更） |
 | `CONTRIBUTING.md` | 人类贡献者与 agent 的协作约定 |
@@ -33,6 +34,7 @@
 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 可沉淀进模板的经验 |
 | `private/dev/EXPERIENCE-TO-KB.md` | 可沉淀进知识库的经验 |
 | `README.md` | 使用者视角 |
+| `docs/DOCS.md` | docs 目录说明与文档治理 |
 | `docs/UPGRADE.md` | 模板如何升级 |
 
 ## 文档模块归属（通用 / 项目专用）

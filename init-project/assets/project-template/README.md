@@ -28,12 +28,13 @@ npm test
 ```text
 .
 ├── AGENTS.md                # Agent 接手入口（公开）
-├── docs/                    # 公开文档（audit-checklist.md / UPGRADE.md / CONTRIBUTING.md 等）
+├── docs/                    # 公开文档（DOCS.md / audit-checklist.md / UPGRADE.md / CONTRIBUTING.md 等）
 ├── scripts/                 # 自动化脚本（bump_version / pre_release_check / ci_check / trash）
 ├── .github/workflows/       # CI 与自动发布
 ├── VERSION                  # 版本号（单一事实来源）
 ├── TEMPLATE_VERSION         # 初始化/升级时的模板版本记录
 └── private/                 # 私有区：个人/开发期文件（不进 GitHub）
+    ├── PRIVATE.md           # 私有区说明与子 git 管理
     ├── AGENTS.md            # 开发入口与当前状态（唯一常青开发记忆）
     └── dev/                 # DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
 ```
