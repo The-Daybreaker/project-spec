@@ -15,12 +15,13 @@
   1. 方案设计（✅ 已完成）：四目录实体化（prd/rfc/adr/research 各含 INDEX.md）、
      状态机、开发前门禁、S/M/L 档位、与现有文档衔接、同步面清单、实施步骤；
      已细化：调研落点（research/）+ 后续新增需求机制（PRD 登记册/新 PRD 取代/
-     门禁贯穿生命周期/发布引用编号）
-  2. 待用户确认：档位细节（S/M/L 跳过规则、PRD 默认私有）、ADR 状态元数据可改、
-     发版版本号（建议 minor v1.2.0）
-  3. 实施：模板新增 4 文件 + 规范正文/审计清单/init-project/agent-rules 同步 +
-     sync_template 覆盖列表更新
-  4. 验证 + 六处重装 + 发版（版本号经用户确认）
+     门禁贯穿生命周期/发布引用编号）；第二轮细化：RESEARCH 允许追加更新（发现
+     记录只追加、结论可覆盖）、PRD 优先级字段（P0-P3）、四份 INDEX.md 骨架草案
+  2. 用户已确认：S/M/L 跳过规则、PRD 默认私有、ADR 正文不可变/状态元数据可改、
+     发版版本 v1.2.0（minor）；待确认：INDEX 骨架与排序规则细节
+  3. 实施：模板新增 4 文件（prd/rfc/adr/research 各含 INDEX.md）+ 规范正文/
+     审计清单/init-project/agent-rules 同步 + sync_template 覆盖列表更新
+  4. 验证 + 六处重装 + 发版 v1.2.0
 
 ## 阶段记录
 
@@ -154,6 +155,15 @@
   一次发布=多个 PRD/RFC/ADR 实现集合（CHANGELOG 引用编号）、S 档持续可跳过；
   模板新增文件 3→4，同步面随之更新 | docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md |
   回读核对 | 待用户确认细化方案后实施 |
+| 34 开发前规范·第二轮细化 | ✅ | 用户确认全部建议（S/M/L 跳过规则、PRD 默认
+  私有、ADR 正文不可变/状态元数据可改、发版 v1.2.0 minor）并新增两点：①
+  RESEARCH 允许追加更新——发现记录只追加（带日期/来源）、「结论与建议」为当前
+  有效状态可覆盖、主题根本变化才开新号取代；② PRD 增加优先级字段（P0 紧急阻塞
+  →P3 低/待定，属元数据可随时更新；INDEX 按状态+优先级分组排序，已实现/已废弃
+  沉底）；给出四份 INDEX.md 骨架草案（PRD 含定稿门禁字段清单、RFC 候选对比表、
+  ADR Nygard 不可变、RESEARCH 追加日志+结论覆盖）与 S/M/L 判定示例 |
+  docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | 回读核对 | 待用户审阅骨架与排序
+  规则后实施 |
 
 ## 待办/遗留
 
