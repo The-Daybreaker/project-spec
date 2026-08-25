@@ -16,8 +16,9 @@
 
 ## 未发版变更（v1.1.2 候选）
 
-以下改动已完成并提交（HEAD 3006b97），尚未发版（`version.json` 的 `version` 仍
-1.1.1）；发版 v1.1.2 时并入正式条目并同步 `version.json` / tag。
+以下改动已完成并提交，尚未发版（`version.json` 的 `version` 仍 1.1.1）；
+发版 v1.1.2 时并入正式条目并同步 `version.json` / tag。
+（注：本区段不固定「当前 HEAD」引用，避免每次提交后过时；以提交记录为准。）
 
 - 目录结构：README 回根；工作区文档入 `docs/`、同步脚本入 `scripts/`。
 - 模板结构：`CONTRIBUTING.md` → `docs/`；`version-sync.json` → `scripts/`；
