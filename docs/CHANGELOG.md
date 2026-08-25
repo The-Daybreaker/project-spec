@@ -25,6 +25,12 @@
   子目录 README 改名（`docs/DOCS.md`、`private/PRIVATE.md`、`private/test/TEST.md`）。
 - 版本机制：`VERSION` / `TEMPLATE_VERSION` 合并为根 `version.json`
   （`version` + `template_version` 字段）；脚本/CI/skill 全部改读 `version.json`。
+- P3 建议实施：`init_project.py` 增加 UTF-8 输出（中文 Windows 防乱码）；
+  `UPGRADE.md` 澄清 `sync_template.py` 仅存在于模板母项目（目标项目不运行）；
+  `CONTRIBUTING.md`「新需求先对齐意图」改为 DESIGN + 用户决策 + WORKLOG 承载
+  （移除 CHANGELOG 误述）；`EXPERIENCE-TO-KB` 索引顺序规则（与正文一致、新条目
+  在前）；版本单一来源（SKILL/init-steps 正文改引用 `version.json` +
+  `sync_template.py` 自动校验 `metadata.version`）。
 - 发版同步：约定补充「全局 grep 新旧版本号」防版本字样残留。
 - 工作流收口：WORKLOG 生命周期纪律（任务开始切换当前任务、收尾校准硬事实）。
 - 经验自动沉淀：维护约定明确「每轮对话结束自动把完整候选经验写入

@@ -4,21 +4,25 @@
 > 使用规则：每完成一小阶段先更新本文件与受影响文档；新对话/新任务开始时，若旧内容
 > 已完结或文档已膨胀，**先询问用户是否清理**（已完结条目归档到「历史记录」，或整段
 > 移入 `_trash/`），得到确认后才清理；绝不自动删除。
-- 最后更新：2026-08-25
+- 最后更新：2026-08-26
 
 ## 当前任务
 
-- 需求：统一删除纪律的临时删除区命名为 `<agent产品名>_<YYYY-MM-DD>_<HHMM>`
-  （如 `codex_2026-08-25_2330`；用户确认：统一为产品名、只举例、不设固定列表，
-  保证通用性），同步模板 / 工作区 / 两 skill 全部正文。
-- 目标/验收：正文 9 处 + sync 镜像更新；红线 4 指纹更新 + sync 通过；
-  quick_validate ×2；两 skill × 五处已安装副本重装并哈希一致；提交。
+- 需求：全面审计当前项目（结构 / git 状态与 tag / 版本一致性 / 同步与校验 /
+  红线落地 / 安全扫描 / 文档硬事实），专业输出审计报告。
+- 目标/验收：自动化校验全绿（sync / quick_validate / py_compile / 端到端冒烟 /
+  五副本哈希）+ 人工核对硬事实；发现项按严重度分级列出；维护级文档问题就地修复；
+  阶段落盘 + 经验自动沉淀；提交。
 - 计划步骤：
-  1. 修改模板/工作区/两 skill 的删除纪律命名为 `<agent产品名>`（只举例不设列表）
-  2. 重新计算红线 4 指纹并更新继承矩阵
-  3. 同步 CHANGELOG / WORKLOG / EXPERIENCE-TO-KB
-  4. 验证（sync / quick_validate / py_compile）+ 重装五处副本
-  5. 提交
+  1. 通读工作区规范与模板规范/文档（AGENTS ×3、README、WORKLOG、CHANGELOG、
+     EXPERIENCE-TO-KB、两 skill、模板 docs/private/dev、全部脚本与 CI）
+  2. 自动化验证：sync 28 文件 / quick_validate ×2 / py_compile / init 冒烟 /
+     tag 指向 / 五副本全量哈希
+  3. 硬事实与安全扫描：版本 grep、占位符、BOM/换行、秘密扫描、README 路径、
+     提交信息格式、`git status --ignored`
+  4. 修复维护级发现（EXP-KB 索引/正文顺序、日期陈旧、CHANGELOG 未发版区段缺
+     P3 条目、WORKLOG 33→32 校准）+ 阶段落盘 + 经验自动沉淀
+  5. 复核（sync / quick_validate / git status）+ 提交 + 汇报
 
 ## 阶段记录
 
@@ -80,7 +84,7 @@
   README.md AGENTS.md docs/CHANGELOG.md + 5 处系统目录 | sync / quick_validate /
   py_compile / 副本哈希 全过 | 汇报 |
 | 25 安装·init-project+目录纠正 | ✅ | init-project 首次安装到五个 agent（每处
-  33 文件）；agent-rules 从误装 `~/.qoderwork/skills` 移到正确位置
+  32 文件，不含 `__pycache__`/`.pyc`）；agent-rules 从误装 `~/.qoderwork/skills` 移到正确位置
   `~/.qoderworkcn/skills`（用户反馈实际目录为 qcoderworkcn）；误装目录已进回收站；
   两个 skill × 五处哈希全部一致 | README.md docs/CHANGELOG.md
   docs/EXPERIENCE-TO-KB.md + 5 处系统目录 | 文件数+哈希复核 | 提交 |
@@ -90,6 +94,14 @@
   agent-rules 共 9 处正文同步；红线 4 指纹 eb6d20857fe1 → ee28329cc7e5；sync
   通过、quick_validate ×2 通过 | 9 处正文 + inheritance-map + sync 镜像 |
   sync / quick_validate / py_compile | 重装五处副本 |
+| 27 全面审计·第三轮 | ✅ | 全面通读 + 自动化验证全绿（sync 28 文件 0 差异、
+  quick_validate ×2 valid、py_compile 6 脚本、init 冒烟 28 文件/13 替换/双 git
+  干净/check-ignore 命中、tag 指向正确、五副本 × 两 skill 全量哈希一致、无秘密、
+  无占位符残留）；人工核对发现并修复维护级问题：EXP-KB 索引/正文顺序不一致
+  （P3 #4 复发）、WORKLOG/EXP-KB 最后更新日期陈旧、CHANGELOG 未发版区段缺 P3
+  条目、WORKLOG 阶段 25 文件数 33→32 校准；当前任务切换 + 经验自动沉淀 |
+  docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md docs/CHANGELOG.md | sync /
+  quick_validate / git status | 汇报 |
 
 ## 待办/遗留
 
@@ -111,9 +123,16 @@
 - [x] 新需求（精简版 agent 全局规范 skill，agent-rules）：方案已确认，已实施
       （skill 创建 + sync 校验 + 文档同步 + 安装到五个 agent）；随 v1.1.2 发版时
       同步版本
+- [x] 本任务（全面审计·第三轮）完结：自动化验证全绿；维护级缺陷已修复并提交
 
 ## 历史记录
 
+- 2026-08-26 删除纪律命名统一：`_trash/<agent名>` → `<agent产品名>_<日期>_<时分>`
+  （只举例不设列表），正文 9 处 + 继承矩阵红线 4 指纹更新 + 五副本重装，已提交
+  （0fbec33）。
+- 2026-08-26 全面审计（第三次）：通读全部规范/实现 + 自动化验证 + 端到端冒烟全过；
+  发现并修复维护级缺陷（EXP-KB 索引/正文顺序、日期陈旧、CHANGELOG 未发版区段缺
+  P3 条目、WORKLOG 33→32 校准）。
 - 2026-08-25 P3 建议实施（按注释反馈）：init_project.py UTF-8 输出；UPGRADE.md
   澄清 sync_template 归属（目标项目无此脚本）；CONTRIBUTING 对齐意图措辞
   （DESIGN / 用户决策 / WORKLOG 承载）；EXPERIENCE-TO-KB 索引统一；SKILL/init-steps
