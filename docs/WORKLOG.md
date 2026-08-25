@@ -8,16 +8,16 @@
 
 ## 当前任务
 
-- 需求：把 `init-project` skill **首次同步安装**到五个 agent（此前只装了
-  agent-rules）；纠正 QoderWork skill 目录为 `~/.qoderworkcn/skills`（用户反馈
-  实际目录是 qcoderworkcn），清理误装的 `~/.qoderwork/skills`。
-- 目标/验收：五个 agent 的 init-project 与 agent-rules 均与仓库哈希一致；误装
-  目录已清理；README / CHANGELOG / WORKLOG / EXPERIENCE-TO-KB 同步；自动提交。
+- 需求：统一删除纪律的临时删除区命名为 `<agent产品名>_<YYYY-MM-DD>_<HHMM>`
+  （如 `codex_2026-08-25_2330`；用户确认：统一为产品名、只举例、不设固定列表，
+  保证通用性），同步模板 / 工作区 / 两 skill 全部正文。
+- 目标/验收：正文 9 处 + sync 镜像更新；红线 4 指纹更新 + sync 通过；
+  quick_validate ×2；两 skill × 五处已安装副本重装并哈希一致；提交。
 - 计划步骤：
-  1. 确认 QoderWork 真实目录（`.qoderworkcn/skills`）与 init-project 未安装现状
-  2. 安装 init-project × 5 + agent-rules 移至 `.qoderworkcn/skills`
-  3. 清理误装 `~/.qoderwork/skills`（进回收站）
-  4. 哈希复核 + 文档同步（README / CHANGELOG / EXPERIENCE-TO-KB）
+  1. 修改模板/工作区/两 skill 的删除纪律命名为 `<agent产品名>`（只举例不设列表）
+  2. 重新计算红线 4 指纹并更新继承矩阵
+  3. 同步 CHANGELOG / WORKLOG / EXPERIENCE-TO-KB
+  4. 验证（sync / quick_validate / py_compile）+ 重装五处副本
   5. 提交
 
 ## 阶段记录
@@ -84,6 +84,12 @@
   `~/.qoderworkcn/skills`（用户反馈实际目录为 qcoderworkcn）；误装目录已进回收站；
   两个 skill × 五处哈希全部一致 | README.md docs/CHANGELOG.md
   docs/EXPERIENCE-TO-KB.md + 5 处系统目录 | 文件数+哈希复核 | 提交 |
+| 26 删除纪律命名统一 | ✅ | `_trash/<agent名>` 统一为 `_trash/<agent产品名>_<日期>_<时分>`
+  （如 `codex_2026-08-25_2330`，只举例不设列表）；模板红线 4 / 私有 AGENTS ×2 /
+  DOCS / audit-checklist / DESIGN / 工作区 AGENTS ×2 / README / init-project /
+  agent-rules 共 9 处正文同步；红线 4 指纹 eb6d20857fe1 → ee28329cc7e5；sync
+  通过、quick_validate ×2 通过 | 9 处正文 + inheritance-map + sync 镜像 |
+  sync / quick_validate / py_compile | 重装五处副本 |
 
 ## 待办/遗留
 

@@ -46,7 +46,8 @@
    `template_version` 一致（改模板/发版后运行 sync 即校验）；另按**特性核对清单**
    逐条对照模板 CHANGELOG 能力点与 `init-project/`、`agent-rules/` 摘要（自动化
    校验不覆盖摘要级过时，需人工比对）。
-5. **删除纪律**：对话内删除先移入 `_trash/<agent名>_<YYYY-MM-DD>_<HHMM>/`，
+5. **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<YYYY-MM-DD>_<HHMM>/`
+   （如 `codex_2026-08-25_2330`；不设固定 agent 列表，以执行 agent 的产品名为准），
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），
    避免小文件堆积。
 6. **WORKLOG 生命周期纪律**：新任务开始先切换「当前任务」；每完成一小阶段更新
@@ -67,7 +68,8 @@
 ## 【项目专用】用户确认的设计决策
 
 - 模板脚本统一使用 Python（不再用 PowerShell）。
-- 删除纪律：`_trash/` 临时删除区 + 整轮进回收站。
+- 删除纪律：`_trash/` 临时删除区（命名 = `<agent产品名>_<YYYY-MM-DD>_<HHMM>`，
+  如 `codex_2026-08-25_2330`；不设固定 agent 列表）+ 整轮进回收站。
 - 经验文档放 `private/dev/`，完整条目、不预设沉淀位置。
 - 工作区不建 private 子 git（避免与模板 private 骨架混淆）。
 - 母项目不设 EXPERIENCE-TO-TEMPLATE 暂存：可复用进模板的经验直接改进

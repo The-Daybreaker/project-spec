@@ -41,6 +41,10 @@
 - init-project skill **首次安装**到五个 agent（codex / dsh / workbuddy /
   trae-cn / qoderworkcn）；QoderWork skill 目录纠正为 `~/.qoderworkcn/skills`
   （原误装 `~/.qoderwork/skills` 已清理进回收站）。
+- 删除纪律命名统一：临时删除区文件夹 = `<agent产品名>_<YYYY-MM-DD>_<HHMM>`
+  （如 `codex_2026-08-25_2330`），只举例、**不设固定 agent 列表**（保证通用性）；
+  模板红线 4 / 私有 AGENTS / DOCS / audit-checklist / DESIGN / init-project /
+  agent-rules 同步，继承矩阵红线 4 指纹更新。
 - 发版同步约定增加「特性核对清单」：模板 CHANGELOG 能力点 ↔ 两 skill 摘要逐条
   对照（防摘要级过时复发）。
 

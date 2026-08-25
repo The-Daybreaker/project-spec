@@ -89,8 +89,9 @@ agent-rules/                     # skill：Agent 通用行为规范（精简版�
 10. **模板升级机制**：项目根 `version.json` 的 `template_version` 记录模板版本；
     模板 `CHANGELOG.md` 记录版本变更历史；升级按 `docs/UPGRADE.md` 只应用
     【通用】模块。
-11. **删除纪律**：对话内删除先移入 `_trash/<agent>_<日期>_<时分>/`，任务结束时用
-    `scripts/trash.py` 整体进回收站（避免小文件堆积）。
+11. **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
+    `codex_2026-08-25_2330`；不设固定 agent 列表），任务结束时用 `scripts/trash.py`
+    整体进回收站（避免小文件堆积）。
 
 ## 使用方法
 
