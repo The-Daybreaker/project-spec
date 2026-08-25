@@ -16,11 +16,15 @@
      状态机、开发前门禁、S/M/L 档位、与现有文档衔接、同步面清单、实施步骤；
      已细化：调研落点（research/）+ 后续新增需求机制（PRD 登记册/新 PRD 取代/
      门禁贯穿生命周期/发布引用编号）；第二轮细化：RESEARCH 允许追加更新（发现
-     记录只追加、结论可覆盖）、PRD 优先级字段（P0-P3）、四份 INDEX.md 骨架草案
+     记录只追加、结论可覆盖）、PRD 优先级字段（P0-P3）、四份 INDEX.md 骨架草案；
+     第三轮细化：状态机三层约束（流程强制/完成清单+审计清单/check_dev_docs.py
+     工具校验 + 状态变更权限）
   2. 用户已确认：S/M/L 跳过规则、PRD 默认私有、ADR 正文不可变/状态元数据可改、
-     发版版本 v1.2.0（minor）；待确认：INDEX 骨架与排序规则细节
-  3. 实施：模板新增 4 文件（prd/rfc/adr/research 各含 INDEX.md）+ 规范正文/
-     审计清单/init-project/agent-rules 同步 + sync_template 覆盖列表更新
+     发版版本 v1.2.0（minor）、索引排序/P0-P3 定义/骨架无示例值；待确认：
+     状态机约束方案（三层：流程/清单/工具）
+  3. 实施：模板新增 4 文件（prd/rfc/adr/research 各含 INDEX.md）+ 新增
+     scripts/check_dev_docs.py + 规范正文/审计清单/init-project/agent-rules
+     同步 + sync_template 覆盖列表更新
   4. 验证 + 六处重装 + 发版 v1.2.0
 
 ## 阶段记录
@@ -164,6 +168,17 @@
   ADR Nygard 不可变、RESEARCH 追加日志+结论覆盖）与 S/M/L 判定示例 |
   docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | 回读核对 | 待用户审阅骨架与排序
   规则后实施 |
+| 35 开发前规范·第三轮细化（状态机约束） | ✅ | 用户提出「状态机靠什么约束、
+  避免文档落后」；设计三层约束：① 流程层——工作流第 1-3 步显式写「同步更新
+  文档状态与索引」动作，并定义状态变更权限（定稿/采纳/废弃须用户确认，已实现
+  由 agent 实施完成后自动更新）；② 检查层——完成检查清单 + audit-checklist
+  新增「开发前文档一致性」检查项（编号连续 / INDEX 与正文状态一致 / 必填字段 /
+  ADR 不可变靠 git log 核对）；③ 工具层——新增 `scripts/check_dev_docs.py`
+  （stdlib 只读校验：文件名/编号连续/元数据枚举/状态机规则/INDEX 一致性/
+  交叉引用，空目录通过），并入 pre_release_check.py 发布前必跑 + ci_check.py
+  注释示例 + init-steps 校验清单；用户已确认剩余 3 小点（索引排序、P0-P3 定义、
+  骨架无示例值） | docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | 回读核对 |
+  待用户确认约束方案后实施 |
 
 ## 待办/遗留
 
@@ -187,8 +202,8 @@
       （skill 创建 + sync 校验 + 文档同步 + 安装到五个 agent）；随 v1.1.2 发版时
       同步版本
 - [x] 本任务（全面审计·第三轮）完结：自动化验证全绿；维护级缺陷已修复并提交
-- [ ] 开发前规范（PRD/RFC/ADR/RESEARCH）C 档方案已设计并细化；待用户确认细节
-      与发版版本后实施
+- [ ] 开发前规范（PRD/RFC/ADR/RESEARCH）C 档方案已设计并细化（含状态机三层
+      约束）；待用户确认后实施（v1.2.0）
 
 ## 历史记录
 

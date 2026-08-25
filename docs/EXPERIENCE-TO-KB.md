@@ -86,8 +86,22 @@
   11. **四份 INDEX.md 骨架与工作流细化**：PRD（含优先级与定稿门禁字段齐全
       清单）、RFC（候选对比表 + 评审冻结）、ADR（Nygard 不可变）、RESEARCH
       （追加日志 + 结论覆盖）；S/M/L 判定示例（S=bug/文案/单函数重构，
-      M=新功能/模块/引入新库，L=新项目/技术栈选型/架构级重构）；发版版本号
-      确认 v1.2.0（minor）。
+      M=新功能/模块/引入新库，L=新项目/技术栈选型/架构级重构）；索引排序规则
+      （PRD 按状态+优先级分组、RFC/RESEARCH 新条目在前、ADR 编号升序）、P0-P3
+      定义、骨架不预填示例值；发版版本号确认 v1.2.0（minor）；
+  12. **状态机约束（第三轮细化）**：用户提出「文档状态机靠什么约束、避免落后」，
+      设计三层约束——① **流程层**：工作流第 1-3 步显式写状态更新动作 + 状态
+      变更权限（草稿→已定稿、评审→已采纳/否决、已接受 ADR、废弃均须用户确认；
+      已定稿→已实现由 agent 实施完成后自动更新）；② **检查层**：完成检查清单
+      与 audit-checklist 新增「开发前文档一致性」检查项（编号连续 / INDEX 与
+      正文状态一致 / 必填字段齐全 / ADR 不可变靠 git log 核对 / RESEARCH 追加
+      记录带日期）；③ **工具层**：新增 `scripts/check_dev_docs.py`（仅 stdlib、
+      只读、退出码 0/1：校验文件名与编号连续、头部元数据枚举（状态/优先级等）、
+      状态机规则（PRD 已定稿需定稿日期+字段齐全、已实现需实现版本、RFC 已采纳/
+      否决需采纳日期、ADR 取代号存在、RESEARCH 已完成需最近更新）、INDEX 表格
+      与文件/状态一致、D-xxx→ADR 交叉引用存在；空目录通过），并入
+      pre_release_check.py 发布前必跑（扩展现有第 6 步文档一致性）、ci_check.py
+      注释示例、init-steps 校验清单。
 - 经验/教训：
   - 「正文不留历史」与「历史文档区」可以并存：关键是**显式划分**哪类文档是
     历史文档（只增/冻结），其余一律当前状态；ADR 正是把「决策历史」从 CHANGELOG
@@ -96,11 +110,11 @@
     C 档不是每个需求都全走，而是「能承载完整流程 + 可按档位裁剪」；
   - 不可变文档（ADR）的「状态元数据可改、正文不可改」是留史与可维护的平衡点；
     编号不重用保证追溯链完整。
-- 验证/效果：方案细化完成（第二轮，尚未实施）；发版版本 v1.2.0 已确认；待用户
-  审阅四份 INDEX.md 骨架与排序规则后实施。
+- 验证/效果：方案细化完成（第三轮，尚未实施）；发版版本 v1.2.0 已确认；待用户
+  确认状态机三层约束方案后实施。
 - 相关文件：project-template/（AGENTS×2、DESIGN、DOCS、CONTRIBUTING、README、
   audit-checklist、private/dev/{prd,rfc,adr,research}/INDEX.md 待新增）、
-  init-project/、agent-rules/、docs/WORKLOG.md
+  scripts/check_dev_docs.py 待新增）、init-project/、agent-rules/、docs/WORKLOG.md
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/方案`；`domain=项目管理/文档治理/工程实践`；
   `tags=[PRD, RFC, ADR, 开发前规范, 立项, 模板]`；`project=通用项目模板`
