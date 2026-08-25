@@ -25,7 +25,7 @@
 ### 【通用】每次对话前置（bootstrap）
 
 任何任务开始前：读根 `AGENTS.md` → 读 `private/AGENTS.md` → 查看两个 git 状态 →
-读 `VERSION` 与 `CHANGELOG.md` 顶部 → 读 `WORKLOG.md`（恢复进行中进度）→ 读
+读 `version.json` 与 `CHANGELOG.md` 顶部 → 读 `WORKLOG.md`（恢复进行中进度）→ 读
 `TEST-REPORT.md`。**上下文压缩后或新对话开始时必须完成以上重读（红线 15）**；
 WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归档/移入 `_trash/`）。
 保证任何新对话、任何 agent 都能从零接手，不依赖记忆。
@@ -72,7 +72,7 @@ WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归
 12. **上下文恢复重读**：上下文压缩后或新对话开始时，必须重读红线规范与相关文档
     再继续（根 `AGENTS.md` 红线 15）。
 13. **模板升级**：模板发布新版本时，按 `../../docs/UPGRADE.md` 只应用【通用】模块
-    变更，并更新根 `TEMPLATE_VERSION`。
+    变更，并更新根 `version.json` 的 `template_version`。
 14. **删除纪律**：对话内删除先移入 `_trash/<agent>_<日期>_<时分>/`，任务结束时
     用 `scripts/trash.py` 整体进回收站（根 `AGENTS.md` 红线 4）。
 

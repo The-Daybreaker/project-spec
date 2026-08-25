@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""bump_version.py - bump project version (VERSION file is the single source of truth)
+"""bump_version.py - bump project version (version.json 'version' field is the single
+source of truth)
 
 Usage:
-  python scripts/bump_version.py [--part patch|minor|major] [--version-file VERSION]
+  python scripts/bump_version.py [--part patch|minor|major] [--version-file version.json]
   python scripts/bump_version.py --help
 
 Behavior:
-  - read VERSION (X.Y.Z), bump by --part, write back (UTF-8, no BOM);
+  - read version (X.Y.Z) from version.json, bump by --part, write back
+    (JSON keeps other fields, e.g. template_version; UTF-8, no BOM);
   - best-effort sync of version fields in package.json / Cargo.toml /
   pyproject.toml / src-tauri/*; targets come from scripts/version-sync.json (optional,
     entries merge over the built-in defaults; {"skip": true} disables a built-in
@@ -59,10 +61,37 @@ def _write_utf8_no_bom(path: Path, content: str) -> None:
     path.write_text(content, encoding="utf-8", newline="\n")
 
 
+def _read_version(path: Path) -> str:
+    """Read version from version.json ('version' field) or a plain text file."""
+    if path.suffix == ".json":
+        data = json.loads(path.read_text(encoding="utf-8"))
+        version = data.get("version")
+        if not isinstance(version, str) or not re.fullmatch(r"\d+\.\d+\.\d+", version):
+            raise ValueError(
+                f"invalid 'version' field in {path.name}: {version!r} (expected X.Y.Z)"
+            )
+        return version
+    return path.read_text(encoding="utf-8").strip()
+
+
+def _write_version(path: Path, version: str) -> None:
+    """Write version back into version.json (preserving other fields) or plain text."""
+    if path.suffix == ".json":
+        data = json.loads(path.read_text(encoding="utf-8"))
+        data["version"] = version
+        path.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+            newline="\n",
+        )
+    else:
+        _write_utf8_no_bom(path, version + "\n")
+
+
 def _bump(version: str, part: str) -> str:
     m = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)", version)
     if not m:
-        raise ValueError(f"invalid VERSION format: '{version}' (expected X.Y.Z)")
+        raise ValueError(f"invalid version format: '{version}' (expected X.Y.Z)")
     maj, minor, patch = (int(x) for x in m.groups())
     if part == "major":
         maj += 1
@@ -122,7 +151,7 @@ def _sync_file(path: Path, spec: dict, version: str) -> bool:
             _set_json_version(path, key, version)
             return True
         except (KeyError, TypeError, json.JSONDecodeError, OSError) as e:
-            print(f"[warning] sync {path} failed (VERSION unchanged): {e}", file=sys.stderr)
+            print(f"[warning] sync {path} failed (version unchanged): {e}", file=sys.stderr)
             return False
     pattern = spec.get("pattern", "")
     replacement = spec.get("replacement", "").replace("{version}", version)
@@ -134,14 +163,14 @@ def _sync_file(path: Path, spec: dict, version: str) -> bool:
         path.write_text(new_content, encoding="utf-8", newline="\n")
         return True
     except (re.error, OSError) as e:
-        print(f"[warning] sync {path} failed (VERSION unchanged): {e}", file=sys.stderr)
+        print(f"[warning] sync {path} failed (version unchanged): {e}", file=sys.stderr)
         return False
 
 
 def main() -> int:
     _configure_utf8()
     parser = argparse.ArgumentParser(
-        description="bump project version (VERSION is the single source of truth)"
+        description="bump project version (version.json is the single source of truth)"
     )
     parser.add_argument(
         "--part",
@@ -151,8 +180,9 @@ def main() -> int:
     )
     parser.add_argument(
         "--version-file",
-        default="VERSION",
-        help="version file path relative to repo root (default: VERSION)",
+        default="version.json",
+        help="version file path relative to repo root (default: version.json; "
+        "supports JSON with a 'version' field or a plain text file)",
     )
     args = parser.parse_args()
 
@@ -161,15 +191,15 @@ def main() -> int:
         print(f"[error] version file not found: {version_file}", file=sys.stderr)
         return 1
 
-    old = version_file.read_text(encoding="utf-8").strip()
     try:
+        old = _read_version(version_file)
         new = _bump(old, args.part)
-    except ValueError as e:
+    except (ValueError, json.JSONDecodeError, OSError) as e:
         print(f"[error] {e}", file=sys.stderr)
         return 1
 
-    _write_utf8_no_bom(version_file, new + "\n")
-    print(f"==> VERSION: {old} -> {new}")
+    _write_version(version_file, new)
+    print(f"==> {version_file.name}: {old} -> {new}")
 
     targets = _sync_targets(_load_config())
     for rel, spec in targets.items():

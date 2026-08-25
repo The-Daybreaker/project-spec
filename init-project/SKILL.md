@@ -19,7 +19,7 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
 发布前自动检查变动并提交（`scripts/pre_release_check.py`）。
 - **开发工作流与红线**：先对齐需求与计划、获确认后实施；实施后自动审计（推荐
   独立子 agent 审计）；验证后发布。
-- **版本管理与 CI/CD**：`VERSION` 单一事实来源 + git tag；`.github/workflows/`
+- **版本管理与 CI/CD**：`version.json` 单一事实来源 + git tag；`.github/workflows/`
   自动 CI 检查与自动版本递增发布。
 - **自动化脚本**：`scripts/bump_version.py`、`pre_release_check.py`、`ci_check.py`
   （仅依赖 Python 标准库，Python 3.9+ 跨平台运行）。
@@ -27,8 +27,8 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   `EXPERIENCE-TO-TEMPLATE.md` / `EXPERIENCE-TO-KB.md`（每轮对话后写入完整候选经验）。
 - **删除纪律**：对话内删除先移入 `_trash/<agent>_<日期>_<时分>/`，任务结束时用
   `scripts/trash.py` 整体进回收站。
-- **模板版本与升级**：项目根 `TEMPLATE_VERSION` 记录初始化时的模板版本；升级按
-  `docs/UPGRADE.md` 只应用【通用】模块变更。
+- **模板版本与升级**：项目根 `version.json` 的 `template_version` 记录初始化时的
+  模板版本；升级按 `docs/UPGRADE.md` 只应用【通用】模块变更。
 
 ## 前置确认（必须）
 
@@ -61,7 +61,8 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
    - `private/.git` 存在、主仓库 `.git` 存在；
    - `git status`（主）与 `git -C private status`（子）均干净；
    - 根 `AGENTS.md` 与 `private/AGENTS.md` 可读且内容正确；
-   - `VERSION` 为 `0.0.1`；`TEMPLATE_VERSION` 与 skill/模板版本一致（当前 1.1.1）；
+   - `version.json`：`version` 为 `0.0.1`、`template_version` 与 skill/模板版本一致
+     （当前 1.1.1）；
    - `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
      已生成；
    - `python scripts/trash.py --help` 退出码 0。

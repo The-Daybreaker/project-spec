@@ -11,8 +11,8 @@
 ## 【项目专用】项目状态与版本
 
 - **当前版本**：{{VERSION}}（`dev/CHANGELOG.md` 有完整历史）。
-- **模板版本**：根 `TEMPLATE_VERSION`（初始化/升级时的通用项目模板版本；升级见
-  根 `AGENTS.md`「模板升级」与 `../docs/UPGRADE.md`）。
+- **模板版本**：根 `version.json` 的 `template_version`（初始化/升级时的通用项目
+  模板版本；升级见根 `AGENTS.md`「模板升级」与 `../docs/UPGRADE.md`）。
 - **版本规则**：版本号**从 `0.0.1` 开始**；每次默认只升最后一位（patch）；
   **前两位（major/minor）增加必须向用户确认**；破坏性变更必须用户确认并升主版本、
   说明迁移方案。
@@ -70,7 +70,7 @@ B 区；C 区内容两者都不得出现。
 ## 【通用】发布流程（每次发布时执行，md 驱动、agent 执行）
 
 1. **版本递增**：默认只升最后一位；运行 `scripts/bump_version.py`（按
-`scripts/version-sync.json` 同步 `VERSION` 与 `package.json` / `Cargo.toml` /
+   `scripts/version-sync.json` 同步 `version.json` 与 `package.json` / `Cargo.toml` /
    `pyproject.toml` 等），并更新 `dev/CHANGELOG.md` 顶部条目。
 2. **检查受影响文档**（改动完成即文档就绪）：CHANGELOG / DESIGN / TEST-REPORT /
    WORKLOG / README / 根 AGENTS.md / 本文件 / 用户可见文档。
@@ -83,7 +83,7 @@ B 区；C 区内容两者都不得出现。
 5. **打标签与 Release**：`git tag v<version>` + `git push origin v<version>`；
    创建 GitHub Release（`gh release create v<version> --title "v<version>"
    --notes "<变更摘要>" --attach <发布产物>`；gh 未认证时请用户 `gh auth login`，
-   或网页手动上传）。推送 main 后 CI 也会自动完成第 5 步（仅当当前 VERSION 尚无
+  或网页手动上传）。推送 main 后 CI 也会自动完成第 5 步（仅当当前 version 尚无
    tag 时，不会二次递增版本；手动/自动二选一，见根 `AGENTS.md`「版本管理」）。
 6. **分发/安装/部署**：按项目实际执行（安装包、zip、文档站点等）；**分发/打包前
    自测**：产物可运行、关键文件齐全、无密钥/配置/素材等运行时数据混入。
@@ -102,7 +102,7 @@ B 区；C 区内容两者都不得出现。
 - [ ] 检查命令与测试通过，TEST-REPORT 已记录
 - [ ] **本轮候选经验已完整写入 EXPERIENCE-TO-TEMPLATE / EXPERIENCE-TO-KB（如有）**
 - [ ] private 子 git 已提交且 `git -C private status --short` 干净
-- [ ] 版本号一致（VERSION / CHANGELOG 顶部 / 各版本文件）且递增规则正确
+- [ ] 版本号一致（version.json / CHANGELOG 顶部 / 各版本文件）且递增规则正确
 - [ ] 已提交并推送（提交信息符合格式：普通提交不带版本号，发布提交带 vX.Y.Z）
 - [ ] 已创建 GitHub Release（tag vX.Y.Z + 发布产物）
 - [ ] 分发/安装/部署完成
@@ -115,9 +115,9 @@ B 区；C 区内容两者都不得出现。
 
 ## 【通用】模板升级（详见 `../docs/UPGRADE.md`）
 
-- 模板发布新版本时：读模板仓库 `CHANGELOG.md` → 比对根 `TEMPLATE_VERSION` →
-  **只应用【通用】模块变更**（【项目专用】绝不覆盖）→ 回读校验 → 更新
-  `TEMPLATE_VERSION` → 记录 CHANGELOG/WORKLOG。
+- 模板发布新版本时：读模板仓库 `CHANGELOG.md` → 比对根 `version.json` 的
+  `template_version` → **只应用【通用】模块变更**（【项目专用】绝不覆盖）→
+  回读校验 → 更新 `template_version` → 记录 CHANGELOG/WORKLOG。
 
 ## 【通用】文档职责划分
 
@@ -132,7 +132,7 @@ B 区；C 区内容两者都不得出现。
 | `dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
 | `dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
 | `README.md` / `docs/` | 公开 | 项目专用 / 通用 | 面向使用者/贡献者；通用文档（DOCS / audit-checklist / UPGRADE） |
-| `TEMPLATE_VERSION` | 公开 | 通用 | 初始化/升级时的模板版本记录 |
+| `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
 
 ## 【通用】文档治理（正文即当前状态）
 

@@ -1,7 +1,7 @@
 # CHANGELOG — 通用项目模板 版本变更历史
 
 > 模块：项目专用（工作区）。
-> 记录模板自身每次发版变更，与根 `VERSION` 与 git tag 对齐；项目升级时据此比对
+> 记录模板自身每次发版变更，与根 `version.json` 与 git tag 对齐；项目升级时据此比对
 > （见 `project-template/docs/UPGRADE.md`）。
 
 ## v1.1.1（2026-08-25）

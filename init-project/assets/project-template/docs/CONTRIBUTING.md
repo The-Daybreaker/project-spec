@@ -10,7 +10,7 @@
 - 默认分支：`{{DEFAULT_BRANCH}}`；直接在该分支上开发（小型个人项目约定；
   多人在线协作时改为 feature 分支 + PR）。
 - 提交信息格式：普通提交 `feat: / fix: / docs: / chore: / refactor: - 描述`
-  （不带版本号；版本号见 `VERSION`）；**发布提交**带版本号 `feat: vX.Y.Z - 描述`。
+  （不带版本号；版本号见 `version.json`）；**发布提交**带版本号 `feat: vX.Y.Z - 描述`。
 - 不 force push 共享分支；不修改他人未提交的改动。
 
 ## 【通用】改动流程（简要）

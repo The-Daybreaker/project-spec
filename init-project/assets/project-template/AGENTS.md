@@ -16,9 +16,10 @@
   - `scripts/` — 自动化脚本（版本、发布前检查、CI 检查）
   - `private/` — 私有区（个人/开发期文件，**不进 GitHub**，见「仓库布局」）
   - `.github/workflows/` — CI / 自动发布
-- **版本**：以 `VERSION` 文件与 git tag `vX.Y.Z` 为准；完整历史见
+- **版本**：以 `version.json` 的 `version` 字段与 git tag `vX.Y.Z` 为准；完整历史见
   `private/dev/CHANGELOG.md`（私有，不发布）。
-- **模板版本**：`TEMPLATE_VERSION`（初始化/升级时的通用项目模板版本，见「模板升级」）。
+- **模板版本**：`version.json` 的 `template_version`（初始化/升级时的通用项目模板
+  版本，见「模板升级」）。
 - **当前状态**：见 `private/AGENTS.md`「项目状态与版本」（开发期状态只记在私有指引）。
 
 ## 【通用】仓库布局与文件分类归属（三区，强制）
@@ -46,7 +47,7 @@
 1. 读本文件；再读 `private/AGENTS.md`——它是**开发入口与完整开发规范**
    （唯一常青开发记忆），含完整工作流、发布流程、版本、本机环境、用户决策。
 2. 查看两个仓库状态：`git status`（主仓库）、`git -C private status`（私有子 git）。
-3. 读 `VERSION` 与 `private/dev/CHANGELOG.md` 顶部，确认当前版本与最近变更。
+3. 读 `version.json` 与 `private/dev/CHANGELOG.md` 顶部，确认当前版本与最近变更。
 4. 读 `private/dev/DESIGN.md`（设计）与 `private/dev/TEST-REPORT.md`（测试记录）。
 5. 读 `private/dev/WORKLOG.md`（恢复进行中进度）；若旧任务已完结或内容膨胀，
    **先询问用户是否清理**（归档到「历史记录」或移入 `_trash/`），确认后才清理。
@@ -112,7 +113,7 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 
 ## 【通用】版本管理
 
-- **版本号**：`VERSION` 文件为单一事实来源，格式 `X.Y.Z`；git tag `vX.Y.Z` 与
+- **版本号**：`version.json` 的 `version` 字段为单一事实来源，格式 `X.Y.Z`；git tag `vX.Y.Z` 与
   Release 使用同一版本。
 - **递增规则**：版本号**从 `0.0.1` 开始**；每次默认只升最后一位（patch）；
   **前两位（major/minor）增加必须向用户确认**；破坏性变更必须用户确认并升主版本、
@@ -121,22 +122,23 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
   （不带版本号）；**发布提交**（版本递增与发布前同步）带版本号
   `feat: vX.Y.Z - 描述`。
 - **发布机制**：版本递增由 agent **本地**执行（`scripts/bump_version.py` 按
-   `scripts/version-sync.json` 同步 `VERSION` 与 `package.json` / `Cargo.toml` /
+  `scripts/version-sync.json` 同步 `version.json` 与 `package.json` / `Cargo.toml` /
   `pyproject.toml` 等，同时更新 CHANGELOG——`private/` 不进 GitHub，CI 无法代劳）；
-  推送 main 后，若当前 `VERSION` 尚无对应 tag，CI（`.github/workflows/release.yml`）
+  推送 main 后，若当前 `version` 尚无对应 tag，CI（`.github/workflows/release.yml`）
   自动打 tag 并创建 GitHub Release。
 - **手动/自动二选一**：手动发布（本地 bump + tag + `gh release create`）后不要再
   期望 CI 重复发布；CI 只发布「无 tag 的当前版本」，不会二次递增版本。
 - **发布策略**：默认不自动发布（用户明确要求发布时才走发布流程）；如需自动发布，
   见 `private/AGENTS.md`「项目状态与版本」（初始化时可用 `--auto-release` 开启）。
-- **模板版本**：项目根 `TEMPLATE_VERSION` 记录初始化/升级时的通用项目模板版本；
+- **模板版本**：项目根 `version.json` 的 `template_version` 记录初始化/升级时的
+  通用项目模板版本；
   升级见「模板升级」与 `docs/UPGRADE.md`。
 
 ## 【通用】模板升级（详见 `docs/UPGRADE.md`）
 
 当通用项目模板发布新版本时：读模板仓库 `CHANGELOG.md`（版本变更历史）→ 比对项目
-`TEMPLATE_VERSION` → **只应用【通用】模块变更**（【项目专用】内容绝不覆盖）→
-回读校验 → 更新 `TEMPLATE_VERSION` → 记录到 CHANGELOG/WORKLOG。
+`version.json` 的 `template_version` → **只应用【通用】模块变更**（【项目专用】
+内容绝不覆盖）→ 回读校验 → 更新 `template_version` → 记录到 CHANGELOG/WORKLOG。
 
 ## 【通用】发布流程（每次发布时执行；完整版见 `private/AGENTS.md`「发布流程」）
 
@@ -178,7 +180,7 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
 | `docs/` | 公开 | 通用（DOCS / audit-checklist / UPGRADE 等） | 公开文档 |
 | `docs/CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
-| `TEMPLATE_VERSION` | 公开 | 通用 | 初始化/升级时的模板版本记录 |
+| `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
 
 **文档维护清单**（变更类型 → 必须同步的文档）：
 
@@ -189,9 +191,9 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | 设计/架构/数据流 | `private/dev/DESIGN.md` |
 | 功能/接口实现 | DESIGN / README / docs（按项目实际） |
 | 测试/验证 | `private/dev/TEST-REPORT.md` |
-| 版本/发布 | `VERSION` / CHANGELOG / README / `TEMPLATE_VERSION` |
+| 版本/发布 | `version.json` / CHANGELOG / README |
 | 用户视角/流程 | README / docs（audit-checklist / UPGRADE / CONTRIBUTING 等）/ 根 AGENTS.md |
-| 模板升级 | 按 `docs/UPGRADE.md` 流程 + `TEMPLATE_VERSION` + CHANGELOG/WORKLOG |
+| 模板升级 | 按 `docs/UPGRADE.md` 流程 + `version.json` + CHANGELOG/WORKLOG |
 
 ## 【通用】许可
 

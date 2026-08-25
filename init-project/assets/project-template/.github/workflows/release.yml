@@ -1,11 +1,11 @@
 # Release — 推送 main 后自动发布 GitHub Release（版本递增由 agent 本地执行）
 # 规则（与根 AGENTS.md「版本管理」一致）：
-#   - VERSION 文件为单一事实来源；**版本递增由 agent 本地完成**
+#   - version.json 的 version 字段为单一事实来源；**版本递增由 agent 本地完成**
 #     （scripts/bump_version.py，按 scripts/version-sync.json 同步 package.json /
 #     Cargo.toml / pyproject.toml 等，并同步更新 private/dev/CHANGELOG.md——
 #     private/ 不进 GitHub，CI 无法代劳）。
-#   - 当前 VERSION 尚无对应 tag → 自动打 tag vX.Y.Z 并创建 Release；
-#   - 当前 VERSION 已有 tag → 跳过（等待 agent 递增版本后再次推送）；
+#   - 当前 version 尚无对应 tag → 自动打 tag vX.Y.Z 并创建 Release；
+#   - 当前 version 已有 tag → 跳过（等待 agent 递增版本后再次推送）；
 #   - 仓库尚无任何 tag 且由 push 触发 → 跳过（初始搭建期，可用 workflow_dispatch
 #     或本地 gh release 手动发布首个版本）。
 # 注意：private/ 不进 GitHub，CI 中不可用；发布说明由提交记录自动生成。
@@ -41,10 +41,11 @@ jobs:
         id: decide
         shell: python
         run: |
+          import json
           import os
           import subprocess
 
-          v = open("VERSION", encoding="utf-8").read().strip()
+          v = json.load(open("version.json", encoding="utf-8"))["version"]
           tags = subprocess.run(["git", "tag"], capture_output=True, text=True).stdout.split()
 
           lines = []
@@ -57,7 +58,7 @@ jobs:
               ).stdout.strip()
               if tagged:
                   lines.append("should_release=false")
-                  lines.append("reason=v" + v + " already tagged; bump VERSION locally (bump_version.py) and push")
+                  lines.append("reason=v" + v + " already tagged; bump version.json locally (bump_version.py) and push")
               else:
                   lines.append("should_release=true")
                   lines.append("version=" + v)

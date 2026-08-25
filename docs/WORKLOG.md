@@ -8,33 +8,36 @@
 
 ## 当前任务
 
-- 需求：子文件夹下的 README.md 改名，避免与项目根 README 混淆、便于索引——
-  `project-template/docs/README.md` → `docs/DOCS.md`、
-  `project-template/private/README.md` → `private/PRIVATE.md`、
-  `project-template/private/test/README.md` → `private/test/TEST.md`，并同步全部引用。
-- 目标/验收：模板内不再有子目录 README.md；全部引用改为 DOCS.md / PRIVATE.md；
-  sync 0 差异；quick_validate 通过；自动提交。
+- 需求：两个 version 文件合并为一个 JSON——
+  工作区根与模板骨架统一使用 `version.json`（`version` + `template_version` 两字段），
+  删除 `VERSION` / `TEMPLATE_VERSION`，脚本、CI、skill 与全部文档引用同步更新。
+- 目标/验收：全工作区无 `VERSION` / `TEMPLATE_VERSION` 文件与引用残留（历史除外）；
+  bump_version / pre_release_check / release.yml / init_project 均读 `version.json`；
+  sync 0 差异；quick_validate 通过；初始化冒烟通过；自动提交。
 - 计划步骤：
-  1. 改名（DOCS.md / PRIVATE.md）
-  2. 更新引用（模板 AGENTS / 私有 AGENTS / audit-checklist / 模板与工作区 README）
-  3. sync + 校验 + 自动提交 + 汇报
+  1. 创建 version.json（工作区 + 模板），删除 VERSION / TEMPLATE_VERSION
+  2. 改造脚本与 CI（bump_version / pre_release_check / release.yml / init_project）
+  3. 更新全部文档引用（模板 AGENTS / 私有 AGENTS / README / UPGRADE / audit-checklist /
+     CONTRIBUTING / DESIGN / CHANGELOG / SKILL / init-steps / 工作区文档）
+  4. sync + 校验 + 冒烟 + 自动提交 + 汇报
 
 ## 阶段记录
 
 | 阶段 | 状态 | 完成内容 | 变更文件 | 验证 | 下一步 |
 |---|---|---|---|---|---|
-| 1 改名 | ✅ | docs/README.md → docs/DOCS.md；private/README.md → private/PRIVATE.md；private/test/README.md → private/test/TEST.md | 移动 3 文件 | 结构检查 | 引用更新 |
-| 2 引用更新 | ✅ | 模板 AGENTS / 私有 AGENTS / audit-checklist / 模板与工作区 README 的 tree 与治理引用 | 6 文件 | grep 无 docs/README 残留 | sync+校验 |
-| 3 sync+校验+提交 | ✅ | sync 29 文件 0 差异；quick_validate；py_compile；git add + commit（991b518 + 补充提交） | 全部 | 通过 | 汇报 |
+| 1 文件替换 | ✅ | 工作区 + 模板新建 version.json；删除 VERSION / TEMPLATE_VERSION | version.json ×2 + 删除 3 文件 | 结构检查 | 脚本改造 |
+| 2 脚本/CI | ✅ | bump_version / pre_release_check / release.yml / init_project 读 version.json | 4 文件 | py_compile + 冒烟 | 文档更新 |
+| 3 文档更新 | ✅ | 模板 AGENTS / 私有 AGENTS / README / UPGRADE / audit-checklist / CONTRIBUTING / DESIGN / CHANGELOG / SKILL / init-steps / 工作区文档 | 13 文件 | grep 残留核对 | sync+校验 |
+| 4 sync+校验+提交 | ✅ | sync 29 文件 0 差异；quick_validate；py_compile；初始化冒烟；git add + commit | 全部 | 通过 | 汇报 |
 
 ## 待办/遗留
 
 - [x] 上一任务（模板 v1.1.0 第二轮改造）9/9 完结
 - [x] 上一任务（文档治理经验吸收）6/6 完结
 - [x] 上一任务（A–G 经验合入 v1.1.1，提交 1e02c3e + tag v1.1.1）完结
-- [x] 本任务（审计修复 + 目录整理 + 模板结构整理 + 子目录 README 改名）完结
+- [x] 本任务（审计修复 + 目录整理 + 模板结构整理 + 子目录 README 改名 + version.json 合并）完结
 - [ ] 工作区无 git 远端，改动未推送（N/A 或用户决定）
-- [ ] 模板根其余 8 个文件（AGENTS/README/LICENSE/VERSION/TEMPLATE_VERSION/
+- [ ] 模板根其余 7 个文件（AGENTS/README/LICENSE/version.json/
       .gitignore/.gitattributes/.editorconfig）为入口与工具必需；如仍想精简需单独评估
 
 ## 历史记录
@@ -50,6 +53,8 @@
 - 2026-08-25 子目录 README 改名：docs/README.md → docs/DOCS.md、
   private/README.md → private/PRIVATE.md、private/test/README.md →
   private/test/TEST.md（避免与项目根 README 混淆、便于索引），全部引用同步更新并提交。
+- 2026-08-25 版本文件合并：`VERSION` / `TEMPLATE_VERSION` 合并为根 `version.json`
+  （`version` + `template_version` 两字段），脚本/CI/skill/文档全部更新，提交。
 - 2026-08-25 模板 v1.1.0 第二轮改造：阶段落盘（WORKLOG）、双模块、【通用】/【项目专用】
   标注、经验文档×2（完整条目）、删除纪律（_trash + trash.py）、模板升级机制
   （TEMPLATE_VERSION + CHANGELOG + UPGRADE）、红线 13→15（阶段落盘、上下文恢复重读）。

@@ -10,7 +10,7 @@
 通用项目模板/
 ├── AGENTS.md                 # 本项目（工作区）专属规范入口
 ├── README.md                 # 本文件
-├── VERSION                   # 版本号（单一事实来源）
+├── version.json              # 版本（version）与模板版本（template_version）单一事实来源
 ├── .gitignore                # 工作区忽略规则
 ├── docs/                     # 工作区自身文档
 │   ├── CHANGELOG.md          # 模板版本变更历史（升级比对依据）
@@ -20,7 +20,7 @@
 │   └── sync_template.py      # 同步脚本：project-template/ → init-project/assets/
 ├── project-template/         # 通用项目模板（权威副本，人类可读）
 │   ├── AGENTS.md             #   Agent 接手入口（公开版，随仓库发布）
-│   ├── README.md / LICENSE / VERSION / TEMPLATE_VERSION / .gitignore / .gitattributes / .editorconfig
+│   ├── README.md / LICENSE / version.json / .gitignore / .gitattributes / .editorconfig
 │   ├── docs/                 #   公开文档（DOCS.md / audit-checklist.md / UPGRADE.md / CONTRIBUTING.md）
 │   ├── scripts/              #   自动化脚本 + version-sync.json
 │   ├── .github/workflows/    #   CI 检查 + 自动版本递增发布
@@ -59,7 +59,7 @@
    **经验沉淀**（每轮对话后把完整候选经验写入 EXPERIENCE-TO-TEMPLATE /
    EXPERIENCE-TO-KB，并提醒用户真正沉淀）→ 汇报（附完成检查清单）。
 6. **版本管理与 CI/CD**：版本号**从 `0.0.1` 开始**，每次默认末位 +1，**前两位
-   （major/minor）增加必须向用户确认**；`VERSION` 单一事实来源 + git tag `vX.Y.Z`；
+   （major/minor）增加必须向用户确认**；`version.json` 单一事实来源 + git tag `vX.Y.Z`；
    版本递增由 agent 本地完成（`bump_version.py` 按 `scripts/version-sync.json` 同步
    `package.json` / `Cargo.toml` / `pyproject.toml` 等与 CHANGELOG），推送 main 后
    `.github/workflows/release.yml` 对尚无 tag 的当前版本自动打 tag 并建 Release
@@ -75,8 +75,9 @@
    模板，项目专用模块不受模板更新覆盖；**正文 = 当前有效状态**（决策修改直接覆盖、
    禁止 AI 在正文追加历史、留痕只在 CHANGELOG 一行；详见模板
    `project-template/docs/DOCS.md`「文档治理」）。
-10. **模板升级机制**：项目根 `TEMPLATE_VERSION` 记录模板版本；模板 `CHANGELOG.md`
-    记录版本变更历史；升级按 `docs/UPGRADE.md` 只应用【通用】模块。
+10. **模板升级机制**：项目根 `version.json` 的 `template_version` 记录模板版本；
+    模板 `CHANGELOG.md` 记录版本变更历史；升级按 `docs/UPGRADE.md` 只应用
+    【通用】模块。
 11. **删除纪律**：对话内删除先移入 `_trash/<agent>_<日期>_<时分>/`，任务结束时用
     `scripts/trash.py` 整体进回收站（避免小文件堆积）。
 
@@ -126,13 +127,13 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 - **skill 校验**：改完 skill 用 skill-creator 的 quick_validate 校验：
   `python <skill-creator>/scripts/quick_validate.py init-project`
   （中文 Windows 默认 GBK 编码下若报 UnicodeDecodeError，先设置 `PYTHONUTF8=1`）。
-- **发版同步**：版本递增时同步更新 `VERSION`、`project-template/TEMPLATE_VERSION`、
-  `docs/CHANGELOG.md`、`SKILL.md metadata.version`，并**全局 grep 新旧版本号**
-  （如 `1.1.0` / `1.1.1`）核对所有文档内嵌版本字样（`SKILL.md`、
-  `references/init-steps.md` 等；模板内部文件一律用占位符、不写死版本），
-  确认无残留后再走模板发布流程。
+- **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
+  （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
+  `SKILL.md metadata.version`，并**全局 grep 新旧版本号**（如 `1.1.0` / `1.1.1`）
+  核对所有文档内嵌版本字样（`SKILL.md`、`references/init-steps.md` 等；模板内部
+  文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
 - **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.1；
-  版本号见 `VERSION` 文件）。
+  版本号见 `version.json`）。
 
 ## 经验来源
 

@@ -13,7 +13,7 @@ Behavior:
   2) main repo status: list uncommitted changes (the agent commits them, not this
      script); safety scan: no private/ path or gitlink may enter the main repo
      index/working tree, no secret-named files;
-  3) version consistency: VERSION vs top of CHANGELOG;
+  3) version consistency: version.json 'version' vs top of CHANGELOG;
   4) ci_check.py must be implemented (no template placeholder), unless
      --allow-placeholder is given;
   5) print audit & release reminders.
@@ -24,6 +24,7 @@ NOTE: stdlib-only, Python 3.9+; the repo root is resolved from this script's
 """
 
 import argparse
+import json
 import re
 import subprocess
 import sys
@@ -103,15 +104,19 @@ def main() -> int:
         print(f"[error] not a git repo root (no .git): {REPO_ROOT}", file=sys.stderr)
         return 1
 
-    # --- 1. VERSION ---
-    version_file = REPO_ROOT / "VERSION"
+    # --- 1. version ---
+    version_file = REPO_ROOT / "version.json"
     if not version_file.exists():
-        print("[error] VERSION file missing.", file=sys.stderr)
+        print("[error] version.json missing.", file=sys.stderr)
         return 1
-    version = version_file.read_text(encoding="utf-8").strip()
+    try:
+        version = json.loads(version_file.read_text(encoding="utf-8"))["version"]
+    except (json.JSONDecodeError, KeyError, OSError) as e:
+        print(f"[error] cannot read version.json: {e}", file=sys.stderr)
+        return 1
     if args.version and args.version != version:
         print(
-            f"[warning] --version ({args.version}) differs from VERSION file "
+            f"[warning] --version ({args.version}) differs from version.json "
             f"({version}); using file value."
         )
     print(f"[1/6] current version: v{version}")
@@ -182,7 +187,7 @@ def main() -> int:
             print(f"    {line}")
         fail = True
 
-    # --- 4. version consistency (VERSION vs CHANGELOG top) ---
+    # --- 4. version consistency (version.json vs CHANGELOG top) ---
     changelog = REPO_ROOT / "private" / "dev" / "CHANGELOG.md"
     if changelog.exists():
         top = next(
@@ -191,10 +196,10 @@ def main() -> int:
             "",
         )
         if top and f"v{version}" not in top:
-            print(f"[error] CHANGELOG top ({top}) does not match VERSION (v{version}).")
+            print(f"[error] CHANGELOG top ({top}) does not match version.json (v{version}).")
             fail = True
         elif top:
-            print(f"[4/6] CHANGELOG top matches VERSION: v{version}")
+            print(f"[4/6] CHANGELOG top matches version.json: v{version}")
         else:
             print(
                 f"[error] no '## v' entry found in "

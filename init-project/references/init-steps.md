@@ -36,7 +36,7 @@
 | `{{DEFAULT_BRANCH}}` | 默认分支名 |
 | `{{AUTHOR}}` | 作者 |
 | `{{YEAR}}` / `{{DATE}}` | 当前年份 / 当前日期（YYYY-MM-DD，写入 CHANGELOG 与 TEST-REPORT） |
-| `{{VERSION}}` | `VERSION` 文件内容（初始 `0.0.1`，版本规则见模板 AGENTS.md「版本管理」） |
+| `{{VERSION}}` | `version.json` 的 `version` 字段内容（初始 `0.0.1`，版本规则见模板 AGENTS.md「版本管理」） |
 | `{{LICENSE_NOTICE}}` | 许可声明（默认「本项目使用 MIT 许可，详见 LICENSE。」） |
 | `{{AUTO_RELEASE}}` | 发布策略（默认「不自动发布，用户确认后发布」；`--auto-release` 为「每次改动完成后自动发布」） |
 
@@ -99,8 +99,8 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - [ ] `git check-ignore private/` 命中（`.gitignore` 生效）
 - [ ] 根 `AGENTS.md` 存在且 `{{PROJECT_NAME}}` 已替换
 - [ ] `private/AGENTS.md` 存在（版本为 `0.0.1`，待用户补充「本机环境」「用户决策」）
-- [ ] `VERSION` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
-- [ ] `TEMPLATE_VERSION` 存在且与 skill/模板版本一致（当前 1.1.1）
+- [ ] `version.json`：`version` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
+- [ ] `version.json`：`template_version` 与 skill/模板版本一致（当前 1.1.1）
 - [ ] `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
       已生成（阶段落盘与经验沉淀载体）
 - [ ] `private/AGENTS.md`「发布策略」已按所选模式生成（默认不自动发布；
@@ -125,7 +125,7 @@ git -C private commit -m "docs: private v0.0.1 - init"
 | 用户要求其他许可 | 用 `--license-file <路径>` 提供自定义 LICENSE（文件中的
   `{{YEAR}}`/`{{AUTHOR}}` 会被替换），并在 `private/AGENTS.md`「用户确认的设计决策」
   记录 |
-| 初始化后想改项目名 | 直接改 `README.md` 与 `AGENTS.md` 顶部标题；`VERSION` 不受影响 |
+| 初始化后想改项目名 | 直接改 `README.md` 与 `AGENTS.md` 顶部标题；`version.json` 的 `version` 不受影响 |
 
 ## 7. 初始化完成后的建议（告知用户）
 

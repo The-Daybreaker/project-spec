@@ -25,6 +25,7 @@
 
 import argparse
 import datetime
+import json
 import re
 import shutil
 import subprocess
@@ -242,9 +243,13 @@ def main() -> int:
     # 4. 替换占位符
     print('[2/4] 替换占位符')
     version = '0.0.1'
-    vf = target / 'VERSION'
+    vf = target / 'version.json'
     if vf.is_file():
-        version = vf.read_text(encoding='utf-8').strip() or version
+        try:
+            data = json.loads(vf.read_text(encoding='utf-8'))
+            version = str(data.get('version') or version)
+        except (json.JSONDecodeError, OSError):
+            pass
     today = datetime.date.today()
     values = {
         'PROJECT_NAME': name,

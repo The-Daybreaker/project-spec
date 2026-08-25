@@ -14,7 +14,7 @@
   WORKLOG / EXPERIENCE-TO-KB）、`scripts/sync_template.py`（同步脚本）、
   `project-template/`（权威模板，同步到 skill 资产）、`init-project/`（skill：
   SKILL.md / references / scripts / assets）。
-- **版本**：根 `VERSION`（当前 1.1.1）+ git tag；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.1.1）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
@@ -31,11 +31,11 @@
    `git add -f project-template/private init-project/assets/project-template/private`。
 3. **skill 校验**：`PYTHONUTF8=1 python <skill-creator>/scripts/quick_validate.py
    init-project`（中文 Windows 默认 GBK 需 PYTHONUTF8=1）。
-4. **发版同步**：版本递增时同步更新 `VERSION`、`project-template/TEMPLATE_VERSION`、
-   `docs/CHANGELOG.md`、`SKILL.md metadata.version`，并**全局 grep 新旧版本号**
-   （如 `1.1.0` / `1.1.1`）核对所有文档内嵌版本字样（`SKILL.md`、
-   `references/init-steps.md` 等；模板内部文件一律用占位符、不写死版本），
-   确认无残留后再走模板发布流程。
+4. **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
+   （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
+   `SKILL.md metadata.version`，并**全局 grep 新旧版本号**（如 `1.1.0` / `1.1.1`）
+   核对所有文档内嵌版本字样（`SKILL.md`、`references/init-steps.md` 等；模板内部
+   文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
 5. **删除纪律**：对话内删除先移入 `_trash/<agent名>_<YYYY-MM-DD>_<HHMM>/`，
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），
    避免小文件堆积。

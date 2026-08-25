@@ -56,12 +56,12 @@
 
 ## 6. 版本与发布就绪
 
-- [ ] `VERSION` 与 `private/dev/CHANGELOG.md` 顶部版本一致，递增规则正确
+- [ ] `version.json` 的 `version` 与 `private/dev/CHANGELOG.md` 顶部版本一致，递增规则正确
 - [ ] `git -C private status --short` 干净（private 子 git 已同步，或本次无私有变动）
 - [ ] 主仓库 `git status` 只含公开区（A 区）文件
 - [ ] 提交信息符合格式（普通提交不带版本号，发布提交带 vX.Y.Z）；tag / Release
       计划明确
-- [ ] `TEMPLATE_VERSION` 与当前模板版本一致（初始化后/升级后）
+- [ ] `version.json` 的 `template_version` 与当前模板版本一致（初始化后/升级后）
 
 ## 7. 文档无缝衔接（冷启动新人视角；大版本后/跨会话前执行，每轮对话顺手查）
 
