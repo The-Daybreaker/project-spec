@@ -8,18 +8,15 @@
 
 ## 当前任务
 
-- 需求：诊断 init-project skill 在 v1.1.2 改造后是否覆盖到位（镜像一致性 /
-  SKILL 摘要 / init-steps 校验清单），发现缺项立即修复并全链路同步。
-- 目标/验收：sync 31 文件 0 差异；SKILL 摘要已覆盖新特性；init-steps 校验清单补
-  `archive/ARCHIVE.md`、`dist/.gitkeep`（含 ignore 规则）与 `docs/TESTING.md`
-  检查；CHANGELOG 未发版 v1.1.3 候选登记；六处副本重装并哈希一致；提交。
+- 需求：回答「为什么改模板不自动更新 skill / agent-rules 是否需更新 / 初始化
+  流程是否需更新」三问；修复工作流缺陷：sync 自动校验 skill 承载文档覆盖 +
+  init-steps 补「初始化落地路线图」（文档时机 + CI 落地）。
 - 计划步骤：
-  1. 诊断：sync 一致性 + SKILL/init-steps 覆盖度 grep
-  2. 修复 init-steps.md 校验清单与初始化后建议
-  3. 更新 CHANGELOG（未发版 v1.1.3 候选）/ WORKLOG / EXP-KB（经验自动沉淀）
-  4. 验证（quick_validate / sync / git status）
-  5. 重装六处 init-project 副本 + 哈希校验
-  6. 提交 + 汇报结论
+  1. 取证：agent-rules 版本/指纹/副本；模板文件 vs init-steps 覆盖对比
+  2. sync_template.py 新增 INIT_STEPS_COVERAGE 校验（破坏性测试通过）
+  3. init-steps.md 第 7 节升级为「落地路线图」（阶段 + 文档时机速查表）
+  4. 维护约定 #4 补 skill 覆盖度复查；CHANGELOG / WORKLOG / EXP-KB 同步
+  5. 验证（sync / quick_validate / 冒烟）+ 重装六处 + 提交
 
 ## 阶段记录
 
@@ -127,6 +124,18 @@
   v1.1.3 候选登记；六处副本重装哈希一致 | init-project/references/init-steps.md
   docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md + 六处 agent 目录 |
   quick_validate / sync / git status / 副本哈希 | 汇报 |
+| 31 工作流缺陷修复（skill 覆盖自动校验 + 初始化路线图） | ✅ | 回答三问：
+  「改模板不自动更新 skill」= 缺陷（sync 只校验资产镜像/版本/指纹，不校验 skill
+  承载文档与已安装副本）；agent-rules 无需内容更新（v1.1.2 全是项目机制 + 红线
+  指纹未变 + 版本已同步）；初始化流程需要更新（无 CI 落地时机/文档填写时机）。
+  修复：sync_template.py 新增 `INIT_STEPS_COVERAGE` 校验（模板关键文件未进
+  init-steps 即失败，破坏性测试拦截/还原通过）；init-steps 第 7 节升级为
+  「落地路线图」（阶段 1 文档填空 / 2 实现 CI / 3 首个需求 / 4 首次发布 / 5
+  立项调研 + 文档时机速查表）；维护约定 #4 补 skill 覆盖度复查；六处重装 |
+  scripts/sync_template.py init-project/references/init-steps.md AGENTS.md
+  README.md docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md +
+  六处 agent 目录 | sync（含破坏性测试）/ quick_validate / py_compile /
+  副本哈希 | 汇报 |
 
 ## 待办/遗留
 

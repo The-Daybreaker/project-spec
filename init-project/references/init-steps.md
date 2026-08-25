@@ -128,14 +128,61 @@ git -C private commit -m "docs: private v0.0.1 - init"
   记录 |
 | 初始化后想改项目名 | 直接改 `README.md` 与 `AGENTS.md` 顶部标题；`version.json` 的 `version` 不受影响 |
 
-## 7. 初始化完成后的建议（告知用户）
+## 7. 初始化完成后的落地路线图（分阶段）
 
-1. 填写 `private/AGENTS.md` 的「本机环境」「安装目标/部署目标」。
-2. 按项目技术栈实现 `scripts/ci_check.py` 与 `.github/workflows/ci.yml` 的检查
-   步骤（测试落地见 `docs/TESTING.md`），并更新 `private/dev/TEST-REPORT.md`。
-3. 填写 `README.md`（功能、快速开始、项目结构）。
-4. 用户确认后配置远端并推送首个提交（首次 push 不自动发 Release，见
-   `.github/workflows/release.yml` 说明）。
-5. **立项初期先调研**：之后与 agent 讨论项目思路/需求/架构/功能/产品等立项类
-   话题时，要求 agent 优先在 GitHub 调研现成参考并提醒「先调研再立项」（模板
-   AGENTS.md 红线 13），避免从零造轮子。
+> 初始化当场（脚本 + 第 5 节校验清单）只保证「骨架就绪」；项目真正可用还需要
+> 按下列阶段落地。每个阶段完成后更新 `private/dev/WORKLOG.md`（阶段落盘）。
+
+### 阶段 1 · 首个开发会话前（文档填空，一次做完）
+
+- `README.md`：功能特性、快速开始、项目结构、许可（按项目实际填写）。
+- `private/AGENTS.md`：「本机环境」「安装目标/部署目标」必填；「用户确认的设计
+  决策」（D-001…）与「定案清单」「必须询问人类清单」按首个需求逐步补。
+- `private/dev/DESIGN.md`：项目形态、核心设计、关键不变量、改动影响面定位表。
+- `private/dev/CHANGELOG.md` / `private/dev/TEST-REPORT.md` / `private/dev/WORKLOG.md`：
+  脚本已生成初始化条目，此后随开发/发布更新。
+- `private/dev/EXPERIENCE-TO-KB.md` / `private/dev/EXPERIENCE-TO-TEMPLATE.md`：
+  脚本已生成骨架；每轮对话结束写入完整候选经验。
+- `docs/audit-checklist.md` / `docs/UPGRADE.md` / `docs/DOCS.md`：模板自带，
+  按需阅读使用（实施后审计 / 模板升级 / 文档治理）。
+
+### 阶段 2 · 首个功能开发前（实现 CI，一次做完）
+
+1. 按 `docs/TESTING.md` 落地测试：创建 `tests/`、写首批用例、本地跑通
+   （`python -m pytest`，其他技术栈等价）；
+2. 实现 `scripts/ci_check.py`：按项目技术栈填入真实 lint / build / test，并移除
+   `__CI_CHECK_PLACEHOLDER__` 标记（`scripts/pre_release_check.py` 会拦截占位）；
+3. 更新 `.github/workflows/ci.yml`：按技术栈补 setup / 依赖安装 / 检查步骤
+   （文件内已有示例注释）；
+4. 跑通 `python scripts/ci_check.py`，结果记入 `private/dev/TEST-REPORT.md`。
+
+### 阶段 3 · 首个需求（走开发工作流）
+
+对齐需求 → 决策记入 `private/AGENTS.md`（D-001）→ `private/dev/WORKLOG.md` 切换
+当前任务 → 实施（阶段落盘）→ 按 `docs/audit-checklist.md` 审计 → 提交。
+
+### 阶段 4 · 首次发布
+
+按根 `AGENTS.md`「发布流程」：`scripts/bump_version.py` 递增版本 → 更新
+`private/dev/CHANGELOG.md` 顶部 → `scripts/pre_release_check.py` 发布前检查 →
+主仓库提交/推送 → tag + Release（首次 push 不自动发 Release，见
+`.github/workflows/release.yml` 说明；手动/自动二选一）。
+
+### 阶段 5 · 立项类话题（持续）
+
+与 agent 讨论项目思路/需求/架构/功能/产品时，要求 agent 优先在 GitHub 调研现成
+参考并提醒「先调研再立项」（模板 `AGENTS.md` 红线 13），避免从零造轮子。
+
+### 文档时机速查
+
+| 文档 | 初始化（脚本） | 首次开发前 | 开发中 | 每次发布 |
+|---|---|---|---|---|
+| `README.md` | 骨架 | 填写 | 随用户视角改动更新 | 核对 |
+| `private/AGENTS.md` | 骨架 | 填环境/安装目标 | 决策/定案/询问清单随需求补 | 核对 |
+| `private/dev/DESIGN.md` | 骨架 | 填项目形态/核心设计 | 设计变化时更新 | 核对 |
+| `private/dev/WORKLOG.md` | 初始化条目 | — | **每小阶段更新** | 收口 |
+| `private/dev/CHANGELOG.md` | v0.0.1 条目 | — | 变更要点 | **顶部新增条目** |
+| `private/dev/TEST-REPORT.md` | 初始化条目 | 记 CI 落地结果 | 测试变化时更新 | **必更新** |
+| `private/dev/EXPERIENCE-TO-*.md` | 骨架 | — | **每轮对话结束写入** | 提醒沉淀 |
+| `docs/TESTING.md` | 模板自带 | 按它落地测试 | 测试体系变化时更新 | 核对 |
+| `version.json` | 0.0.1 / 模板版本 | — | — | **bump** |

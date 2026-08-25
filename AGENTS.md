@@ -45,7 +45,13 @@
    `agent-rules` 继承矩阵版本/覆盖/指纹与 `project-template/version.json` 的
    `template_version` 一致（改模板/发版后运行 sync 即校验）；另按**特性核对清单**
    逐条对照模板 CHANGELOG 能力点与 `init-project/`、`agent-rules/` 摘要（自动化
-   校验不覆盖摘要级过时，需人工比对）。
+   校验不覆盖摘要级过时，需人工比对）。`sync_template.py` 还会自动校验
+   `init-project/references/init-steps.md` 对模板关键文件的覆盖
+   （`INIT_STEPS_COVERAGE`，缺失即拦截，防止「只同步资产镜像、不同步 skill 承载
+   文档」）；改模板/发版后的 **skill 覆盖度复查**必须核对：①
+   `init-project/SKILL.md` 摘要、② `init-steps.md` 校验清单/落地路线图、
+   ③ `agent-rules/`（仅当模板【通用】红线/工作流原则变更）、④ 全部已安装副本
+   重装并哈希复核。
 5. **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<YYYY-MM-DD>_<HHMM>/`
    （如 `codex_2026-08-25_2330`；不设固定 agent 列表，以执行 agent 的产品名为准），
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），

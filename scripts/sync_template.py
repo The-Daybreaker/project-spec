@@ -31,7 +31,34 @@ SKILL_MD = ROOT / "init-project" / "SKILL.md"
 AGENT_RULES_DIR = ROOT / "agent-rules"
 AGENT_RULES_SKILL_MD = AGENT_RULES_DIR / "SKILL.md"
 INHERITANCE_MAP = AGENT_RULES_DIR / "references" / "inheritance-map.md"
+INIT_STEPS = ROOT / "init-project" / "references" / "init-steps.md"
 SKIP_NAMES = {".git", "__pycache__", ".DS_Store", "Thumbs.db"}
+
+# 初始化流程必须覆盖的模板关键文件：模板新增/变更这类文件后，必须同步
+# init-steps.md（校验清单 / 常见问题 / 落地路线图），否则 sync 失败——
+# 防止「改模板只同步资产镜像、不同步 skill 承载文档」。
+# 维护：按需增删；新增模板文件若属「初始化流程关键项」，加入本清单并同步 init-steps.md。
+INIT_STEPS_COVERAGE = [
+    "AGENTS.md",
+    "private/AGENTS.md",
+    "README.md",
+    "version.json",
+    "archive/ARCHIVE.md",
+    "dist/.gitkeep",
+    "docs/TESTING.md",
+    "docs/audit-checklist.md",
+    "docs/UPGRADE.md",
+    "scripts/ci_check.py",
+    "scripts/pre_release_check.py",
+    "scripts/trash.py",
+    "scripts/bump_version.py",
+    "private/dev/WORKLOG.md",
+    "private/dev/CHANGELOG.md",
+    "private/dev/TEST-REPORT.md",
+    "private/dev/EXPERIENCE-TO-KB.md",
+    "private/dev/EXPERIENCE-TO-TEMPLATE.md",
+    "private/dev/DESIGN.md",
+]
 
 
 def _configure_utf8() -> None:
@@ -177,6 +204,21 @@ def _check_agent_rules(tpl_version: str, problems: list) -> None:
             problems.append(f"inheritance-map has obsolete mapping for 红线 {num}")
 
 
+def _check_init_steps_coverage(problems: list) -> None:
+    """Verify init-steps.md covers the key template files of the init flow."""
+    if not INIT_STEPS.is_file():
+        problems.append(f"init-steps not found: {INIT_STEPS}")
+        return
+    text = INIT_STEPS.read_text(encoding="utf-8")
+    missing = [k for k in INIT_STEPS_COVERAGE if k not in text]
+    if missing:
+        problems.append(
+            "init-steps.md missing coverage for template key file(s): "
+            f"{missing} (add to init-steps.md 校验清单/常见问题/落地路线图; "
+            "if not init-flow-critical, remove from INIT_STEPS_COVERAGE in sync_template.py)"
+        )
+
+
 def main() -> int:
     _configure_utf8()
     if not SRC.is_dir():
@@ -220,6 +262,7 @@ def main() -> int:
         )
 
     _check_agent_rules(tpl_version, problems)
+    _check_init_steps_coverage(problems)
 
     if problems:
         print("[error] sync verification failed:", file=sys.stderr)
@@ -230,7 +273,7 @@ def main() -> int:
     print(
         f"synced and verified {len(rel_src)} files: {SRC} -> {DST} "
         f"(template_version={tpl_version}, init-project metadata.version={skill_version}, "
-        f"agent-rules verified)"
+        f"agent-rules verified, init-steps coverage verified)"
     )
     return 0
 

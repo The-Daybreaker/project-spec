@@ -182,7 +182,10 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
   `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
   `agent-rules` 继承矩阵版本/覆盖/指纹与 `project-template/version.json` 的
-  `template_version` 一致（改模板/发版后运行 sync 即校验）。
+  `template_version` 一致，并校验 `init-steps.md` 对模板关键文件的覆盖
+  （`INIT_STEPS_COVERAGE`，缺失即拦截）；改模板/发版后按「skill 覆盖度复查」核对
+  SKILL 摘要 / init-steps 校验清单与路线图 / agent-rules（如涉红线）/
+  全部已安装副本重装并哈希复核。
 - **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.2；
   版本号见 `version.json`）。
 - **索引/未发版区段纪律**：「新条目在前」的文档（EXP-KB 索引与正文、CHANGELOG
