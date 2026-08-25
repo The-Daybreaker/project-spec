@@ -10,7 +10,8 @@
 
 - 需求：子文件夹下的 README.md 改名，避免与项目根 README 混淆、便于索引——
   `project-template/docs/README.md` → `docs/DOCS.md`、
-  `project-template/private/README.md` → `private/PRIVATE.md`，并同步全部引用。
+  `project-template/private/README.md` → `private/PRIVATE.md`、
+  `project-template/private/test/README.md` → `private/test/TEST.md`，并同步全部引用。
 - 目标/验收：模板内不再有子目录 README.md；全部引用改为 DOCS.md / PRIVATE.md；
   sync 0 差异；quick_validate 通过；自动提交。
 - 计划步骤：
@@ -22,9 +23,9 @@
 
 | 阶段 | 状态 | 完成内容 | 变更文件 | 验证 | 下一步 |
 |---|---|---|---|---|---|
-| 1 改名 | ✅ | docs/README.md → docs/DOCS.md；private/README.md → private/PRIVATE.md | 移动 2 文件 | 结构检查 | 引用更新 |
+| 1 改名 | ✅ | docs/README.md → docs/DOCS.md；private/README.md → private/PRIVATE.md；private/test/README.md → private/test/TEST.md | 移动 3 文件 | 结构检查 | 引用更新 |
 | 2 引用更新 | ✅ | 模板 AGENTS / 私有 AGENTS / audit-checklist / 模板与工作区 README 的 tree 与治理引用 | 6 文件 | grep 无 docs/README 残留 | sync+校验 |
-| 3 sync+校验+提交 | ✅ | sync 29 文件 0 差异；quick_validate；py_compile；git add + commit | 全部 | 通过 | 汇报 |
+| 3 sync+校验+提交 | ✅ | sync 29 文件 0 差异；quick_validate；py_compile；git add + commit（991b518 + 补充提交） | 全部 | 通过 | 汇报 |
 
 ## 待办/遗留
 
@@ -47,8 +48,8 @@
   （CONTRIBUTING → docs/、version-sync.json → scripts/，bump_version 同步更新）；
   修正「工作区 .git 只读」错误描述，改动由 agent 自动提交。
 - 2026-08-25 子目录 README 改名：docs/README.md → docs/DOCS.md、
-  private/README.md → private/PRIVATE.md（避免与项目根 README 混淆、便于索引），
-  全部引用同步更新并提交。
+  private/README.md → private/PRIVATE.md、private/test/README.md →
+  private/test/TEST.md（避免与项目根 README 混淆、便于索引），全部引用同步更新并提交。
 - 2026-08-25 模板 v1.1.0 第二轮改造：阶段落盘（WORKLOG）、双模块、【通用】/【项目专用】
   标注、经验文档×2（完整条目）、删除纪律（_trash + trash.py）、模板升级机制
   （TEMPLATE_VERSION + CHANGELOG + UPGRADE）、红线 13→15（阶段落盘、上下文恢复重读）。
