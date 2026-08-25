@@ -6,6 +6,13 @@
 
 ## 未发版变更（v1.2.1 候选）
 
+- UPGRADE 升级路径补齐（全面审计第五轮 P2·T1）：`project-template/docs/UPGRADE.md`
+  新增「B 区私有骨架迁移」规则（新增骨架直接复制、已有同名文件只合并模板新增
+  字段、依赖补齐、私有子 git 同步）与「升级迁移检查表（按版本）」（含 v1.2.0
+  已知迁移要点：四登记册 INDEX ×4 复制 / WORKLOG「流程位置」字段合并 /
+  `check_dev_docs.py` 依赖补救）；回读校验补 `check_dev_docs.py` 步骤——解决
+  「既有项目按【通用】规则升级会漏建 B 区骨架，导致 `ci_check` /
+  `pre_release_check` 升级后失败且无补救说明」的缺口。
 - 流程提示补充「缩写附中文翻译」要求：模板 `private/AGENTS.md`「流程提示」新增
   强制规则 + 「缩写对照」表（PRD=产品需求文档 / RFC=技术方案文档 /
   ADR=架构决策记录 / RESEARCH=调研记录 / DESIGN=设计文档 / WORKLOG=工作进度日志 /

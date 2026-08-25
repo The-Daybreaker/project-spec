@@ -8,23 +8,21 @@
 
 ## 当前任务
 
-- 需求：全面审计整个项目（第五轮）——覆盖全流程缺口、流程描述清晰度，并判断
-  能否支撑「从零搭建并开发项目」的完整生命周期。
+- 需求：T1 升级路径修复——UPGRADE.md 补「B 区私有骨架迁移」规则与「按版本迁移
+  检查表」，根治「既有项目升级漏建 B 区骨架导致校验失败且无补救说明」；并回答
+  文档/skill/WORKLOG/private 子 git 各同步面的约束机制现状。
 - 流程位置：14/16 · 展示与提交（S 档：01 需求提出 → 10 确认开工 直达）；
-  已完成：01-13（通读全部规范/脚本 → 自动化验证 → 端到端冒烟 → 人工核对与
-  缺口分析 → 结论汇总）；下一步：16 经验沉淀与汇报（15 发版 v1.2.1 由用户决定）。
+  已完成：01-13（约束机制根因分析 → UPGRADE 修复 → sync/quick_validate/六处重装
+  哈希复核）；下一步：16 沉淀汇报（15 发版 v1.2.1 由用户决定）。
 - 计划步骤：
-  1. 盘点与通读（✅）：工作区 AGENTS/README/docs、模板根/私有 AGENTS、模板
-     docs/scripts/workflows/private 骨架、init-project SKILL/init-steps/脚本、
-     agent-rules 全套
-  2. 自动化验证（✅）：sync 36 文件 0 差异 + agent-rules verified；quick_validate
-     ×2 valid；py_compile 7 脚本 OK；版本号 grep 无残留；git 干净
-  3. 端到端冒烟（✅）：init_project.py 初始化 36 文件/13 替换、双 git 干净、
-     check-ignore 命中、check_dev_docs 0 issue、ci_check 0、pre_release 占位拦截
-     符合预期、六处副本全量哈希一致
-  4. 人工核对与缺口分析（✅）：逐环节核对从零搭建→开发→发布→升级→归档全流程；
-     发现 P2×1、P3×5（详见阶段 43 与最终汇报）
-  5. 阶段落盘 + 经验沉淀 + 审计结论汇报（进行中）
+  1. 约束机制根因分析（✅）：文档/Worklog=流程+检查层弱约束，新鲜度无自动化；
+     skill=sync_template 工具强约束；private 子 git=发布前强约束、日常流程约束
+  2. UPGRADE.md 修复（✅）：新增「B 区私有骨架迁移」+「升级迁移检查表（按版本）」
+     + v1.2.0 已知迁移要点 + 回读校验补 check_dev_docs
+  3. sync + 文档同步（进行中）：sync 36 文件 0 差异；CHANGELOG 未发版区段登记；
+     WORKLOG 切换；EXP-KB 沉淀
+  4. 六处副本重装 + 哈希复核
+  5. 提交 + 汇报
 
 ## 阶段记录
 
@@ -251,6 +249,15 @@
   经验自动沉淀 | docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | sync / quick_validate
   / py_compile / 冒烟 / 副本哈希 | 汇报（修复建议待用户确认；15 发版 v1.2.1
   由用户决定） |
+| 44 T1·升级路径修复 | ✅ | UPGRADE.md 补「B 区私有骨架迁移」规则（新增骨架直接
+  复制、已有同名文件只合并模板新增字段、依赖补齐、私有子 git 同步）+「升级迁移
+  检查表（按版本）」（v1.2.0 已知迁移要点：四登记册 INDEX 复制 / WORKLOG 流程
+  位置字段合并 / check_dev_docs 依赖补救）；回读校验补 check_dev_docs 步骤；
+  sync 36 文件 0 差异；CHANGELOG 未发版登记；WORKLOG 当前任务切换；EXP-KB
+  沉淀 | project-template/docs/UPGRADE.md（assets 镜像同步）、docs/CHANGELOG.md、
+  docs/WORKLOG.md、docs/EXPERIENCE-TO-KB.md | sync 36 文件 0 差异 / quick_validate
+  ×2 valid / 六处副本全量哈希一致（40 文件逐文件）+ UPGRADE 新节就位 | 提交 →
+  汇报 |
 
 ## 待办/遗留
 
@@ -278,9 +285,13 @@
       流程提示落地，六处重装哈希一致，tag v1.2.0
 - [x] 本任务（init-project 初始化流程更新）完结：提交 4347220；阶段 42 验证项
       已由第五轮审计补验全绿
+- [x] 本任务（全面审计第五轮）完结：审计结论汇报已交付，P2/P3 修复建议待用户
+      确认（P2·T1 已由新任务实施）
 
 ## 历史记录
 
+- 2026-08-26 T1 升级路径修复：UPGRADE.md 补「B 区私有骨架迁移」+「升级迁移
+  检查表（按版本）」（v1.2.0 迁移要点），sync 通过，六处重装哈希复核。
 - 2026-08-26 全面审计（第五轮）：全流程覆盖与清晰度审计，自动化验证 + 端到端
   冒烟 + 六处副本哈希全绿；结论可支撑从零搭建全流程；发现 P2×1 / P3×5 建议
   （详见阶段 43），修复待用户确认。
