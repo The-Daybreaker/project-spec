@@ -8,21 +8,23 @@
 
 ## 当前任务
 
-- 需求：init-project skill 初始化流程更新（审计后续）：`init_project.py` 下一步
-  提示 + SKILL 执行流程/前置确认 + init-steps 校验清单/落地路线图补 v1.2.0
-  特性（开发前登记册 / 流程提示 / 缩写翻译 / check_dev_docs）。
+- 需求：全面审计整个项目（第五轮）——覆盖全流程缺口、流程描述清晰度，并判断
+  能否支撑「从零搭建并开发项目」的完整生命周期。
 - 流程位置：14/16 · 展示与提交（S 档：01 需求提出 → 10 确认开工 直达）；
-  已完成：01-13（含全面审计与修复）；下一步：16 沉淀汇报（15 发版 v1.2.1
-  由用户决定）。
+  已完成：01-13（通读全部规范/脚本 → 自动化验证 → 端到端冒烟 → 人工核对与
+  缺口分析 → 结论汇总）；下一步：16 经验沉淀与汇报（15 发版 v1.2.1 由用户决定）。
 - 计划步骤：
-  1. 自动化验证（✅ 已完成）：sync 36 文件 0 差异 / quick_validate×2 / py_compile /
-     init 冒烟 / check_dev_docs / 版本与占位符 grep / 六处副本哈希 全绿
-  2. 独立子代理审计（进行中）：只看 diff + audit-checklist，不共享上下文
-  3. 人工文档核对（✅ 已完成）：发现并确认 4 处问题——P1：WORKLOG 当前任务陈旧、
-     P1：CHANGELOG 版本非新在前；P2：维护约定 9 排在 8 前；P3：init-project
-     SKILL 摘要缺「缩写中文翻译」
-  4. 修复 + 复检
-  5. 阶段落盘 + 提交 + 审计结论汇报
+  1. 盘点与通读（✅）：工作区 AGENTS/README/docs、模板根/私有 AGENTS、模板
+     docs/scripts/workflows/private 骨架、init-project SKILL/init-steps/脚本、
+     agent-rules 全套
+  2. 自动化验证（✅）：sync 36 文件 0 差异 + agent-rules verified；quick_validate
+     ×2 valid；py_compile 7 脚本 OK；版本号 grep 无残留；git 干净
+  3. 端到端冒烟（✅）：init_project.py 初始化 36 文件/13 替换、双 git 干净、
+     check-ignore 命中、check_dev_docs 0 issue、ci_check 0、pre_release 占位拦截
+     符合预期、六处副本全量哈希一致
+  4. 人工核对与缺口分析（✅）：逐环节核对从零搭建→开发→发布→升级→归档全流程；
+     发现 P2×1、P3×5（详见阶段 43 与最终汇报）
+  5. 阶段落盘 + 经验沉淀 + 审计结论汇报（进行中）
 
 ## 阶段记录
 
@@ -234,8 +236,21 @@
   步收尾建议补开发前门禁；前置确认 1 补调研落点 RESEARCH；init-steps 校验清单
   补「流程提示/缩写对照」、阶段 1 补流程提示说明；CHANGELOG 未发版登记 |
   init-project/scripts/init_project.py、init-project/SKILL.md、
-  init-project/references/init-steps.md、docs/CHANGELOG.md | 待 py_compile/
-  quick_validate/冒烟/重装 | 14 提交 → 16 汇报（15 待发版 v1.2.1） |
+  init-project/references/init-steps.md、docs/CHANGELOG.md | ✅ 本轮审计补验：
+  py_compile / quick_validate×2 / sync / init 冒烟 / 六处副本哈希 全过 | 14 提交
+  → 16 汇报（15 待发版 v1.2.1） |
+| 43 全面审计（第五轮） | ✅ | 全流程覆盖与清晰度审计：通读工作区/模板/skill/
+  agent-rules 全部规范与脚本；自动化验证全绿（sync 36 文件 0 差异、quick_validate
+  ×2、py_compile、init 冒烟 36 文件/13 替换/双 git 干净/check-ignore 命中、
+  check_dev_docs 0 issue、pre_release 占位拦截符合预期、六处副本全量哈希一致）；
+  补验阶段 42 待验证项；人工核对发现 P2×1（UPGRADE.md 未覆盖模板新增 B 区骨架：
+  四登记册/流程位置字段/check_dev_docs 依赖）与 P3×5（TEST.md 与 private/.gitignore
+  的 staging-repo 不一致、--auto-release 与红线 2 衔接未明确、FAQ「Python 不可用
+  →--no-git」表述误导、check_dev_docs 交叉引用弱校验、.editorconfig/.gitattributes
+  行尾不一致）；结论：可支撑从零搭建全流程，修复建议待用户确认；切换当前任务 +
+  经验自动沉淀 | docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md | sync / quick_validate
+  / py_compile / 冒烟 / 副本哈希 | 汇报（修复建议待用户确认；15 发版 v1.2.1
+  由用户决定） |
 
 ## 待办/遗留
 
@@ -261,9 +276,14 @@
 - [x] 本任务（全面审计·第三轮）完结：自动化验证全绿；维护级缺陷已修复并提交
 - [x] 本任务（开发前规范实施 + v1.2.0 发版）完结：四登记册 + check_dev_docs +
       流程提示落地，六处重装哈希一致，tag v1.2.0
+- [x] 本任务（init-project 初始化流程更新）完结：提交 4347220；阶段 42 验证项
+      已由第五轮审计补验全绿
 
 ## 历史记录
 
+- 2026-08-26 全面审计（第五轮）：全流程覆盖与清晰度审计，自动化验证 + 端到端
+  冒烟 + 六处副本哈希全绿；结论可支撑从零搭建全流程；发现 P2×1 / P3×5 建议
+  （详见阶段 43），修复待用户确认。
 - 2026-08-26 模板 v1.2.0 发版：开发前规范（PRD/RFC/ADR/RESEARCH 四登记册 +
   状态机三层约束 + 流程提示）；提交 60b10cf + tag v1.2.0；六处重装哈希一致。
 - 2026-08-26 工作流缺陷修复（skill 覆盖自动校验 + 初始化路线图）：sync_template
