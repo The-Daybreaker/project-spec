@@ -72,7 +72,8 @@ def parse_args() -> argparse.Namespace:
                    help='自定义 LICENSE 文件路径（替换模板 LICENSE，其中 {{YEAR}}/{{AUTHOR}} '
                         '占位符同样会被替换）')
     p.add_argument('--auto-release', action='store_true',
-                   help='开启「每次改动完成后自动发布」（默认不自动发布，用户确认后发布）')
+                   help='开启「每次改动完成后自动发布」（视为发布/推送预授权；'
+                        '默认不自动发布，用户确认后发布）')
     p.add_argument('--no-git', action='store_true', help='只复制+替换，不初始化 git')
     p.add_argument('--template', default='',
                    help='模板目录（默认 <skill>/assets/project-template/）')
@@ -272,7 +273,9 @@ def main() -> int:
         'LICENSE_NOTICE': license_notice,
         'AUTO_RELEASE': (
             '每次改动完成后自动执行发布（提交、推送、tag/Release、分发/部署），不再等待'
-            '用户明确要求（如需关闭，见「用户确认的设计决策」）。'
+            '用户明确要求；自动发布视为用户对发布/推送的预授权（根 AGENTS.md 红线 2 '
+            '对常规发布的同意要求视为已满足），破坏性变更、永久删除等高风险操作仍须'
+            '单独确认（如需关闭，见「用户确认的设计决策」）。'
             if args.auto_release else
             '默认不自动发布：每次改动完成后先展示与确认，用户明确要求发布时才执行发布'
             '流程（提交、推送、tag/Release、分发/部署；如需改为自动发布，见「用户确认'

@@ -261,7 +261,7 @@ def main() -> int:
         )
         fail = True
     else:
-        r = _run(["python", str(check_dev_docs)])
+        r = _run([sys.executable, str(check_dev_docs)])
         if r.returncode != 0:
             print(
                 "[error] check_dev_docs.py failed "

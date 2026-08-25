@@ -15,6 +15,7 @@
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
+| 2026-08-26 | P3 批量修复：文档/配置/脚本一致性收口（T2-T8，T5 跳过） | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | T1 升级路径修复 + 同步面约束机制根因（UPGRADE B 区骨架迁移） | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | 全流程审计（第五轮）：升级路径/初始化输出面/一致性硬事实核对 | 经验方法/教训 | 待沉淀 |
 | 2026-08-26 | init-project 初始化流程更新（审计后续补 v1.2.0 特性） | 经验方法/方案 | 待沉淀 |
@@ -37,6 +38,47 @@
 | 2026-08-25 | 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
+
+## 2026-08-26 · P3 批量修复：文档/配置/脚本一致性收口（T2-T8，T5 跳过）
+
+- 来源项目/任务：通用项目模板工作区（全面审计第五轮 P3 建议实施）
+- 背景与上下文：审计提出 T2-T8 六项 P3；用户指示「继续修 P3，约束增强不做」，
+  因此跳过 T5（check_dev_docs 交叉引用增强，属工具层约束增强）。
+- 需求/问题：把文档声称、配置规则、脚本行为三者对齐，并清理已安装副本生成物。
+- 做法与过程：
+  1. T2 文档↔配置对齐：`private/test/TEST.md` 声称 `staging-repo/` 被
+     `../.gitignore` 忽略，实际无规则 → 补 `test/**/staging-repo/`；
+  2. T3 语义预授权：`--auto-release` 与红线 2「发布/推送须同意」衔接——根
+     AGENTS.md 版本管理、init_project.py 自动发布文案、init-steps 参数表三处
+     同步「自动发布视为预授权；破坏性变更/永久删除仍须单独确认」；
+  3. T4 FAQ 纠错：`--no-git` 不能绕过 Python（脚本本身需要解释器）→ 改为
+     人工复制/换机器；
+  4. T6 行尾统一：.gitattributes 的 ps1/bat CRLF 与 .editorconfig LF 冲突 →
+     统一为 LF（工作区 + 模板同步）；
+  5. T7 可移植性：ci_check / pre_release 子进程 `["python", ...]` →
+     `[sys.executable, ...]`；
+  6. T8 卫生：六处副本 + 工作区 `__pycache__` 经 trash.py 进回收站，重装后
+     各 40 文件逐文件哈希一致。
+- 经验/教训：
+  - 「文档声称 ↔ 配置文件 ↔ 脚本行为」三面必须互相核对：TEST.md 引用
+    .gitignore 规则、FAQ 描述脚本能力、help 文案与替换文本都要反向验证；
+  - 语义预授权类文案要三处同步（规范正文 / 参数说明 / 生成文本），否则 init
+    出来的项目与文档不一致；
+  - 批量 P3 收口的最短验证链 = sync + quick_validate + py_compile + 冒烟 +
+    副本全量哈希；明确「约束增强不做」时要在变更记录里显式登记跳过项，避免
+    误以为遗漏。
+- 验证/效果：sync 36 文件 0 差异；quick_validate ×2；py_compile；冒烟（自动发布
+  文案/忽略规则/LF 行尾/sys.executable 调用）；六处重装 40 文件逐文件哈希一致。
+- 相关文件：project-template/private/.gitignore、project-template/AGENTS.md、
+  project-template/.gitattributes、project-template/scripts/ci_check.py、
+  project-template/scripts/pre_release_check.py、init-project/scripts/init_project.py、
+  init-project/references/init-steps.md、.gitattributes、docs/CHANGELOG.md
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/方案`；`domain=文档治理/工程实践`；
+  `tags=[P3, 一致性, .gitignore, .gitattributes, sys.executable, 预授权, pycache]`；
+  `project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
 
 ## 2026-08-26 · T1 升级路径修复 + 同步面约束机制根因（UPGRADE B 区骨架迁移）
 

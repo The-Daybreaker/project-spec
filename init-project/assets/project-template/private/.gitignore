@@ -16,6 +16,7 @@ test/**/.trash/
 test/**/.obsidian/
 test/**/.config/HTML-Export/
 test/**/.config/log/
+test/**/staging-repo/
 
 # 密钥（确需保留时也不提交；或加密后提交）
 secrets/

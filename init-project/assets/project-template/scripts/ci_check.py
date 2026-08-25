@@ -62,7 +62,7 @@ def main() -> int:
 
     print("==> ci-check: pre-development doc registers (PRD/RFC/ADR/RESEARCH)")
     # 模板自带：校验开发前文档登记册（编号/状态机/索引一致性），建议保留。
-    r = _run(["python", "scripts/check_dev_docs.py"])
+    r = _run([sys.executable, "scripts/check_dev_docs.py"])
     if r.returncode != 0:
         print(r.stdout, end="", file=sys.stderr)
         print(r.stderr, end="", file=sys.stderr)
@@ -77,7 +77,7 @@ def main() -> int:
     print("    and update the check table in private/dev/TEST-REPORT.md.")
     print("    Guide: docs/TESTING.md (pytest setup, coverage, CI integration).")
     # Python 项目接入示例（创建 tests/ 后取消注释并移除 PLACEHOLDER_MARKER）：
-    # r = _run(["python", "-m", "pytest"])
+    # r = _run([sys.executable, "-m", "pytest"])
     # if r.returncode != 0:
     #     print("[error] pytest failed", file=sys.stderr)
     #     return 1

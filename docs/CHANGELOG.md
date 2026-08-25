@@ -6,6 +6,17 @@
 
 ## 未发版变更（v1.2.1 候选）
 
+- P3 批量修复（全面审计第五轮后续；T5 属约束增强，按用户要求跳过）：
+  ① T2 `project-template/private/.gitignore` 补 `test/**/staging-repo/`（与
+  `private/test/TEST.md` 描述一致）；② T3 `--auto-release` 与红线 2 衔接明确——
+  「自动发布视为用户对发布/推送的预授权，红线 2 对常规发布视为已满足；破坏性
+  变更、永久删除等仍须单独确认」（根 AGENTS.md 版本管理、`init_project.py`
+  自动发布文案、init-steps 参数表同步）；③ T4 init-steps FAQ「Python 不可用」
+  表述纠正（`--no-git` 不能绕过脚本，只能人工复制/换机器）；④ T6 `.gitattributes`
+  `*.ps1` / `*.bat` 行尾改为 LF（与 `.editorconfig` 一致；工作区与模板同步）；
+  ⑤ T7 `ci_check.py` / `pre_release_check.py` 子进程调用改 `sys.executable`
+  （提升仅有 `python3` 环境的可移植性）；⑥ T8 清理六处副本与工作区
+  `__pycache__`（重装后各 40 文件逐文件哈希一致）。
 - UPGRADE 升级路径补齐（全面审计第五轮 P2·T1）：`project-template/docs/UPGRADE.md`
   新增「B 区私有骨架迁移」规则（新增骨架直接复制、已有同名文件只合并模板新增
   字段、依赖补齐、私有子 git 同步）与「升级迁移检查表（按版本）」（含 v1.2.0

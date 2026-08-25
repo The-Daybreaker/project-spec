@@ -8,21 +8,21 @@
 
 ## 当前任务
 
-- 需求：T1 升级路径修复——UPGRADE.md 补「B 区私有骨架迁移」规则与「按版本迁移
-  检查表」，根治「既有项目升级漏建 B 区骨架导致校验失败且无补救说明」；并回答
-  文档/skill/WORKLOG/private 子 git 各同步面的约束机制现状。
+- 需求：P3 批量修复（T2/T3/T4/T6/T7/T8；T5 属约束增强按用户要求跳过）——文档/
+  配置/脚本一致性收口，并把六处副本与工作区 pycache 清理干净。
 - 流程位置：14/16 · 展示与提交（S 档：01 需求提出 → 10 确认开工 直达）；
-  已完成：01-13（约束机制根因分析 → UPGRADE 修复 → sync/quick_validate/六处重装
-  哈希复核）；下一步：16 沉淀汇报（15 发版 v1.2.1 由用户决定）。
+  已完成：01-13（T2-T4/T6-T8 修复 → sync/quick_validate/py_compile → 冒烟 →
+  六处重装哈希复核）；下一步：16 沉淀汇报（15 发版 v1.2.1 由用户决定）。
 - 计划步骤：
-  1. 约束机制根因分析（✅）：文档/Worklog=流程+检查层弱约束，新鲜度无自动化；
-     skill=sync_template 工具强约束；private 子 git=发布前强约束、日常流程约束
-  2. UPGRADE.md 修复（✅）：新增「B 区私有骨架迁移」+「升级迁移检查表（按版本）」
-     + v1.2.0 已知迁移要点 + 回读校验补 check_dev_docs
-  3. sync + 文档同步（进行中）：sync 36 文件 0 差异；CHANGELOG 未发版区段登记；
-     WORKLOG 切换；EXP-KB 沉淀
-  4. 六处副本重装 + 哈希复核
-  5. 提交 + 汇报
+  1. T2-T4/T6-T8 修复（✅）：staging-repo 忽略规则、auto-release 预授权衔接、
+     FAQ 表述纠正、.gitattributes 行尾统一、sys.executable 子进程调用、pycache
+     清理
+  2. sync + 校验（✅）：sync 36 文件 0 差异；quick_validate ×2 valid；
+     py_compile OK
+  3. 冒烟（✅）：init --auto-release → ci_check / pre_release（sys.executable
+     生效）、预授权文案、staging-repo 规则、LF 行尾 全部符合
+  4. 六处重装 + 哈希复核（✅）：各 40 文件逐文件一致、无 pycache
+  5. 落盘 + 提交 + 汇报（进行中）
 
 ## 阶段记录
 
@@ -258,6 +258,19 @@
   docs/WORKLOG.md、docs/EXPERIENCE-TO-KB.md | sync 36 文件 0 差异 / quick_validate
   ×2 valid / 六处副本全量哈希一致（40 文件逐文件）+ UPGRADE 新节就位 | 提交 →
   汇报 |
+| 45 P3 批量修复（T2-T8，T5 跳过） | ✅ | ① T2 private/.gitignore 补
+  `test/**/staging-repo/`（与 TEST.md 一致）；② T3 自动发布预授权语义：根
+  AGENTS.md 版本管理 + init_project.py 自动发布文案 + init-steps 参数表；
+  ③ T4 init-steps FAQ「Python 不可用」纠正；④ T6 .gitattributes ps1/bat 行尾
+  LF（工作区 + 模板同步）；⑤ T7 ci_check/pre_release 子进程改 sys.executable；
+  ⑥ T8 清理工作区与六处副本 __pycache__（回收站）；sync + quick_validate×2 +
+  py_compile + 冒烟（--auto-release 预授权文案/规则/LF 生效）+ 六处重装 40 文件
+  逐文件哈希一致 全过 | project-template/（private/.gitignore、AGENTS.md、
+  .gitattributes、scripts/ci_check.py、scripts/pre_release_check.py）、
+  .gitattributes、init-project/（scripts/init_project.py、references/init-steps.md）、
+  docs/CHANGELOG.md、docs/WORKLOG.md、docs/EXPERIENCE-TO-KB.md + 六处 agent 目录 |
+  sync / quick_validate / py_compile / 冒烟 / 副本哈希 全过 | 提交 → 汇报（15
+  发版 v1.2.1 由用户决定） |
 
 ## 待办/遗留
 
@@ -287,9 +300,12 @@
       已由第五轮审计补验全绿
 - [x] 本任务（全面审计第五轮）完结：审计结论汇报已交付，P2/P3 修复建议待用户
       确认（P2·T1 已由新任务实施）
+- [x] 本任务（T1 升级路径修复）完结：提交 344b423；sync + 六处重装哈希复核
 
 ## 历史记录
 
+- 2026-08-26 P3 批量修复（T2-T8，T5 跳过）：文档/配置/脚本一致性收口 +
+  pycache 清理；sync / quick_validate / 冒烟 / 六处重装哈希复核全过。
 - 2026-08-26 T1 升级路径修复：UPGRADE.md 补「B 区私有骨架迁移」+「升级迁移
   检查表（按版本）」（v1.2.0 迁移要点），sync 通过，六处重装哈希复核。
 - 2026-08-26 全面审计（第五轮）：全流程覆盖与清晰度审计，自动化验证 + 端到端
