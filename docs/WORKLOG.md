@@ -8,15 +8,16 @@
 
 ## 当前任务
 
-- 需求：回答「为什么改模板不自动更新 skill / agent-rules 是否需更新 / 初始化
-  流程是否需更新」三问；修复工作流缺陷：sync 自动校验 skill 承载文档覆盖 +
-  init-steps 补「初始化落地路线图」（文档时机 + CI 落地）。
+- 需求：为模板补「项目开发前阶段」规范（需求讨论、定架构、定设计方案）。用户选定
+  C 档（PRD + RFC + ADR 三层体系）；当前已完成方案设计，待用户确认后实施。
 - 计划步骤：
-  1. 取证：agent-rules 版本/指纹/副本；模板文件 vs init-steps 覆盖对比
-  2. sync_template.py 新增 INIT_STEPS_COVERAGE 校验（破坏性测试通过）
-  3. init-steps.md 第 7 节升级为「落地路线图」（阶段 + 文档时机速查表）
-  4. 维护约定 #4 补 skill 覆盖度复查；CHANGELOG / WORKLOG / EXP-KB 同步
-  5. 验证（sync / quick_validate / 冒烟）+ 重装六处 + 提交
+  1. 方案设计（✅ 已完成）：三目录实体化（prd/rfc/adr 各含 INDEX.md）、状态机、
+     开发前门禁、S/M/L 档位、与现有文档衔接、同步面清单、实施步骤
+  2. 待用户确认：档位细节（S/M/L 跳过规则、PRD 默认私有）、ADR 状态元数据可改、
+     发版版本号（建议 minor v1.2.0）
+  3. 实施：模板新增 3 文件 + 规范正文/审计清单/init-project/agent-rules 同步 +
+     sync_template 覆盖列表更新
+  4. 验证 + 六处重装 + 发版（版本号经用户确认）
 
 ## 阶段记录
 
@@ -136,6 +137,12 @@
   README.md docs/CHANGELOG.md docs/WORKLOG.md docs/EXPERIENCE-TO-KB.md +
   六处 agent 目录 | sync（含破坏性测试）/ quick_validate / py_compile /
   副本哈希 | 汇报 |
+| 32 开发前规范·方案设计 | ✅ | 用户选定 C 档（PRD+RFC+ADR 三层体系）；确认
+  「历史文档区例外」兼容性结论（普通正文仍禁留史，仅 prd/rfc/adr 允许正文留史）；
+  完成全套方案设计：三目录实体化 + 状态机（PRD/RFC 定稿冻结、ADR 只增不改）、
+  开发前门禁、S/M/L 档位、与 DESIGN/D-xxx/CHANGELOG 衔接、同步面清单、实施
+  步骤；WORKLOG 当前任务切换；EXP-KB 沉淀 | docs/WORKLOG.md
+  docs/EXPERIENCE-TO-KB.md | 回读核对 | 待用户确认方案细节与发版版本后实施 |
 
 ## 待办/遗留
 
@@ -159,9 +166,13 @@
       （skill 创建 + sync 校验 + 文档同步 + 安装到五个 agent）；随 v1.1.2 发版时
       同步版本
 - [x] 本任务（全面审计·第三轮）完结：自动化验证全绿；维护级缺陷已修复并提交
+- [ ] 开发前规范（PRD/RFC/ADR）C 档方案已设计；待用户确认细节与发版版本后实施
 
 ## 历史记录
 
+- 2026-08-26 工作流缺陷修复（skill 覆盖自动校验 + 初始化路线图）：sync_template
+  新增 INIT_STEPS_COVERAGE；init-steps 第 7 节升级落地路线图；维护约定 #4 补
+  覆盖度复查；六处重装（阶段 31）。
 - 2026-08-26 模板 v1.1.2 发版：实体化 `archive/` / `dist/`、维护约定 #8 双置顶、
   测试落地指引（TESTING.md）、六处 agent 安装（新增 `.qoder-cn`）；版本递增
   1.1.1→1.1.2，已提交并打 tag（v1.1.2）。
