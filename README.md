@@ -122,7 +122,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （中文 Windows 默认 GBK 编码下若报 UnicodeDecodeError，先设置 `PYTHONUTF8=1`）。
 - **发版同步**：版本递增时同步更新 `VERSION`、`project-template/TEMPLATE_VERSION`、
   根 `CHANGELOG.md`、`SKILL.md metadata.version`，再走模板发布流程。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.0；
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.1.1；
   版本号见 `VERSION` 文件）。
 
 ## 经验来源

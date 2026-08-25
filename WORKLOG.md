@@ -8,34 +8,31 @@
 
 ## 当前任务
 
-- 需求：把用户提供的文档治理实战经验吸收进模板（选项 A，不复制整篇、不写参考来源）——
-  文档维护清单、红线 12/5 强化、文档治理约定（用户已定版：正文=当前状态、禁止 AI
-  追加历史、留痕只进 CHANGELOG 一行、废案直接删除走 _trash、可恢复性由删除机制保证）、
-  审计清单「文档无缝衔接」专项。
-- 目标/验收：模板文档齐全；sync 后两份副本一致；红线仍 15 条；不出现参考来源字样。
+- 需求：把外部实践项目经验按用户确认的 A–G（去掉「恢复现场只需读」/
+  「HEAD--wd 打包纪律」两项）合入模板，版本 v1.1.1，不写参考来源。
+- 目标/验收：WORKLOG 增强（下次从这里继续/人工介入点，不替代红线 15）；DESIGN
+  不变量/影响面；私有 AGENTS 定案/询问清单 + 决策格式（可扩展）；发布前自测；
+  三级门禁；文档地图；sync 0 差异；冒烟通过；提交 v1.1.1 + tag。
 - 计划步骤：
-  1. docs/README.md「文档治理」小节
-  2. 根 AGENTS.md（维护清单 + 红线 12/5 + 文档治理）
-  3. private/AGENTS.md 同步
-  4. audit-checklist「文档无缝衔接」专项
-  5. 根 README 设计要点 9 补充
-  6. sync + 校验 + 测试 + 清理 + 报告
+  1. 模板编辑（WORKLOG/DESIGN/私有 AGENTS/根 AGENTS/docs README/audit-checklist）
+  2. 版本升级 1.1.1（VERSION/TEMPLATE_VERSION/SKILL/CHANGELOG/README）
+  3. sync + 校验 + 冒烟 + 清理
+  4. 提交 v1.1.1 + 打 tag + 报告
 
 ## 阶段记录
 
 | 阶段 | 状态 | 完成内容 | 变更文件 | 验证 | 下一步 |
 |---|---|---|---|---|---|
-| 1 docs/README 文档治理 | ✅ | 文档治理 5 条约定（正文即当前状态） | project-template/docs/README.md | 重读比对 | 根 AGENTS |
-| 2 根 AGENTS | ✅ | 红线 5/12 强化 + 文档维护清单 + 文档治理 | project-template/AGENTS.md | 红线 15 条确认 | private AGENTS |
-| 3 private AGENTS | ✅ | 文档治理小节同步 | project-template/private/AGENTS.md | 重读比对 | 审计清单 |
-| 4 审计清单 | ✅ | 「文档无缝衔接」专项第 7 节 + 过时立即修条目 | project-template/docs/audit-checklist.md | 重读比对 | 根 README |
-| 5 根 README | ✅ | 设计要点 9 补充文档治理 | README.md | 重读比对 | sync+测试 |
-| 6 sync+测试+报告 | 🔄 | sync 29 文件 0 差异；quick_validate；冒烟测试（文档治理/维护清单/审计专项/占位符 0/来源字样 0） | 全部模板+skill | 通过 | 清理+报告 |
+| 1 模板编辑 | ✅ | WORKLOG 增强/DESIGN 不变量+影响面/私有 AGENTS 定案+询问+决策格式/发布自测/文档地图/三级门禁 | project-template/ 6 个文件 | 重读比对 | 版本升级 |
+| 2 版本升级 | ✅ | VERSION/TEMPLATE_VERSION/SKILL/CHANGELOG/README → 1.1.1 | 5 个文件 | 值一致 | sync+测试 |
+| 3 sync+校验+冒烟 | ✅ | sync 29 文件 0 差异；quick_validate；初始化冒烟（11 处新增小节 OK/占位符 0/来源字样 0/TEMPLATE_VERSION=1.1.1） | 全部模板+skill | 通过 | 提交 |
+| 4 提交+报告 | 🔄 | 提交 v1.1.1 + tag | - | 待执行 | 报告 |
 
 ## 待办/遗留
 
 - [x] 上一任务（模板 v1.1.0 第二轮改造）9/9 完结
-- [x] 本任务（文档治理经验吸收）6/6 完结
+- [x] 上一任务（文档治理经验吸收）6/6 完结
+- [x] 本任务（A–G 经验合入 v1.1.1）4/4 完结
 
 ## 历史记录
 
@@ -46,3 +43,4 @@
 - 2026-08-25 文档治理经验吸收：文档维护清单、红线 12/5 强化、文档治理约定（正文即当前
   状态；覆盖原文、禁止 AI 追加历史、留痕仅 CHANGELOG 一行、废案走 _trash、可恢复性由
   删除机制保证）、审计清单「文档无缝衔接」专项；未写入参考来源。
+- 2026-08-25 v1.1.0 已提交并打 tag（c58a816）。

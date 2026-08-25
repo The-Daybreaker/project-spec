@@ -19,6 +19,21 @@
 
 > 改动涉及用户视角时，必须同步更新对应文档（「改动完成即文档就绪」红线）。
 
+## 文档地图（每份文档回答什么问题）
+
+| 文档 | 回答的问题 |
+|---|---|
+| 根 `AGENTS.md` | Agent 入口：红线摘要、必读顺序、文档职责、维护清单 |
+| `private/AGENTS.md` | 开发规范全集、当前状态、环境、决策、定案/询问清单 |
+| `private/dev/DESIGN.md` | 怎么做：设计、关键不变量、影响面 |
+| `private/dev/WORKLOG.md` | 做到哪了：当前任务、阶段进度、下次从这里继续 |
+| `private/dev/CHANGELOG.md` | 变过什么：版本历史 |
+| `private/dev/TEST-REPORT.md` | 验证过什么：测试记录 |
+| `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 可沉淀进模板的经验 |
+| `private/dev/EXPERIENCE-TO-KB.md` | 可沉淀进知识库的经验 |
+| `README.md` | 使用者视角 |
+| `docs/UPGRADE.md` | 模板如何升级 |
+
 ## 文档模块归属（通用 / 项目专用）
 
 - 每份文档顶部标注 `> 模块：全通用 / 全项目专用 / 混合`；
