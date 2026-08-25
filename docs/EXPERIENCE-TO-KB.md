@@ -45,9 +45,10 @@
      现有治理约束的是「当前状态文档」；把 PRD/RFC/ADR 定义为**历史文档区**
      （唯一允许正文留史），普通正文（AGENTS/DESIGN/README/docs）仍禁留史，
      即可零冲突；
-  2. **文档结构**：`private/dev/prd/`、`rfc/`、`adr/` 三目录（实体化，各含
-     INDEX.md：用途/状态机/编号规则/模板骨架/索引），编号 `PRD-0001` /
-     `RFC-0001` / `ADR-0001`（4 位前缀零，各序列独立、编号不重用）；
+  2. **文档结构**：`private/dev/prd/`、`rfc/`、`adr/`、`research/` 四目录
+     （实体化，各含 INDEX.md：用途/状态机/编号规则/模板骨架/索引），编号
+     `PRD-0001` / `RFC-0001` / `ADR-0001` / `RESEARCH-0001`（4 位前缀零，
+     各序列独立、编号不重用）；
   3. **状态机**：PRD 草稿→已定稿（冻结）→已实现/已废弃（被新 PRD 取代）；RFC
      草稿→评审中→已采纳/已否决（冻结）；ADR 创建即不可变（正文 Context/
      Decision/Consequences/Alternatives 只增不改），仅状态元数据可改
@@ -64,9 +65,19 @@
   7. **同步面**：根/私有 AGENTS、DESIGN、DOCS、CONTRIBUTING、README、
      audit-checklist 新「开发前门禁」节、init-project SKILL/init-steps、
      agent-rules 继承矩阵（不继承列表 + 红线 12 指纹 + 规范 11「历史文档区
-     例外」原则）、sync_template.py 的 INIT_STEPS_COVERAGE 新增三路径；
+     例外」原则）、sync_template.py 的 INIT_STEPS_COVERAGE 新增四路径；
   8. **实施后**：全链路验证 + 六处重装 + 发版（版本号待用户确认，建议
-     minor v1.2.0）。
+     minor v1.2.0）；
+  9. **调研落点（细化）**：新增 `private/dev/research/`（RESEARCH-0001-<topic>.md
+     + INDEX.md；状态 进行中→已完成（结论快照冻结）→被新调研取代）；PRD/RFC
+     只内嵌 2-3 行调研摘要 + `详见 RESEARCH-000X`，完整调研进 research/（可跨
+     需求/决策复用，也满足红线 6「创建前相似检查」防重复调研）；
+  10. **后续新增需求（细化）**：编号序列跨版本持续增长、不重置；PRD INDEX =
+      需求登记册（草稿=待办 / 已定稿=排期 / 已实现=完成 / 已废弃=放弃）；已定稿
+      PRD 的需求变更开新 PRD 取代（旧 PRD 仅状态元数据改为已废弃，正文不动）；
+      开发前门禁适用于**每个 M/L 需求**（不只在项目启动时）；一次发布 = 多个
+      PRD/RFC/ADR 实现集合，CHANGELOG 按版本汇总并引用编号；S 档后续需求仍可
+      跳过 PRD/RFC。
 - 经验/教训：
   - 「正文不留历史」与「历史文档区」可以并存：关键是**显式划分**哪类文档是
     历史文档（只增/冻结），其余一律当前状态；ADR 正是把「决策历史」从 CHANGELOG
@@ -77,8 +88,8 @@
     编号不重用保证追溯链完整。
 - 验证/效果：方案设计阶段（尚未实施）；待用户确认档位细节/发版版本后实施。
 - 相关文件：project-template/（AGENTS×2、DESIGN、DOCS、CONTRIBUTING、README、
-  audit-checklist、private/dev/{prd,rfc,adr}/INDEX.md 待新增）、init-project/、
-  agent-rules/、docs/WORKLOG.md
+  audit-checklist、private/dev/{prd,rfc,adr,research}/INDEX.md 待新增）、
+  init-project/、agent-rules/、docs/WORKLOG.md
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/方案`；`domain=项目管理/文档治理/工程实践`；
   `tags=[PRD, RFC, ADR, 开发前规范, 立项, 模板]`；`project=通用项目模板`
