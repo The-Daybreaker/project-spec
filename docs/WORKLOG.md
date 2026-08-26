@@ -8,35 +8,26 @@
 
 ## 当前任务
 
-- 需求：模板 v1.3.0（minor，用户已确认）——①新增红线 16「范围克制与纠错清零
-  （按单办事、不加菜；撤菜不解释）」：不过度添加需求外内容、被指出后直接删除且
-  禁止为「未做之事」补写说明；②图可视化规范：涉及界面/交互、架构/结构、流程/状态
-  改动先出图（页面原型/架构图/流程图，Mermaid 或 SVG 单文件）→ 展示确认后执行，
-  分挂各阶段（流程图随 PRD/RFC、架构图随 RFC/ADR、页面原型挂设计阶段新增
-  `prototype/` 目录），门禁=流程+清单双落点，16 节点数不变；③两个 skill 合并到
-  `skills/`（init-project + agent-rules → `skills/`），脚本路径/安装表/工作区文档
-  全链更新。
-- 流程位置：01 需求提出 → 05 PRD 定稿（红线措辞、图规范的多轮方案经用户确认）→
-  09 DESIGN 吸收 → 10 确认开工（发版 v1.3.0 已确认）；当前 11 实施（t1
-  WORKLOG/CHANGELOG → t2 模板内改动 → t3 agent-rules → t4 init-project →
-  t5 skills 合并 → t6 版本递增 → t7 验证链 → t8 提交/发版/收尾）。
+- 需求：模板 v1.3.1（patch，用户已确认）——**src/ 代码区实体化与分区约定**：
+  `src/` 从文档提及提升为实体代码区（`src/.gitkeep` 随初始化存在），全部业务源码
+  入 `src/`（子目录由项目按技术栈自定），根目录（工程区：AGENTS/docs/scripts/
+  .github/private 等）不直接放业务代码，提高模板通用性；同步 init-steps 校验清单
+  + INIT_STEPS_COVERAGE + UPGRADE 迁移要点，发版 v1.3.1。
+- 流程位置：01 需求提出 → 05 PRD 定稿（src 分区方案经用户确认）→ 10 确认开工
+  （v1.3.1 已确认）；当前 11 实施（u1 切换 → u2 模板改动 → u3 init-project →
+  u4 版本递增 → u5 文档 → u6 验证 → u7 提交/发版/收尾）。
 - 计划步骤：
-  1. 启动前置：WORKLOG 切换（本步）+ CHANGELOG 未发版区段（v1.3.0 候选）
-  2. 模板内改动：红线 16 正文 + 开发工作流图规范（03/06/08/09 出图确认动作）+
-     完成清单/audit-checklist 检查项 + 文档职责表/三区表补 prototype/ +
-     新增 `private/dev/prototype/README.md` 实体目录 + project-template/README 结构树
-  3. agent-rules：SKILL 规范 16 + 继承矩阵（版本表 1.3.0 + 红线 16 行指纹）+
-     audit-checklist-lite 检查项
-  4. init-project：SKILL 摘要能力点 + init-steps 校验清单（prototype/ + 红线 16）+
-     INIT_STEPS_COVERAGE 补 prototype/README.md
-  5. skills 合并：移动 init-project/agent-rules → skills/ + sync/verify 脚本路径常量
-     + install-targets.json source + 工作区 AGENTS/README 引用
-  6. 版本递增 1.2.2 → 1.3.0（根/project-template version.json、SKILL metadata ×2、
-     继承矩阵版本对照、AGENTS/README 当前版本字样；全局 grep 无残留）
-  7. 验证链：sync / quick_validate×2 / py_compile / 冒烟（含 prototype 目录生成）
-  8. 六处副本重装 + 全量哈希 + 提交 + tag v1.3.0 + 收尾（EXP-KB 双置顶 / WORKLOG 校准）
-- 状态：✅ 本任务完结（发布提交 0613dda + 收尾 9c1a663 + tag v1.3.0），待用户
-  确认后归档。
+  1. 启动前置：WORKLOG 切换（本步）+ CHANGELOG 未发版区段（v1.3.1 候选）
+  2. 模板内改动：`src/.gitkeep` 实体化 + 分区约定（根/私有 AGENTS「代码区」描述、
+     模板 README 结构树补 src/、DESIGN 项目形态小节）
+  3. init-project：INIT_STEPS_COVERAGE 补 src/.gitkeep + init-steps 校验清单
+     补 src/ 检查项
+  4. 版本递增 1.3.0 → 1.3.1（根/project-template version.json、SKILL metadata
+     ×2、继承矩阵版本表、AGENTS/README 当前版本；grep 无残留）
+  5. UPGRADE 补 v1.3.1 迁移要点 + CHANGELOG 未发版区段登记
+  6. 验证链：sync / quick_validate×2 / py_compile / 冒烟（验证 src/.gitkeep 生成）
+  7. 六处副本重装 + 全量哈希 + 提交 + tag v1.3.1 + 收尾（EXP-KB / WORKLOG 校准）
+- 状态：✅ 本任务完结（发布提交 + 附注 tag v1.3.1），待用户确认后归档。
 
 ## 阶段记录
 
@@ -390,6 +381,23 @@
   install-targets.json、AGENTS.md、README.md、docs/CHANGELOG.md、docs/WORKLOG.md、
   version.json ×2）+ 六处 agent 目录 | sync / quick_validate / py_compile / 冒烟 /
   副本哈希 全过 | 收尾汇报 |
+| 54 src/ 代码区实体化·v1.3.1 | ✅ | ① 模板内：`src/.gitkeep` 实体化（A 区，进 git，
+  含代码区说明注释）+ 分区约定「代码区 = 全部业务源码/资源入 `src/`（子目录按
+  技术栈自定）、根目录为工程区不直接放业务代码」落根 AGENTS 项目概览、模板 README
+  结构树、DESIGN 项目形态；② init-project：INIT_STEPS_COVERAGE 补 src/.gitkeep +
+  init-steps 校验清单/落地路线图补 src/ 检查项 + SKILL 摘要「实体目录」补 src；③
+  版本递增 1.3.0→1.3.1（version.json ×2、SKILL metadata ×2、继承矩阵版本表、
+  AGENTS/README 当前版本，grep 无残留，资产镜像经 sync）；④ UPGRADE 补 v1.3.1
+  迁移要点；⑤ 验证链全过：sync 38 文件 0 差异（含六处副本校验；IDE 文件锁
+  WinError 32 按 P3-2 兜底重试通过）、quick_validate ×2 valid、py_compile 8 OK、
+  冒烟（smoke_v131：38 文件/13 替换/src/.gitkeep 生成/template_version=1.3.1/
+  占位符 0/check_dev_docs 0）；⑥ 六处副本重装（init-project 42 文件、agent-rules
+  4 文件）哈希一致；发布提交 + 附注 tag v1.3.1 | project-template/（AGENTS、README、
+  DESIGN、src/.gitkeep 新建、UPGRADE 经 sync）、skills/init-project/（SKILL.md、
+  init-steps）、skills/agent-rules/（SKILL.md、inheritance-map）、scripts/
+  sync_template.py、AGENTS.md、README.md、docs/CHANGELOG.md、docs/WORKLOG.md、
+  version.json ×2 + 六处 agent 目录 | sync / quick_validate / py_compile / 冒烟 /
+  副本哈希 全过 | 收尾汇报 |
 
 ## 待办/遗留
 
@@ -428,6 +436,8 @@
       六处副本 v1.2.2 哈希复核一致
 - [x] 本任务（模板 v1.3.0：红线 16 + 图可视化规范 + skills 目录合并）完结：发布
       提交 0613dda + 收尾 9c1a663 + 附注 tag v1.3.0；六处副本 v1.3.0 哈希复核一致
+- [x] 本任务（模板 v1.3.1：src/ 代码区实体化与分区约定）完结：发布提交 + 附注
+      tag v1.3.1；六处副本 v1.3.1 哈希复核一致
 
 ## 历史记录
 

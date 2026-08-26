@@ -94,6 +94,8 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - [ ] 主仓库 `git status` 干净；`git -C private status` 干净
 - [ ] `git check-ignore private/` 命中（`.gitignore` 生效）
 - [ ] `archive/ARCHIVE.md` 已生成（A 区归档区说明；未归档时保持默认内容）
+- [ ] `src/.gitkeep` 已生成（代码区占位：全部业务源码/资源统一放 `src/`，根目录
+      不放业务代码；v1.3.1 特性）
 - [ ] `dist/.gitkeep` 已生成（C 区发布产物占位；`git check-ignore dist/<任意文件>`
       命中、`git check-ignore dist/.gitkeep` 不命中）
 - [ ] `docs/TESTING.md` 已生成（测试落地指引：pytest 示例 / 覆盖率 / CI 接入 /
@@ -151,6 +153,8 @@ git -C private commit -m "docs: private v0.0.1 - init"
 ### 阶段 1 · 首个开发会话前（文档填空，一次做完）
 
 - `README.md`：功能特性、快速开始、项目结构、许可（按项目实际填写）。
+- `src/`：代码区已就位（`.gitkeep` 占位）；首个功能开发把业务源码/资源统一放
+  `src/` 下（子目录按技术栈自定），**根目录不放业务代码**。
 - `private/AGENTS.md`：「本机环境」「安装目标/部署目标」必填；「用户确认的设计
   决策」（D-001…）与「定案清单」「必须询问人类清单」按首个需求逐步补。
 - `private/dev/DESIGN.md`：项目形态、核心设计、关键不变量、改动影响面定位表。

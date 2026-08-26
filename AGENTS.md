@@ -15,7 +15,7 @@
   `project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill 目录）：
   `init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.3.0）+ git tag；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.3.1）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流

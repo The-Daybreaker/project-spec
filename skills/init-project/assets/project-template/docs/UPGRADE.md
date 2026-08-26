@@ -93,6 +93,12 @@
   页面原型落 `prototype/`，Mermaid/SVG 单文件；未确认不实施）；完成检查清单与
   `docs/audit-checklist.md` 新增图确认检查项（【通用】应用）；无脚本依赖变化
   （`check_dev_docs.py` 仍只管四登记册，`prototype/` 轻量目录不入校验）。
+- **v1.3.1**（src/ 代码区实体化与分区约定）：新增 `src/.gitkeep`（A 区代码区
+  实体占位，模板资产内**直接复制**）；根 `AGENTS.md` 项目概览与模板 `README.md`
+  结构树补「代码区 = 全部业务源码/资源统一入 `src/`（子目录按技术栈自定）、根
+  目录不放业务代码」（【通用】应用）；`private/dev/DESIGN.md` 项目形态补代码区
+  约定（B 区骨架合并）；init-steps 校验清单补 `src/.gitkeep` 检查项（无脚本依赖
+  变化）。
 - （后续版本在此追加；模板 CHANGELOG 为权威）
 
 > 注意：major 版本（如 2.0.0）升级前，先读新模板的 `AGENTS.md` 了解破坏性变更与迁移

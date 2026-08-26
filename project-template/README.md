@@ -29,6 +29,7 @@ npm test
 ```text
 .
 ├── AGENTS.md                # Agent 接手入口（公开）
+├── src/                     # 代码区：全部业务源码/资源（子目录按技术栈自定，根目录不放业务代码）
 ├── docs/                    # 公开文档（DOCS.md / audit-checklist.md / UPGRADE.md / CONTRIBUTING.md / TESTING.md 等）
 ├── scripts/                 # 自动化脚本（bump_version / pre_release_check / ci_check / check_dev_docs / trash）
 ├── .github/workflows/       # CI 与自动发布

@@ -66,6 +66,7 @@ INIT_STEPS_COVERAGE = [
     "private/dev/research/INDEX.md",
     "scripts/check_dev_docs.py",
     "private/dev/prototype/README.md",
+    "src/.gitkeep",
 ]
 
 

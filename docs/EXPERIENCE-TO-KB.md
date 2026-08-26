@@ -15,6 +15,7 @@
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
+| 2026-08-26 | v1.3.1 src/ 代码区实体化：分区约定提通用性 + IDE 文件锁下 sync 兜底重试 | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | v1.3.0 模板增强：红线16（规则为主+比喻为辅）+ 图可视化规范（挂靠阶段、先出图再确认）+ skills 目录合并 | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | 第七轮审计修复 + v1.2.2 发版收口：sync 先于安装 / private 骨架强制跟踪核实 | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | TRAE IDE 内存视图覆盖磁盘编辑：SearchReplace 成功后须整篇回读核对 | 经验方法/教训 | 待沉淀 |
@@ -44,6 +45,31 @@
 | 2026-08-25 | 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
+
+## 2026-08-26 · v1.3.1 src/ 代码区实体化：分区约定提通用性 + IDE 文件锁下 sync 兜底重试
+
+- 来源项目/任务：通用项目模板工作区（模板 v1.3.1 发版）
+- 背景与上下文：用户要求「模板文件夹分区，项目代码区和其他区分开」提高通用性，
+  并建议直接在模板根加 src/ 目录、规定源码都放里面；原模板三区表虽 mention src/
+  但无实体目录。
+- 方案要点：
+  1. **实体占位即约定载体**：`src/.gitkeep` 内含一行代码区说明（业务源码入
+     src/、根目录不放业务代码），随初始化存在；「代码区/工程区」分区约定写在根
+     AGENTS 项目概览 + README 结构树 + DESIGN 项目形态三处（正文=当前状态）。
+  2. **通用性提升**：模板只规定「代码进 src/」，子目录按技术栈自定（backend/sdk/
+     assets…），测试位置从宽——不绑定具体语言/布局。
+  3. **IDE 文件锁 + P3-2 兜底**：sync 的 rmtree+copytree 在 IDE 占用
+     `assets/.../.gitignore` 时报 WinError 32（partial mirror left）；等 20s 释放
+     后重试即成功——发版链的兜底设计按预期工作，锁是暂时性的，不要改代码、
+     直接重试。
+- 验证/效果：sync 38 文件 0 差异（含六处副本校验）、quick_validate ×2 valid、
+  py_compile 8 OK、冒烟（src/.gitkeep 生成、template_version=1.3.1、check_dev_docs
+  0）；六处副本重装（init-project 42 文件 / agent-rules 4 文件）哈希一致；发布
+  提交 + tag v1.3.1。
+- 相关文件：project-template/src/.gitkeep（新建）、project-template/AGENTS.md
+  （项目概览）、project-template/README.md（结构树）、project-template/private/dev/
+  DESIGN.md（项目形态）、skills/init-project/references/init-steps.md、
+  scripts/sync_template.py（INIT_STEPS_COVERAGE）。
 
 ## 2026-08-26 · v1.3.0 模板增强：红线16（规则为主+比喻为辅）+ 图可视化规范（挂靠阶段、先出图再确认）+ skills 目录合并
 

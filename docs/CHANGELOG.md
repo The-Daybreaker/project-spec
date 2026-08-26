@@ -4,6 +4,17 @@
 > 记录模板自身每次发版变更，与根 `version.json` 与 git tag 对齐；项目升级时据此比对
 > （见 `project-template/docs/UPGRADE.md`）。
 
+## v1.3.1（2026-08-26）
+
+> 维护增强版本（patch）：src/ 代码区实体化与分区约定；`version.json` 的 `version` /
+> `template_version` 与 tag `v1.3.1` 对齐。
+
+- **src/ 代码区实体化与分区约定**：`src/` 从文档提及提升为实体代码区
+  （`src/.gitkeep` 随初始化存在，A 区进 git）；约定「代码区 = 全部业务源码/资源入
+  `src/`（子目录按技术栈自定）、根目录为工程区（AGENTS/docs/scripts/.github/
+  private 等），不直接放业务代码」，模板根/私有 AGENTS 项目概览、README 结构树、
+  DESIGN 项目形态同步；init-steps 校验清单与 INIT_STEPS_COVERAGE 补 `src/.gitkeep`。
+
 ## v1.3.0（2026-08-26）
 
 > 功能增强版本（minor）：新增红线 16「范围克制与纠错清零」+ 图可视化规范
