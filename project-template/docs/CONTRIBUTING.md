@@ -19,10 +19,10 @@
    `private/dev/prd|rfc|adr/`（S 档可跳过）；定稿方案吸收进
    `private/dev/DESIGN.md`；用户确认的决策记入 `private/AGENTS.md`
    「用户确认的设计决策」（D-xxx 摘要 + `详见 ADR-XXXX`）；计划与进度在
-   `private/dev/WORKLOG.md`（含「流程位置」；`CHANGELOG.md` 只记录变更历史，
-   不对齐意图）；
+   `private/dev/STATUS.md`（含「📇 阶段卡」与生命周期合规清单；`CHANGELOG.md`
+   只记录变更历史，不对齐意图）；
 2. 实施 + 同步更新受影响文档（「改动完成即文档就绪」）；**每完成一小阶段先更新
-   `private/dev/WORKLOG.md` 与受影响文档再继续（阶段落盘）**；
+   `private/dev/STATUS.md` 快照与受影响文档再继续（阶段落盘）**；
 3. 运行 `scripts/ci_check.py`（lint / build / test）并记录到
    `private/dev/TEST-REPORT.md`；
 4. 按 `docs/audit-checklist.md` 自审，建议由独立 agent 复审；

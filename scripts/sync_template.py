@@ -47,6 +47,9 @@ INIT_STEPS_COVERAGE = [
     "version.json",
     "archive/ARCHIVE.md",
     "dist/.gitkeep",
+    "docs/FLOW.md",
+    "docs/USER-GUIDE.md",
+    "docs/LOADING.md",
     "docs/TESTING.md",
     "docs/audit-checklist.md",
     "docs/UPGRADE.md",
@@ -54,7 +57,8 @@ INIT_STEPS_COVERAGE = [
     "scripts/pre_release_check.py",
     "scripts/trash.py",
     "scripts/bump_version.py",
-    "private/dev/WORKLOG.md",
+    "private/dev/STATUS.md",
+    "private/dev/PHASES.md",
     "private/dev/CHANGELOG.md",
     "private/dev/TEST-REPORT.md",
     "private/dev/EXPERIENCE-TO-KB.md",
@@ -239,9 +243,21 @@ def main() -> int:
         return 1
 
     try:
+        # 增量镜像：删除 DST 多余文件、复制 SRC 新增/变更文件。
+        # （不用 rmtree+copytree 全量重建：批量删除会触发安全钩子确认，且增量更安全。）
         if DST.exists():
-            shutil.rmtree(DST)
-        shutil.copytree(SRC, DST, ignore=shutil.ignore_patterns(*SKIP_NAMES))
+            for p in _collect(DST):
+                rel = p.relative_to(DST)
+                if not (SRC / rel).exists():
+                    p.unlink()
+            for p in _collect(SRC):
+                rel = p.relative_to(SRC)
+                dst_p = DST / rel
+                if not dst_p.exists() or _sha256(p) != _sha256(dst_p):
+                    dst_p.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(p, dst_p)
+        else:
+            shutil.copytree(SRC, DST, ignore=shutil.ignore_patterns(*SKIP_NAMES))
     except OSError as e:
         print(
             f"[error] failed to mirror {SRC} -> {DST}: {e} "

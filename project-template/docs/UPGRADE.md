@@ -11,7 +11,7 @@
 4. **只应用【通用】模块**：根/私有 AGENTS.md、`docs/`、`scripts/`、`.github/`、
    模板资产（`.gitignore` / `.editorconfig` / `.gitattributes` 等；
    `scripts/version-sync.json` 位于 `scripts/`）；
-   **【项目专用】模块**（README、DESIGN 的项目内容、CHANGELOG/TEST-REPORT/WORKLOG、
+   **【项目专用】模块**（README、DESIGN 的项目内容、CHANGELOG/TEST-REPORT/STATUS、
    经验文档、本机环境、用户决策等）**绝不覆盖**。
    **例外——B 区私有骨架**：`private/` 内随模板分发的**骨架文件**也属于模板内容，
    升级时必须同步（新增的直接复制、已有的只合并模板新增字段，**不覆盖项目已有
@@ -23,10 +23,10 @@
    升级时直接复制新模板文件即可，无需也不能运行它。
 6. **回读校验**：占位符无残留（`git grep -n -E '\{\{[A-Z_]+\}\}'`）；脚本可运行
    （`python scripts/ci_check.py` 退出码 0）；`python scripts/check_dev_docs.py`
-   退出码 0（登记册/流程位置字段，见「B 区私有骨架迁移」）；
+   退出码 0（登记册/STATUS 阶段卡字段，见「B 区私有骨架迁移」）；
    `python scripts/pre_release_check.py` 通过。
 7. **更新版本记录**：项目根 `version.json` 的 `template_version` 改为目标版本。
-8. **记录升级**：`private/dev/CHANGELOG.md` 与 `private/dev/WORKLOG.md` 记录本次升级。
+8. **记录升级**：`private/dev/CHANGELOG.md` 与 `private/dev/STATUS.md` 记录本次升级。
 
 ## B 区私有骨架迁移（模板随版本新增/变更的 private/ 骨架）
 
@@ -37,7 +37,9 @@
   v1.2.0 新增 `private/dev/{prd,rfc,adr,research}/INDEX.md` ×4、`private/test/TEST.md`
   等；v1.3.0 新增 `private/dev/prototype/README.md`）。
 - **已存在的同名文件** → **只合并模板新增的字段/小节，绝不覆盖项目已有内容**：
-  - `private/dev/WORKLOG.md`：合并模板新增字段（如 v1.2.0「当前任务 → 流程位置」）；
+  - `private/dev/STATUS.md`（v1.4.0 起由 WORKLOG.md 改名）：合并模板新增字段
+    （如 v1.2.0「当前任务 → 流程位置」、v1.4.0「📇 阶段卡 + 生命周期合规清单 +
+    任务影响清单 + 下一阶段输入预告」）；
   - `private/AGENTS.md`：只应用【通用】小节（工作流 / 流程提示 / 缩写对照 /
     文档更新流程 / 文档职责表等），【项目专用】内容（状态/环境/决策/定案清单）保持
     不动；
@@ -45,7 +47,7 @@
     `private/dev/TEST-REPORT.md`：只补模板新增的骨架字段，项目已写内容不动；
   - `private/.gitignore` / `private/PRIVATE.md`：按模板变更合并（如新增忽略规则）。
 - **依赖补齐**：模板新增脚本可能依赖新骨架（如 `scripts/check_dev_docs.py` 要求
-  四登记册目录与 WORKLOG「流程位置」字段存在）；缺依赖时 `ci_check.py` /
+  四登记册目录与 STATUS「📇 阶段卡」字段存在）；缺依赖时 `ci_check.py` /
   `pre_release_check.py` 会失败，按上表补齐即可，不是模板缺陷。
 - **私有子 git**：升级产生的 `private/` 改动同样走 private 子 git 提交（发布前
   `pre_release_check.py` 自动同步）。
@@ -60,11 +62,11 @@
       `.github/`、模板资产（`.gitignore` / `.editorconfig` / `.gitattributes` 等）
 - [ ] **B 区私有骨架已迁移**：新增的复制、已有的只合并新增字段（见上节）
 - [ ] 占位符无残留（`git grep -n -E '\{\{[A-Z_]+\}\}'`）
-- [ ] `python scripts/check_dev_docs.py` 退出码 0（登记册 / 流程位置字段齐全）
+- [ ] `python scripts/check_dev_docs.py` 退出码 0（登记册 / STATUS 阶段卡字段齐全）
 - [ ] `python scripts/ci_check.py` 退出码 0
 - [ ] `python scripts/pre_release_check.py` 通过
 - [ ] 根 `version.json` 的 `template_version` 已更新为目标版本
-- [ ] 升级已记录到 `private/dev/CHANGELOG.md` 与 `private/dev/WORKLOG.md`
+- [ ] 升级已记录到 `private/dev/CHANGELOG.md` 与 `private/dev/STATUS.md`
 
 ### 已知版本迁移要点
 
@@ -108,6 +110,18 @@
   （`check_dev_docs.py` / `pre_release_check.py` / `trash.py`）与根 `AGENTS.md`
   「工程区」术语、归档 release.yml 说明均属【通用】自动应用；`init_project.py`
   仅母项目使用、不下发目标项目。
+- **v1.4.0**（整体架构重构：模块化）：**WORKLOG → STATUS 改名**——`private/dev/
+  WORKLOG.md` 更名为 `private/dev/STATUS.md`（快照化：只存最新状态，历史由 git
+  承担；含「📇 阶段卡 + ✅ 生命周期合规清单 + 任务影响清单 + 下一阶段输入预告」；
+  旧 WORKLOG 内容迁移为快照格式，历史条目移 `_trash/` 或由 git 追溯）；新增
+  `private/dev/PHASES.md`（阶段模块权威定义：P1-P5 五阶段 + 子阶段 + 16 节点映射 +
+  切换规则 + 需求引导方法论 + 阶段↔文档映射，**直接复制**）；新增公开文档
+  `docs/{FLOW,USER-GUIDE,LOADING}.md`（流程状态机总图 / 面向人指南 / 加载规则表，
+  属 `docs/`【通用】自动应用）；三份 AGENTS.md 瘦身为「摘要 + 加载规则表 + 红线 +
+  工作流摘要」（【通用】应用，私有版【项目专用】内容保持不动）；`check_dev_docs.py`
+  校验点由 WORKLOG「流程位置」改为 STATUS「阶段卡」（属 `scripts/`【通用】自动
+  应用）；每阶段/子阶段完成即 git 提交（阶段卡展示 = 落盘 = 提交）。迁移时旧项目
+  把 `WORKLOG.md` 内容按 STATUS 快照模板整理后改名，历史删除走 `_trash/`。
 - （后续版本在此追加；模板 CHANGELOG 为权威）
 
 > 注意：major 版本（如 2.0.0）升级前，先读新模板的 `AGENTS.md` 了解破坏性变更与迁移

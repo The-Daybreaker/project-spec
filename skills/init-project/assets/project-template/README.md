@@ -45,7 +45,7 @@ npm test
         ├── adr/             # 决策登记册（ADR-XXXX，只增不改）
         ├── research/        # 调研登记册（RESEARCH-XXXX，红线 13 结果）
         ├── prototype/       # 页面原型/设计稿（界面/交互改动的可视化产物）
-        └── DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
+        └── DESIGN / CHANGELOG / TEST-REPORT / STATUS / 经验文档
 ```
 
 ## 开发与发布
@@ -58,15 +58,15 @@ npm test
 - **可视化确认**：涉及界面/交互、架构/结构、流程/状态的改动，agent 会先出图
   （页面原型/架构图/流程图，Mermaid 或 SVG 单文件，路径见根 `AGENTS.md` 文档职责表）
   向用户展示、**获确认后才实施**。
-- **流程提示**：每次对话展示流程位置（当前节点/已完成/下一步），以
-  `private/dev/WORKLOG.md`「流程位置」为准。
+- **阶段卡展示**：每次对话展示阶段卡（当前模块·子阶段/正在完成/已完成/下一步/
+  状态 + 生命周期合规清单），以 `private/dev/STATUS.md`「📇 阶段卡」为准。
 - **立项调研先行**：与 agent 讨论项目思路/需求/架构/功能/产品时，agent 会优先在
   GitHub 调研现成参考并提醒「先调研再立项」（见 `AGENTS.md` 红线 13）。
 - **人类贡献**：见 `docs/CONTRIBUTING.md`。
 - **版本管理**：`version.json` 的 `version` 字段 + git tag `vX.Y.Z`；版本递增由 agent 本地执行
   （`scripts/bump_version.py`），CI 对尚无 tag 的当前版本自动打 tag 并发布
   （`.github/workflows/release.yml`）。
-- **阶段落盘**：任务中每完成一小阶段先更新 `private/dev/WORKLOG.md` 与受影响文档
+- **阶段落盘**：任务中每完成一小阶段先更新 `private/dev/STATUS.md` 与受影响文档
   （红线 14），防止上下文压缩丢失进度。
 - **模板升级**：项目根 `version.json` 的 `template_version` 记录模板版本；升级按 `docs/UPGRADE.md`
   只应用【通用】模块变更。

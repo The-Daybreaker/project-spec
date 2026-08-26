@@ -16,7 +16,8 @@ so the pre-development docs cannot silently drift:
   5) INDEX.md table rows: every doc file is registered, every row references an
      existing file, INDEX status matches the doc header status;
   6) private/AGENTS.md D-xxx entries: "详见 ADR-XXXX" references exist;
-  7) WORKLOG 当前任务 contains a 流程位置 field (flow-position carrier).
+  7) STATUS.md snapshot: 阶段卡 + 任务影响清单（含要读文档清单）+ 生命周期合规清单
+     present, 当前阶段 module in P1-P5 (phase carrier for recovery / observability).
 
 Empty registers (INDEX.md only) pass, so freshly initialized projects are fine.
 Stdlib-only, read-only, Python 3.9+; repo root resolved from script location.
@@ -244,21 +245,27 @@ def _check_cross_refs(problems: list) -> None:
                 )
 
 
-def _check_worklog(problems: list) -> None:
-    worklog = DEV / "WORKLOG.md"
-    if not worklog.is_file():
-        problems.append(f"missing {worklog.relative_to(REPO_ROOT)}")
+def _check_status(problems: list) -> None:
+    """Validate the STATUS.md snapshot (phase card + impact list + lifecycle checklist)."""
+    status = DEV / "STATUS.md"
+    if not status.is_file():
+        problems.append(f"missing {status.relative_to(REPO_ROOT)} (STATUS snapshot)")
         return
-    text = _read_text(worklog, problems)
+    text = _read_text(status, problems)
     if text is None:
         return
-    m = re.search(r"(?ms)^## 当前任务(.*?)(?=\n## |\Z)", text)
-    section = m.group(1) if m else ""
-    if "流程位置" not in section:
+
+    # 阶段卡：模块 P1-P5 枚举 + 阶段卡区块
+    m = re.search(r"(?ms)^## 当前阶段(.*?)(?=\n## |\Z)", text)
+    stage_section = m.group(1) if m else ""
+    if not re.search(r"模块[：:]\s*P[1-5]", stage_section):
         problems.append(
-            "WORKLOG.md 当前任务 section missing 流程位置 field "
-            "(flow position; see template 当前任务 skeleton)"
+            "STATUS.md 当前阶段 section missing 模块 P1-P5 (phase module; "
+            "see template STATUS.md skeleton / private/dev/PHASES.md)"
         )
+    for block in ("阶段卡", "任务影响清单", "要读文档清单", "生命周期合规清单"):
+        if block not in text:
+            problems.append(f"STATUS.md missing {block} section/field (snapshot skeleton)")
 
 
 def main() -> int:
@@ -271,7 +278,7 @@ def main() -> int:
         for typ, (dirname, statuses) in REGISTERS.items():
             _check_register(typ, dirname, statuses, problems)
         _check_cross_refs(problems)
-        _check_worklog(problems)
+        _check_status(problems)
 
     print(f"==> check_dev_docs: {len(problems)} issue(s)")
     for p in problems:

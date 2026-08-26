@@ -107,8 +107,11 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - [ ] `version.json`：`version` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
 - [ ] `version.json`：`template_version` 与 skill/模板版本一致（以
       `assets/project-template/version.json` 的 `template_version` 字段为准）
-- [ ] `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
-      已生成（阶段落盘与经验沉淀载体）
+- [ ] `docs/FLOW.md`、`docs/USER-GUIDE.md`、`docs/LOADING.md` 已生成（v1.4.0
+      特性：流程状态机总图 / 面向人阶段指南 / 加载规则表）
+- [ ] `private/dev/STATUS.md`、`private/dev/PHASES.md`、`EXPERIENCE-TO-TEMPLATE.md`、
+      `EXPERIENCE-TO-KB.md` 已生成（v1.4.0：WORKLOG 改名 STATUS 快照 + 阶段模块
+      权威定义；阶段落盘与经验沉淀载体）
 - [ ] `private/dev/prd/INDEX.md`、`private/dev/rfc/INDEX.md`、
       `private/dev/adr/INDEX.md`、`private/dev/research/INDEX.md` 已生成
       （开发前四登记册：状态机/编号规则/模板骨架）
@@ -117,7 +120,9 @@ git -C private commit -m "docs: private v0.0.1 - init"
       架构图随 `rfc/` `adr/`、页面原型落 `prototype/`）
 - [ ] 根/私有 `AGENTS.md` 含红线 16「范围克制与纠错清零」与开发工作流
       「可视化确认」小节（v1.3.0 特性）
-- [ ] `private/dev/WORKLOG.md`「当前任务」含「流程位置」字段
+- [ ] `private/dev/STATUS.md`「📇 阶段卡」字段齐全（当前模块 P1-P5 / 子阶段 / 正在
+      完成 / 已完成 / 下一步 / 状态 + 生命周期合规清单 + 任务影响清单含要读文档清单；
+      v1.4.0 特性）
 - [ ] `private/AGENTS.md`「发布策略」已按所选模式生成（默认不自动发布；
       `--auto-release` 为自动发布）
 - [ ] `scripts/ci_check.py` 可运行（`python scripts/ci_check.py` 退出码 0）
@@ -148,7 +153,8 @@ git -C private commit -m "docs: private v0.0.1 - init"
 ## 7. 初始化完成后的落地路线图（分阶段）
 
 > 初始化当场（脚本 + 第 5 节校验清单）只保证「骨架就绪」；项目真正可用还需要
-> 按下列阶段落地。每个阶段完成后更新 `private/dev/WORKLOG.md`（阶段落盘）。
+> 按下列阶段落地。每个阶段完成后更新 `private/dev/STATUS.md` 快照（阶段落盘 +
+> git 提交）。
 
 ### 阶段 1 · 首个开发会话前（文档填空，一次做完）
 
@@ -158,8 +164,9 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - `private/AGENTS.md`：「本机环境」「安装目标/部署目标」必填；「用户确认的设计
   决策」（D-001…）与「定案清单」「必须询问人类清单」按首个需求逐步补。
 - `private/dev/DESIGN.md`：项目形态、核心设计、关键不变量、改动影响面定位表。
-- `private/dev/CHANGELOG.md` / `private/dev/TEST-REPORT.md` / `private/dev/WORKLOG.md`：
-  脚本已生成初始化条目，此后随开发/发布更新。
+- `private/dev/CHANGELOG.md` / `private/dev/TEST-REPORT.md` / `private/dev/STATUS.md`：
+  脚本已生成初始化条目，此后随开发/发布更新（STATUS 为快照，覆盖更新、历史由 git
+  承担）。
 - `private/dev/EXPERIENCE-TO-KB.md` / `private/dev/EXPERIENCE-TO-TEMPLATE.md`：
   脚本已生成骨架；每轮对话结束写入完整候选经验。
 - `docs/audit-checklist.md` / `docs/UPGRADE.md` / `docs/DOCS.md`：模板自带，
@@ -171,9 +178,9 @@ git -C private commit -m "docs: private v0.0.1 - init"
   涉及界面/交互的改动时按它产出原型（一文件一原型），向用户展示**获确认后**再
   实施（「先出图再确认」；流程图/架构图随所属 PRD/RFC/ADR 同目录，Mermaid/SVG
   单文件）。
-- 「流程提示」：每次对话展示流程位置（当前节点/已完成/下一步），以
-  `private/dev/WORKLOG.md`「流程位置」为单一真相；展示时缩写附中文翻译
-  （对照表见 `private/AGENTS.md`「缩写对照」）。
+- 「阶段卡展示」：每次对话展示阶段卡（模块·子阶段/正在完成/已完成/下一步/状态 +
+  生命周期合规清单），以 `private/dev/STATUS.md`「📇 阶段卡」为单一真相；展示时
+  缩写附中文翻译（对照表见 `private/AGENTS.md`「缩写对照」）。
 
 ### 阶段 2 · 首个功能开发前（实现 CI，一次做完）
 
@@ -190,8 +197,9 @@ git -C private commit -m "docs: private v0.0.1 - init"
 档位判定（S/M/L，与用户确认）→ M/L 档走**开发前门禁**：调研（`RESEARCH-XXXX`
 或内嵌）→ PRD 定稿（`private/dev/prd/PRD-0001-*.md`）→ RFC 评审（可选）→
 ADR 记录（架构级）→ DESIGN 吸收 → `private/AGENTS.md` D-001 摘要 +
-`详见 ADR-XXXX` → `private/dev/WORKLOG.md` 切换当前任务并记录「流程位置」→
-实施（阶段落盘）→ 按 `docs/audit-checklist.md` 审计 → 提交。
+`详见 ADR-XXXX` → `private/dev/STATUS.md` 更新阶段卡（当前模块/子阶段）→
+实施（阶段落盘 + 每阶段/子阶段 git 提交）→ 按 `docs/audit-checklist.md` 审计 →
+提交。
 
 ### 阶段 4 · 首次发布
 
@@ -213,7 +221,7 @@ ADR 记录（架构级）→ DESIGN 吸收 → `private/AGENTS.md` D-001 摘要 
 | `README.md` | 骨架 | 填写 | 随用户视角改动更新 | 核对 |
 | `private/AGENTS.md` | 骨架 | 填环境/安装目标 | 决策/定案/询问清单随需求补 | 核对 |
 | `private/dev/DESIGN.md` | 骨架 | 填项目形态/核心设计 | 设计变化时更新 | 核对 |
-| `private/dev/WORKLOG.md` | 初始化条目 | — | **每小阶段更新** | 收口 |
+| `private/dev/STATUS.md` | 初始化条目 | — | **每阶段/子阶段覆盖更新 + git 提交** | 收口 |
 | `private/dev/CHANGELOG.md` | v0.0.1 条目 | — | 变更要点 | **顶部新增条目** |
 | `private/dev/TEST-REPORT.md` | 初始化条目 | 记 CI 落地结果 | 测试变化时更新 | **必更新** |
 | `private/dev/EXPERIENCE-TO-*.md` | 骨架 | — | **每轮对话结束写入** | 提醒沉淀 |

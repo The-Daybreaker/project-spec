@@ -14,6 +14,9 @@
 | 文档 | 职责 |
 |---|---|
 | `DOCS.md` | 本文件：docs 目录说明与文档治理 |
+| `FLOW.md` | 项目运转流程与状态机总图（主流程 + 每阶段子流程 + 动作状态机，mermaid） |
+| `USER-GUIDE.md` | 面向人的阶段流程简明指南（阶段/产物/何时确认/阶段卡怎么读，防遗忘） |
+| `LOADING.md` | 文档加载规则表全量版（渐进式披露：场景→必读/按需读/默认不读） |
 | `audit-checklist.md` | 实施后审计清单（自审与独立 agent 审计共用） |
 | `TESTING.md` | 测试落地指引（pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应） |
 | `UPGRADE.md` | 模板升级指南（只应用【通用】模块变更） |
@@ -28,24 +31,41 @@
 |---|---|
 | 根 `AGENTS.md` | Agent 入口：红线摘要、必读顺序、文档职责、维护清单 |
 | `private/AGENTS.md` | 开发规范全集、当前状态、环境、决策、定案/询问清单 |
+| `private/dev/PHASES.md` | 阶段模块权威定义：每阶段输入/产物/生命周期/16节点映射/切换规则/需求引导/文档映射 |
 | `private/dev/DESIGN.md` | 怎么做：设计、关键不变量、影响面 |
+| `private/dev/STATUS.md` | 做到哪了：当前状态快照（阶段卡 + 影响清单 + 生命周期合规清单 + 下阶段输入预告） |
 | `private/dev/prd/` | 为什么做/做什么：需求登记册（状态+优先级，定稿门禁） |
 | `private/dev/rfc/` | 怎么做：方案登记册（候选对比/评审结果，采纳后冻结） |
 | `private/dev/adr/` | 决定了什么/为什么：决策登记册（只增不改，历史追溯） |
 | `private/dev/research/` | 调研过什么：调研登记册（发现记录追加+当前结论） |
 | `private/dev/prototype/` | 页面长什么样：页面原型/设计稿（界面/交互改动，「先出图再确认」产物） |
-| `private/dev/WORKLOG.md` | 做到哪了：当前任务、阶段进度、下次从这里继续 |
 | `private/dev/CHANGELOG.md` | 变过什么：版本历史 |
 | `private/dev/TEST-REPORT.md` | 验证过什么：测试记录 |
 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 可沉淀进模板的经验 |
 | `private/dev/EXPERIENCE-TO-KB.md` | 可沉淀进知识库的经验 |
 | `README.md` | 使用者视角 |
 | `docs/DOCS.md` | docs 目录说明与文档治理 |
+| `docs/FLOW.md` | 流程长什么样：主流程 + 每阶段子流程 + 动作状态机总图 |
+| `docs/USER-GUIDE.md` | 项目有几个阶段/产物/何时确认：面向人的防遗忘指南 |
+| `docs/LOADING.md` | 什么场景读什么：加载规则表全量版（渐进式披露） |
 | `docs/audit-checklist.md` | 改动对不对：实施后审计清单（自审/独立审计共用） |
 | `docs/TESTING.md` | 怎么测：pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应 |
 | `docs/UPGRADE.md` | 模板如何升级 |
 | `docs/CONTRIBUTING.md` | 人类贡献者与 agent 怎么协作 |
 | `archive/ARCHIVE.md` | 归档：归档流程、归档说明与已归档内容快照 |
+
+## 加载规则表摘要（渐进式披露；全量版见 `LOADING.md`）
+
+| 场景 | 优先级 | 文件 |
+|---|---|---|
+| 新对话/压缩后恢复 | 必读 | 根 AGENTS → private/AGENTS → `STATUS.md` 快照 |
+| 红线规范 | 始终必读 | AGENTS 红线小节 |
+| 阶段定义/切换规则 | 按需 | `PHASES.md` |
+| 流程图/状态机 | 按需 | `FLOW.md` |
+| 需求/方案/调研 | 按需 | 登记册 INDEX → 目标文档 |
+| 实施 | 必读 | DESIGN + 对应 PRD |
+| 发布 | 必读 | 发布流程 → CHANGELOG → pre_release_check |
+| 历史决策/追溯 | **默认不读** | CHANGELOG / ADR |
 
 ## 文档模块归属（通用 / 项目专用）
 

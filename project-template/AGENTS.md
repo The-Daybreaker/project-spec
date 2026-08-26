@@ -7,6 +7,27 @@
 > `private/AGENTS.md`（由 private 子 git 管理，不进 GitHub，仅本机开发 agent 读取）。
 > 两份文件冲突时：`private/AGENTS.md` 中的开发/机器/个人专属细节以它为准。
 
+## 摘要与加载规则（渐进式披露）
+
+- **项目运转**：5 大阶段串行（P1 需求 → P2 方案 → P3 开发 → P4 审计验证 → P5 交付
+  发布），每次专注一个阶段；阶段内分子阶段；阶段/子阶段完成展示**阶段卡**（进度 +
+  生命周期合规清单 + 下一阶段输入预告）。🔵 决策型阶段/子阶段须**用户确认**放行，
+  🟢 执行型展示即走。细节见 `private/dev/PHASES.md` 与 `docs/FLOW.md`。
+- **文档披露**：渐进式——什么场景读什么，按下方加载规则表；历史决策默认不读；
+  红线始终必读。全量规则见 `docs/LOADING.md`。
+- **双维度**：主流程阶段串行、严禁跨阶段；文档维护/STATUS 落盘/git 提交/经验沉淀等
+  贯穿动作不占阶段，随时可触发并落盘。
+
+| 场景 | 优先级 | 读什么 |
+|---|---|---|
+| 新对话 / 压缩后恢复 | 必读 | 本文件 → `private/AGENTS.md` → `private/dev/STATUS.md` 快照 |
+| 红线规范 | 始终必读 | 本文件「通用红线」小节 |
+| 阶段定义 / 切换规则 | 按需 | `private/dev/PHASES.md` |
+| 流程图 / 状态机 | 按需 | `docs/FLOW.md` |
+| 需求 / 方案 / 调研 | 按需 | `private/dev/{prd,rfc,adr,research}/INDEX.md` → 目标文档 |
+| 实施 | 必读 | `private/dev/DESIGN.md` + 对应 PRD |
+| 历史决策 / 追溯 | **默认不读** | CHANGELOG / ADR |
+
 ## 【项目专用】项目概览
 
 - **定位**：{{PROJECT_DESCRIPTION}}
@@ -29,7 +50,7 @@
 | 区 | 位置 | 内容 | 版本管理 |
 |---|---|---|---|
 | A. 公开 | 仓库根、`src/`、`docs/`、`scripts/`、`.github/`、`archive/` | 用户可见、可发布、无敏感信息（含归档区） | 主仓库 git，发布到 GitHub |
-| B. 私有 | `private/` | 个人/机器专属信息、开发期文档（PRD/RFC/ADR/RESEARCH 登记册、PROTOTYPE（页面原型/设计稿）、DESIGN/CHANGELOG/TEST-REPORT/WORKLOG/经验文档）、测试素材 | private 子 git（本地、无远端） |
+| B. 私有 | `private/` | 个人/机器专属信息、开发期文档（PRD/RFC/ADR/RESEARCH 登记册、PROTOTYPE（页面原型/设计稿）、DESIGN/CHANGELOG/TEST-REPORT/STATUS/经验文档）、测试素材 | private 子 git（本地、无远端） |
 | C. 不管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、`_trash/` | 无（.gitignore 忽略） |
 
 **归属判定规则**（新增文件必须先判区再落盘）：
@@ -44,42 +65,45 @@
 负责 B 区；C 区内容两者都不得出现。发布前必须先同步 private 子 git
 （见「发布流程」与 `scripts/pre_release_check.py`）。
 
-## 【通用】Agent 快速上手（每次新对话、任何 agent 都按此 bootstrap）
+## 【通用】Agent 启动 / 恢复协议（每次新对话、任何 agent 都按此 bootstrap）
 
-1. 读本文件；再读 `private/AGENTS.md`——它是**开发入口与完整开发规范**
-   （唯一常青开发记忆），含完整工作流、发布流程、版本、本机环境、用户决策。
+1. **必读**：读本文件（红线 + 加载规则）→ `private/AGENTS.md`（开发入口与完整规范）→
+   `private/dev/STATUS.md` 快照（判断当前阶段/进度）。
 2. 查看两个仓库状态：`git status`（主仓库）、`git -C private status`（私有子 git）。
-3. 读 `version.json` 与 `private/dev/CHANGELOG.md` 顶部，确认当前版本与最近变更。
-4. 读 `private/dev/DESIGN.md`（设计）与 `private/dev/TEST-REPORT.md`（测试记录）；
-   有进行中的需求/方案/决策时读 `private/dev/{prd,rfc,adr,research}/INDEX.md`
-   （登记册状态，见「开发工作流」）。
-5. 读 `private/dev/WORKLOG.md`（恢复进行中进度）；若旧任务已完结或内容膨胀，
-   **先询问用户是否清理**（归档到「历史记录」或移入 `_trash/`），确认后才清理。
-6. **上下文压缩后或任何新对话开始时，必须先完成以上重读（红线 15），不得凭记忆
+3. **按需读**：`version.json` 与 `private/dev/CHANGELOG.md` 顶部（版本与最近变更）、
+   `private/dev/DESIGN.md` 与 `TEST-REPORT.md`、进行中需求/方案/决策的登记册 INDEX。
+4. **阶段恢复**：按 STATUS 快照「📇 阶段卡」判断当前阶段 → 按「任务影响清单 → 要读
+   文档清单」逐份读（详见 `docs/LOADING.md` 恢复协议）；阶段卡缺失时 `git log` 推断、
+   仍不确定则询问用户。
+5. **上下文压缩后或任何新对话开始时，必须先完成以上重读（红线 15），不得凭记忆
    直接继续。**
-7. 任何实施开始前，必须先走「开发工作流」前 3 步：**对齐需求与计划、获用户确认**。
+6. 任何实施开始前，必须先走阶段体系：**对齐需求与计划、获用户确认**（P1 需求 /
+   P2 方案为决策型，须用户确认放行）。
 
-## 【通用】开发工作流（摘要；完整版见 `private/AGENTS.md`「开发工作流」）
+## 【通用】开发工作流（阶段体系摘要；权威定义见 `private/dev/PHASES.md`，流程图见 `docs/FLOW.md`）
 
-**开发前（M/L 需求必走；S 档直达「确认开工」）：需求提出 → 调研（红线 13，结果落
-`RESEARCH-XXXX` 或内嵌）→ PRD 定稿（门禁 1）→ RFC 评审（可选）→ ADR 记录
-（架构级，门禁 2）→ DESIGN 吸收 → 确认开工 → 实施（每完成一小阶段先落盘更新
-WORKLOG 与受影响文档，红线 14）→ 自动审计 → 验证 → 展示与提交（先 private
-子 git）→ 发布 → 经验沉淀（每轮对话结束把完整候选经验写入
-`private/dev/EXPERIENCE-TO-TEMPLATE.md` / `private/dev/EXPERIENCE-TO-KB.md`）→
-汇报。**涉及界面/交互、架构/结构、流程/状态的改动，需先出图（页面原型/架构图/
-流程图）向用户展示、获确认后才进入下一步（见 `private/AGENTS.md`「开发工作流」
-「可视化确认」）。**
+**5 大阶段串行**（16 节点收敛，每次只专注一个，严禁跨阶段）：
 
-**流程提示（每次对话强制）**：实质回复/阶段落盘/上下文恢复/收尾/用户询问进度时，
-展示流程位置——当前节点（16 节点两阶段，见 `private/AGENTS.md`「流程提示」）、
-已完成链、下一步；**展示时缩写须附中文翻译**（如 ADR=架构决策记录，对照表见
-`private/AGENTS.md`「缩写对照」）；以 `private/dev/WORKLOG.md`
-「当前任务 → 流程位置」为单一真相；**文档更新贯穿全程**（文档就绪 → 发布前
-文档检查 → 状态文档收口，见 `private/AGENTS.md`「文档更新流程」）。
+| 模块 | 节点 | 类型 | 明确产物 | 退出条件 |
+|---|---|---|---|---|
+| P1 需求 | 01-05 | 🔵决策 | PRD 定稿 + RESEARCH | 阶段卡 + **用户确认** |
+| P2 方案 | 06-09 | 🔵决策 | RFC / ADR / 原型 / DESIGN | 阶段卡 + **用户确认** |
+| P3 开发 | 10-11 | 🟢执行 | 实现代码 + 文档就绪 | 展示阶段卡，无反对即继续 |
+| P4 审计验证 | 12-13 | 🟢执行 | 审计结论 + TEST-REPORT | 展示阶段卡，无反对即继续 |
+| P5 交付发布 | 14-16 | 🟠发布 | commit / tag / Release / EXP | 展示阶段卡；发布另行确认 |
 
-涉及**立项类话题**（项目思路/需求/架构/功能/产品）时，先按「通用红线」第 13 条在
-GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
+- **P1 需求引导（强制）**：先复述意图、提开放问题帮用户澄清真实需求，**未澄清前禁止
+  直接抛方案选项**（「技术决策先解释后选择」）；立项类话题先按红线 13 GitHub 调研并
+  提醒「先调研再立项」。
+- **涉及界面/交互、架构/结构、流程/状态的改动**：先出图（页面原型/架构图/流程图，
+  见 PHASES.md P2）向用户展示、获确认后才实施。
+- **档位**：S 档 P1 简化直达 P3；M 档 P1 全走（RFC 可选、ADR 架构级必走）；L 档全走。
+
+**阶段卡展示（每次对话强制）**：实质回复/阶段落盘/恢复/收尾/用户询问进度时，展示
+阶段卡（模块·子阶段 / 正在完成 / 已完成 / 下一步 / 状态）+ **生命周期合规清单**
+（文档同步/STATUS 落盘/git 提交/质量校验/确认/沉淀逐条勾选）+ 下一阶段输入预告；
+缩写附中文翻译；以 `private/dev/STATUS.md` 为单一真相。**每次阶段/子阶段完成：
+落盘 STATUS → 展示阶段卡 → git 提交（主仓库 + private 子 git，提交信息带阶段标识）。**
 
 ## 【通用】自动审计（实施后必做；清单见 `docs/audit-checklist.md`）
 
@@ -113,7 +137,7 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 10. **发布前验证**：检查与测试通过、TEST-REPORT 有记录、审计完成，才允许发布。
 11. **密钥安全**：任何密钥/凭据不入主仓库（见「仓库布局」规则 4）。
 12. **文档同步与治理**：改动涉及用户视角或流程时，受影响文档在**同一次改动**内更新；
-    **发现过时立即修（不论是否本轮引入），无变更时也须校准状态文档**（如 WORKLOG
+    **发现过时立即修（不论是否本轮引入），无变更时也须校准状态文档**（如 STATUS
     「当前做到哪里」）；**文档正文 = 当前有效状态**——决策修改时直接覆盖原文、禁止
     保留旧段落或「已取代」标注、禁止 AI 在正文追加大段历史说明，确需留痕只在
     `private/dev/CHANGELOG.md` 记一行摘要；**例外：`private/dev/prd|rfc|adr|research/`
@@ -124,10 +148,10 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
     **优先在 GitHub 调研现成参考**（相似项目、方案、库），并向用户展示调研结果、
     提醒用户**「先调研再立项」**；未经调研不引导用户立项，不把「从零造轮子」
     作为默认方案。
-14. **阶段落盘**：任务过程中每完成一小阶段，先更新 `private/dev/WORKLOG.md` 与
+14. **阶段落盘**：任务过程中每完成一小阶段，先更新 `private/dev/STATUS.md` 快照与
     受影响文档再继续；进度不得只存在于对话记忆。
 15. **上下文恢复重读**：上下文压缩后或任何新对话开始时，必须重读红线规范（根
-    `AGENTS.md` 与 `private/AGENTS.md`）与相关文档（`WORKLOG.md`、`DESIGN.md`、
+    `AGENTS.md` 与 `private/AGENTS.md`）与相关文档（`STATUS.md`、`DESIGN.md`、
     `CHANGELOG.md`、`TEST-REPORT.md` 及受影响文档）后再继续；不得凭记忆直接继续。
 16. **范围克制与纠错清零（按单办事、不加菜；撤菜不解释）**：严格按已确认的需求
     范围实施，不擅自添加需求外的功能、文件、依赖、配置或装饰；确需超出范围先
@@ -165,14 +189,14 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 
 当通用项目模板发布新版本时：读模板仓库 `CHANGELOG.md`（版本变更历史）→ 比对项目
 `version.json` 的 `template_version` → **只应用【通用】模块变更**（【项目专用】
-内容绝不覆盖）→ 回读校验 → 更新 `template_version` → 记录到 CHANGELOG/WORKLOG。
+内容绝不覆盖）→ 回读校验 → 更新 `template_version` → 记录到 CHANGELOG/STATUS。
 
 ## 【通用】发布流程（每次发布时执行；完整版见 `private/AGENTS.md`「发布流程」）
 
 1. **版本递增**：`scripts/bump_version.py`（默认 patch；前两位须用户确认），随后
    agent 手工更新 `private/dev/CHANGELOG.md` 顶部（脚本只校验同步目标，不写
    CHANGELOG，防止覆盖人工编辑的发布说明）。
-2. **文档就绪**：CHANGELOG / DESIGN / TEST-REPORT / WORKLOG / README / 根 AGENTS.md /
+2. **文档就绪**：CHANGELOG / DESIGN / TEST-REPORT / STATUS / README / 根 AGENTS.md /
    private/AGENTS.md / 用户可见文档同步。
 3. **同步 private 子 git（发布前必做）**：`scripts/pre_release_check.py` 一键完成
    （检查并自动提交 private 变动、版本一致性、泄漏扫描、ci_check 已实现等）。
@@ -223,7 +247,8 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 |---|---|---|---|
 | 根 `AGENTS.md` | 公开 | 混合 | 公开入口（本文件；面向使用者/贡献者/接手 agent） |
 | `private/AGENTS.md` | 私有 | 混合 | 开发入口与完整开发规范（唯一常青开发记忆） |
-| `private/dev/WORKLOG.md` | 私有 | 项目专用 | 阶段落盘（每完成一小阶段更新） |
+| `private/dev/PHASES.md` | 私有 | 通用 | 阶段模块权威定义（I/O/产物/生命周期/16节点映射/切换规则/需求引导/文档映射） |
+| `private/dev/STATUS.md` | 私有 | 项目专用 | 当前状态快照（阶段卡 + 生命周期合规清单 + 影响清单 + 下阶段输入预告；历史由 git 承担） |
 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进模板的经验（完整条目） |
 | `private/dev/EXPERIENCE-TO-KB.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进知识库的经验（完整条目） |
 | `private/dev/DESIGN.md` | 私有 | 混合 | 当前设计 + 开发规范（引用不重复） |
@@ -235,7 +260,7 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | `private/dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
 | `private/dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
 | `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
-| `docs/` | 公开 | 通用（DOCS / audit-checklist / UPGRADE 等） | 公开文档 |
+| `docs/` | 公开 | 通用（DOCS / FLOW / USER-GUIDE / LOADING / audit-checklist / UPGRADE 等） | 公开文档（FLOW=流程状态机图、USER-GUIDE=面向人指南、LOADING=加载规则表全量） |
 | `docs/CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
 | `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
 
@@ -246,13 +271,13 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 | 决策/选型/红线类 | `private/AGENTS.md`「用户确认的设计决策」（覆盖原文）+ CHANGELOG 一行摘要 |
 | 需求/方案/调研 | `private/dev/prd|rfc|research/`（登记册状态+索引同步）+ DESIGN（定稿吸收） |
 | 架构决策 | `private/dev/adr/`（只增不改）+ `private/AGENTS.md` D-xxx 一行摘要 + `详见 ADR-XXXX` + CHANGELOG 一行摘要 |
-| 进度/状态/环境 | `private/dev/WORKLOG.md`（当前做到哪里）+ 受影响文档 |
+| 进度/状态/环境 | `private/dev/STATUS.md`（当前做到哪里）+ 受影响文档 |
 | 设计/架构/数据流 | `private/dev/DESIGN.md` |
 | 功能/接口实现 | DESIGN / README / docs（按项目实际） |
 | 测试/验证 | `private/dev/TEST-REPORT.md` |
 | 版本/发布 | `version.json` / CHANGELOG / README |
 | 用户视角/流程 | README / docs（audit-checklist / UPGRADE / CONTRIBUTING 等）/ 根 AGENTS.md |
-| 模板升级 | 按 `docs/UPGRADE.md` 流程 + `version.json` + CHANGELOG/WORKLOG |
+| 模板升级 | 按 `docs/UPGRADE.md` 流程 + `version.json` + CHANGELOG/STATUS |
 
 ## 【通用】许可
 

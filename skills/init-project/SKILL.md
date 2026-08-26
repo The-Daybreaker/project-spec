@@ -30,11 +30,22 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   尚无 tag 的当前版本自动打 tag 并建 Release。
 - **自动化脚本**：`scripts/bump_version.py`、`pre_release_check.py`、`ci_check.py`
   、`trash.py`（仅依赖 Python 标准库，Python 3.9+ 跨平台运行，UTF-8）。
-- **阶段落盘与经验沉淀**：`private/dev/WORKLOG.md`（每完成一小阶段更新）+ 
-  `EXPERIENCE-TO-TEMPLATE.md` / `EXPERIENCE-TO-KB.md`（每轮对话后写入完整候选经验）。
+- **阶段落盘与经验沉淀**：`private/dev/STATUS.md`（当前状态快照：阶段卡 + 生命周期
+  合规清单 + 影响清单；每完成阶段/子阶段覆盖更新 + git 提交）+ `EXPERIENCE-TO-TEMPLATE.md`
+  / `EXPERIENCE-TO-KB.md`（每轮对话后写入完整候选经验）。
 - **私有开发指引**：`private/AGENTS.md` 含本机环境、用户确认的设计决策、定案清单、
-  必须询问人类清单；`private/dev/` 承载 DESIGN / CHANGELOG / TEST-REPORT / WORKLOG /
-  经验文档。
+  必须询问人类清单；`private/dev/` 承载 PHASES（阶段模块定义）/ STATUS（状态快照）/
+  DESIGN / CHANGELOG / TEST-REPORT / 经验文档。
+- **阶段体系模块化**：16 节点收敛为 P1-P5 五阶段（需求/方案/开发/审计验证/交付发布）
+  + 子阶段两级；每阶段有输入/明确产物/完成标志/生命周期；阶段/子阶段完成展示
+  **阶段卡**（进度 + 生命周期合规清单 + 下一阶段输入预告）；🔵 决策型阶段/子阶段须
+  用户确认放行、🟢 执行型展示即走；双维度模型（主流程串行 + 贯穿动作不占阶段）；
+  权威定义 `private/dev/PHASES.md`，流程图 `docs/FLOW.md`。
+- **渐进式披露**：`docs/LOADING.md` 加载规则表（场景→必读/按需/默认不读，历史默认
+  不读、红线始终必读）；`docs/USER-GUIDE.md` 面向人的阶段流程指南（防遗忘）；
+  新对话/压缩后读 AGENTS → private/AGENTS → STATUS 快照恢复。
+- **需求引导方法论（P1 内嵌）**：先复述意图、提开放问题帮用户澄清真实需求，
+  未澄清前禁止直接抛方案选项。
 - **质量门禁**：文档 / 常规代码 / 架构变更三级门禁；发布前自测（产物可运行、关键
   文件齐全、无密钥/运行时数据混入）。
 - **发布产物与归档**：构建/打包产物统一输出 `dist/`（不进 git，Release 自动
@@ -55,9 +66,9 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   页面原型/设计稿落 `private/dev/prototype/`（目录随初始化存在，`README.md` 含
   使用规则，一文件一原型）——向用户展示获确认后才实施（开发工作流「可视化
   确认」）。
-- **流程提示**：每次对话展示流程位置（当前节点/已完成/下一步，16 节点两阶段
-  清单），以 `private/dev/WORKLOG.md`「流程位置」为单一真相；展示时缩写附中文
-  翻译（对照表见模板 `private/AGENTS.md`「缩写对照」）。
+- **阶段卡展示**：每次对话展示阶段卡（模块·子阶段/正在完成/已完成/下一步/状态 +
+  生命周期合规清单），以 `private/dev/STATUS.md`「📇 阶段卡」为单一真相；展示时缩写
+  附中文翻译（对照表见模板 `private/AGENTS.md`「缩写对照」）。
 - **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
   `codex_2026-08-25_2330`），任务结束时用 `scripts/trash.py` 整体进回收站。
 - **模板版本与升级**：项目根 `version.json` 的 `template_version` 记录初始化时的
@@ -97,11 +108,13 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
    - 根 `AGENTS.md` 与 `private/AGENTS.md` 可读且内容正确；
    - `version.json`：`version` 为 `0.0.1`、`template_version` 与 skill/模板版本一致
      （以 `assets/project-template/version.json` 的 `template_version` 字段为准）；
-   - `private/dev/WORKLOG.md`、`EXPERIENCE-TO-TEMPLATE.md`、`EXPERIENCE-TO-KB.md`
-     已生成；
+   - `private/dev/STATUS.md`、`PHASES.md`、`EXPERIENCE-TO-TEMPLATE.md`、
+     `EXPERIENCE-TO-KB.md` 已生成；
+   - `docs/{FLOW,USER-GUIDE,LOADING}.md` 已生成（流程状态机图 / 用户指南 / 加载规则表）；
    - `private/dev/{prd,rfc,adr,research}/INDEX.md` 已生成（开发前四登记册）；
    - `private/dev/prototype/README.md` 已生成（页面原型/设计稿目录说明）；
-   - `private/dev/WORKLOG.md`「当前任务」含「流程位置」字段；
+   - `private/dev/STATUS.md`「📇 阶段卡」字段齐全（当前模块 P1-P5/子阶段/正在完成/
+     已完成/下一步/状态 + 生命周期合规清单 + 任务影响清单含要读文档清单）；
    - `python scripts/check_dev_docs.py` 退出码 0（空登记册应通过）；
    - `python scripts/trash.py --help` 退出码 0。
 4. **收尾与汇报**：确认 `.gitignore` 生效（`git check-ignore private/` 应命中）；
@@ -124,4 +137,5 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
 |---|---|
 | 初始化执行细节（参数表、占位符清单、校验清单、常见问题） | `references/init-steps.md` |
 | 模板结构与文件职责（向用户解释模板） | 根 `assets/project-template/AGENTS.md` |
+| 阶段体系定义（P1-P5/子阶段/切换规则，向用户解释） | `assets/project-template/private/dev/PHASES.md` |
 | 复制与替换（确定性执行） | 直接运行 `scripts/init_project.py` |

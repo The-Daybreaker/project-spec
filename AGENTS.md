@@ -3,17 +3,36 @@
 > 模块：混合（【通用】= 沿用模板规范；【项目专用】= 本工作区维护约定）。
 > 本文件是**本项目（模板工作区）**的专属规范入口：任何 agent 在本工作区工作时先读
 > 本文件，再读模板规范（`project-template/AGENTS.md` 与
-> `project-template/private/AGENTS.md`）。上下文压缩后或新对话开始时，必须重读
-> 本文件、模板规范与 `docs/WORKLOG.md` 后再继续（红线 15）。
+> `project-template/private/AGENTS.md`）与 `docs/STATUS.md` 快照。上下文压缩后或
+> 新对话开始时，必须重读本文件、模板规范与 `docs/STATUS.md` 后再继续（红线 15）。
+
+## 摘要与加载规则（渐进式披露）
+
+- **阶段体系**：工作区任务按 P1-P5 五阶段串行（P1 需求/P2 方案/P3 开发/P4 审计验证/
+  P5 交付发布），权威定义见 `project-template/private/dev/PHASES.md`；每次专注一个
+  阶段，严禁跨阶段；阶段/子阶段完成展示**阶段卡**（进度 + 生命周期合规清单 + 下一
+  阶段输入预告）；🔵 决策型须用户确认、🟢 执行型展示即走；流程状态机见
+  `docs/FLOW.md`。
+- **披露协议**：什么场景读什么按下方加载规则表；历史默认不读、红线始终必读；
+  全量规则见 `docs/LOADING.md`。
+
+| 场景 | 优先级 | 读什么 |
+|---|---|---|
+| 新对话 / 压缩后恢复 | 必读 | 本文件 → 模板 AGENTS×2 → `docs/STATUS.md` 快照 |
+| 红线规范 | 始终必读 | 模板 AGENTS 红线小节 |
+| 阶段定义 / 切换规则 | 按需 | 模板 `private/dev/PHASES.md` |
+| 流程 / 状态机 | 按需 | `docs/FLOW.md` |
+| 母项目改模板 / 同步 | 必读 | 本文件「维护约定」→ `scripts/sync_template.py` |
+| 历史决策 / 追溯 | **默认不读** | `docs/CHANGELOG.md` / 模板 ADR |
 
 ## 【项目专用】项目概览
 
 - **定位**：通用项目模板 + init-project skill 的维护工作区（本项目本身就是模板的
   「母项目」）。
 - **目录**：`README.md`（面向使用者的说明）+ `docs/`（工作区自身文档：CHANGELOG /
-  WORKLOG / EXPERIENCE-TO-KB）、`scripts/sync_template.py`（同步脚本）、
-  `project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill 目录）：
-  `init-project/`（skill：SKILL.md / references / scripts / assets）、
+  STATUS / EXPERIENCE-TO-KB / FLOW / USER-GUIDE / LOADING）、`scripts/sync_template.py`
+  （同步脚本）、`project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill
+  目录）：`init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
 - **版本**：根 `version.json`（当前 1.3.2）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
@@ -22,7 +41,7 @@
 
 - 遵循模板规范：红线、工作流、版本/发布、审计，见 `project-template/AGENTS.md` 与
   `project-template/private/AGENTS.md`（冲突时私有版优先）。
-- 阶段落盘：每完成一小阶段先更新 `docs/WORKLOG.md` 与受影响文档再继续。
+- 阶段落盘：每完成一小阶段先更新 `docs/STATUS.md` 快照与受影响文档再继续。
 
 ## 【项目专用】维护约定（强制）
 
@@ -57,9 +76,10 @@
    （如 `codex_2026-08-25_2330`；不设固定 agent 列表，以执行 agent 的产品名为准），
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），
    避免小文件堆积。
-6. **WORKLOG 生命周期纪律**：新任务开始先切换「当前任务」；每完成一小阶段更新
-   「阶段记录」（红线 14）；任务收尾/汇报前回读校准硬事实（文件数、版本号、
-   提交号）与实际仓库状态一致后再汇报。
+6. **STATUS 快照纪律（dogfood）**：新任务开始先更新 `docs/STATUS.md`「当前任务」；
+   每完成阶段/子阶段**覆盖更新**快照 + 展示阶段卡 + git 提交（主仓库，提交信息带
+   阶段标识，D14）；任务收尾/汇报前回读校准硬事实（文件数、版本号、提交号）与实际
+   仓库状态一致后再汇报。
 7. **经验自动沉淀**：每轮对话结束后**自动**把完整候选经验写入
    `docs/EXPERIENCE-TO-KB.md`（必做、不需询问，与模板红线 9 对齐）；沉淀与否、
    沉淀到哪由用户决定。
@@ -67,11 +87,10 @@
    `docs/EXPERIENCE-TO-KB.md` 索引与正文、`docs/CHANGELOG.md` 未发版区段），新增
    条目必须**正文与索引同时置顶**；任务收尾/汇报前核对：索引顺序与正文一致、
    「最后更新」日期与最新提交一致、未发版区段与 `git log <tag>..HEAD` 逐条比对。
-9. **流程提示（dogfood）**：工作区汇报/阶段落盘/收尾展示流程位置（当前节点/
-   已完成/下一步），以 `docs/WORKLOG.md`「当前任务 → 流程位置」为单一真相；
-   WORKLOG 当前任务须含「流程位置」字段（与模板 v1.2.0 对齐）；**展示时缩写
-   附中文翻译**（如 ADR=架构决策记录，对照表见模板 `private/AGENTS.md`
-   「缩写对照」）。
+9. **流程提示（dogfood）**：工作区汇报/阶段落盘/收尾展示**阶段卡**（模块·子阶段/
+   正在完成/已完成/下一步/状态 + 生命周期合规清单），以 `docs/STATUS.md`「📇 阶段卡」
+   为单一真相；**展示时缩写附中文翻译**（如 ADR=架构决策记录，对照表见模板
+   `private/AGENTS.md`「缩写对照」）。
 
 ## 【项目专用】本机环境
 
@@ -109,13 +128,17 @@
 |---|---|---|
 | `AGENTS.md`（本文件） | 混合 | 工作区专属规范入口 |
 | `README.md` | 项目专用 | 面向使用者的说明 |
-| `docs/WORKLOG.md` | 项目专用 | 阶段落盘（每完成一小阶段更新） |
+| `docs/STATUS.md` | 项目专用 | 当前状态快照（阶段卡 + 生命周期合规清单 + 影响清单；历史由 git 承担） |
+| `docs/FLOW.md` | 混合 | 流程与状态机总图（主流程 + 每阶段子流程 + 动作状态机，mermaid） |
+| `docs/USER-GUIDE.md` | 混合 | 面向人的阶段流程简明指南（防遗忘） |
+| `docs/LOADING.md` | 混合 | 加载规则表全量版（渐进式披露协议） |
 | `docs/CHANGELOG.md` | 项目专用 | 模板版本变更历史（升级比对依据） |
 | `docs/EXPERIENCE-TO-KB.md` | 项目专用 | 可沉淀进知识库的经验（完整条目） |
 | `install-targets.json` | 项目专用 | 机器可读安装表：两 skill 在各 agent 用户级 skill 目录的位置（单一事实来源） |
 | `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → skills/init-project/assets/ + 全链校验） |
 | `scripts/verify_installed_copies.py` | 项目专用 | 安装副本校验：读安装表 → 逐目录 × 逐 skill 全量 SHA-256 + 版本哨兵（随 sync 并入发版链） |
 | `project-template/` | 通用 | 权威模板（同步到 `skills/init-project/assets/`） |
+| `project-template/private/dev/PHASES.md` | 通用 | 阶段模块权威定义（I/O/产物/生命周期/16节点映射/切换规则/需求引导/文档映射） |
 | `skills/` | 通用 | skill 目录（`init-project/`：初始化 skill；`agent-rules/`：精简版全局规范） |
 | `skills/init-project/SKILL.md` | 通用 | 初始化 skill（SKILL.md / references / scripts / assets） |
 | `skills/init-project/references/` `scripts/` `assets/` | 通用 | 初始化 skill 承载（init-steps.md / init_project.py / assets/project-template/ 模板镜像） |
