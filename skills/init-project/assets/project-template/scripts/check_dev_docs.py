@@ -252,7 +252,7 @@ def _check_worklog(problems: list) -> None:
     text = _read_text(worklog, problems)
     if text is None:
         return
-    m = re.search(r"(?ms)^## 当前任务(.*?)(?=\n## )", text)
+    m = re.search(r"(?ms)^## 当前任务(.*?)(?=\n## |\Z)", text)
     section = m.group(1) if m else ""
     if "流程位置" not in section:
         problems.append(

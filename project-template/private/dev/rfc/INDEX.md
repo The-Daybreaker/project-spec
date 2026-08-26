@@ -39,7 +39,7 @@
 ```markdown
 # RFC-0001 — <标题>
 
-> 状态：草稿 | 依据 PRD-XXXX | 创建：YYYY-MM-DD | 采纳日期：— | Supersedes：—
+> 状态：草稿 | 依据 PRD：PRD-XXXX | 创建：YYYY-MM-DD | 采纳日期：— | Supersedes：—
 
 ## 问题陈述
 ## 目标与非目标

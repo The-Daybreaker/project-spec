@@ -99,6 +99,15 @@
   目录不放业务代码」（【通用】应用）；`private/dev/DESIGN.md` 项目形态补代码区
   约定（B 区骨架合并）；init-steps 校验清单补 `src/.gitkeep` 检查项（无脚本依赖
   变化）。
+- **v1.3.2**（全生命周期审计修复）：无新增骨架文件；已初始化项目重点核对三处
+  「照抄即失败」类修复是否需合并进本项目私有骨架：① `private/dev/rfc/INDEX.md`
+  示例行的依据字段格式为「依据 PRD：PRD-XXXX」（带冒号；若项目已自行登记过 RFC
+  则只对齐格式、不动已有内容）；② `private/dev/prototype/README.md` 相对路径
+  应指向 `../../AGENTS.md` 与 `../../scripts/trash.py`；③ `private/AGENTS.md`
+  三区表 A 区含 `archive/`（属【通用】小节，按合并规则应用）。脚本改动
+  （`check_dev_docs.py` / `pre_release_check.py` / `trash.py`）与根 `AGENTS.md`
+  「工程区」术语、归档 release.yml 说明均属【通用】自动应用；`init_project.py`
+  仅母项目使用、不下发目标项目。
 - （后续版本在此追加；模板 CHANGELOG 为权威）
 
 > 注意：major 版本（如 2.0.0）升级前，先读新模板的 `AGENTS.md` 了解破坏性变更与迁移

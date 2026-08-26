@@ -4,6 +4,52 @@
 > 记录模板自身每次发版变更，与根 `version.json` 与 git tag 对齐；项目升级时据此比对
 > （见 `project-template/docs/UPGRADE.md`）。
 
+## v1.3.2（2026-08-26）
+
+> 全生命周期专业审计修复版本（patch）：三域并行独立子代理审计（A 规范与文档语言 /
+> B 脚本与机制 / C 流程闭环与生命周期），结论「能支撑完整生命周期」，处置
+> P1×3 + P2×7 + P3×6 共 16 项；`version.json` 的 `version` / `template_version`
+> 与 tag `v1.3.2` 对齐。
+
+### P1 一致性缺陷（照抄模板即失败类）
+
+- **RFC 骨架依据字段补冒号**：`private/dev/rfc/INDEX.md` 示例「依据 PRD-XXXX」→
+  「依据 PRD：PRD-XXXX」，与 `check_dev_docs.py` 校验规则对齐；此前新项目照抄
+  骨架登记 RFC 必被校验拦截。
+- **私有 AGENTS 三区表 A 区补 `archive/`**：v1.2.2 曾声称补齐但实际丢失，本次
+  复核补上，与实体目录约定一致。
+- **prototype/README 相对路径修正**：`../AGENTS.md` → `../../AGENTS.md`、trash
+  脚本路径补 `../../` 前缀（页面原型目录位于 `private/dev/` 下两级）。
+
+### P2 描述准确性 / 流程体验
+
+- **agent-rules 规范 9 溯源标注**：标注「模板红线 9『private 目录纪律』+
+  红线 11『密钥安全』合并」，消除精简版条目与模板红线位置一一对应的误解。
+- **「工程区」术语入模板根 AGENTS 项目概览**：定义从 `src/.gitkeep` 注释提升至
+  规范正文（根目录为工程区，业务代码统一入代码区）。
+- **归档约定补 release.yml 自动发布说明**：注明项目归档后 CI 仍会对尚无 tag 的
+  当前版本自动发 Release 的现象与机器级防呆思路。
+- **工作区 AGENTS 文档职责表补 skill 子文件行**：`init-project/references|
+  scripts|assets` 与 `agent-rules/references/*` 不再缺位。
+- **pre_release_check 步骤标签补齐**：auto-commit 分支补 `[2/7]`、ci_check 占位符
+  提醒行改 `[5/7]` 标签、docstring 步骤清单 5→7 步对齐实际实现、reminder 补
+  ci_check 接线提示。
+- **init_project --name 默认值规范化**：未指定时目录名经 `_kebab_slug()` 规范化
+  并给出提示，消除默认路径下的 kebab-case 告警噪音。
+
+### P3 脚本健壮性
+
+- **check_dev_docs WORKLOG 尾段正则修正**：「当前任务」段位于文末（无后续 `## `
+  标题）不再误报缺字段（`(?=\n## )` → `(?=\n## |\Z)`）。
+- **pre_release private/ 纵深检查**：status 无输出时追加 `git ls-files -- private`
+  兜底，堵住「已提交进主仓库索引且工作树干净」的泄漏盲区。
+- **git 子进程输出解码修正**：新增 `_decode()`（Windows 按 mbcs/GBK 解码），中文
+  文件名不再乱码导致校验误判。
+- **trash.py 支持 `--` 分隔符**：`-` 开头路径不再被当作选项丢弃。
+- **pre_release CHANGELOG 读取走 `_read_text`**：编码异常兜底与其余读取点统一。
+- **sync/verify 公共函数不抽取**（设计权衡记录）：维持单文件可分发特性、避免跨
+  脚本 import 耦合，重复的 `_sha256` / `_collect` 等保留各自内联。
+
 ## v1.3.1（2026-08-26）
 
 > 维护增强版本（patch）：src/ 代码区实体化与分区约定；`version.json` 的 `version` /

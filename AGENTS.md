@@ -15,7 +15,7 @@
   `project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill 目录）：
   `init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.3.1）+ git tag；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.3.2）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
@@ -118,5 +118,7 @@
 | `project-template/` | 通用 | 权威模板（同步到 `skills/init-project/assets/`） |
 | `skills/` | 通用 | skill 目录（`init-project/`：初始化 skill；`agent-rules/`：精简版全局规范） |
 | `skills/init-project/SKILL.md` | 通用 | 初始化 skill（SKILL.md / references / scripts / assets） |
+| `skills/init-project/references/` `scripts/` `assets/` | 通用 | 初始化 skill 承载（init-steps.md / init_project.py / assets/project-template/ 模板镜像） |
 | `skills/agent-rules/SKILL.md` | 项目专用 | 精简版 agent 全局行为规范（仅非项目且非纯聊天对话加载） |
 | `skills/agent-rules/references/inheritance-map.md` | 项目专用 | 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（sync 校验依据） |
+| `skills/agent-rules/references/audit-checklist-lite.md` `agents/` | 项目专用 | 精简审计清单 / 平台接口描述 |

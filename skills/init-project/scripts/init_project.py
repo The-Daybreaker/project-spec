@@ -85,6 +85,17 @@ def _valid_name(name: str) -> bool:
     return bool(re.fullmatch(r'[a-z0-9]+(-[a-z0-9]+)*', name))
 
 
+def _kebab_slug(s: str) -> str:
+    """把任意名称规范化为 kebab-case（小写、分隔符统一为连字符、去首尾连字符）。
+
+    无法保留的有效字符（如中文、重音符号）会被去除；结果为空的场景由调用方
+    保留原值并告警。
+    """
+    slug = re.sub(r'[^0-9A-Za-z\-_ .]+', '-', s).strip('-_ .')
+    slug = re.sub(r'[\-_ .]+', '-', slug).strip('-').lower()
+    return slug
+
+
 def _valid_branch(branch: str) -> bool:
     """git 分支名基本合法性检查（不保证与所有 git 版本完全一致）。"""
     if not branch or branch.startswith(('-', '/')) or branch.endswith(('/', '.')):
@@ -214,12 +225,15 @@ def main() -> int:
         return 1
 
     # 2. 参数默认值与校验
-    name = args.name.strip() or target.name
-    if args.name.strip() and not _valid_name(name):
+    explicit_name = bool(args.name.strip())
+    name = args.name.strip() or _kebab_slug(target.name)
+    if explicit_name and not _valid_name(name):
         print(f'[错误] --name 必须是 kebab-case（小写字母/数字/连字符）: {name}')
         return 1
     if not _valid_name(name):
         print(f'[警告] 项目名不是 kebab-case（将按原样使用，建议后续改名为 kebab-case）: {name}')
+    elif not explicit_name:
+        print(f'[提示] 未指定 --name，已按目录名规范化为 kebab-case: {name}')
     if not _valid_branch(args.branch):
         print(f'[错误] --branch 不是合法 git 分支名: {args.branch}')
         return 1

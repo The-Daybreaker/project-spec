@@ -102,17 +102,22 @@ def main() -> int:
     except AttributeError:
         pass
 
-    if len(sys.argv) < 2 or sys.argv[1] in ("-h", "--help"):
+    argv = sys.argv[1:]
+    if any(a in ("-h", "--help") for a in argv):
         print(__doc__)
         return 0
-
-    paths = [p for p in sys.argv[1:] if not p.startswith("-")]
+    if "--" in argv:
+        # `--` 之后的所有参数都是路径（允许以 - 开头的合法文件名）
+        paths = argv[argv.index("--") + 1:]
+    else:
+        paths = [a for a in argv if not a.startswith("-")]
+    if not paths:
+        print("[error] no paths given; use `-- <path>` to trash a path that starts with '-'",
+              file=sys.stderr)
+        return 1
     missing = [p for p in paths if not Path(p).exists()]
     if missing:
         print(f"[error] path(s) not found: {missing}", file=sys.stderr)
-        return 1
-    if not paths:
-        print("[error] no paths given", file=sys.stderr)
         return 1
 
     system = platform.system()

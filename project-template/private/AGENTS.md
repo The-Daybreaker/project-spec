@@ -24,7 +24,7 @@
 
 | 区 | 位置 | 内容 | 版本管理 |
 |---|---|---|---|
-| A. 公开 | 仓库根 + `src/` `docs/` `scripts/` `.github/` | README / LICENSE / 根 AGENTS.md（公开版）/ docs/（audit-checklist、UPGRADE、CONTRIBUTING 等）/ 运行时代码与资源 | 主仓库 git 跟踪，随 Release 发布 |
+| A. 公开 | 仓库根 + `src/` `docs/` `scripts/` `.github/` `archive/` | README / LICENSE / 根 AGENTS.md（公开版）/ docs/（audit-checklist、UPGRADE、CONTRIBUTING 等）/ 运行时代码与资源 / 归档区 | 主仓库 git 跟踪，随 Release 发布 |
 | B. 私有 | `private/` | 本文件（AGENTS.md）、`dev/`（开发期文档：PRD/RFC/ADR/RESEARCH 登记册、PROTOTYPE（页面原型/设计稿）、DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档）、`test/`（本地测试素材） | private 子 git（本地、无远端） |
 | C. 不版本管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、打包产物、`_trash/` | 无（.gitignore 忽略） |
 

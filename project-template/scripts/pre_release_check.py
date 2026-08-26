@@ -7,16 +7,19 @@ Usage:
       [--skip-subgit] [--allow-placeholder]
 
 Behavior:
-  1) private sub-git: if it has changes -> auto add + commit
+  1) version: read version.json (source of truth);
+  2) private sub-git: if it has changes -> auto add + commit
      ("docs: private vX.Y.Z - desc") and confirm it is clean
      (required before every release; see root AGENTS.md release flow);
-  2) main repo status: list uncommitted changes (the agent commits them, not this
+  3) main repo status: list uncommitted changes (the agent commits them, not this
      script); safety scan: no private/ path or gitlink may enter the main repo
-     index/working tree, no secret-named files;
-  3) version consistency: version.json 'version' vs top of CHANGELOG;
-  4) ci_check.py must be implemented (no template placeholder), unless
+     index/working tree or be already tracked, no secret-named files;
+  4) version consistency: version.json 'version' vs top of CHANGELOG;
+  5) ci_check.py must be implemented (no template placeholder), unless
      --allow-placeholder is given;
-  5) print audit & release reminders.
+  6) doc consistency: root AGENTS.md present, private/AGENTS.md pointer intact;
+  7) pre-development doc registers (PRD/RFC/ADR/RESEARCH) via scripts/check_dev_docs.py;
+  then print audit & release reminders.
 Exit code: 0 all ready; 1 issues must be fixed first.
 
 NOTE: stdlib-only, Python 3.9+; the repo root is resolved from this script's
@@ -25,6 +28,7 @@ NOTE: stdlib-only, Python 3.9+; the repo root is resolved from this script's
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -46,15 +50,24 @@ def _configure_utf8() -> None:
         pass
 
 
+def _decode(b: bytes) -> str:
+    """按平台解码子进程输出：Windows 用系统 ANSI（GBK/mbcs），其余 UTF-8。
+
+    git 以 core.quotepath=false 输出非 ASCII 文件名时用的是系统字节序；
+    UTF-8 固定解码在中文 Windows 下会变乱码（仅影响展示，判定用 ASCII 路径仍可靠）。
+    """
+    if os.name == "nt":
+        try:
+            return b.decode("mbcs")
+        except (UnicodeDecodeError, LookupError):
+            pass
+    return b.decode("utf-8", errors="replace")
+
+
 def _run(args: list, check: bool = False) -> subprocess.CompletedProcess:
-    r = subprocess.run(
-        args,
-        cwd=str(REPO_ROOT),
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-        errors="replace",
-    )
+    r = subprocess.run(args, cwd=str(REPO_ROOT), capture_output=True)
+    r.stdout = _decode(r.stdout)
+    r.stderr = _decode(r.stderr)
     if check and r.returncode != 0:
         raise RuntimeError(
             f"command failed: {' '.join(args)}\n{r.stdout}{r.stderr}"
@@ -162,7 +175,7 @@ def main() -> int:
             if status.returncode != 0:
                 print("[warning] could not read private sub-git status; skipping auto commit.")
             elif status.stdout.strip():
-                print("==> private sub-git has changes; auto committing:")
+                print("[2/7] private sub-git has changes; auto committing:")
                 for line in status.stdout.splitlines():
                     print(f"    {line}")
                 msg = (
@@ -208,6 +221,10 @@ def main() -> int:
     if not private_hits:
         untracked = _run(["git", "ls-files", "--others", "--exclude-standard", "-z"])
         private_hits = [p for p in untracked.stdout.split("\0") if p and _is_private_path(p)]
+    if not private_hits:
+        # 纵深：已提交且工作树干净的 private/（一旦误提交进主仓库索引，status 无输出）
+        tracked = _run(["git", "ls-files", "--", "private"])
+        private_hits = [p for p in tracked.stdout.splitlines() if _is_private_path(p)]
     if private_hits:
         print("[error] private/ content in main repo status (must not be committed):")
         for p in private_hits:
@@ -225,7 +242,7 @@ def main() -> int:
     changelog = REPO_ROOT / "private" / "dev" / "CHANGELOG.md"
     if changelog.exists():
         top = next(
-            (line for line in changelog.read_text(encoding="utf-8").splitlines()
+            (line for line in _read_text(changelog).splitlines()
              if line.startswith("## v")),
             "",
         )
@@ -266,7 +283,7 @@ def main() -> int:
             if ci_state == "placeholder":
                 if args.allow_placeholder:
                     print(
-                        "[warning] ci_check.py is still a template placeholder "
+                        "[5/7] ci_check.py is still a template placeholder "
                         "(allowed via --allow-placeholder)."
                     )
                 else:
@@ -339,7 +356,8 @@ def main() -> int:
     print("========== reminders ==========")
     print("1. auto-audit: check docs/audit-checklist.md; prefer an independent sub-agent to review git diff.")
     print("2. docs ready: CHANGELOG / DESIGN / TEST-REPORT / README / root AGENTS.md / private/AGENTS.md.")
-    print("   dev docs: PRD/RFC/ADR/RESEARCH registers consistent (scripts/check_dev_docs.py).")
+    print("   dev docs: PRD/RFC/ADR/RESEARCH registers consistent "
+          "(scripts/check_dev_docs.py; already wired into ci_check and step [7/7]).")
     print("3. checks & tests passed and recorded in private/dev/TEST-REPORT.md (no pass, no release).")
     print("4. commit format: normal commits feat:/fix:/docs:/chore:/refactor: - description;")
     print("   release commit carries version: feat: v<version> - description")
