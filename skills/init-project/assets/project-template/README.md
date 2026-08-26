@@ -63,8 +63,8 @@ npm test
 - **立项调研先行**：与 agent 讨论项目思路/需求/架构/功能/产品时，agent 会优先在
   GitHub 调研现成参考并提醒「先调研再立项」（见 `AGENTS.md` 红线 13）。
 - **人类贡献**：见 `docs/CONTRIBUTING.md`。
-- **版本管理**：`version.json` 的 `version` 字段 + git tag `vX.Y.Z`；版本递增由 agent 本地执行
-  （`scripts/bump_version.py`），CI 对尚无 tag 的当前版本自动打 tag 并发布
+- **版本管理**：`version.json` 的 `version` 字段 + git tag `vX.Y.Z.patchN`；版本递增由 agent 本地执行
+  （`scripts/bump_version.py --part patchn|patch|minor|major`，默认 `patchn`），CI 对尚无 tag 的当前版本自动打 tag 并发布
   （`.github/workflows/release.yml`）。
 - **阶段落盘**：任务中每完成一小阶段先更新 `private/dev/STATUS.md` 与受影响文档
   （红线 14），防止上下文压缩丢失进度。

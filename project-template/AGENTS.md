@@ -39,7 +39,7 @@
   - `scripts/` — 自动化脚本（版本、发布前检查、CI 检查）
   - `private/` — 私有区（个人/开发期文件，**不进 GitHub**，见「仓库布局」）
   - `.github/workflows/` — CI / 自动发布
-- **版本**：以 `version.json` 的 `version` 字段与 git tag `vX.Y.Z` 为准；完整历史见
+- **版本**：以 `version.json` 的 `version` 字段与 git tag `vX.Y.Z.patchN` 为准；完整历史见
   `private/dev/CHANGELOG.md`（私有，不发布）。
 - **模板版本**：`version.json` 的 `template_version`（初始化/升级时的通用项目模板
   版本，见「模板升级」）。
@@ -162,14 +162,20 @@
 
 ## 【通用】版本管理
 
-- **版本号**：`version.json` 的 `version` 字段为单一事实来源，格式 `X.Y.Z`；git tag `vX.Y.Z` 与
+- **版本号**：`version.json` 的 `version` 字段为单一事实来源，格式 `X.Y.Z.patchN`（第 4 段为
+  字面 `patch` + 数字，从 0 开始）；git tag `vX.Y.Z.patchN` 与
   Release 使用同一版本。
-- **递增规则**：版本号**从 `0.0.1` 开始**；每次默认只升最后一位（patch）；
-  **前两位（major/minor）增加必须向用户确认**；破坏性变更必须用户确认并升主版本、
-  说明迁移方案。
+- **递增规则**：版本号**从 `0.0.1.patch0` 开始**：
+  - 补丁/小修复：默认只升第 4 段（`patchN` → `patchN+1`，如 `1.4.0.patch0` → `1.4.0.patch1`）；
+  - 普通功能升级/补齐：升第 3 段并将第 4 段归零（`1.4.0.patch1` → `1.4.1.patch0`）；
+  - 大功能升级：升第 2 段并将后两段归零（`1.4.1.patch0` → `1.5.0.patch0`）；
+  - **前两位（major/minor）增加必须向用户确认**；破坏性变更必须用户确认并升
+    major（首位）、说明迁移方案（`1.5.0.patch0` → `2.0.0.patch0`）。
+  - bump 脚本：`python scripts/bump_version.py --part patchn|patch|minor|major`
+    （默认 `patchn`，即最小单位）。
 - **提交信息格式**：普通提交 `feat: / fix: / docs: / chore: / refactor: - 描述`
   （不带版本号）；**发布提交**（版本递增与发布前同步）带版本号
-  `feat: vX.Y.Z - 描述`。
+  `feat: vX.Y.Z.patchN - 描述`。
 - **发布机制**：版本递增由 agent **本地**执行（`scripts/bump_version.py` 按
   `scripts/version-sync.json` 同步 `version.json` 与 `package.json` / `Cargo.toml` /
   `pyproject.toml` 等，同时更新 CHANGELOG——`private/` 不进 GitHub，CI 无法代劳）；
@@ -201,7 +207,7 @@
 3. **同步 private 子 git（发布前必做）**：`scripts/pre_release_check.py` 一键完成
    （检查并自动提交 private 变动、版本一致性、泄漏扫描、ci_check 已实现等）。
 4. **主仓库提交推送**：提交信息见「版本管理」；`git push`。
-5. **打标签与 Release**：`git tag vX.Y.Z` + `git push origin vX.Y.Z` +
+5. **打标签与 Release**：`git tag vX.Y.Z.patchN` + `git push origin vX.Y.Z.patchN` +
    `gh release create`（或推送 main 后由 CI 自动完成，手动/自动二选一）。
 6. **分发/安装/部署**：按项目实际（安装包、zip、文档站点等）；**构建/打包产物统一
    输出到 `dist/`**（C 区生成物，不进 git，`.gitignore` 已忽略；`release.yml` 自动

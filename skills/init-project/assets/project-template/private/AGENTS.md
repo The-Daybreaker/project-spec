@@ -15,7 +15,9 @@
 - **当前版本**：{{VERSION}}（`dev/CHANGELOG.md` 有完整历史）。
 - **模板版本**：根 `version.json` 的 `template_version`（初始化/升级时的通用项目
   模板版本；升级见根 `AGENTS.md`「模板升级」与 `../docs/UPGRADE.md`）。
-- **版本规则**：版本号**从 `0.0.1` 开始**；每次默认只升最后一位（patch）；
+- **版本规则**：版本号**从 `0.0.1.patch0` 开始**，格式 `X.Y.Z.patchN`（第 4 段为
+  字面 `patch` + 数字，从 0 开始）；补丁/小修复默认只升第 4 段（`patchN+1`）、
+  普通功能升级升第 3 段并将第 4 段归零、大功能升级升第 2 段并将后两段归零；
   **前两位（major/minor）增加必须向用户确认**；破坏性变更必须用户确认并升主版本、
   说明迁移方案。
 - **发布策略**：{{AUTO_RELEASE}}
@@ -139,10 +141,11 @@ B 区；C 区内容两者都不得出现。
 
 ## 【通用】发布流程（每次发布时执行，md 驱动、agent 执行）
 
-1. **版本递增**：默认只升最后一位；运行 `scripts/bump_version.py`（按
-   `scripts/version-sync.json` 同步 `version.json` 与 `package.json` / `Cargo.toml` /
-   `pyproject.toml` 等），随后 agent 手工更新 `dev/CHANGELOG.md` 顶部条目（脚本只
-   校验同步目标、不写 CHANGELOG，防止覆盖人工编辑的发布说明）。
+1. **版本递增**：默认只升补丁段（第 4 段）；运行 `scripts/bump_version.py
+   --part patchn|patch|minor|major`（默认 `patchn`；按 `scripts/version-sync.json`
+   同步 `version.json` 与 `package.json` / `Cargo.toml` / `pyproject.toml` 等），
+   随后 agent 手工更新 `dev/CHANGELOG.md` 顶部条目（脚本只校验同步目标、不写
+   CHANGELOG，防止覆盖人工编辑的发布说明）。
 2. **检查受影响文档**（改动完成即文档就绪）：CHANGELOG / DESIGN / TEST-REPORT /
    STATUS / README / 根 AGENTS.md / 本文件 / 用户可见文档。
 3. **提交 private 子 git（发布前必做）**：检查 `git -C private status --short`；
@@ -207,8 +210,8 @@ B 区；C 区内容两者都不得出现。
 - [ ] **本轮候选经验已完整写入 EXPERIENCE-TO-TEMPLATE / EXPERIENCE-TO-KB（如有）**
 - [ ] private 子 git 已提交且 `git -C private status --short` 干净
 - [ ] 版本号一致（version.json / CHANGELOG 顶部 / 各版本文件）且递增规则正确
-- [ ] 已提交并推送（提交信息符合格式：普通提交不带版本号，发布提交带 vX.Y.Z）
-- [ ] 已创建 GitHub Release（tag vX.Y.Z + 发布产物）
+- [ ] 已提交并推送（提交信息符合格式：普通提交不带版本号，发布提交带 vX.Y.Z.patchN）
+- [ ] 已创建 GitHub Release（tag vX.Y.Z.patchN + 发布产物）
 - [ ] 分发/安装/部署完成
 - [ ] **已提醒用户沉淀经验**（架构变化/更新发布后：知识库沉淀 + 可复用经验
       集成进项目模板）
@@ -253,7 +256,7 @@ B 区；C 区内容两者都不得出现。
    「⚠️ 已取代 by …」这类历史标注。
 2. **禁止 AI 追加历史**：AI 改决策时，不得自动在正文里追加大段历史决策说明。
 3. **追溯用一行记录**：确需留痕时，只在 `dev/CHANGELOG.md` 记一行摘要
-   （如 `vX.Y.Z：决策 A → B`），由用户决定是否记录，不进决策正文。
+   （如 `vX.Y.Z.patchN：决策 A → B`），由用户决定是否记录，不进决策正文。
 4. **废案/临时内容**：按用户意愿直接删除，不强制留痕；删除走
 `_trash/<agent产品名>_<日期>_<时分>/`（如 `codex_2026-08-25_2330`）→
 `scripts/trash.py` → 回收站，保证可恢复即可。

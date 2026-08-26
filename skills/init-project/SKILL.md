@@ -1,7 +1,7 @@
 ---
 name: init-project
 metadata:
-  version: 1.4.0
+  version: 1.4.0.patch0
 description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（AGENTS.md 公开/私有拆分、private 子 git、.gitignore、CI/CD 工作流、自动化脚本、Agent+人协作开发工作流与通用红线），替换项目占位符，初始化主 git 与 private 子 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
 ---
 
@@ -98,15 +98,15 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
      `--no-git` 仅复制文件（不建 git，需用户另行决定）。
 2. **git 收尾**（脚本已做时跳过）：主仓库 `git init -b <branch>` + 首次提交
    `chore: init from universal project template`；`git -C private init` + 提交
-   `docs: private v0.0.1 - init`。**未获用户确认前不 `git push`**（远端未配置
-   时不推送；配置了远端也先征得同意）。
+  `docs: private v0.0.1.patch0 - init`。**未获用户确认前不 `git push`**（远端未配置
+  时不推送；配置了远端也先征得同意）。
 3. **回读校验**（按 `references/init-steps.md` 的校验清单）：
    - 占位符已全部替换（`git grep -n -E '\{\{[A-Z_]+\}\}'` 应无残留；GitHub
      Actions 的 `${{ }}` 表达式属正常）；
    - `private/.git` 存在、主仓库 `.git` 存在；
    - `git status`（主）与 `git -C private status`（子）均干净；
    - 根 `AGENTS.md` 与 `private/AGENTS.md` 可读且内容正确；
-   - `version.json`：`version` 为 `0.0.1`、`template_version` 与 skill/模板版本一致
+   - `version.json`：`version` 为 `0.0.1.patch0`、`template_version` 与 skill/模板版本一致
      （以 `assets/project-template/version.json` 的 `template_version` 字段为准）；
    - `private/dev/STATUS.md`、`PHASES.md`、`EXPERIENCE-TO-TEMPLATE.md`、
      `EXPERIENCE-TO-KB.md` 已生成；

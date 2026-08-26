@@ -3,13 +3,13 @@
 """pre_release_check.py - pre-release checks (markdown-driven, script-assisted)
 
 Usage:
-  python scripts/pre_release_check.py [--version X.Y.Z] [--description "desc"]
+  python scripts/pre_release_check.py [--version X.Y.Z.patchN] [--description "desc"]
       [--skip-subgit] [--allow-placeholder]
 
 Behavior:
   1) version: read version.json (source of truth);
   2) private sub-git: if it has changes -> auto add + commit
-     ("docs: private vX.Y.Z - desc") and confirm it is clean
+     ("docs: private vX.Y.Z.patchN - desc") and confirm it is clean
      (required before every release; see root AGENTS.md release flow);
   3) main repo status: list uncommitted changes (the agent commits them, not this
      script); safety scan: no private/ path or gitlink may enter the main repo

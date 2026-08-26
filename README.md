@@ -74,12 +74,15 @@
    → 展示与提交（先 private 子 git）→ 发布（版本递增 + tag + Release）→
    **经验沉淀**（每轮对话后把完整候选经验写入 EXPERIENCE-TO-TEMPLATE /
    EXPERIENCE-TO-KB，并提醒用户真正沉淀）→ 汇报（附完成检查清单）。
-6. **版本管理与 CI/CD**：版本号**从 `0.0.1` 开始**，每次默认末位 +1，**前两位
-   （major/minor）增加必须向用户确认**；`version.json` 单一事实来源 + git tag `vX.Y.Z`；
-   版本递增由 agent 本地完成（`bump_version.py` 按 `scripts/version-sync.json` 同步
-   `package.json` / `Cargo.toml` / `pyproject.toml` 等与 CHANGELOG），推送 main 后
-   `.github/workflows/release.yml` 对尚无 tag 的当前版本自动打 tag 并建 Release
-   （不会二次递增，手动/自动发布二选一）；
+6. **版本管理与 CI/CD**：版本号**从 `0.0.1.patch0` 开始**，格式
+   `X.Y.Z.patchN`（第 4 段为字面 `patch` + 数字，从 0 开始）：补丁/小修复默认只升
+   第 4 段、普通功能升级升第 3 段并将第 4 段归零、大功能升级升第 2 段并将后两段
+   归零，**前两位（major/minor）增加必须向用户确认**；`version.json` 单一事实来源
+   + git tag `vX.Y.Z.patchN`；版本递增由 agent 本地完成（`bump_version.py
+   --part patchn|patch|minor|major`，默认 `patchn`，按 `scripts/version-sync.json`
+   同步 `package.json` / `Cargo.toml` / `pyproject.toml` 等与 CHANGELOG），推送
+   main 后 `.github/workflows/release.yml` 对尚无 tag 的当前版本自动打 tag 并建
+   Release（不会二次递增，手动/自动发布二选一）；
    `.github/workflows/ci.yml` 提供 CI 检查入口。发布策略默认**不自动发布**
    （用户确认后执行发布流程；初始化时可用 `--auto-release` 开启自动发布）。
 7. **不依赖任何 agent 与上下文**：AGENTS.md 自带 bootstrap（任何新对话从零接手）；
@@ -137,7 +140,7 @@ python skills/init-project/scripts/init_project.py <目标目录> --name my-app 
 git -C <目标目录> init -b main
 git -C <目标目录> add -A -- . && git -C <目标目录> commit -m "chore: init"
 git -C <目标目录>/private init
-git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commit -m "docs: private v0.0.1 - init"
+git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commit -m "docs: private v0.0.1.patch0 - init"
 ```
 
 ### 3. 初始化后的下一步（模板内已写明）
@@ -197,7 +200,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   `skills/init-project/SKILL.md metadata.version`、
   `skills/agent-rules/SKILL.md metadata.version` 与
   `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
-  版本号**（如 `1.1.2` / `1.2.0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+  版本号**（如 `1.4.0.patch0` / `1.4.1.patch0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
   `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；模板
   内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
   `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
@@ -206,7 +209,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （`INIT_STEPS_COVERAGE`，缺失即拦截）；改模板/发版后按「skill 覆盖度复查」核对
   SKILL 摘要 / init-steps 校验清单与路线图 / agent-rules（如涉红线）/
   全部已安装副本重装并哈希复核。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.4.0；
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.4.0.patch0；
   版本号见 `version.json`）。
 - **阶段卡展示（dogfood）**：工作区汇报/阶段落盘/收尾展示阶段卡（模块·子阶段/
   正在完成/已完成/下一步/状态 + 生命周期合规清单，以 docs/STATUS.md「📇 阶段卡」

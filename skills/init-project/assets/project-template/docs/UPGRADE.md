@@ -110,6 +110,14 @@
   （`check_dev_docs.py` / `pre_release_check.py` / `trash.py`）与根 `AGENTS.md`
   「工程区」术语、归档 release.yml 说明均属【通用】自动应用；`init_project.py`
   仅母项目使用、不下发目标项目。
+- **v1.4.0.patch0**（版本号体系重新设计）：版本号由 `X.Y.Z` 改为 `X.Y.Z.patchN`
+  （第 4 段为字面 `patch` + 数字，从 0 开始）。已初始化项目迁移要点：① 根
+  `version.json` 的 `version` / `template_version` 补 `.patch0`（如 `1.4.0` →
+  `1.4.0.patch0`）；② `private/dev/CHANGELOG.md` 顶部条目与格式改
+  `## vX.Y.Z.patchN`；③ 后续发版用 `scripts/bump_version.py --part
+  patchn|patch|minor|major`（默认 `patchn`，最小单位）；④ 脚本（bump_version /
+  pre_release_check / release.yml）与公开文档属 `scripts/`、`docs/`【通用】自动
+  应用；⑤ 提交信息与 tag 改 `vX.Y.Z.patchN`。
 - **v1.4.0**（整体架构重构：模块化）：**WORKLOG → STATUS 改名**——`private/dev/
   WORKLOG.md` 更名为 `private/dev/STATUS.md`（快照化：只存最新状态，历史由 git
   承担；含「📇 阶段卡 + ✅ 生命周期合规清单 + 任务影响清单 + 下一阶段输入预告」；
@@ -124,5 +132,5 @@
   把 `WORKLOG.md` 内容按 STATUS 快照模板整理后改名，历史删除走 `_trash/`。
 - （后续版本在此追加；模板 CHANGELOG 为权威）
 
-> 注意：major 版本（如 2.0.0）升级前，先读新模板的 `AGENTS.md` 了解破坏性变更与迁移
+> 注意：major 版本（如 2.0.0.patch0）升级前，先读新模板的 `AGENTS.md` 了解破坏性变更与迁移
 > 方案；涉及红线/工作流变化时，同步核对本项目的私有规范是否需要调整。

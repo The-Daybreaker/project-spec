@@ -31,6 +31,14 @@
     可恢复）；
   - 六处安装副本重装 + 全链验证绿（sync / verify / check_dev_docs /
     quick_validate×2 / py_compile / 冒烟）。
+- **版本号体系重新设计（四段式）**：版本号由 `X.Y.Z` 改为 `X.Y.Z.patchN`（第 4 段
+  为字面 `patch` + 数字，N 从 0 开始）；递增规则：补丁/小修复升 `patchN`、普通
+  功能升级/补齐升第 3 段（patchN 归零）、大功能升级升第 2 段（后两段归零）；
+  **前两位（major/minor）增加必须用户确认的现有管理不变**（不新增红线）；
+  `bump_version.py` 新增 `--part patchn|patch|minor|major`（默认 `patchn`）；
+  模板【通用】机制（bump / pre_release / release.yml / 文档 / skill）全链同步；
+  工作区当前版本迁移为 `1.4.0.patch0`、新项目初始 `0.0.1.patch0`；六处副本重装
+  + 全链验证。
 
 ## v1.4.0（2026-08-26）
 

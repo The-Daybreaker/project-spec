@@ -9,12 +9,13 @@
 > `project-template/` 与 `skills/init-project/`，不设 EXPERIENCE-TO-TEMPLATE 暂存；
 > 本文件只记录可进知识库的经验，**不混入模板内部**（模板内部另有给目标项目用的
 > 同名骨架文件，见 `project-template/private/dev/EXPERIENCE-TO-KB.md`）。
-- 最后更新：2026-08-26 19:42
+- 最后更新：2026-08-26 20:07
 
 ## 索引
 
 | 日期 | 标题 | 类型 | 状态 |
 |---|---|---|---|
+| 2026-08-26 | 版本号体系重新设计（四段式 X.Y.Z.patchN）：全链迁移 + 冒烟 + 副本重装 | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | 全面审计（第八轮）：文档命令可执行性 + 状态文档元数据校验盲区 | 经验方法/教训 | 待沉淀 |
 | 2026-08-26 | v1.4.0 整体架构重构：引导式需求讨论 + 阶段模块化/渐进披露/STATUS 快照（可观察性模式）+ 三坑实录 | 经验方法/方案 | 待沉淀 |
 | 2026-08-26 | v1.3.2 三域并行独立审计：照抄即失败缺陷最优先 + sync installed≠source 中间态预期 | 经验方法/方案 | 待沉淀 |
@@ -49,6 +50,59 @@
 | 2026-08-25 | 未发版变更区段也是状态文档（HEAD 引用/条目需随提交同步） | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 状态文档生命周期需要「开始/收尾双收口」 | 经验方法/教训 | 待沉淀 |
 | 2026-08-25 | 版本硬事实过时与状态文档校准（审计教训） | 经验方法/教训 | 待沉淀 |
+
+## 2026-08-26 · 版本号体系重新设计（四段式 X.Y.Z.patchN）：全链迁移 + 冒烟 + 副本重装
+
+- 来源项目/任务：通用项目模板工作区（版本号规则重新设计，用户确认后实施）
+- 背景与上下文：用户要求版本号从 `X.Y.Z` 改为 `X.Y.Z.patchN`（第 4 段为字面
+  `patch` + 数字，N 从 0 开始）：补丁/小修复升第 4 段、普通功能升级升第 3 段
+  （patchN 归零）、大功能升级升第 2 段（后两段归零）、首位沿用现有管理（前两位
+  增加必须用户确认，不新增红线）。
+- 需求/问题：版本机制是模板的横切面——脚本（bump/pre_release/release.yml）、
+  三份 AGENTS、DESIGN/CHANGELOG/TEST-REPORT、skill 元数据与承载文档、UPGRADE 迁移
+  要点、六处安装副本全部要同步，且不能破坏历史版本记录。
+- 做法与过程：
+  1. P1 澄清三问（字面文本 vs 纯数字 / 起点与归零 / 首位是否新增红线）+ P2 方案
+     （规则表 + mermaid 递增图 + 影响面清单 + 迁移说明）经用户确认后实施；
+  2. `bump_version.py` 四段化：`VERSION_RE = r"(\d+)\.(\d+)\.(\d+)\.patch(\d+)"`、
+     `--part patchn|patch|minor|major`（默认 `patchn`）、前一位增加后位归零；
+     四向冒烟在临时文件上做（不碰真实 version.json）：patchn/patch/minor/major
+     全部 PASS，非法三段格式被拦截；
+  3. 全链同步：version.json×2、模板 AGENTS×2、PRIVATE/DESIGN/CHANGELOG/
+     TEST-REPORT、pre_release docstring、release.yml 注释、audit-checklist/
+     CONTRIBUTING/DOCS/UPGRADE、README、SKILL metadata.version（→
+     `1.4.0.patch0`）、init_project.py 初始版本（→ `0.0.1.patch0`）、init-steps、
+     agent-rules + 继承矩阵；随后 `sync_template.py` 镜像 42 文件；
+  4. 中间态预期：sync 在副本未重装时报「installed='1.4.0' source='1.4.0.patch0'」
+     ——报错即重装清单，重装六处后全绿；
+  5. 冒烟：新项目 `0.0.1.patch0` / `template_version=1.4.0.patch0`、CHANGELOG
+     格式 `## vX.Y.Z.patchN`、bump 默认 patchn（0.0.1.patch0 → 0.0.1.patch1）、
+     check_dev_docs / ci_check / pre_release_check 全通过。
+- 经验/教训：
+  - 版本机制是横切面：全局 grep `vX.Y.Z` / `0.0.1` / `X.Y.Z` 逐处核对是必修课，
+    自动化（sync 版本哨兵 + verify 哈希）只保证「副本一致」，不保证「语义正确」；
+  - `--part` 命名要避免歧义：`patch`（第 3 段）与 `patchn`（第 4 段）在脚本帮助、
+    文档、示例三处保持一致，否则用户照文档会升错段；
+  - 四段式带字面 `patch` 不是标准 semver（npm 等可能不认），模板同步目标按原样
+    写入；若目标技术栈有 semver 约束，由项目自行调整 `version-sync.json` 映射；
+  - skill `metadata.version` 用四段带 patch 字样，quick_validate 校验通过（它不
+    校验 metadata.version 格式），skill 生态接受任意字符串；
+  - 历史 tag（`v1.4.0`）与新格式 tag（`v1.4.0.patch0`）可并存，迁移无需改历史；
+  - 冒烟优先在临时文件/临时目录做（bump 用 `--version-file`、init 用 `_ftest/`），
+    验证完按删除纪律进回收站，不污染真实版本状态。
+- 验证/效果：bump 四向 PASS；sync 全绿（42 文件 + 版本哨兵 + 继承矩阵 +
+  init-steps 覆盖 + 六处副本）；quick_validate×2 valid；init 冒烟全脚本链通过；
+  六处副本版本哨兵 `1.4.0.patch0` 一致。
+- 相关文件：`scripts/bump_version.py`、`AGENTS.md`×3、`README.md`×2、
+  `docs/CHANGELOG.md`、`project-template/docs/UPGRADE.md`、
+  `skills/init-project/{SKILL.md,scripts/init_project.py,references/init-steps.md}`、
+  `skills/agent-rules/{SKILL.md,references/inheritance-map.md}`、`version.json`×2
+- 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
+  `knowledge_type=经验方法/方案`；`domain=版本管理/Agent 工程实践`；
+  `tags=[版本号, 四段式, 模板机制, 全局同步, 冒烟]`；`project=通用项目模板`
+- 状态：待沉淀
+- 沉淀日期：
+
 
 ## 2026-08-26 · 全面审计（第八轮）：文档命令可执行性 + 状态文档元数据校验盲区
 

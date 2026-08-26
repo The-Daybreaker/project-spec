@@ -4,11 +4,11 @@
 source of truth)
 
 Usage:
-  python scripts/bump_version.py [--part patch|minor|major] [--version-file version.json]
+  python scripts/bump_version.py [--part patchn|patch|minor|major] [--version-file version.json]
   python scripts/bump_version.py --help
 
 Behavior:
-  - read version (X.Y.Z) from version.json, bump by --part, write back
+  - read version (X.Y.Z.patchN) from version.json, bump by --part, write back
     (JSON keeps other fields, e.g. template_version; UTF-8, no BOM);
   - best-effort sync of version fields in package.json / Cargo.toml /
   pyproject.toml / src-tauri/*; targets come from scripts/version-sync.json (optional,
@@ -27,6 +27,8 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+
+VERSION_RE = r"(\d+)\.(\d+)\.(\d+)\.patch(\d+)"
 
 DEFAULT_SYNC_TARGETS = {
     "package.json": {"type": "json", "key": "version"},
@@ -66,9 +68,10 @@ def _read_version(path: Path) -> str:
     if path.suffix == ".json":
         data = json.loads(path.read_text(encoding="utf-8"))
         version = data.get("version")
-        if not isinstance(version, str) or not re.fullmatch(r"\d+\.\d+\.\d+", version):
+        if not isinstance(version, str) or not re.fullmatch(VERSION_RE, version):
             raise ValueError(
-                f"invalid 'version' field in {path.name}: {version!r} (expected X.Y.Z)"
+                f"invalid 'version' field in {path.name}: {version!r} "
+                f"(expected X.Y.Z.patchN)"
             )
         return version
     return path.read_text(encoding="utf-8").strip()
@@ -89,20 +92,27 @@ def _write_version(path: Path, version: str) -> None:
 
 
 def _bump(version: str, part: str) -> str:
-    m = re.fullmatch(r"(\d+)\.(\d+)\.(\d+)", version)
+    m = re.fullmatch(VERSION_RE, version)
     if not m:
-        raise ValueError(f"invalid version format: '{version}' (expected X.Y.Z)")
-    maj, minor, patch = (int(x) for x in m.groups())
+        raise ValueError(
+            f"invalid version format: '{version}' (expected X.Y.Z.patchN)"
+        )
+    maj, minor, patch, patchn = (int(x) for x in m.groups())
     if part == "major":
         maj += 1
         minor = 0
         patch = 0
+        patchn = 0
     elif part == "minor":
         minor += 1
         patch = 0
-    else:
+        patchn = 0
+    elif part == "patch":
         patch += 1
-    return f"{maj}.{minor}.{patch}"
+        patchn = 0
+    else:  # patchn
+        patchn += 1
+    return f"{maj}.{minor}.{patch}.patch{patchn}"
 
 
 def _load_config() -> dict:
@@ -179,9 +189,12 @@ def main() -> int:
     )
     parser.add_argument(
         "--part",
-        choices=("patch", "minor", "major"),
-        default="patch",
-        help="version part to bump (default: patch)",
+        choices=("patchn", "patch", "minor", "major"),
+        default="patchn",
+        help="version part to bump: patchn=patch number (default), "
+             "patch=feature patch (patchN resets to 0), "
+             "minor=major feature (patch/patchN reset to 0), "
+             "major=breaking (all lower parts reset to 0)",
     )
     parser.add_argument(
         "--version-file",

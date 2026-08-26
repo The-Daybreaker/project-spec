@@ -37,7 +37,7 @@
 | `{{DEFAULT_BRANCH}}` | 默认分支名 |
 | `{{AUTHOR}}` | 作者 |
 | `{{YEAR}}` / `{{DATE}}` / `{{DATETIME}}` | 当前年份 / 当前日期（YYYY-MM-DD）/ 当前日期时间（YYYY-MM-DD HH:MM，精确到分钟）；写入 CHANGELOG 与 TEST-REPORT 等时间标签 |
-| `{{VERSION}}` | `version.json` 的 `version` 字段内容（初始 `0.0.1`，版本规则见模板 AGENTS.md「版本管理」） |
+| `{{VERSION}}` | `version.json` 的 `version` 字段内容（初始 `0.0.1.patch0`，版本规则见模板 AGENTS.md「版本管理」） |
 | `{{LICENSE_NOTICE}}` | 许可声明（默认「本项目使用 MIT 许可，详见 LICENSE。」） |
 | `{{AUTO_RELEASE}}` | 发布策略（默认「不自动发布，用户确认后发布」；`--auto-release` 为「每次改动完成后自动发布」） |
 
@@ -65,7 +65,7 @@ python <skill>/scripts/init_project.py <目标目录> \
 3. 全文件替换占位符（UTF-8；二进制文件跳过）。
 4. 默认初始化 git：主仓库 `git init -b <branch>` + `git add -A` + 首次提交
    `chore: init from universal project template`；`git -C private init` + 提交
-   `docs: private v0.0.1 - init`。失败（git 不可用）时警告并继续，由 agent 收尾。
+`docs: private v0.0.1.patch0 - init`。失败（git 不可用）时警告并继续，由 agent 收尾。
 5. 打印汇总与下一步。
 
 ## 4. git 收尾（脚本 `--no-git` 或 git 步骤失败时）
@@ -76,7 +76,7 @@ git add -A -- .
 git commit -m "chore: init from universal project template"
 git -C private init                   # private 子 git
 git -C private add -A -- .
-git -C private commit -m "docs: private v0.0.1 - init"
+git -C private commit -m "docs: private v0.0.1.patch0 - init"
 ```
 
 - 主仓库与 private 子 git **分别独立**（`private/.git` 是独立仓库，主仓库的
@@ -102,11 +102,11 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - [ ] `docs/TESTING.md` 已生成（测试落地指引：pytest 示例 / 覆盖率 / CI 接入 /
       TEST-REPORT 对应）
 - [ ] 根 `AGENTS.md` 存在且 `{{PROJECT_NAME}}` 已替换
-- [ ] `private/AGENTS.md` 存在（版本为 `0.0.1`，待用户补充「本机环境」「用户决策」）
+- [ ] `private/AGENTS.md` 存在（版本为 `0.0.1.patch0`，待用户补充「本机环境」「用户决策」）
 - [ ] 根/私有 `AGENTS.md` 含「流程提示」与「缩写对照」（v1.2.0 特性：每次对话
       展示流程位置、缩写附中文翻译；v1.4.0 起流程位置升级为**阶段卡**，见
       `private/dev/STATUS.md`「📇 阶段卡」）
-- [ ] `version.json`：`version` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
+- [ ] `version.json`：`version` = `0.0.1.patch0`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1.patch0`
 - [ ] `version.json`：`template_version` 与 skill/模板版本一致（以
       `assets/project-template/version.json` 的 `template_version` 字段为准）
 - [ ] `docs/FLOW.md`、`docs/USER-GUIDE.md`、`docs/LOADING.md` 已生成（v1.4.0
@@ -224,10 +224,10 @@ ADR 记录（架构级）→ DESIGN 吸收 → `private/AGENTS.md` D-001 摘要 
 | `private/AGENTS.md` | 骨架 | 填环境/安装目标 | 决策/定案/询问清单随需求补 | 核对 |
 | `private/dev/DESIGN.md` | 骨架 | 填项目形态/核心设计 | 设计变化时更新 | 核对 |
 | `private/dev/STATUS.md` | 初始化条目 | — | **每阶段/子阶段覆盖更新 + git 提交** | 收口 |
-| `private/dev/CHANGELOG.md` | v0.0.1 条目 | — | 变更要点 | **顶部新增条目** |
+| `private/dev/CHANGELOG.md` | v0.0.1.patch0 条目 | — | 变更要点 | **顶部新增条目** |
 | `private/dev/TEST-REPORT.md` | 初始化条目 | 记 CI 落地结果 | 测试变化时更新 | **必更新** |
 | `private/dev/EXPERIENCE-TO-*.md` | 骨架 | — | **每轮对话结束写入** | 提醒沉淀 |
 | `private/dev/prd/INDEX.md` 等四登记册 | 模板自带 | 阅读登记册规则 | 每个 M/L 需求按状态机维护 | 核对（`check_dev_docs.py`） |
 | `private/dev/prototype/`（+ 随 PRD/RFC/ADR 的图） | 模板自带 | 阅读目录说明 | 涉及界面/架构/流程改动按需产出，先展示确认 | 核对 |
 | `docs/TESTING.md` | 模板自带 | 按它落地测试 | 测试体系变化时更新 | 核对 |
-| `version.json` | 0.0.1 / 模板版本 | — | — | **bump** |
+| `version.json` | 0.0.1.patch0 / 模板版本 | — | — | **bump** |

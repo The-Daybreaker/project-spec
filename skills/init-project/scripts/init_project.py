@@ -275,7 +275,7 @@ def main() -> int:
 
     # 4. 替换占位符
     print('[2/4] 替换占位符')
-    version = '0.0.1'
+    version = '0.0.1.patch0'
     vf = target / 'version.json'
     if vf.is_file():
         try:

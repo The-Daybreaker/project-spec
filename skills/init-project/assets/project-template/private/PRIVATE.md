@@ -11,7 +11,7 @@ GitHub** 的内容。
 - 本目录由 **private 子 git** 独立管理（`private/.git`，本地、无远端）：
   - 新增子 git：`git -C private init`（模板初始化时已创建）。
   - 查看变动：`git -C private status --short`。
-  - 提交：`git -C private add -A -- . && git -C private commit -m "docs: private vX.Y.Z - 描述"`。
+  - 提交：`git -C private add -A -- . && git -C private commit -m "docs: private vX.Y.Z.patchN - 描述"`。
 - **发布前必须同步**：任何发布动作前，先检查并提交 private 子 git 的变动
   （见根 `AGENTS.md`「发布流程」第 3 步；`scripts/pre_release_check.py` 自动执行）。
 
