@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""sync_template.py - mirror project-template/ into init-project/assets/project-template/
+"""sync_template.py - mirror project-template/ into skills/init-project/assets/project-template/
 
 Keep the two copies identical: project-template/ is the master (human-readable),
-init-project/assets/project-template/ is what the init-project skill ships.
+skills/init-project/assets/project-template/ is what the init-project skill ships.
 Also verifies init-project/SKILL.md metadata.version matches project-template/version.json
 template_version (single source of truth for the template version), and verifies the
 agent-rules skill (lite global agent rules derived from the template):
@@ -28,12 +28,12 @@ from verify_installed_copies import check_installed_copies
 
 ROOT = Path(__file__).resolve().parent.parent  # scripts/ 的上一级 = 工作区根
 SRC = ROOT / "project-template"
-DST = ROOT / "init-project" / "assets" / "project-template"
-SKILL_MD = ROOT / "init-project" / "SKILL.md"
-AGENT_RULES_DIR = ROOT / "agent-rules"
+DST = ROOT / "skills" / "init-project" / "assets" / "project-template"
+SKILL_MD = ROOT / "skills" / "init-project" / "SKILL.md"
+AGENT_RULES_DIR = ROOT / "skills" / "agent-rules"
 AGENT_RULES_SKILL_MD = AGENT_RULES_DIR / "SKILL.md"
 INHERITANCE_MAP = AGENT_RULES_DIR / "references" / "inheritance-map.md"
-INIT_STEPS = ROOT / "init-project" / "references" / "init-steps.md"
+INIT_STEPS = ROOT / "skills" / "init-project" / "references" / "init-steps.md"
 SKIP_NAMES = {".git", "__pycache__", ".DS_Store", "Thumbs.db"}
 
 # 初始化流程必须覆盖的模板关键文件：模板新增/变更这类文件后，必须同步
@@ -65,6 +65,7 @@ INIT_STEPS_COVERAGE = [
     "private/dev/adr/INDEX.md",
     "private/dev/research/INDEX.md",
     "scripts/check_dev_docs.py",
+    "private/dev/prototype/README.md",
 ]
 
 
@@ -232,7 +233,7 @@ def main() -> int:
     if not SRC.is_dir():
         print(f"[error] template source not found: {SRC}", file=sys.stderr)
         return 1
-    if not (ROOT / "init-project" / "SKILL.md").exists():
+    if not (ROOT / "skills" / "init-project" / "SKILL.md").exists():
         print(f"[error] skill folder not found under {ROOT}", file=sys.stderr)
         return 1
 

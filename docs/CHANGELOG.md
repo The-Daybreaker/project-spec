@@ -4,6 +4,23 @@
 > 记录模板自身每次发版变更，与根 `version.json` 与 git tag 对齐；项目升级时据此比对
 > （见 `project-template/docs/UPGRADE.md`）。
 
+## 未发版变更（v1.3.0 候选）
+
+- **新增红线 16「范围克制与纠错清零（按单办事、不加菜；撤菜不解释）」**：不过度
+  添加需求外内容（超出范围先询问用户）；被用户指出的多余内容直接删除，**禁止为
+  「未做之事」补写说明**（标题/提交信息/PR/注释/文档中的「已移除多余 X」「为什么
+  不需要 X」类表述），避免无用信息堆积污染上下文；确需留痕仅 CHANGELOG 一行
+  （模板 `AGENTS.md` 红线区 + `agent-rules/SKILL.md` 规范 16 + 继承矩阵指纹同步）。
+- **图可视化规范（流程图 / 架构图 / 页面原型）**：涉及界面/交互、架构/结构、
+  流程/状态改动先出图（Mermaid 或 SVG 单文件）→ 向用户展示确认后才执行；分挂各
+  阶段（流程图随 PRD/RFC、架构图随 RFC/ADR、页面原型挂设计阶段新增
+  `private/dev/prototype/` 目录，README 实体化随初始化存在）；门禁=开发工作流节点
+  + 完成检查清单/audit-checklist 双落点；16 节点数不变。
+- **skills 目录合并**：`init-project/` 与 `agent-rules/` 并入工作区 `skills/`
+  （`skills/init-project`、`skills/agent-rules`）；sync/verify 脚本路径常量、
+  install-targets.json source、工作区 AGENTS/README 引用全部更新；已安装副本内容
+  与目录名不变、无需重装。
+
 ## v1.2.2（2026-08-26）
 
 > 第七轮全面审计修复版本（patch）：P1-1 安装面机制化（安装表机器可读化 + 部署到

@@ -12,10 +12,10 @@
   「母项目」）。
 - **目录**：`README.md`（面向使用者的说明）+ `docs/`（工作区自身文档：CHANGELOG /
   WORKLOG / EXPERIENCE-TO-KB）、`scripts/sync_template.py`（同步脚本）、
-  `project-template/`（权威模板，同步到 skill 资产）、`init-project/`（skill：
-  SKILL.md / references / scripts / assets）、`agent-rules/`（skill：精简版
-  agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.2.2）+ git tag；模板自身变更历史见
+  `project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill 目录）：
+  `init-project/`（skill：SKILL.md / references / scripts / assets）、
+  `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
+- **版本**：根 `version.json`（当前 1.3.0）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
@@ -28,30 +28,31 @@
 
 1. **改模板必同步**：修改 `project-template/` 后运行
    `python scripts/sync_template.py`（同步 + 哈希校验），两份副本必须一致；
-   模板【通用】变更还需同步 `agent-rules/`（精简版全局规范正文或继承矩阵指纹复核），
-   sync 会一并校验（版本一致性 + 矩阵覆盖 + 红线正文指纹）。
+   模板【通用】变更还需同步 `skills/agent-rules/`（精简版全局规范正文或继承矩阵
+   指纹复核），sync 会一并校验（版本一致性 + 矩阵覆盖 + 红线正文指纹）。
 2. **private 骨架强制跟踪**：模板自身 `.gitignore` 忽略 `private/`，提交用
-   `git add -f project-template/private init-project/assets/project-template/private`。
+   `git add -f project-template/private skills/init-project/assets/project-template/private`。
 3. **skill 校验**：`PYTHONUTF8=1 python <skill-creator>/scripts/quick_validate.py
    init-project`（中文 Windows 默认 GBK 需 PYTHONUTF8=1）。
 4. **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
    （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
-   `SKILL.md metadata.version`、`agent-rules/SKILL.md metadata.version` 与
-   `agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧版本号**
-   （如 `1.1.2` / `1.2.0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+   `skills/init-project/SKILL.md metadata.version`、
+   `skills/agent-rules/SKILL.md metadata.version` 与
+   `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
+   版本号**（如 `1.1.2` / `1.2.0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
    `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；
    模板内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
    `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
    `agent-rules` 继承矩阵版本/覆盖/指纹与 `project-template/version.json` 的
    `template_version` 一致（改模板/发版后运行 sync 即校验）；另按**特性核对清单**
-   逐条对照模板 CHANGELOG 能力点与 `init-project/`、`agent-rules/` 摘要（自动化
-   校验不覆盖摘要级过时，需人工比对）。`sync_template.py` 还会自动校验
-   `init-project/references/init-steps.md` 对模板关键文件的覆盖
+   逐条对照模板 CHANGELOG 能力点与 `skills/init-project/`、`skills/agent-rules/`
+   摘要（自动化校验不覆盖摘要级过时，需人工比对）。`sync_template.py` 还会自动
+   校验 `skills/init-project/references/init-steps.md` 对模板关键文件的覆盖
    （`INIT_STEPS_COVERAGE`，缺失即拦截，防止「只同步资产镜像、不同步 skill 承载
    文档」）；改模板/发版后的 **skill 覆盖度复查**必须核对：①
-   `init-project/SKILL.md` 摘要、② `init-steps.md` 校验清单/落地路线图、
-   ③ `agent-rules/`（仅当模板【通用】红线/工作流原则变更）、④ 全部已安装副本
-   重装并哈希复核。
+   `skills/init-project/SKILL.md` 摘要、② `init-steps.md` 校验清单/落地路线图、
+   ③ `skills/agent-rules/`（仅当模板【通用】红线/工作流原则变更）、④ 全部已安装
+   副本重装并哈希复核。
 5. **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<YYYY-MM-DD>_<HHMM>/`
    （如 `codex_2026-08-25_2330`；不设固定 agent 列表，以执行 agent 的产品名为准），
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），
@@ -88,7 +89,7 @@
 - 经验文档放 `private/dev/`，完整条目、不预设沉淀位置。
 - 工作区不建 private 子 git（避免与模板 private 骨架混淆）。
 - 母项目不设 EXPERIENCE-TO-TEMPLATE 暂存：可复用进模板的经验直接改进
-  `project-template/` 与 `init-project/`；可进知识库的经验记于
+  `project-template/` 与 `skills/init-project/`；可进知识库的经验记于
   `docs/EXPERIENCE-TO-KB.md`，不混入模板内部。
 - 工作区根补 `.gitattributes`（LF 归一化，与模板一致；P3 #6 落地）。
 - 模板【通用】模块补「项目归档/退役」流程与 `dist/` 发布产物目录约定
@@ -112,9 +113,10 @@
 | `docs/CHANGELOG.md` | 项目专用 | 模板版本变更历史（升级比对依据） |
 | `docs/EXPERIENCE-TO-KB.md` | 项目专用 | 可沉淀进知识库的经验（完整条目） |
 | `install-targets.json` | 项目专用 | 机器可读安装表：两 skill 在各 agent 用户级 skill 目录的位置（单一事实来源） |
-| `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → init-project/assets/ + 全链校验） |
+| `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → skills/init-project/assets/ + 全链校验） |
 | `scripts/verify_installed_copies.py` | 项目专用 | 安装副本校验：读安装表 → 逐目录 × 逐 skill 全量 SHA-256 + 版本哨兵（随 sync 并入发版链） |
-| `project-template/` | 通用 | 权威模板（同步到 `init-project/assets/`） |
-| `init-project/` | 通用 | skill（SKILL.md / references / scripts / assets） |
-| `agent-rules/SKILL.md` | 项目专用 | 精简版 agent 全局行为规范（仅非项目且非纯聊天对话加载） |
-| `agent-rules/references/inheritance-map.md` | 项目专用 | 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（sync 校验依据） |
+| `project-template/` | 通用 | 权威模板（同步到 `skills/init-project/assets/`） |
+| `skills/` | 通用 | skill 目录（`init-project/`：初始化 skill；`agent-rules/`：精简版全局规范） |
+| `skills/init-project/SKILL.md` | 通用 | 初始化 skill（SKILL.md / references / scripts / assets） |
+| `skills/agent-rules/SKILL.md` | 项目专用 | 精简版 agent 全局行为规范（仅非项目且非纯聊天对话加载） |
+| `skills/agent-rules/references/inheritance-map.md` | 项目专用 | 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（sync 校验依据） |

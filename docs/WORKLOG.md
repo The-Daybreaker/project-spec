@@ -8,29 +8,33 @@
 
 ## 当前任务
 
-- 需求：第七轮全面审计修复（P1+P2+P3 全部，合并发版 v1.2.2）——①P1-1 安装面
-  漂移：`.qwenworkcn` 安装两 skill + 安装表机器可读化（install-targets.json +
-  verify_installed_copies.py）+ `.qoderworkcn` 副本更替清理（用户已确认替换方案）；
-  ②P2×4：文档↔实现对齐 / bump_version 静默漂移 / 三区表补 archive / 脚本健壮性
-  （read_text 解码 + CI 占位门禁双向断言）；③P3×7：KnowOps 泛化 / 路径判断
-  relative_to / 输入校验与安全 / 校验覆盖冗余 / 模块标注 / 细节一致性 / 版本示例。
-- 流程位置：01 需求提出 → 10 确认开工 直达（M 档修复任务，无开发前登记册）；
-  已完成：01 需求提出（审计报告交付）、10 用户确认（双产品=替换 .qwenworkcn、
-  范围=P1+P2+P3 全部）、11 实施（t2/t4/t3/t6 全部完成）、12 自动审计 + 13 验证
-  （t5 补装 + t7 发版链验证全过：sync 36 文件 0 差异 / validate×2 / py_compile×8 /
-  冒烟 / pre_release 占位拦截预期 + allow-placeholder 全绿 / 六处副本哈希复核）、
-  14 展示提交 + 15 发布（t8 提交 01435a0 + tag v1.2.2）、16 沉淀汇报（t9 收尾
-  完成）；本任务完结，待用户确认后归档。
+- 需求：模板 v1.3.0（minor，用户已确认）——①新增红线 16「范围克制与纠错清零
+  （按单办事、不加菜；撤菜不解释）」：不过度添加需求外内容、被指出后直接删除且
+  禁止为「未做之事」补写说明；②图可视化规范：涉及界面/交互、架构/结构、流程/状态
+  改动先出图（页面原型/架构图/流程图，Mermaid 或 SVG 单文件）→ 展示确认后执行，
+  分挂各阶段（流程图随 PRD/RFC、架构图随 RFC/ADR、页面原型挂设计阶段新增
+  `prototype/` 目录），门禁=流程+清单双落点，16 节点数不变；③两个 skill 合并到
+  `skills/`（init-project + agent-rules → `skills/`），脚本路径/安装表/工作区文档
+  全链更新。
+- 流程位置：01 需求提出 → 05 PRD 定稿（红线措辞、图规范的多轮方案经用户确认）→
+  09 DESIGN 吸收 → 10 确认开工（发版 v1.3.0 已确认）；当前 11 实施（t1
+  WORKLOG/CHANGELOG → t2 模板内改动 → t3 agent-rules → t4 init-project →
+  t5 skills 合并 → t6 版本递增 → t7 验证链 → t8 提交/发版/收尾）。
 - 计划步骤：
-  1. 启动前置：WORKLOG 切换（本步）+ CHANGELOG 未发版区段
-  2. 模板内改动（P2-1~P2-4 + P3 组B 组C）
-  3. 工作区文档（P3-7 版本示例）
-  4. 机制化：install-targets.json + verify_installed_copies.py（并入发版链）
-  5. ✅ P1-1 落地：装 .qwenworkcn 两 skill + 哈希复核 + 清 .qoderworkcn 副本 + 安装表更新
-  6. ✅ 版本四件套递增 1.2.1→1.2.2
-  7. ✅ 发版链验证：sync → validate×2 → py_compile×8 → 冒烟 → pre_release → grep
-  8. ✅ 提交发版：private 骨架强制跟踪 + 主仓库 commit 01435a0 + tag v1.2.2
-  9. 收尾：WORKLOG 校准 + EXP-KB 沉淀 + 索引核对 + 汇报
+  1. 启动前置：WORKLOG 切换（本步）+ CHANGELOG 未发版区段（v1.3.0 候选）
+  2. 模板内改动：红线 16 正文 + 开发工作流图规范（03/06/08/09 出图确认动作）+
+     完成清单/audit-checklist 检查项 + 文档职责表/三区表补 prototype/ +
+     新增 `private/dev/prototype/README.md` 实体目录 + project-template/README 结构树
+  3. agent-rules：SKILL 规范 16 + 继承矩阵（版本表 1.3.0 + 红线 16 行指纹）+
+     audit-checklist-lite 检查项
+  4. init-project：SKILL 摘要能力点 + init-steps 校验清单（prototype/ + 红线 16）+
+     INIT_STEPS_COVERAGE 补 prototype/README.md
+  5. skills 合并：移动 init-project/agent-rules → skills/ + sync/verify 脚本路径常量
+     + install-targets.json source + 工作区 AGENTS/README 引用
+  6. 版本递增 1.2.2 → 1.3.0（根/project-template version.json、SKILL metadata ×2、
+     继承矩阵版本对照、AGENTS/README 当前版本字样；全局 grep 无残留）
+  7. 验证链：sync / quick_validate×2 / py_compile / 冒烟（含 prototype 目录生成）
+  8. 六处副本重装 + 全量哈希 + 提交 + tag v1.3.0 + 收尾（EXP-KB 双置顶 / WORKLOG 校准）
 
 ## 阶段记录
 

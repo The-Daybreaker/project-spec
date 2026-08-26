@@ -18,7 +18,7 @@
 │   ├── WORKLOG.md            # 工作区阶段落盘日志
 │   └── EXPERIENCE-TO-KB.md   # 可沉淀进知识库的经验（不混入模板内部）
 ├── scripts/
-│   └── sync_template.py      # 同步脚本：project-template/ → init-project/assets/
+│   └── sync_template.py      # 同步脚本：project-template/ → skills/init-project/assets/
 ├── project-template/         # 通用项目模板（权威副本，人类可读）
 │   ├── AGENTS.md             #   Agent 接手入口（公开版，随仓库发布）
 │   ├── README.md / LICENSE / version.json / .gitignore / .gitattributes / .editorconfig
@@ -30,24 +30,19 @@
 │   └── private/              #   私有区（不进 GitHub，内部子 git 管理）
 │       ├── PRIVATE.md        #     私有区说明与子 git 管理
 │       ├── AGENTS.md         #     开发指引（唯一常青开发记忆）
-│       └── dev/              #     PRD/RFC/ADR/RESEARCH 登记册 + DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
-└── init-project/             # skill：根据模板初始化指定项目文件夹
-    ├── SKILL.md
-    ├── references/init-steps.md     # 初始化执行细节
-    ├── scripts/init_project.py      # 复制 + 占位符替换 + git 初始化
-    └── assets/project-template/     # 模板副本（skill 分发用，与 project-template/ 同步）
-```
-
-另含 `agent-rules/`（见「使用方法 3」）：
-
-```text
-agent-rules/                     # skill：Agent 通用行为规范（精简版，全局基线）
-├── SKILL.md                     # 规范正文（自包含）+ 触发规则（仅非项目且非纯聊天加载）
-├── references/
-│   ├── inheritance-map.md       # 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（防漂移）
-│   └── audit-checklist-lite.md  # 精简审计清单（自审/独立审计共用）
-└── agents/openai.yaml           # agent 平台接口描述
-```
+│       └── dev/              #     PRD/RFC/ADR/RESEARCH 登记册 + prototype/ + DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
+└── skills/                   # skill 目录
+    ├── init-project/         # skill：根据模板初始化指定项目文件夹
+    │   ├── SKILL.md
+    │   ├── references/init-steps.md     # 初始化执行细节
+    │   ├── scripts/init_project.py      # 复制 + 占位符替换 + git 初始化
+    │   └── assets/project-template/     # 模板副本（skill 分发用，与 project-template/ 同步）
+    └── agent-rules/          # skill：Agent 通用行为规范（精简版，全局基线）
+        ├── SKILL.md                     # 规范正文（自包含）+ 触发规则（仅非项目且非纯聊天加载）
+        ├── references/
+        │   ├── inheritance-map.md       # 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（防漂移）
+        │   └── audit-checklist-lite.md  # 精简审计清单（自审/独立审计共用）
+        └── agents/openai.yaml           # agent 平台接口描述
 
 ## 模板设计要点
 
@@ -64,8 +59,9 @@ agent-rules/                     # skill：Agent 通用行为规范（精简版�
    - 实施之前必须对齐需求和计划，**得到确认之后再实施**；
    - 实施之后**自动审计**，推荐委托独立子 agent（只看 diff + 审计清单）复审；
    - 变更分级、删除纪律、回读校验、相似检查、密钥安全、文档同步、**阶段落盘**、
-     **上下文恢复重读**等 15 条（含**立项调研先行**：讨论项目思路/需求/架构/
-     功能/产品时优先在 GitHub 调研现成参考，并提醒用户「先调研再立项」）。
+     **上下文恢复重读**等 16 条（含**立项调研先行**：讨论项目思路/需求/架构/
+     功能/产品时优先在 GitHub 调研现成参考，并提醒用户「先调研再立项」；
+     红线 16 范围克制与纠错清零：不做需求外添加、不为未做之事补写说明）。
 5. **开发工作流**：需求提出 → 讨论对齐（复述需求；**立项类话题先 GitHub 调研并
    提醒「先调研再立项」**）→ 确认开工 → 实施（改动完成即文档就绪；**每完成一小
    阶段先落盘更新 WORKLOG，红线 14**）→ 自动审计 → 验证（ci_check + TEST-REPORT）
@@ -104,13 +100,17 @@ agent-rules/                     # skill：Agent 通用行为规范（精简版�
     S 档可跳过）；`scripts/check_dev_docs.py` 自动校验登记册一致性（并入
     ci_check 与发布前检查）；每次对话展示流程位置（当前节点/已完成/下一步，
     以 `private/dev/WORKLOG.md`「流程位置」为单一真相）。
+14. **图可视化确认（先出图再确认）**：涉及界面/交互、架构/结构、流程/状态的改动
+    先出图——流程图随 PRD/RFC、架构图随 RFC/ADR（Mermaid/SVG 单文件同目录）、
+    页面原型/设计稿落 `private/dev/prototype/`（轻量目录，随初始化存在）——向
+    用户展示获确认后才实施。
 
 ## 使用方法
 
 ### 1. 安装 skill（把 init-project 放入 agent 的 skill 目录）
 
-将 `init-project/` 整个目录复制到 agent 的用户级 skill 目录（如 DeepSeek Harness：
-`$DSH_HOME/skills` 或 `C:\Users\<你>\.dsh\skills\`；其他 agent 见其文档），
+将 `skills/init-project/` 整个目录复制到 agent 的用户级 skill 目录（如 DeepSeek
+Harness：`$DSH_HOME/skills` 或 `C:\Users\<你>\.dsh\skills\`；其他 agent 见其文档），
 重启/刷新后即可用：
 
 > 「用 init-project skill 把 <目标目录> 初始化为一个新项目」
@@ -125,7 +125,7 @@ private 子 git 并完成首次提交 → 按清单回读校验。初始化是�
 # 复制模板并替换占位符（{{PROJECT_NAME}} {{PROJECT_DESCRIPTION}} {{DEFAULT_BRANCH}}
 # {{AUTHOR}} {{YEAR}} {{DATE}} {{VERSION}} {{LICENSE_NOTICE}}）
 # 推荐：用 init_project.py 只复制+替换、不建 git
-python init-project/scripts/init_project.py <目标目录> --name my-app --desc "..." --no-git
+python skills/init-project/scripts/init_project.py <目标目录> --name my-app --desc "..." --no-git
 # 初始化两个 git 仓库
 git -C <目标目录> init -b main
 git -C <目标目录> add -A -- . && git -C <目标目录> commit -m "chore: init"
@@ -141,18 +141,19 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 
 ### 4. 安装 agent-rules 与 init-project 到各 agent
 
-`agent-rules/` 是从通用模板【通用】部分派生的**精简版 agent 全局行为规范**：
+`skills/agent-rules/` 是从通用模板【通用】部分派生的**精简版 agent 全局行为规范**：
 **仅当对话不在任何项目/工作区内**（无项目 `AGENTS.md`、不属于已打开的工作区）
 **且非纯聊天**（编码、文档、分析、调研、规划、文件操作、事实性问答等）时加载；
 **项目内对话以项目自身 `AGENTS.md` 为准，不加载本 skill**。除项目专属的需求/规定
 外，模板要求一律继承（继承矩阵 + sync 自动化校验保证随模板版本同步，不漂移）。
-`init-project/` 是**项目初始化 skill**（用模板初始化新项目文件夹），同样建议装到
-每个 agent。
+`skills/init-project/` 是**项目初始化 skill**（用模板初始化新项目文件夹），同样
+建议装到每个 agent。
 
-安装：把 `agent-rules/` 整个目录复制到各 agent 的用户级 skill 目录（重启/刷新后
-生效）。本机已安装位置以根目录 `install-targets.json`（**机器可读安装表，单一事实
-来源**）为准，下表为概览（两个 skill 都装在下列目录下；增删 agent 需同步更新安装表，
-并可用 `python scripts/verify_installed_copies.py` 全量哈希 + 版本哨兵复验）：
+安装：把 `skills/agent-rules/` 与 `skills/init-project/` 整个目录复制到各 agent
+的用户级 skill 目录（重启/刷新后生效）。本机已安装位置以根目录 `install-targets.json`
+（**机器可读安装表，单一事实来源**）为准，下表为概览（两个 skill 都装在下列目录下；
+增删 agent 需同步更新安装表，并可用 `python scripts/verify_installed_copies.py`
+全量哈希 + 版本哨兵复验）：
 
 | Agent | skill 目录 |
 |---|---|
@@ -165,27 +166,29 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 
 其他机器/agent：找到对应用户级 skill 目录（如 `~/.codex/skills`、`~/.dsh/skills`、
 `~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qwenworkcn/skills`、
-`~/.qoder-cn/skills`），把 `agent-rules/` 与 `init-project/` 复制进去即可。
+`~/.qoder-cn/skills`），把 `skills/agent-rules/` 与 `skills/init-project/` 复制进去
+即可。
 
 ## 维护约定
 
 - **改模板必同步**：修改 `project-template/` 后运行
   `python scripts/sync_template.py`，把改动镜像到
-  `init-project/assets/project-template/`（skill 分发的是副本，两份必须一致）；
-  模板【通用】变更还需同步 `agent-rules/`（精简版全局规范正文或继承矩阵指纹复核），
-  sync 会一并校验（版本一致性 + 矩阵覆盖 + 红线正文指纹）。
+  `skills/init-project/assets/project-template/`（skill 分发的是副本，两份必须一致）；
+  模板【通用】变更还需同步 `skills/agent-rules/`（精简版全局规范正文或继承矩阵
+  指纹复核），sync 会一并校验（版本一致性 + 矩阵覆盖 + 红线正文指纹）。
 - **private/ 骨架的跟踪**：模板自身的 `.gitignore` 会忽略 `private/`（这正是设计
   目标——目标项目中的 private/ 永不进主仓库），因此本工作区仓库需要用
-  `git add -f project-template/private init-project/assets/project-template/private`
+  `git add -f project-template/private skills/init-project/assets/project-template/private`
   强制跟踪这些骨架文件；改动它们后提交时同样用 `-f`。
 - **skill 校验**：改完 skill 用 skill-creator 的 quick_validate 校验：
   `python <skill-creator>/scripts/quick_validate.py init-project`
   （中文 Windows 默认 GBK 编码下若报 UnicodeDecodeError，先设置 `PYTHONUTF8=1`）。
 - **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
   （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
-  `SKILL.md metadata.version`、`agent-rules/SKILL.md metadata.version` 与
-  `agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧版本号**
-  （如 `1.1.2` / `1.2.0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+  `skills/init-project/SKILL.md metadata.version`、
+  `skills/agent-rules/SKILL.md metadata.version` 与
+  `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
+  版本号**（如 `1.1.2` / `1.2.0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
   `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；模板
   内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
   `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
@@ -194,7 +197,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （`INIT_STEPS_COVERAGE`，缺失即拦截）；改模板/发版后按「skill 覆盖度复查」核对
   SKILL 摘要 / init-steps 校验清单与路线图 / agent-rules（如涉红线）/
   全部已安装副本重装并哈希复核。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.2.2；
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.3.0；
   版本号见 `version.json`）。
 - **流程提示**：工作区汇报/阶段落盘/收尾展示流程位置（以 docs/WORKLOG.md
   「流程位置」为准；展示时缩写附中文翻译）。

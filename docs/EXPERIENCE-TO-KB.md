@@ -6,7 +6,7 @@
 > 写入本文件；沉淀时以本文件为唯一依据，不需要重读整个项目。入库时由知识库流程
 > 决定归属（本文件不预设位置）。
 > 注意：本工作区即模板开发项目——可复用进模板的经验**直接改进**
-> `project-template/` 与 `init-project/`，不设 EXPERIENCE-TO-TEMPLATE 暂存；
+> `project-template/` 与 `skills/init-project/`，不设 EXPERIENCE-TO-TEMPLATE 暂存；
 > 本文件只记录可进知识库的经验，**不混入模板内部**（模板内部另有给目标项目用的
 > 同名骨架文件，见 `project-template/private/dev/EXPERIENCE-TO-KB.md`）。
 - 最后更新：2026-08-26
