@@ -16,8 +16,8 @@
 | 需要全量加载规则 | 按需读 | `docs/LOADING.md`（本文件） |
 | 需求 / 方案 / 调研任务 | 按需读 | `private/dev/{prd,rfc,adr,research}/INDEX.md` → 目标文档 |
 | 实施任务 | 必读 | `private/dev/DESIGN.md`、对应 PRD |
-| 审计任务 | 必读 | `docs/audit-checklist.md` |
-| 验证任务 | 必读 | `scripts/ci_check.py` 说明、`docs/TESTING.md` |
+| 审计任务 | 必读 | `project-template/docs/audit-checklist.md` |
+| 验证任务 | 必读 | `scripts/ci_check.py` 说明、`project-template/docs/TESTING.md` |
 | 发布任务 | 必读 | 发布流程（`private/AGENTS.md`）→ `private/dev/CHANGELOG.md` → `pre_release_check.py` |
 | 母项目改模板 / 同步 | 必读 | 根 `AGENTS.md` 维护约定 → `scripts/sync_template.py` |
 | **历史决策 / 追溯** | **默认不读，按需** | `CHANGELOG` / `ADR`（用户明确要求或确需追溯时） |
@@ -43,6 +43,6 @@
 3. 读 `private/dev/STATUS.md` 快照——由「📇 阶段卡 → 当前阶段/正在完成的任务」判断进度；
 4. 按快照「任务影响清单 → 要读文档清单」逐份读；
 5. 阶段卡缺失/空白时：`git log` 查本文件最近提交推断，仍不确定则**询问用户**；
-6. 展示流程位置（📍 阶段卡）后继续。
+6. 展示阶段卡（📍 模块·子阶段 + 生命周期合规清单）后继续。
 
 > 渐进式披露在恢复场景不失效：恢复只读「必读 + 要读清单」，历史依旧默认不读。

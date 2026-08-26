@@ -250,6 +250,16 @@ def main() -> int:
                 rel = p.relative_to(DST)
                 if not (SRC / rel).exists():
                     p.unlink()
+            # 清理删除后残留的空目录（保持镜像结构一致）
+            for d in sorted(
+                (p for p in DST.rglob("*") if p.is_dir()),
+                key=lambda p: len(p.parts),
+                reverse=True,
+            ):
+                try:
+                    d.rmdir()
+                except OSError:
+                    pass  # 非空目录跳过
             for p in _collect(SRC):
                 rel = p.relative_to(SRC)
                 dst_p = DST / rel

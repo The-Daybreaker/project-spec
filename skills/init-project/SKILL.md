@@ -121,7 +121,7 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
    向用户汇报：初始化位置、两个 git 仓库、下一步建议（填写 README 与
    `private/AGENTS.md` 的「本机环境」「用户决策」；首个 M/L 需求走开发前门禁
    ——需求/方案/决策/调研落 `private/dev/{prd,rfc,adr,research}/`；每次对话
-   展示流程位置；配置远端后推送）。
+   展示阶段卡（以 `private/dev/STATUS.md`「📇 阶段卡」为准）；配置远端后推送）。
 
 ## 执行红线
 

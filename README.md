@@ -15,7 +15,10 @@
 ├── .gitattributes            # 工作区行尾归一化（LF，与模板一致）
 ├── docs/                     # 工作区自身文档
 │   ├── CHANGELOG.md          # 模板版本变更历史（升级比对依据）
-│   ├── WORKLOG.md            # 工作区阶段落盘日志
+│   ├── STATUS.md             # 当前状态快照（阶段卡 + 生命周期合规清单，历史由 git 承担）
+│   ├── FLOW.md               # 流程与状态机总图（mermaid）
+│   ├── USER-GUIDE.md         # 面向人的阶段流程简明指南
+│   ├── LOADING.md            # 加载规则表（渐进式披露协议）
 │   └── EXPERIENCE-TO-KB.md   # 可沉淀进知识库的经验（不混入模板内部）
 ├── scripts/
 │   └── sync_template.py      # 同步脚本：project-template/ → skills/init-project/assets/
@@ -30,7 +33,7 @@
 │   └── private/              #   私有区（不进 GitHub，内部子 git 管理）
 │       ├── PRIVATE.md        #     私有区说明与子 git 管理
 │       ├── AGENTS.md         #     开发指引（唯一常青开发记忆）
-│       └── dev/              #     PRD/RFC/ADR/RESEARCH 登记册 + prototype/ + DESIGN / CHANGELOG / TEST-REPORT / WORKLOG / 经验文档
+│       └── dev/              #     PHASES（阶段定义）/ STATUS（状态快照）/ DESIGN / CHANGELOG / TEST-REPORT / 登记册 / 经验文档
 └── skills/                   # skill 目录
     ├── init-project/         # skill：根据模板初始化指定项目文件夹
     │   ├── SKILL.md
@@ -62,9 +65,10 @@
      **上下文恢复重读**等 16 条（含**立项调研先行**：讨论项目思路/需求/架构/
      功能/产品时优先在 GitHub 调研现成参考，并提醒用户「先调研再立项」；
      红线 16 范围克制与纠错清零：不做需求外添加、不为未做之事补写说明）。
-5. **开发工作流**：需求提出 → 讨论对齐（复述需求；**立项类话题先 GitHub 调研并
-   提醒「先调研再立项」**）→ 确认开工 → 实施（改动完成即文档就绪；**每完成一小
-   阶段先落盘更新 WORKLOG，红线 14**）→ 自动审计 → 验证（ci_check + TEST-REPORT）
+5. **开发工作流（阶段体系）**：P1 需求 → P2 方案 → P3 开发 → P4 审计验证 → P5 交付
+   发布，五模块串行（每次专注一个，严禁跨阶段；权威定义 `private/dev/PHASES.md`）；
+   每阶段/子阶段完成**落盘 STATUS 快照 + 展示阶段卡（含生命周期合规清单）+ git 提交**
+   （红线 14）→ 自动审计（推荐独立子 agent）→ 验证（ci_check + TEST-REPORT）
    → 展示与提交（先 private 子 git）→ 发布（版本递增 + tag + Release）→
    **经验沉淀**（每轮对话后把完整候选经验写入 EXPERIENCE-TO-TEMPLATE /
    EXPERIENCE-TO-KB，并提醒用户真正沉淀）→ 汇报（附完成检查清单）。
@@ -94,12 +98,13 @@
 12. **发布产物与归档**：构建/打包产物统一输出 `dist/`（C 区、不进 git、Release
     自动 attach）；项目停止主动开发时有「项目归档/退役」流程（最终发布 + README
     归档标记 + 产物归档 + 经验沉淀，agent 不擅自删除）。
-13. **开发前规范与流程提示**：M/L 需求先走开发前门禁——需求（PRD）/方案（RFC）/
+13. **开发前规范与阶段卡**：M/L 需求先走开发前门禁——需求（PRD）/方案（RFC）/
     调研（RESEARCH）/架构决策（ADR）四登记册
     （`private/dev/{prd,rfc,adr,research}/`，各含 INDEX.md 状态机/编号/模板骨架，
-    S 档可跳过）；`scripts/check_dev_docs.py` 自动校验登记册一致性（并入
-    ci_check 与发布前检查）；每次对话展示流程位置（当前节点/已完成/下一步，
-    以 `private/dev/WORKLOG.md`「流程位置」为单一真相）。
+    S 档可跳过）；`scripts/check_dev_docs.py` 自动校验登记册一致性 + STATUS 快照
+    （并入 ci_check 与发布前检查）；每次对话展示**阶段卡**（模块·子阶段/正在完成/
+    已完成/下一步/状态 + 生命周期合规清单，以 `private/dev/STATUS.md`「📇 阶段卡」
+    为单一真相；缩写附中文翻译）。
 14. **图可视化确认（先出图再确认）**：涉及界面/交互、架构/结构、流程/状态的改动
     先出图——流程图随 PRD/RFC、架构图随 RFC/ADR（Mermaid/SVG 单文件同目录）、
     页面原型/设计稿落 `private/dev/prototype/`（轻量目录，随初始化存在）——向
@@ -199,8 +204,9 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   全部已安装副本重装并哈希复核。
 - **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.3.2；
   版本号见 `version.json`）。
-- **流程提示**：工作区汇报/阶段落盘/收尾展示流程位置（以 docs/WORKLOG.md
-  「流程位置」为准；展示时缩写附中文翻译）。
+- **阶段卡展示（dogfood）**：工作区汇报/阶段落盘/收尾展示阶段卡（模块·子阶段/
+  正在完成/已完成/下一步/状态 + 生命周期合规清单，以 docs/STATUS.md「📇 阶段卡」
+  为准；展示时缩写附中文翻译）。
 - **索引/未发版区段纪律**：「新条目在前」的文档（EXP-KB 索引与正文、CHANGELOG
   未发版区段）新增条目须**正文与索引同时置顶**；收尾核对索引顺序、日期、未发版
   条目与 `git log` 一致。
