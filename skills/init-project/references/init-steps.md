@@ -90,7 +90,8 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - [ ] 占位符无残留（`git grep -n -E '\{\{[A-Z_]+\}\}'` 为空；GitHub Actions 的
       `${{ }}` 表达式除外）
 - [ ] `private/dev/CHANGELOG.md` 顶部与 `private/dev/TEST-REPORT.md` 日期已由脚本
-      自动填写为初始化当天（`{{DATE}}` 占位被替换）
+      自动填写为初始化当天（`{{DATE}}` / `{{DATETIME}}` 占位被替换；DATETIME
+      精确到分钟，写入 STATUS / TEST-REPORT / 经验文档的时间标签）
 - [ ] 主仓库 `git status` 干净；`git -C private status` 干净
 - [ ] `git check-ignore private/` 命中（`.gitignore` 生效）
 - [ ] `archive/ARCHIVE.md` 已生成（A 区归档区说明；未归档时保持默认内容）

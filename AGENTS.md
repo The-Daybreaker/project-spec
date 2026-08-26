@@ -55,7 +55,8 @@
 2. **private 骨架强制跟踪**：模板自身 `.gitignore` 忽略 `private/`，提交用
    `git add -f project-template/private skills/init-project/assets/project-template/private`。
 3. **skill 校验**：`PYTHONUTF8=1 python <skill-creator>/scripts/quick_validate.py
-   init-project`（中文 Windows 默认 GBK 需 PYTHONUTF8=1）。
+   skills/init-project`（以及 `skills/agent-rules`；脚本参数为 skill 目录路径，
+   不是 skill 名；中文 Windows 默认 GBK 需 PYTHONUTF8=1）。
 4. **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
    （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
    `skills/init-project/SKILL.md metadata.version`、

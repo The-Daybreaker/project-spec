@@ -4,6 +4,34 @@
 > 记录模板自身每次发版变更，与根 `version.json`、git tag 对齐；项目升级时据此比对
 > （见 `project-template/docs/UPGRADE.md`）。
 
+## 未发版变更（v1.4.0 之后）
+
+> 以下为 v1.4.0 发布后、尚未发版的累积变更；发版时并入对应版本条目。条目以
+> `git log v1.4.0..HEAD` 记录为准，不固定提交号。
+
+- **全面审计修复（第一轮，v1.4.0 发布后）**：
+  - check_dev_docs 支持 PRD/RFC「已废弃（由 XX-XXXX 取代）」复合状态 + 读取容错；
+  - init_project.py 中文目录名回退 + `{{DATETIME}}` 占位符（时间标签精确到分钟）；
+  - 模板骨架 STATUS/EXP/TEST-REPORT 时间标签 `{{DATE}}` → `{{DATETIME}}`；模板
+    STATUS 移除冗余「流程位置」小节；
+  - 工作区文档路径实例化、AGENTS 加载表补实施/审计/发布场景、`.gitignore` 补
+    `.workbuddy/`；六处副本重装。
+- **全面审计修复（第二轮，本次）**：
+  - 文档可执行性（P1）：`AGENTS.md` / `README.md` 的 quick_validate 校验命令改为
+    完整目录路径（`skills/init-project` / `skills/agent-rules`），修复「照文档执行
+    必失败」缺陷；
+  - 状态文档收口（P2）：`docs/STATUS.md` 硬事实校准（最后更新/阶段卡与仓库实际
+    一致）；`docs/CHANGELOG.md` 新增本「未发版变更」区段（与 `git log` 逐条对应）；
+    `docs/EXPERIENCE-TO-KB.md` 最后更新时间戳校准 + 本轮审计经验置顶；
+  - 细节修复（P3）：`README.md` 目录结构树补 `install-targets.json` 与
+    `scripts/verify_installed_copies.py`；`init-steps.md` 校验清单补 `{{DATETIME}}`
+    占位符说明；`skills/init-project/agents/openai.yaml` 行尾归一为 LF（与
+    `.gitattributes` 一致）；v1.3.2「sync/verify 公共函数不抽取」权衡注记更新；
+  - 删除纪律（P2）：清理 `_trash/` 遗留 3 轮 trae 临时删除区（整体进回收站，
+    可恢复）；
+  - 六处安装副本重装 + 全链验证绿（sync / verify / check_dev_docs /
+    quick_validate×2 / py_compile / 冒烟）。
+
 ## v1.4.0（2026-08-26）
 
 > 整体架构重构（模块化改造）试点：需求清单 v1 七条（阶段模块化/可观察性/渐进式披露/
@@ -72,8 +100,10 @@
   文件名不再乱码导致校验误判。
 - **trash.py 支持 `--` 分隔符**：`-` 开头路径不再被当作选项丢弃。
 - **pre_release CHANGELOG 读取走 `_read_text`**：编码异常兜底与其余读取点统一。
-- **sync/verify 公共函数不抽取**（设计权衡记录）：维持单文件可分发特性、避免跨
-  脚本 import 耦合，重复的 `_sha256` / `_collect` 等保留各自内联。
+- **sync/verify 公共函数不抽取**（设计权衡记录）：`_sha256` / `_collect` 等重复
+  函数保留各自内联（不抽取公共模块，维持单文件可分发）；同步校验通过
+  `sync_template.py` 调用 `verify_installed_copies.check_installed_copies` 并入
+  发版链（两脚本均属母项目、不分发目标项目，跨脚本调用可接受）。
 
 ## v1.3.1（2026-08-26）
 

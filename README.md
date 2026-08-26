@@ -13,6 +13,7 @@
 ├── version.json              # 版本（version）与模板版本（template_version）单一事实来源
 ├── .gitignore                # 工作区忽略规则
 ├── .gitattributes            # 工作区行尾归一化（LF，与模板一致）
+├── install-targets.json      # 机器可读安装表（两 skill × 六处 agent 目录，单一事实来源）
 ├── docs/                     # 工作区自身文档
 │   ├── CHANGELOG.md          # 模板版本变更历史（升级比对依据）
 │   ├── STATUS.md             # 当前状态快照（阶段卡 + 生命周期合规清单，历史由 git 承担）
@@ -21,7 +22,8 @@
 │   ├── LOADING.md            # 加载规则表（渐进式披露协议）
 │   └── EXPERIENCE-TO-KB.md   # 可沉淀进知识库的经验（不混入模板内部）
 ├── scripts/
-│   └── sync_template.py      # 同步脚本：project-template/ → skills/init-project/assets/
+│   ├── sync_template.py      # 同步脚本：project-template/ → skills/init-project/assets/
+│   └── verify_installed_copies.py  # 安装副本全量哈希 + 版本哨兵校验
 ├── project-template/         # 通用项目模板（权威副本，人类可读）
 │   ├── AGENTS.md             #   Agent 接手入口（公开版，随仓库发布）
 │   ├── README.md / LICENSE / version.json / .gitignore / .gitattributes / .editorconfig
@@ -185,8 +187,10 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   目标——目标项目中的 private/ 永不进主仓库），因此本工作区仓库需要用
   `git add -f project-template/private skills/init-project/assets/project-template/private`
   强制跟踪这些骨架文件；改动它们后提交时同样用 `-f`。
-- **skill 校验**：改完 skill 用 skill-creator 的 quick_validate 校验：
-  `python <skill-creator>/scripts/quick_validate.py init-project`
+- **skill 校验**：改完 skill 用 skill-creator 的 quick_validate 校验（参数为
+  skill 目录路径，不是 skill 名）：
+  `python <skill-creator>/scripts/quick_validate.py skills/init-project`
+  `python <skill-creator>/scripts/quick_validate.py skills/agent-rules`
   （中文 Windows 默认 GBK 编码下若报 UnicodeDecodeError，先设置 `PYTHONUTF8=1`）。
 - **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
   （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
