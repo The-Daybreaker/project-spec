@@ -35,6 +35,8 @@
      继承矩阵版本对照、AGENTS/README 当前版本字样；全局 grep 无残留）
   7. 验证链：sync / quick_validate×2 / py_compile / 冒烟（含 prototype 目录生成）
   8. 六处副本重装 + 全量哈希 + 提交 + tag v1.3.0 + 收尾（EXP-KB 双置顶 / WORKLOG 校准）
+- 状态：✅ 本任务完结（发布提交 0613dda + 收尾 9c1a663 + tag v1.3.0），待用户
+  确认后归档。
 
 ## 阶段记录
 
@@ -365,6 +367,29 @@
   落盘核对 / 沙箱边界实测 + 放行协作）双置顶、索引核对（CHANGELOG 无未发版
   残留、EXP-KB 索引与正文一致、工作树干净） | docs/CHANGELOG.md docs/WORKLOG.md
   docs/EXPERIENCE-TO-KB.md | git log/tag/status + 回读核对 | 汇报 |
+| 53 模板 v1.3.0·实施+发版 | ✅ | ① 红线 16「范围克制与纠错清零（按单办事、
+  不加菜；撤菜不解释）」落模板根/私有 AGENTS + DESIGN 规范 17 + audit-checklist
+  合规项 + agent-rules 规范 16 + 继承矩阵行（指纹 1a89754aa5ba，按 sync 规范化
+  逻辑从文件实算）+ 精简审计清单项；② 图可视化规范「先出图再确认」：流程+清单
+  双落点（私有 AGENTS 工作流 3.「可视化确认」+ 完成清单/audit-checklist 检查项）、
+  三类图分挂各阶段（流程图随 prd/rfc、架构图随 rfc/adr、页面原型落
+  prototype/）、`private/dev/prototype/README.md` 实体化 + INIT_STEPS_COVERAGE/
+  init-steps 校验清单/路线图/速查表 + UPGRADE v1.3.0 迁移要点、根 AGENTS/私有
+  AGENTS 文档职责表、DOCS 地图、template README 结构树 + 工作区 README 设计要点
+  13/14；③ skills 合并：init-project/agent-rules → `skills/`（sync/verify 路径
+  常量 + install-targets source + 工作区 AGENTS/README 全链），六处副本重装
+  （init-project 41 文件、agent-rules 4 文件）哈希一致；④ 版本递增
+  1.2.2→1.3.0（version.json ×2、SKILL metadata ×2、继承矩阵版本表、AGENTS/README
+  当前版本，grep 无残留，资产镜像经 sync）；⑤ 验证链全过：sync 37 文件 0 差异
+  （含六处副本校验）、quick_validate ×2 valid、py_compile 8 OK、冒烟
+  （smoke_v130：37 文件/13 替换/prototype README 生成/template_version=1.3.0/
+  占位符 0/check_dev_docs 0/ci_check pass/pre_release 占位拦截+放行全绿）；
+  ⑥ 发布提交 0613dda（62 files）+ 收尾 9c1a663 + 附注 tag v1.3.0 指向 0613dda；
+  冒烟产物/__pycache__ 已清理 | 多文件（模板 AGENTS×2、DESIGN、audit-checklist、
+  DOCS、UPGRADE、README、prototype/README 新建、skills/×2、sync_template.py、
+  install-targets.json、AGENTS.md、README.md、docs/CHANGELOG.md、docs/WORKLOG.md、
+  version.json ×2）+ 六处 agent 目录 | sync / quick_validate / py_compile / 冒烟 /
+  副本哈希 全过 | 收尾汇报 |
 
 ## 待办/遗留
 
@@ -401,6 +426,8 @@
       一致（收尾提交 b1607fc）
 - [x] 本任务（第七轮全面审计修复 v1.2.2）完结：提交 01435a0 + 附注 tag v1.2.2；
       六处副本 v1.2.2 哈希复核一致
+- [x] 本任务（模板 v1.3.0：红线 16 + 图可视化规范 + skills 目录合并）完结：发布
+      提交 0613dda + 收尾 9c1a663 + 附注 tag v1.3.0；六处副本 v1.3.0 哈希复核一致
 
 ## 历史记录
 
