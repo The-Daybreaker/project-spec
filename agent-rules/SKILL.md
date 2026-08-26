@@ -1,7 +1,7 @@
 ---
 name: agent-rules
 metadata:
-  version: 1.2.1
+  version: 1.2.2
 description: >-
   Agent 通用行为规范（精简版，源自通用项目模板）。触发规则：仅当对话**不在任何
   项目/工作区内**（无项目 AGENTS.md、不属于已打开的工作区）且**不是纯聊天/寒暄**

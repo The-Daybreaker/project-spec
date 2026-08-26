@@ -132,7 +132,8 @@ B 区；C 区内容两者都不得出现。
 
 1. **版本递增**：默认只升最后一位；运行 `scripts/bump_version.py`（按
    `scripts/version-sync.json` 同步 `version.json` 与 `package.json` / `Cargo.toml` /
-   `pyproject.toml` 等），并更新 `dev/CHANGELOG.md` 顶部条目。
+   `pyproject.toml` 等），随后 agent 手工更新 `dev/CHANGELOG.md` 顶部条目（脚本只
+   校验同步目标、不写 CHANGELOG，防止覆盖人工编辑的发布说明）。
 2. **检查受影响文档**（改动完成即文档就绪）：CHANGELOG / DESIGN / TEST-REPORT /
    WORKLOG / README / 根 AGENTS.md / 本文件 / 用户可见文档。
 3. **提交 private 子 git（发布前必做）**：检查 `git -C private status --short`；
@@ -246,7 +247,7 @@ B 区；C 区内容两者都不得出现。
 ## 【项目专用】本机环境
 
 （按实际填写：工作区路径、工具链路径与版本、网络/镜像、沙箱限制、已知坑。
-示例见 KnowOps 项目的做法——机器专属信息只写在这里，不写进公开文档。）
+示例见知识库/文档协作项目（如适用）的做法——机器专属信息只写在这里，不写进公开文档。）
 
 - 工作区：<填写>
 - 工具链：<填写>

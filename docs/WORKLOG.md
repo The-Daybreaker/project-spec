@@ -8,19 +8,29 @@
 
 ## 当前任务
 
-- 需求：第六轮全面审计（子代理通道阻塞，按用户指示由主 Agent 亲自执行）——
-  复核 v1.2.1 发版后全流程缺口/清晰度/硬事实一致性。
-- 流程位置：14/16 · 展示与提交（S 档：01 需求提出 → 10 确认开工 直达）；
-  已完成：01-13（子代理通道阻塞改自审 → 自动化验证全绿 → 发现并修复 agent-rules
-  六副本漂移 → 文档生命周期核对）；下一步：16 沉淀汇报（15 发版 v1.2.1 已完成）。
+- 需求：第七轮全面审计修复（P1+P2+P3 全部，合并发版 v1.2.2）——①P1-1 安装面
+  漂移：`.qwenworkcn` 安装两 skill + 安装表机器可读化（install-targets.json +
+  verify_installed_copies.py）+ `.qoderworkcn` 副本更替清理（用户已确认替换方案）；
+  ②P2×4：文档↔实现对齐 / bump_version 静默漂移 / 三区表补 archive / 脚本健壮性
+  （read_text 解码 + CI 占位门禁双向断言）；③P3×7：KnowOps 泛化 / 路径判断
+  relative_to / 输入校验与安全 / 校验覆盖冗余 / 模块标注 / 细节一致性 / 版本示例。
+- 流程位置：01 需求提出 → 10 确认开工 直达（M 档修复任务，无开发前登记册）；
+  已完成：01 需求提出（审计报告交付）、10 用户确认（双产品=替换 .qwenworkcn、
+  范围=P1+P2+P3 全部）、11 实施（t2 模板内改动 / t4 机制化 / t3 工作区文档 /
+  t6 版本递增全部完成）、13 验证（t5 补装 + t7 发版链验证全过：sync 36 文件
+  0 差异 / validate×2 / py_compile×8 / 冒烟 / pre_release 占位拦截预期 +
+  allow-placeholder 全绿 / 六处副本哈希复核）；下一步：14 展示提交 + 15 发布
+  （t8 提交发版：private 骨架强制跟踪 + 主仓库 commit + tag v1.2.2）。
 - 计划步骤：
-  1. 终止阻塞的子代理（✅：interrupt ×3）
-  2. 自动化验证：sync / quick_validate×2 / py_compile / 冒烟 / 版本+占位符 grep /
-     副本哈希 / git 状态与 tag
-  3. 文档生命周期核对：WORKLOG 当前任务与阶段硬事实 / CHANGELOG 新在前 /
-     EXP-KB 双置顶 / 日期一致
-  4. 全流程缺口与清晰度复核（v1.2.1 后状态）
-  5. 阶段落盘 + 经验沉淀 + 提交 + 汇报
+  1. 启动前置：WORKLOG 切换（本步）+ CHANGELOG 未发版区段
+  2. 模板内改动（P2-1~P2-4 + P3 组B 组C）
+  3. 工作区文档（P3-7 版本示例）
+  4. 机制化：install-targets.json + verify_installed_copies.py（并入发版链）
+  5. ✅ P1-1 落地：装 .qwenworkcn 两 skill + 哈希复核 + 清 .qoderworkcn 副本 + 安装表更新
+  6. ✅ 版本四件套递增 1.2.1→1.2.2
+  7. ✅ 发版链验证：sync → validate×2 → py_compile×8 → 冒烟 → pre_release → grep
+  8. ⏳ 提交发版：private 骨架强制跟踪 + 主仓库 commit + tag v1.2.2（需权限升级）
+  9. 收尾：WORKLOG 校准 + EXP-KB 沉淀 + 索引核对 + 汇报
 
 ## 阶段记录
 
@@ -292,6 +302,55 @@
   全量 4 文件哈希一致；init-project 六副本 40 文件哈希一致 | docs/WORKLOG.md
   docs/EXPERIENCE-TO-KB.md + 六处 agent-rules 目录 | sync / quick_validate /
   py_compile / 冒烟 / 哈希 全过 | 汇报 |
+| 48 第七轮审计·t2 模板内改动 | ✅ | 脚本健壮性：check_dev_docs 两处裸 read_text
+  改走 _read_text（P2-4a）；pre_release_check 修复 `_ci_check_state` NameError
+  bug + CI 占位门禁双向断言（P2-4b）+ SECRET_NAME_RE 收紧（P3-3c）+
+  CHANGELOG/root_agents 读取兜底；sync_template rmtree+copytree 失败兜底（P3-2）；
+  init_project 绝对路径 parts→relative_to + _valid_branch 拦 `/-/` 开头（P3-2/P3-3）；
+  trash.py 核实 P3-3 已修复无需改。文档一致性：P2-1 CHANGELOG 手工更新表述
+  （根/私有 AGENTS + release.yml + bump_version 文案）；P2-3 三区表补 archive/；
+  P3-1 knowops 泛化×5；P3-5 模块标注×5；P3-6 细节一致性×5（DOCS 文档清单/地图、
+  audit-checklist §10 字段名、rfc INDEX PRD-XXXX、README 结构树、DESIGN 相对路径
+  风格统一 9 处） | project-template/（scripts×4、AGENTS×2、README、DOCS、
+  audit-checklist、PRIVATE、TEST-REPORT、TEST、rfc/INDEX、private/AGENTS、
+  release.yml、DESIGN、EXPERIENCE-TO-KB） | 回读核对（发现并发编辑丢失 6 处
+  已重应用并逐处验证） | 待验证 → t3 工作区文档（P3-7） |
+| 49 第七轮审计·t3/t4 工作区与机制化 | ✅ | t3 P3-7：工作区 AGENTS.md / README.md
+  grep 版本示例 `1.1.0 / 1.1.1` → `1.1.2 / 1.2.0`。t4 P1-1 机制化：新增
+  install-targets.json（机器可读安装表 ×6：codex/dsh/workbuddy/trae-cn/
+  qwenworkcn/qoder-cn，qwenworkcn 替换原 qoderworkcn）；新增
+  scripts/verify_installed_copies.py（逐目录 × 逐 skill 全量 SHA-256 + SKILL.md
+  metadata.version 版本哨兵比对）；sync_template.py 并入 `check_installed_copies`
+  钩子（发版链强制安装校验，缺失/过时即拦截）；README §4 / AGENTS 目录 + 维护约定
+  #4 + 设计决策 + 文档职责表更新为引用机器可读表；CHANGELOG 未发版区段登记
+  P2/P3/机制化条目（删占位符） | install-targets.json、
+  scripts/verify_installed_copies.py、scripts/sync_template.py、README.md、
+  AGENTS.md、docs/CHANGELOG.md | verify 首跑实测：精确命中 qwenworkcn 缺失 ×2 +
+  现役 5 处仅 `scripts/init_project.py` 哈希漂移（t2 改动被系统性定位）；
+  回读核对 | t5 P1-1 落地安装 |
+| 50 第七轮审计·t5 搁置 + t6 版本递增 | ✅ | t5 安装被 TRAE 沙箱拦截：工作区外写
+  操作敏感（多轮最小化测试探明边界：新建文件/目录可成功、覆盖/删除已存在文件与整
+  目录复制被拒，`hit restricted` / WinError 5），用户决策「先搁置安装推进后续」
+  （待沙箱外执行）。t6 版本递增 1.2.1→1.2.2：根 version.json（version +
+  template_version）、project-template/version.json（template_version=1.2.2、
+  version=0.0.1 按历史约定不变）、SKILL metadata.version ×2 与继承矩阵版本对照 ×3；
+  grep 1.2.1 全量 51 处分类确认——仅 AGENTS.md:18 / README.md:197「当前版本」字样，
+  均已更新，其余为历史合法引用；UPGRADE 追加 v1.2.2 迁移要点（安装表机制化仅母
+  项目脚本、不下发、无迁移动作）；CHANGELOG 未发版区段占位符替换为版本递增登记
+  （发版条目 t8 补） | version.json ×2、SKILL.md ×2、inheritance-map.md、
+  AGENTS.md、README.md、project-template/docs/UPGRADE.md（assets 经 t7 sync）、
+  docs/CHANGELOG.md、docs/WORKLOG.md | grep 分类核对 + 逐文件回读 | t7 发版链验证 |
+| 51 第七轮审计·t5 补装 + t7 发版链验证 | ✅ | 用户放行沙箱后补装：t5 六处 × 两
+  skill 全量重装（init-project 在 sync 后二次重装以纳入资产镜像变更）、.qoderworkcn
+  旧副本清理、verify EXIT=0 全绿。t7 验证链：sync 36 文件 0 差异 + 版本/继承矩阵 /
+  INIT_STEPS_COVERAGE / 已装副本全过（首两次 .gitignore 被 IDE 文件锁 WinError 32，
+  10s 后释放重试成功，P3-2 兜底按设计工作）；quick_validate ×2 valid；
+  py_compile ×8 OK；冒烟 _ftest/smoke_v122（init template_version=1.2.2 /
+  version=0.0.1、36 文件 13 替换、占位符 CLEAN、check_dev_docs 0、ci_check pass、
+  pre_release 占位拦截预期 + allow-placeholder 全绿）；资产镜像 grep 版本正确；
+  清理 __pycache__、冒烟产物移入 _trash/trae_2026-08-26_1351 | 六处 agent 目录 +
+  多文件 | sync / validate / py_compile / 冒烟 / pre_release / grep 全过 |
+  t8 提交发版 |
 
 ## 待办/遗留
 

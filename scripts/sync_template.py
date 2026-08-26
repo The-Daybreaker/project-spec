@@ -24,6 +24,8 @@ import shutil
 import sys
 from pathlib import Path
 
+from verify_installed_copies import check_installed_copies
+
 ROOT = Path(__file__).resolve().parent.parent  # scripts/ 的上一级 = 工作区根
 SRC = ROOT / "project-template"
 DST = ROOT / "init-project" / "assets" / "project-template"
@@ -86,7 +88,8 @@ def _collect(root: Path) -> list:
     return sorted(
         p
         for p in root.rglob("*")
-        if p.is_file() and not any(part in SKIP_NAMES for part in p.parts)
+        if p.is_file()
+        and not any(part in SKIP_NAMES for part in p.relative_to(root).parts)
     )
 
 
@@ -233,9 +236,17 @@ def main() -> int:
         print(f"[error] skill folder not found under {ROOT}", file=sys.stderr)
         return 1
 
-    if DST.exists():
-        shutil.rmtree(DST)
-    shutil.copytree(SRC, DST, ignore=shutil.ignore_patterns(*SKIP_NAMES))
+    try:
+        if DST.exists():
+            shutil.rmtree(DST)
+        shutil.copytree(SRC, DST, ignore=shutil.ignore_patterns(*SKIP_NAMES))
+    except OSError as e:
+        print(
+            f"[error] failed to mirror {SRC} -> {DST}: {e} "
+            "(partial mirror left for inspection; replaced on the next successful run)",
+            file=sys.stderr,
+        )
+        return 1
 
     src_files = _collect(SRC)
     dst_files = _collect(DST)
@@ -249,9 +260,11 @@ def main() -> int:
             f"src-only={sorted(set(rel_src) - set(rel_dst))} "
             f"dst-only={sorted(set(rel_dst) - set(rel_src))}"
         )
-    for s, d in zip(src_files, dst_files):
-        if _sha256(s) != _sha256(d):
-            problems.append(f"content differs: {s.relative_to(SRC)}")
+    src_by_rel = {p.relative_to(SRC).as_posix(): p for p in src_files}
+    dst_by_rel = {p.relative_to(DST).as_posix(): p for p in dst_files}
+    for rel in sorted(set(rel_src) & set(rel_dst)):
+        if _sha256(src_by_rel[rel]) != _sha256(dst_by_rel[rel]):
+            problems.append(f"content differs: {rel}")
 
     tpl_version = _template_version()
     skill_version = _skill_metadata_version(SKILL_MD)
@@ -266,8 +279,31 @@ def main() -> int:
             f"{tpl_version}, init-project/SKILL.md metadata.version={skill_version}"
         )
 
+    root_version_file = ROOT / "version.json"
+    if not root_version_file.is_file():
+        problems.append(f"workspace root version.json missing: {root_version_file}")
+    else:
+        try:
+            root_data = json.loads(root_version_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as e:
+            problems.append(f"cannot read workspace root version.json: {e}")
+        else:
+            root_version = str(root_data.get("version", ""))
+            root_tpl = str(root_data.get("template_version", ""))
+            if root_version != tpl_version:
+                problems.append(
+                    f"workspace root version.json version mismatch: "
+                    f"root={root_version!r}, template_version={tpl_version!r}"
+                )
+            if root_tpl != tpl_version:
+                problems.append(
+                    f"workspace root version.json template_version mismatch: "
+                    f"root={root_tpl!r}, template={tpl_version!r}"
+                )
+
     _check_agent_rules(tpl_version, problems)
     _check_init_steps_coverage(problems)
+    check_installed_copies(problems)
 
     if problems:
         print("[error] sync verification failed:", file=sys.stderr)
@@ -278,7 +314,7 @@ def main() -> int:
     print(
         f"synced and verified {len(rel_src)} files: {SRC} -> {DST} "
         f"(template_version={tpl_version}, init-project metadata.version={skill_version}, "
-        f"agent-rules verified, init-steps coverage verified)"
+        f"agent-rules verified, init-steps coverage verified, installed copies verified)"
     )
     return 0
 

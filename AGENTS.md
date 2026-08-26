@@ -15,7 +15,7 @@
   `project-template/`（权威模板，同步到 skill 资产）、`init-project/`（skill：
   SKILL.md / references / scripts / assets）、`agent-rules/`（skill：精简版
   agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.2.1）+ git tag；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.2.2）+ git tag；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
@@ -38,7 +38,7 @@
    （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
    `SKILL.md metadata.version`、`agent-rules/SKILL.md metadata.version` 与
    `agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧版本号**
-   （如 `1.1.0` / `1.1.1`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+   （如 `1.1.2` / `1.2.0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
    `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；
    模板内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
    `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
@@ -98,8 +98,9 @@
   归档流程显式引用。
 - 测试落地指引：新增 `project-template/docs/TESTING.md`（pytest 示例、覆盖率、
   CI 接入、TEST-REPORT 对应），`ci_check.py` 内含接入示例注释。
-- agent 安装目标新增 `.qoder-cn`：安装表扩为六处（codex / dsh / workbuddy /
-  trae-cn / qoderworkcn / qoder-cn）。
+- agent 安装目标：六处（codex / dsh / workbuddy / trae-cn / qwenworkcn / qoder-cn），
+  由 `install-targets.json` 单一事实来源承载 + `verify_installed_copies.py` 全量
+  哈希+版本哨兵校验（qwenworkcn 替换原 qoderworkcn，P1-1）。
 
 ## 文档职责
 
@@ -110,7 +111,9 @@
 | `docs/WORKLOG.md` | 项目专用 | 阶段落盘（每完成一小阶段更新） |
 | `docs/CHANGELOG.md` | 项目专用 | 模板版本变更历史（升级比对依据） |
 | `docs/EXPERIENCE-TO-KB.md` | 项目专用 | 可沉淀进知识库的经验（完整条目） |
-| `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → init-project/assets/） |
+| `install-targets.json` | 项目专用 | 机器可读安装表：两 skill 在各 agent 用户级 skill 目录的位置（单一事实来源） |
+| `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → init-project/assets/ + 全链校验） |
+| `scripts/verify_installed_copies.py` | 项目专用 | 安装副本校验：读安装表 → 逐目录 × 逐 skill 全量 SHA-256 + 版本哨兵（随 sync 并入发版链） |
 | `project-template/` | 通用 | 权威模板（同步到 `init-project/assets/`） |
 | `init-project/` | 通用 | skill（SKILL.md / references / scripts / assets） |
 | `agent-rules/SKILL.md` | 项目专用 | 精简版 agent 全局行为规范（仅非项目且非纯聊天对话加载） |

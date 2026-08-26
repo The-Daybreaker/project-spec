@@ -78,9 +78,25 @@ def _iter_docs(register_dir: Path) -> list:
     )
 
 
+def _read_text(path: Path, problems: list):
+    """Read a file as UTF-8; on decode/IO failure report and return None."""
+    try:
+        return path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        problems.append(
+            f"{path.relative_to(REPO_ROOT)}: not valid UTF-8 (decode error); "
+            f"fix the file encoding"
+        )
+    except OSError as e:
+        problems.append(f"{path.relative_to(REPO_ROOT)}: read failed: {e}")
+    return None
+
+
 def _check_doc(typ: str, path: Path, statuses: set, problems: list) -> None:
     rel = path.relative_to(REPO_ROOT)
-    text = path.read_text(encoding="utf-8")
+    text = _read_text(path, problems)
+    if text is None:
+        return
     status = _header_field(text, "状态")
     if statuses is not None and status and status not in statuses:
         problems.append(
@@ -162,7 +178,9 @@ def _check_register(typ: str, dirname: str, statuses: set, problems: list) -> No
                 f"found {sorted(numbers)}, expected {expected}"
             )
 
-    index_text = index.read_text(encoding="utf-8")
+    index_text = _read_text(index, problems)
+    if index_text is None:
+        return
     rows = []
     for line in index_text.splitlines():
         stripped = line.strip()
@@ -211,7 +229,10 @@ def _check_cross_refs(problems: list) -> None:
     if not agents.is_file():
         problems.append("missing private/AGENTS.md (required for cross-ref check)")
         return
-    for line in agents.read_text(encoding="utf-8").splitlines():
+    agents_text = _read_text(agents, problems)
+    if agents_text is None:
+        return
+    for line in agents_text.splitlines():
         if not line.lstrip().startswith("- D-"):
             continue
         for m in re.finditer(r"ADR-(\d{4})", line):
@@ -228,7 +249,9 @@ def _check_worklog(problems: list) -> None:
     if not worklog.is_file():
         problems.append(f"missing {worklog.relative_to(REPO_ROOT)}")
         return
-    text = worklog.read_text(encoding="utf-8")
+    text = _read_text(worklog, problems)
+    if text is None:
+        return
     m = re.search(r"(?ms)^## 当前任务(.*?)(?=\n## )", text)
     section = m.group(1) if m else ""
     if "流程位置" not in section:

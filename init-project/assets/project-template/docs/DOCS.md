@@ -40,7 +40,11 @@
 | `private/dev/EXPERIENCE-TO-KB.md` | 可沉淀进知识库的经验 |
 | `README.md` | 使用者视角 |
 | `docs/DOCS.md` | docs 目录说明与文档治理 |
+| `docs/audit-checklist.md` | 改动对不对：实施后审计清单（自审/独立审计共用） |
+| `docs/TESTING.md` | 怎么测：pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应 |
 | `docs/UPGRADE.md` | 模板如何升级 |
+| `docs/CONTRIBUTING.md` | 人类贡献者与 agent 怎么协作 |
+| `archive/ARCHIVE.md` | 归档：归档流程、归档说明与已归档内容快照 |
 
 ## 文档模块归属（通用 / 项目专用）
 

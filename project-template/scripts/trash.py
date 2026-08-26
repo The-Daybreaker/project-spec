@@ -44,8 +44,15 @@ def _win_trash(paths: list) -> None:
     FOF_NOCONFIRMATION = 0x10
     FOF_SILENT = 0x4
 
-    # pFrom must be double-NUL terminated
-    source = "\0".join(str(Path(p).resolve()) for p in paths) + "\0\0"
+    # pFrom must be double-NUL terminated; paths longer than ~260 chars need
+    # the \\?\ prefix so SHFileOperationW does not fail on long paths.
+    long_paths = []
+    for p in paths:
+        resolved = str(Path(p).resolve())
+        if len(resolved) >= 250 and not resolved.startswith("\\\\?\\"):
+            resolved = "\\\\?\\" + resolved
+        long_paths.append(resolved)
+    source = "\0".join(long_paths) + "\0\0"
     op = SHFILEOPSTRUCTW()
     op.wFunc = FO_DELETE
     op.pFrom = source
@@ -59,8 +66,23 @@ def _mac_trash(paths: list) -> None:
     if shutil.which("trash"):
         subprocess.run(["trash", *paths], check=True)
         return
-    script = ["tell application \"Finder\"", *[f'delete POSIX file "{Path(p).resolve()}"' for p in paths], "end tell"]
-    subprocess.run(["osascript", "-e", "\n".join(script)], check=True)
+    # Pass paths via osascript argv so they are never interpolated into
+    # AppleScript source (avoids quote-injection via file names).
+    script = "\n".join(
+        [
+            "on run argv",
+            'tell application "Finder"',
+            "repeat with p in argv",
+            "delete POSIX file p",
+            "end repeat",
+            "end tell",
+            "end run",
+        ]
+    )
+    subprocess.run(
+        ["osascript", "-e", script, *[str(Path(p).resolve()) for p in paths]],
+        check=True,
+    )
 
 
 def _linux_trash(paths: list) -> None:

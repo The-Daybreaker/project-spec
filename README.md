@@ -150,19 +150,21 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 每个 agent。
 
 安装：把 `agent-rules/` 整个目录复制到各 agent 的用户级 skill 目录（重启/刷新后
-生效）。本机已安装位置（两个 skill 都装在下列目录下）：
+生效）。本机已安装位置以根目录 `install-targets.json`（**机器可读安装表，单一事实
+来源**）为准，下表为概览（两个 skill 都装在下列目录下；增删 agent 需同步更新安装表，
+并可用 `python scripts/verify_installed_copies.py` 全量哈希 + 版本哨兵复验）：
 
 | Agent | skill 目录 |
 |---|---|
-| Codex | `<用户主目录>\.codex\skills`（agent-rules / init-project） |
-| DSH | `<用户主目录>\.dsh\skills`（agent-rules / init-project） |
-| WorkBuddy | `<用户主目录>\.workbuddy\skills`（agent-rules / init-project） |
-| TraeWork（TRAE Work CN） | `<用户主目录>\.trae-cn\skills`（agent-rules / init-project） |
-| QoderWork（QoderWork CN） | `<用户主目录>\.qoderworkcn\skills`（agent-rules / init-project） |
-| Qoder（Qoder CN） | `<用户主目录>\.qoder-cn\skills`（agent-rules / init-project） |
+| Codex | `~/.codex/skills`（agent-rules / init-project） |
+| DSH | `~/.dsh/skills`（agent-rules / init-project） |
+| WorkBuddy | `~/.workbuddy/skills`（agent-rules / init-project） |
+| TraeWork（TRAE Work CN） | `~/.trae-cn/skills`（agent-rules / init-project） |
+| 千问办公（QwenWork CN） | `~/.qwenworkcn/skills`（agent-rules / init-project） |
+| Qoder（Qoder CN） | `~/.qoder-cn/skills`（agent-rules / init-project） |
 
 其他机器/agent：找到对应用户级 skill 目录（如 `~/.codex/skills`、`~/.dsh/skills`、
-`~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qoderworkcn/skills`、
+`~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qwenworkcn/skills`、
 `~/.qoder-cn/skills`），把 `agent-rules/` 与 `init-project/` 复制进去即可。
 
 ## 维护约定
@@ -183,7 +185,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
   `SKILL.md metadata.version`、`agent-rules/SKILL.md metadata.version` 与
   `agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧版本号**
-  （如 `1.1.0` / `1.1.1`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+  （如 `1.1.2` / `1.2.0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
   `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；模板
   内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
   `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
@@ -192,7 +194,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （`INIT_STEPS_COVERAGE`，缺失即拦截）；改模板/发版后按「skill 覆盖度复查」核对
   SKILL 摘要 / init-steps 校验清单与路线图 / agent-rules（如涉红线）/
   全部已安装副本重装并哈希复核。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.2.1；
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.2.2；
   版本号见 `version.json`）。
 - **流程提示**：工作区汇报/阶段落盘/收尾展示流程位置（以 docs/WORKLOG.md
   「流程位置」为准；展示时缩写附中文翻译）。

@@ -4,6 +4,66 @@
 > 记录模板自身每次发版变更，与根 `version.json` 与 git tag 对齐；项目升级时据此比对
 > （见 `project-template/docs/UPGRADE.md`）。
 
+## v1.2.2（2026-08-26）
+
+> 第七轮全面审计修复版本（patch）：P1-1 安装面机制化（安装表机器可读化 + 部署到
+> `~/.qwenworkcn` + 六处副本哈希复核）+ P2×4 + P3×7；`version.json` 的 `version` /
+> `template_version` 与 tag `v1.2.2` 对齐。
+
+### P2 流程/工具收口
+
+- **P2-1 CHANGELOG 顶部改由 agent 手工更新**：发布流程第 1 步明确为「agent 手工
+  更新 CHANGELOG 顶部 + 解释」——脚本不写 CHANGELOG，防止覆盖人工编辑的发布说明
+  （`project-template/AGENTS.md` 发布机制与发布流程两处、`release.yml` 头注释、
+  `private/AGENTS.md` 发布流程第 1 步）。
+- **P2-2 bump_version.py 兜底**：静默漂移告警（版本文件差异即拦截）+ 版本号正则补全 +
+  装配解析容错（`version.json` 缺失字段不崩溃）。
+- **P2-3 三区表补 `archive/`**：`private/AGENTS.md` 三区表 A 区补归档目录，与实体目录
+  约定一致。
+- **P2-4 文档/占位状态脚本加固**：`check_dev_docs.py` 两处裸 `read_text` 改走
+  `_read_text`（UnicodeDecodeError/OSError 兜底）；`pre_release_check.py` 修复
+  **`_ci_check_state` NameError**（被调用未定义）并实现**双向断言**（`PLACEHOLDER_MARKER`
+  赋值与 "template placeholder" 输出必须成对存在，任一单边残留即拦截），ci_check /
+  CHANGELOG / root_agents 读取失败兜底。
+
+### P3 批量修复（组 B + 组 C）
+
+- **P3-1 knowops 泛化**：模板与工作区 5 处「如 knowops」改为「如适用」
+  （`private/AGENTS.md` ×2、`private/dev/DESIGN.md`、`private/dev/EXPERIENCE-TO-KB.md`、
+  工作区 `docs/EXPERIENCE-TO-KB.md`）。
+- **P3-2 路径/同步健壮性**：`init_project.py` replace_all 绝对路径 `.git` 判定改
+  `relative_to().parts`；`sync_template.py` rmtree+copytree 失败兜底（残留镜像待下次
+  覆盖）。
+- **P3-3 安全/校验收紧**：`pre_release_check.py` SECRET_NAME_RE 收紧（`.env`、私钥/
+  证书扩展名、secret/credential/api key 文件名等，避免子串误报）；`init_project.py`
+  `_valid_branch` 拦截 `/` 开头分支；`trash.py` 已核实（osascript argv +
+  Windows `\\?\` 长路径）。
+- **P3-5 模块标注补齐**：`docs/audit-checklist.md`、`private/PRIVATE.md`、
+  `private/dev/TEST-REPORT.md`、`private/test/TEST.md`、`README.md` 顶部补模块标注。
+- **P3-6 一致性微修**：`audit-checklist.md` §10 字段名对齐「背景与目标/用户与场景」；
+  `private/dev/DESIGN.md` 路径风格统一 9 处（去 `dev/` 前缀、`../AGENTS.md`、
+  `../../scripts/`）；`rfc/INDEX.md` PRD-0001→PRD-XXXX；`README.md` 结构树补
+  `check_dev_docs`；`docs/DOCS.md` 文档清单/地图补齐（ARCHIVE / audit-checklist /
+  TESTING / CONTRIBUTING）。
+- **P3-7 工作区版本示例更新**：AGENTS.md / README.md grep 示例 `1.1.0 / 1.1.1` →
+  `1.1.2 / 1.2.0`（不与 v1.2.2 发版 grep 冲突）。
+
+### P1-1 安装面机制化
+
+- **安装表机器可读化**：新增 `install-targets.json`（两 skill × 六处 agent 目录的
+  单一事实来源；`qwenworkcn` 替换原 `qoderworkcn`）+ `scripts/verify_installed_copies.py`
+  （逐目录 × 逐 skill 全量 SHA-256 + SKILL.md `metadata.version` 版本哨兵比对）；
+  校验随 `sync_template.py` 并入发版验证链——安装状态脱离文档自由文本，副本缺失或
+  过时直接拦截发版。
+- **安装表更新**：README.md §4 / AGENTS.md 维护约定 #4 改为引用机器可读表；
+  安装到 `~/.qwenworkcn/skills` 并清理 `~/.qoderworkcn` 旧副本（替换方案，已确认）。
+
+- **版本递增 v1.2.1→v1.2.2**：根 `version.json`（`version` / `template_version`）、
+  `project-template/version.json`（`template_version`）、`init-project/SKILL.md`、
+  `agent-rules/SKILL.md` 与 `agent-rules/references/inheritance-map.md` 版本对照
+  全部递增到 1.2.2；`AGENTS.md` / `README.md` 当前版本字样同步；UPGRADE.md 补
+  v1.2.2 迁移要点（安装表机制化仅母项目脚本、不下发、无迁移动作）。
+
 ## v1.2.1（2026-08-26）
 
 > 维护收口版本（patch）：升级路径补齐（B 区私有骨架迁移）+ P3 批量修复 + 流程

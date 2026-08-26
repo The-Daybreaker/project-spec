@@ -31,7 +31,11 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-SECRET_NAME_RE = re.compile(r"(\.env|\.key|\.pem|secret)", re.IGNORECASE)
+SECRET_NAME_RE = re.compile(
+    r"(?:^|[\\/])(?:\.env(?:[.\-]|$)|[^\\/]*\.(?:key|pem|pfx|p12)$|"
+    r"(?:secret|credential|api[-_. ]?key|private[-_. ]?key)(?:[.\-_]|$))",
+    re.IGNORECASE,
+)
 
 
 def _configure_utf8() -> None:
@@ -61,6 +65,36 @@ def _run(args: list, check: bool = False) -> subprocess.CompletedProcess:
 def _is_private_path(p: str) -> bool:
     p = p.strip('"')
     return p == "private" or p.startswith("private/") or p.startswith("private\\")
+
+
+def _read_text(path: Path) -> str:
+    """Read a file as UTF-8; on decode/IO failure print and return ""."""
+    try:
+        return path.read_text(encoding="utf-8")
+    except (UnicodeDecodeError, OSError) as e:
+        print(f"[error] cannot read {path.relative_to(REPO_ROOT)}: {e}", file=sys.stderr)
+        return ""
+
+
+MARKER_ASSIGN_RE = re.compile(
+    r'^\s*PLACEHOLDER_MARKER\s*=\s*"__CI_CHECK_PLACEHOLDER__"\s*$', re.MULTILINE
+)
+
+
+def _ci_check_state(text: str) -> str:
+    """双向断言 ci_check.py 占位状态：占位常量（PLACEHOLDER_MARKER 赋值行）与
+    占位实现（template placeholder 输出）必须成对出现，任一单边残留都视为
+    改造不完整。Return "placeholder" | "inconsistent" | "stale_constant" | "implemented".
+    """
+    has_marker = MARKER_ASSIGN_RE.search(text) is not None
+    has_body = "template placeholder" in text
+    if has_marker and has_body:
+        return "placeholder"
+    if has_body:
+        return "inconsistent"
+    if has_marker:
+        return "stale_constant"
+    return "implemented"
 
 
 def _status_paths() -> list:
@@ -218,20 +252,45 @@ def main() -> int:
     if not ci_check.exists():
         print("[error] scripts/ci_check.py missing (must exist for release).", file=sys.stderr)
         fail = True
-    elif "__CI_CHECK_PLACEHOLDER__" in ci_check.read_text(encoding="utf-8"):
-        if args.allow_placeholder:
+    else:
+        ci_text = _read_text(ci_check)
+        if not ci_text.strip():
             print(
-                "[warning] ci_check.py is still a template placeholder "
-                "(allowed via --allow-placeholder)."
-            )
-        else:
-            print(
-                "[error] ci_check.py is still a template placeholder; implement real "
-                "checks first (or use --allow-placeholder)."
+                "[error] cannot read scripts/ci_check.py (binary or non-UTF-8); "
+                "fix file encoding.",
+                file=sys.stderr,
             )
             fail = True
-    else:
-        print("[5/7] ci_check.py implemented (no placeholder marker).")
+        else:
+            ci_state = _ci_check_state(ci_text)
+            if ci_state == "placeholder":
+                if args.allow_placeholder:
+                    print(
+                        "[warning] ci_check.py is still a template placeholder "
+                        "(allowed via --allow-placeholder)."
+                    )
+                else:
+                    print(
+                        "[error] ci_check.py is still a template placeholder; implement real "
+                        "checks first (or use --allow-placeholder)."
+                    )
+                    fail = True
+            elif ci_state == "inconsistent":
+                print(
+                    "[error] ci_check.py still has placeholder body but the "
+                    "PLACEHOLDER_MARKER constant was removed; implement real checks "
+                    "(or restore the marker line).",
+                    file=sys.stderr,
+                )
+                fail = True
+            elif ci_state == "stale_constant":
+                print(
+                    "[warning] ci_check.py placeholder body removed but a leftover "
+                    "PLACEHOLDER_MARKER constant remains; remove the dead marker line."
+                )
+                print("[5/7] ci_check.py implemented (placeholder body gone).")
+            else:
+                print("[5/7] ci_check.py implemented (no placeholder marker).")
 
     # --- 6. doc consistency (lightweight) ---
     root_agents = REPO_ROOT / "AGENTS.md"
@@ -241,7 +300,7 @@ def main() -> int:
         print("[error] root AGENTS.md missing (must exist for release).", file=sys.stderr)
         fail = True
         doc_ok = False
-    elif "private/AGENTS.md" not in root_agents.read_text(encoding="utf-8"):
+    elif "private/AGENTS.md" not in _read_text(root_agents):
         print("[error] root AGENTS.md must reference private/AGENTS.md.", file=sys.stderr)
         fail = True
         doc_ok = False

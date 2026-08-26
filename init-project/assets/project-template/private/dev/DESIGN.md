@@ -24,15 +24,15 @@
 
 ### 【通用】每次对话前置（bootstrap）
 
-任何任务开始前：读根 `AGENTS.md` → 读 `private/AGENTS.md` → 查看两个 git 状态 →
-读 `version.json` 与 `CHANGELOG.md` 顶部 → 读 `WORKLOG.md`（恢复进行中进度）→ 读
+任何任务开始前：读根 `AGENTS.md` → 读 `../AGENTS.md` → 查看两个 git 状态 →
+读根 `version.json` 与 `CHANGELOG.md` 顶部 → 读 `WORKLOG.md`（恢复进行中进度）→ 读
 `TEST-REPORT.md`。**上下文压缩后或新对话开始时必须完成以上重读（红线 15）**；
 WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归档/移入 `_trash/`）。
 保证任何新对话、任何 agent 都能从零接手，不依赖记忆。
 
 ### 【通用】约束收口
 
-- agent 读的个性化约束统一存 `private/AGENTS.md`（本机环境、用户决策）；
+- agent 读的个性化约束统一存 `../AGENTS.md`（本机环境、用户决策）；
 - 通用红线在根 `AGENTS.md`；审计清单在 `../../docs/audit-checklist.md`。
 
 ## 【通用】开发工作流（强制，每次需求都走完）
@@ -40,10 +40,10 @@ WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归
 完整工作流见根 `AGENTS.md`「开发工作流」与 `../AGENTS.md`「开发工作流」（权威源，
 本文件不重复），本文件只保留设计相关细则。
 - **开发前规范**：需求/方案/调研/决策登记册（PRD/RFC/RESEARCH/ADR）与状态机见
-  `dev/{prd,rfc,adr,research}/INDEX.md`；开发前门禁（定稿/采纳/记录）见
+  `{prd,rfc,adr,research}/INDEX.md`；开发前门禁（定稿/采纳/记录）见
   `../AGENTS.md`「开发工作流」第 3 步。
 - **流程提示**：每次对话展示流程位置（当前节点/已完成/下一步），以
-  `dev/WORKLOG.md`「流程位置」为单一真相；16 节点清单见 `../AGENTS.md`「流程提示」；
+  `WORKLOG.md`「流程位置」为单一真相；16 节点清单见 `../AGENTS.md`「流程提示」；
   展示时缩写须附中文翻译（对照表见 `../AGENTS.md`「缩写对照」）。
 - **文档更新流程**：文档就绪 / 发布前文档检查 / 状态文档收口贯穿全程，见
   `../AGENTS.md`「文档更新流程」。
@@ -70,7 +70,7 @@ WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归
    `EXPERIENCE-TO-TEMPLATE.md`（可复用进模板）与 `EXPERIENCE-TO-KB.md`（可进知识库），
    沉淀时以这两份文档为唯一依据；每次项目架构发生改变（无论是否发布）以及项目
    每次更新（发布）之后，提醒用户真正沉淀（模板经验集成进通用项目模板；知识库
-   经验按 knowops 等规范沉淀）；沉淀与否、沉淀到哪里由用户决定，agent 负责记录
+   经验按自有知识库规范（如适用）沉淀）；沉淀与否、沉淀到哪里由用户决定，agent 负责记录
    候选与提醒。
 10. **立项调研先行**：讨论项目思路/需求/架构/功能/产品等**立项类话题**时，优先
     在 GitHub 调研现成参考（相似项目、方案、库），向用户展示调研结果并提醒
@@ -82,13 +82,13 @@ WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归
 13. **模板升级**：模板发布新版本时，按 `../../docs/UPGRADE.md` 只应用【通用】模块
     变更，并更新根 `version.json` 的 `template_version`。
 14. **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
-    `codex_2026-08-25_2330`），任务结束时用 `scripts/trash.py` 整体进回收站
+    `codex_2026-08-25_2330`），任务结束时用 `../../scripts/trash.py` 整体进回收站
     （根 `AGENTS.md` 红线 4）。
 15. **流程提示**：每次实质回复/阶段落盘/收尾展示流程位置（当前节点/已完成/
-    下一步），以 `dev/WORKLOG.md`「流程位置」为单一真相（`../AGENTS.md`「流程提示」）；
+    下一步），以 `WORKLOG.md`「流程位置」为单一真相（`../AGENTS.md`「流程提示」）；
     展示时缩写附中文翻译。
 16. **开发前文档一致性**：涉及 PRD/RFC/ADR/RESEARCH 时，状态/索引/编号与正文
-    一致；发布前运行 `scripts/check_dev_docs.py`。
+    一致；发布前运行 `../../scripts/check_dev_docs.py`。
 
 ## 【项目专用】关键不变量（改动后必须仍成立）
 
@@ -106,9 +106,9 @@ WORKLOG 内容膨胀或旧任务已完结时，先询问用户是否清理（归
 
 ## 【通用】测试（发布前必跑）
 
-1. **检查命令**：`scripts/ci_check.py`（lint / build / test，按项目实现）。
+1. **检查命令**：`../../scripts/ci_check.py`（lint / build / test，按项目实现）。
    测试落地（pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应）见
-   `docs/TESTING.md`。
+   `../../docs/TESTING.md`。
 2. **真实场景测试**（如有）：在 `../test/` 按场景清单实际执行并核对；记录到
    `TEST-REPORT.md`。
 3. **明文例外（仅此一种）**：本次改动不涉及运行时文件、且用户明确确认时，测试

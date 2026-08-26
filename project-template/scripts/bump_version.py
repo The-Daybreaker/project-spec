@@ -159,6 +159,11 @@ def _sync_file(path: Path, spec: dict, version: str) -> bool:
         content = path.read_text(encoding="utf-8")
         new_content, n = re.subn(pattern, replacement, content)
         if n == 0:
+            print(
+                f"[warning] no version field matched in {path.name} "
+                f"(pattern {pattern!r}); target NOT synced",
+                file=sys.stderr,
+            )
             return False
         path.write_text(new_content, encoding="utf-8", newline="\n")
         return True
@@ -202,13 +207,25 @@ def main() -> int:
     print(f"==> {version_file.name}: {old} -> {new}")
 
     targets = _sync_targets(_load_config())
+    missed = []
     for rel, spec in targets.items():
         path = REPO_ROOT / rel
         if path.exists() and isinstance(spec, dict):
             if _sync_file(path, spec, new):
                 print(f"==> synced {rel} -> {new}")
+            else:
+                missed.append(rel)
 
-    print("==> done. Update the top entry of private/dev/CHANGELOG.md.")
+    if missed:
+        print(
+            "[warning] sync target(s) not matched (no version field found; "
+            "update the target file or its pattern):",
+            file=sys.stderr,
+        )
+        for rel in missed:
+            print(f"  - {rel}", file=sys.stderr)
+
+    print("==> done. Manually update the top entry of private/dev/CHANGELOG.md.")
     return 0
 
 

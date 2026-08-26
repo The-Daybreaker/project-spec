@@ -159,8 +159,9 @@ GitHub 调研现成参考，并提醒用户**「先调研再立项」**。
 
 ## 【通用】发布流程（每次发布时执行；完整版见 `private/AGENTS.md`「发布流程」）
 
-1. **版本递增**：`scripts/bump_version.py`（默认 patch；前两位须用户确认），更新
-   `private/dev/CHANGELOG.md` 顶部。
+1. **版本递增**：`scripts/bump_version.py`（默认 patch；前两位须用户确认），随后
+   agent 手工更新 `private/dev/CHANGELOG.md` 顶部（脚本只校验同步目标，不写
+   CHANGELOG，防止覆盖人工编辑的发布说明）。
 2. **文档就绪**：CHANGELOG / DESIGN / TEST-REPORT / WORKLOG / README / 根 AGENTS.md /
    private/AGENTS.md / 用户可见文档同步。
 3. **同步 private 子 git（发布前必做）**：`scripts/pre_release_check.py` 一键完成

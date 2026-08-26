@@ -2,6 +2,7 @@
 
 {{PROJECT_DESCRIPTION}}
 
+> 模块：混合（【通用】= 模板约定；【项目专用】= 功能/使用说明，按项目填写）。
 > 本项目由通用项目模板初始化。模板约定：根 `AGENTS.md` 为任何 agent 的接手入口；
 > 开发规范与个人/机器信息在 `private/`（不进 GitHub，private 子 git 管理）。
 > 使用模板规范前请先阅读 `AGENTS.md` 与 `docs/CONTRIBUTING.md`。
@@ -29,7 +30,7 @@ npm test
 .
 ├── AGENTS.md                # Agent 接手入口（公开）
 ├── docs/                    # 公开文档（DOCS.md / audit-checklist.md / UPGRADE.md / CONTRIBUTING.md / TESTING.md 等）
-├── scripts/                 # 自动化脚本（bump_version / pre_release_check / ci_check / trash）
+├── scripts/                 # 自动化脚本（bump_version / pre_release_check / ci_check / check_dev_docs / trash）
 ├── .github/workflows/       # CI 与自动发布
 ├── version.json             # 版本（version）与模板版本（template_version）单一事实来源
 ├── dist/                    # 发布产物（构建/打包输出，不进 git，Release 自动 attach）

@@ -87,7 +87,7 @@ def _valid_name(name: str) -> bool:
 
 def _valid_branch(branch: str) -> bool:
     """git 分支名基本合法性检查（不保证与所有 git 版本完全一致）。"""
-    if not branch or branch.startswith('-') or branch.endswith('/') or branch.endswith('.'):
+    if not branch or branch.startswith(('-', '/')) or branch.endswith(('/', '.')):
         return False
     if '..' in branch or '@{' in branch or '//' in branch or ' ' in branch:
         return False
@@ -222,6 +222,9 @@ def main() -> int:
         print(f'[警告] 项目名不是 kebab-case（将按原样使用，建议后续改名为 kebab-case）: {name}')
     if not _valid_branch(args.branch):
         print(f'[错误] --branch 不是合法 git 分支名: {args.branch}')
+        return 1
+    if args.remote and args.remote.startswith('-'):
+        print(f'[错误] --remote 不能以 - 开头（以免被误解析为选项）: {args.remote}')
         return 1
     desc = args.desc.strip() or name
     author = args.author.strip()
