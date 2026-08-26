@@ -66,9 +66,9 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   页面原型/设计稿落 `private/dev/prototype/`（目录随初始化存在，`README.md` 含
   使用规则，一文件一原型）——向用户展示获确认后才实施（开发工作流「可视化
   确认」）。
-- **阶段卡展示**：每次对话展示阶段卡（模块·子阶段/正在完成/已完成/下一步/状态 +
-  生命周期合规清单），以 `private/dev/STATUS.md`「📇 阶段卡」为单一真相；展示时缩写
-  附中文翻译（对照表见模板 `private/AGENTS.md`「缩写对照」）。
+- **阶段卡展示**：每次对话展示合并紧凑阶段卡（标题含状态 + 横置阶段线当前节点
+  加粗 + 合规两行 + 反定型条件块仅关键/风险节点；全中文不显示字母缩写），以
+  `private/dev/STATUS.md`「📇 阶段卡」为单一真相。
 - **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
   `codex_2026-08-25_2330`），任务结束时用 `scripts/trash.py` 整体进回收站。
 - **模板版本与升级**：项目根 `version.json` 的 `template_version` 记录初始化时的
@@ -113,8 +113,9 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
    - `docs/{FLOW,USER-GUIDE,LOADING}.md` 已生成（流程状态机图 / 用户指南 / 加载规则表）；
    - `private/dev/{prd,rfc,adr,research}/INDEX.md` 已生成（开发前四登记册）；
    - `private/dev/prototype/README.md` 已生成（页面原型/设计稿目录说明）；
-   - `private/dev/STATUS.md`「📇 阶段卡」字段齐全（当前模块 P1-P5/子阶段/正在完成/
-     已完成/下一步/状态 + 生命周期合规清单 + 任务影响清单含要读文档清单）；
+   - `private/dev/STATUS.md`「📇 阶段卡」为合并紧凑模块（标题含状态 + 横置阶段线
+     当前节点加粗 + 合规两行（✓ 已完成 / ⏳ 待完成）+ 反定型条件块；全中文不显示
+     字母缩写）+ 任务影响清单含要读文档清单；
    - `python scripts/check_dev_docs.py` 退出码 0（空登记册应通过）；
    - `python scripts/trash.py --help` 退出码 0。
 4. **收尾与汇报**：确认 `.gitignore` 生效（`git check-ignore private/` 应命中）；

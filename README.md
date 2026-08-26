@@ -23,7 +23,8 @@
 │   └── EXPERIENCE-TO-KB.md   # 可沉淀进知识库的经验（不混入模板内部）
 ├── scripts/
 │   ├── sync_template.py      # 同步脚本：project-template/ → skills/init-project/assets/
-│   └── verify_installed_copies.py  # 安装副本全量哈希 + 版本哨兵校验
+│   ├── verify_installed_copies.py  # 安装副本全量哈希 + 版本哨兵校验
+│   └── smoke_init.py         # 开箱即用冒烟自检（发版前必绿，维护约定 #10）
 ├── project-template/         # 通用项目模板（权威副本，人类可读）
 │   ├── AGENTS.md             #   Agent 接手入口（公开版，随仓库发布）
 │   ├── README.md / LICENSE / version.json / .gitignore / .gitattributes / .editorconfig
@@ -107,9 +108,9 @@
     调研（RESEARCH）/架构决策（ADR）四登记册
     （`private/dev/{prd,rfc,adr,research}/`，各含 INDEX.md 状态机/编号/模板骨架，
     S 档可跳过）；`scripts/check_dev_docs.py` 自动校验登记册一致性 + STATUS 快照
-    （并入 ci_check 与发布前检查）；每次对话展示**阶段卡**（模块·子阶段/正在完成/
-    已完成/下一步/状态 + 生命周期合规清单，以 `private/dev/STATUS.md`「📇 阶段卡」
-    为单一真相；缩写附中文翻译）。
+    （并入 ci_check 与发布前检查）；每次对话展示**合并紧凑阶段卡**（标题含状态 +
+    横置阶段线当前节点加粗 + 合规两行 + 反定型条件块仅关键/风险节点；全中文不显示
+    字母缩写，以 `private/dev/STATUS.md`「📇 阶段卡」为单一真相）。
 14. **图可视化确认（先出图再确认）**：涉及界面/交互、架构/结构、流程/状态的改动
     先出图——流程图随 PRD/RFC、架构图随 RFC/ADR（Mermaid/SVG 单文件同目录）、
     页面原型/设计稿落 `private/dev/prototype/`（轻量目录，随初始化存在）——向
@@ -211,9 +212,12 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   全部已安装副本重装并哈希复核。
 - **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.4.1.patch0；
   版本号见 `version.json`）。
-- **阶段卡展示（dogfood）**：工作区汇报/阶段落盘/收尾展示阶段卡（模块·子阶段/
-  正在完成/已完成/下一步/状态 + 生命周期合规清单，以 docs/STATUS.md「📇 阶段卡」
-  为准；展示时缩写附中文翻译）。
+- **阶段卡展示（dogfood）**：工作区汇报/阶段落盘/收尾展示合并紧凑阶段卡（标题含
+  状态 + 横置阶段线当前节点加粗 + 合规两行 + 反定型条件块仅关键/风险节点；全中文
+  不显示字母缩写），以 docs/STATUS.md「📇 阶段卡」为单一真相。
+- **发布前开箱即用自检**：模板发布前运行 `python scripts/smoke_init.py` 且全绿
+  （初始化 + 回读 + 冒烟项目内骨架脚本自检四连）；改展示格式/字段类红线时另须
+  grep 枚举「断言面」影响点（脚本字面断言 / 输出文案 / init-steps 清单与路线图）。
 - **索引/未发版区段纪律**：「新条目在前」的文档（EXP-KB 索引与正文、CHANGELOG
   未发版区段）新增条目须**正文与索引同时置顶**；收尾核对索引顺序、日期、未发版
   条目与 `git log` 一致。

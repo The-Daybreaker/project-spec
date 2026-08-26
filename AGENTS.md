@@ -95,6 +95,14 @@
    状态 + 横置阶段线当前节点加粗 + 合规已完成/待完成两行 + 反定型紧凑内容（仅关键/
    风险节点）；**只用中文名称、不显示字母缩写**），以 `docs/STATUS.md`「📇 阶段卡」
    为单一真相。
+10. **发布前开箱即用自检（强制，AUDIT-2026-08-27 机制）**：模板发布前必须运行
+    `python scripts/smoke_init.py` 且全绿——初始化临时项目 + 占位符回读 + 冒烟项目
+    内骨架脚本自检四连（`ci_check` / `check_dev_docs` / `trash --help` /
+    `pre_release_check --allow-placeholder`），防止「新项目首跑即红」漏到发布后。
+    凡改**展示格式/字段类红线**（如阶段卡），还须 grep 枚举「断言面」影响点并确认
+    零残留：模板脚本的字面断言（`check_dev_docs.py` 等）、`init_project.py` 输出
+    文案、`init-steps.md` 校验清单与落地路线图（自动化校验只证文件级覆盖/正文指纹，
+    证不了语义级过时）。
 
 ## 【项目专用】本机环境
 
@@ -146,6 +154,7 @@
 | `install-targets.json` | 项目专用 | 机器可读安装表：两 skill 在各 agent 用户级 skill 目录的位置（单一事实来源） |
 | `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → skills/init-project/assets/ + 全链校验） |
 | `scripts/verify_installed_copies.py` | 项目专用 | 安装副本校验：读安装表 → 逐目录 × 逐 skill 全量 SHA-256 + 版本哨兵（随 sync 并入发版链） |
+| `scripts/smoke_init.py` | 项目专用 | 开箱即用冒烟自检：初始化临时项目 + 回读校验 + 冒烟项目内骨架脚本自检四连（发版前必绿，维护约定 #10） |
 | `project-template/` | 通用 | 权威模板（同步到 `skills/init-project/assets/`） |
 | `project-template/private/dev/PHASES.md` | 通用 | 阶段模块权威定义（I/O/产物/生命周期/16节点映射/切换规则/需求引导/文档映射） |
 | `skills/` | 通用 | skill 目录（`init-project/`：初始化 skill；`agent-rules/`：精简版全局规范） |

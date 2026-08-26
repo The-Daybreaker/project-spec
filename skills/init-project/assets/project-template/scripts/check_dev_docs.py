@@ -16,7 +16,8 @@ so the pre-development docs cannot silently drift:
   5) INDEX.md table rows: every doc file is registered, every row references an
      existing file, INDEX status matches the doc header status;
   6) private/AGENTS.md D-xxx entries: "详见 ADR-XXXX" references exist;
-  7) STATUS.md snapshot: 阶段卡 + 任务影响清单（含要读文档清单）+ 生命周期合规清单
+  7) STATUS.md snapshot: 阶段卡 + 任务影响清单（含要读文档清单）+ 合规两行锚点
+     （生命周期合规清单以「✓（已完成）/⏳（待完成）」承载，合并紧凑阶段卡格式）
      present, 当前阶段 module in P1-P5 (phase carrier for recovery / observability).
 
 Empty registers (INDEX.md only) pass, so freshly initialized projects are fine.
@@ -277,9 +278,17 @@ def _check_status(problems: list) -> None:
             "STATUS.md 当前阶段 section missing 模块 P1-P5 (phase module; "
             "see template STATUS.md skeleton / private/dev/PHASES.md)"
         )
-    for block in ("阶段卡", "任务影响清单", "要读文档清单", "生命周期合规清单"):
+    for block in ("阶段卡", "任务影响清单", "要读文档清单"):
         if block not in text:
             problems.append(f"STATUS.md missing {block} section/field (snapshot skeleton)")
+    # 生命周期合规清单：合并紧凑阶段卡以「合规两行」承载（见 PHASES.md §5 与
+    # STATUS 骨架）；锚点必须与骨架用词一致，改格式红线时须同步本断言。
+    for anchor in ("✓（已完成）", "⏳（待完成）"):
+        if anchor not in text:
+            problems.append(
+                f"STATUS.md missing compliance anchor {anchor!r} "
+                "(lifecycle checklist in merged compact phase card; see PHASES.md §5)"
+            )
 
 
 def main() -> int:

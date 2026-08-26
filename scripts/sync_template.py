@@ -246,6 +246,14 @@ def main() -> int:
         # 增量镜像：删除 DST 多余文件、复制 SRC 新增/变更文件。
         # （不用 rmtree+copytree 全量重建：批量删除会触发安全钩子确认，且增量更安全。）
         if DST.exists():
+            # 清理 DST 中命中排除名（__pycache__/.git 等）的残留：比对与复制
+            # 逻辑都跳过这些名字，若不在这里清理，一旦进入镜像便永残留
+            # （AUDIT-2026-08-27 F5）。
+            for p in DST.rglob("*"):
+                if p.is_file() and any(
+                    part in SKIP_NAMES for part in p.relative_to(DST).parts
+                ):
+                    p.unlink()
             for p in _collect(DST):
                 rel = p.relative_to(DST)
                 if not (SRC / rel).exists():
