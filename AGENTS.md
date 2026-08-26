@@ -37,7 +37,7 @@
   （同步脚本）、`project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill
   目录）：`init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.4.1.patch0）+ git tag `vX.Y.Z.patchN`；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.4.2.patch0）+ git tag `vX.Y.Z.patchN`；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
@@ -62,7 +62,7 @@
    `skills/init-project/SKILL.md metadata.version`、
    `skills/agent-rules/SKILL.md metadata.version` 与
    `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
-  版本号**（如 `1.4.1.patch0` / `1.4.2.patch0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+  版本号**（如 `1.4.2.patch0` / `1.4.3.patch0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
    `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；
    模板内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
    `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、

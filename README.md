@@ -201,7 +201,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   `skills/init-project/SKILL.md metadata.version`、
   `skills/agent-rules/SKILL.md metadata.version` 与
   `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
-  版本号**（如 `1.4.1.patch0` / `1.4.2.patch0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+  版本号**（如 `1.4.2.patch0` / `1.4.3.patch0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
   `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；模板
   内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
   `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
@@ -210,7 +210,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （`INIT_STEPS_COVERAGE`，缺失即拦截）；改模板/发版后按「skill 覆盖度复查」核对
   SKILL 摘要 / init-steps 校验清单与路线图 / agent-rules（如涉红线）/
   全部已安装副本重装并哈希复核。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.4.1.patch0；
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.4.2.patch0；
   版本号见 `version.json`）。
 - **阶段卡展示（dogfood）**：工作区汇报/阶段落盘/收尾展示合并紧凑阶段卡（标题含
   状态 + 横置阶段线当前节点加粗 + 合规两行 + 反定型条件块仅关键/风险节点；全中文
