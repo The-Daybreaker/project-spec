@@ -37,7 +37,7 @@
   （同步脚本）、`project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill
   目录）：`init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.4.0.patch0）+ git tag `vX.Y.Z.patchN`；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.4.1.patch0）+ git tag `vX.Y.Z.patchN`；模板自身变更历史见
   `docs/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
@@ -62,7 +62,7 @@
    `skills/init-project/SKILL.md metadata.version`、
    `skills/agent-rules/SKILL.md metadata.version` 与
    `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
-   版本号**（如 `1.4.0.patch0` / `1.4.1.patch0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
+  版本号**（如 `1.4.1.patch0` / `1.4.2.patch0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
    `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；
    模板内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
    `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
@@ -92,8 +92,9 @@
    条目必须**正文与索引同时置顶**；任务收尾/汇报前核对：索引顺序与正文一致、
    「最后更新」日期与最新提交一致、未发版区段与 `git log <tag>..HEAD` 逐条比对。
 9. **流程提示（dogfood）**：工作区汇报/阶段落盘/收尾展示**合并紧凑阶段卡**（标题含
-   状态 + 横置阶段线当前节点加粗 + 合规已完成/待完成两行 + 反定型紧凑内容；**只用
-   中文名称、不显示字母缩写**），以 `docs/STATUS.md`「📇 阶段卡」为单一真相。
+   状态 + 横置阶段线当前节点加粗 + 合规已完成/待完成两行 + 反定型紧凑内容（仅关键/
+   风险节点）；**只用中文名称、不显示字母缩写**），以 `docs/STATUS.md`「📇 阶段卡」
+   为单一真相。
 
 ## 【项目专用】本机环境
 
