@@ -125,6 +125,11 @@
 - agent 安装目标：六处（codex / dsh / workbuddy / trae-cn / qwenworkcn / qoder-cn），
   由 `install-targets.json` 单一事实来源承载 + `verify_installed_copies.py` 全量
   哈希+版本哨兵校验（qwenworkcn 替换原 qoderworkcn，P1-1）。
+- agent 提问与共识确认机制（红线 17，2026-08-27）：禁面板（禁止问题面板/选择面板类
+  UI）/ 回答≠确认（回答=新信息输入并重检问题空间）/ 共识快照+逐项表态 / 反定型 6 项
+  关键/风险节点展示（平时内部思考）/ 确认不锁定（需求阶段内新信息可回审，PRD 定稿
+  后走变更流程=开新 PRD 取代）；本工作区按轻量流程实施（不建 DESIGN 文件，ADR-0001
+  确认后直接进入实现）；详见 `docs/ADR-0001-agent-questioning.md`。
 
 ## 文档职责
 
