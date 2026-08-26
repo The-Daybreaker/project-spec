@@ -13,41 +13,43 @@
 
 ## 当前阶段
 
-- 模块：P4 审计验证（节点 12-13）｜ 子阶段：独立审计+修复｜ 状态：✅ 已收尾
+- 模块：P3 开发（节点 10-11）｜ 子阶段：dogfood 修复｜ 状态：🔄 进行中
 
 ## 📇 阶段卡（最新）
 
-| 当前模块 | P4 审计验证（12-13） |
+| 当前模块 | P3 开发（10-11）· dogfood 任务 |
 |---|---|
-| 当前子阶段 | 独立审计（P0×1/P1×2/P2×3 全修复）+ 全链复验 |
-| 正在完成的任务 | P4 完成，P3 产物已审计通过 |
-| 已完成任务 | 1. P3 开发全链验证全绿（sync 源侧/quick_validate×2/py_compile/check_dev_docs/冒烟） 2. 独立审计：WORKLOG 残留清零、流程位置→阶段卡统一、LOADING 路径修正、sync 空目录清理 3. 提交 0b0b81f(P3) + b9cba3b(P4 修复) 4. 经验沉淀（红线 9） |
-| 下一步（子阶段/模块） | P5 交付发布（14-16）——待用户确认：v1.4.0 minor 递增 + 六处副本重装 |
-| 阶段状态 | ✅ 已收尾 |
+| 当前子阶段 | dogfood 修复（审计 P2×2 + STATUS 校准） |
+| 正在完成的任务 | 修复 STATUS 预告/流程位置字段 + init-steps 补注 |
+| 已完成任务 | 1. 发布前审计（P0=0/P1=0/P2=2，可 dogfood） 2. P1 需求 S 档引导确认（用户已确认） 3. STATUS 快照切换到 dogfood 任务 |
+| 下一步（子阶段/模块） | init-steps 补注 → P4 审计验证 |
+| 阶段状态 | 🔄 进行中 |
 
 ## ✅ 生命周期合规清单
 
 | 生命周期行为 | 状态 |
 |---|---|
-| 受影响文档已同步（红线 12） | ✓ |
+| 受影响文档已同步（红线 12） | 🔄 进行中（STATUS 已切换） |
 | STATUS 快照已落盘（覆盖更新） | ✓ |
-| 本阶段 git 提交已完成（主仓库 + private 子 git，D14） | ✓（0b0b81f + b9cba3b） |
-| 产物质量校验通过（sync/check_dev_docs/冒烟） | ✓（全绿） |
-| 阶段卡已展示 + 决策型已获确认 | ✓（P1/P2 已确认；P3/P4 执行型） |
-| 经验沉淀候选已写入（红线 9） | ✓（EXP-TO-KB 已置顶） |
+| 本阶段 git 提交已完成（主仓库 + private 子 git，D14） | 🔄 修复完成后提交 |
+| 产物质量校验通过（check_dev_docs/sync） | ⏳ 待 P4 |
+| 阶段卡已展示 + 决策型已获确认 | ✓（P1 已确认；P3 执行型） |
+| 经验沉淀候选已写入（红线 9） | ⏳ 收尾时执行 |
 
 ## 任务影响清单
 
-- 影响文件：工作区 `docs/{STATUS,FLOW,USER-GUIDE,LOADING}.md`、`AGENTS.md`、`README.md`、`docs/CHANGELOG.md`；模板 `project-template/{AGENTS.md,docs/*,private/AGENTS.md,private/dev/*,scripts/check_dev_docs.py}`；`scripts/sync_template.py`；`skills/init-project/{SKILL.md,references/init-steps.md}`；`skills/agent-rules/*`（条件）
-- 依赖文档：`project-template/private/AGENTS.md`（16 节点/红线/发布流程）、`project-template/docs/DOCS.md`（文档地图）、`skills/init-project/SKILL.md`（加载规则范式）
-- 要读文档清单（恢复时逐份读）：根 `AGENTS.md` → `project-template/AGENTS.md` → `project-template/private/AGENTS.md` → 本文件 → `PHASES.md`（模板）→ 计划文件 `<用户主目录>\.workbuddy\plans\<计划名>.md`
+- 影响文件：`docs/STATUS.md`、`skills/init-project/references/init-steps.md`
+- 依赖文档：发布前审计报告（P2×2）、`docs/FLOW.md`（阶段卡规范）
+- 要读文档清单（恢复时逐份读）：根 `AGENTS.md` → 模板 AGENTS×2 → 本文件 → `PHASES.md`（模板）
 
 ## 下一阶段输入预告
 
 - 下一阶段：P4 审计与验证（12-13）
-- 输入：P3 产出的全部新文档 + 脚本改动
-- 预期产物：审计结论 + 全链验证通过记录（sync 0 差异 / quick_validate / py_compile / 副本哈希 / init 冒烟）
+- 输入：P3 修复产物（STATUS 校准 + init-steps 补注）
+- 预期产物：check_dev_docs 0 issue + sync 源侧全绿（安装副本过期除外）
 
 ## 流程位置
 
-- 模块：P3 开发（10-11）· 子阶段「骨架落地」；已完成：P1 需求 → P2 方案 → P3.1 骨架落地；下一步：P3.2 AGENTS 瘦身 → P3.3 脚本适配 → P3.4 skill 同步 → P4 审计验证（缩写附中文翻译：PRD=产品需求文档、RFC=技术方案、ADR=架构决策记录）
+- 模块：P3 开发（10-11）· 子阶段「dogfood 修复」；已完成：P1 需求（S 档引导确认）→
+  P3 修复进行中；下一步：P4 审计验证 → P5 交付发布（缩写附中文翻译：PRD=产品需求
+  文档、RFC=技术方案、ADR=架构决策记录）

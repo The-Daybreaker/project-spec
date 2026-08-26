@@ -103,7 +103,8 @@ git -C private commit -m "docs: private v0.0.1 - init"
 - [ ] 根 `AGENTS.md` 存在且 `{{PROJECT_NAME}}` 已替换
 - [ ] `private/AGENTS.md` 存在（版本为 `0.0.1`，待用户补充「本机环境」「用户决策」）
 - [ ] 根/私有 `AGENTS.md` 含「流程提示」与「缩写对照」（v1.2.0 特性：每次对话
-      展示流程位置、缩写附中文翻译）
+      展示流程位置、缩写附中文翻译；v1.4.0 起流程位置升级为**阶段卡**，见
+      `private/dev/STATUS.md`「📇 阶段卡」）
 - [ ] `version.json`：`version` = `0.0.1`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1`
 - [ ] `version.json`：`template_version` 与 skill/模板版本一致（以
       `assets/project-template/version.json` 的 `template_version` 字段为准）
