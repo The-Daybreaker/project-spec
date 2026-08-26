@@ -202,7 +202,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   （`INIT_STEPS_COVERAGE`，缺失即拦截）；改模板/发版后按「skill 覆盖度复查」核对
   SKILL 摘要 / init-steps 校验清单与路线图 / agent-rules（如涉红线）/
   全部已安装副本重装并哈希复核。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.3.2；
+- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.4.0；
   版本号见 `version.json`）。
 - **阶段卡展示（dogfood）**：工作区汇报/阶段落盘/收尾展示阶段卡（模块·子阶段/
   正在完成/已完成/下一步/状态 + 生命周期合规清单，以 docs/STATUS.md「📇 阶段卡」

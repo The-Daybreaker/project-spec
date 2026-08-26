@@ -4,7 +4,7 @@
 > 记录模板自身每次发版变更，与根 `version.json` 与 git tag 对齐；项目升级时据此比对
 > （见 `project-template/docs/UPGRADE.md`）。
 
-## 未发版变更（v1.4.0 候选）
+## v1.4.0（2026-08-26）
 
 > 整体架构重构（模块化改造）试点：需求清单 v1 七条（阶段模块化/可观察性/渐进式披露/
 > 中断恢复/用户文档/需求引导方法论/流程图状态机）+ 决策 D1-D15（2026-08-26 引导式
@@ -23,6 +23,11 @@
   阶段↔文档映射（披露隔离）；需求引导方法论（禁抛选项）。
 - **git 提交节奏（D14）**：每阶段/子阶段完成落盘后即提交（主仓库 + private 子 git），
   提交信息带阶段标识。
+- **工程改进**：sync_template.py 增量镜像改造（避免 rmtree 批量删除钩子 + 空目录
+  清理）；check_dev_docs.py 新增 STATUS 快照校验；agent-rules description 单行化。
+- **验证**：全链绿（sync 源侧 / quick_validate×2 / py_compile / check_dev_docs /
+  init 冒烟）+ 发布前独立审计（P0=0/P1=0/P2=2）+ dogfood 一轮（P1→P3→P4 走通，
+  阶段卡/STATUS 快照/决策型确认/阶段提交/合规清单均按预期）。
 
 ## v1.3.2（2026-08-26）
 
