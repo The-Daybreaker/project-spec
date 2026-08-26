@@ -1,6 +1,6 @@
 # PRD-0001 — agent 提问与共识确认机制重设计（模板【通用】）
 
-> 状态：草稿 | 优先级：P1 | 创建：2026-08-26 | 定稿：— | 实现版本：— | Supersedes：—
+> 状态：已定稿 | 优先级：P1 | 创建：2026-08-26 | 定稿：2026-08-27 | 实现版本：— | Supersedes：—
 > 位置说明：本工作区（母项目）无 `private/dev` 登记册，PRD 落于 `docs/`；
 > 模板骨架（`project-template/private/dev/prd/`）保持不动。
 
@@ -110,4 +110,4 @@ Tessl）等散点实践，但**未见**把「禁面板 + 开放提问 + 回答�
 ## 关联（RFC / ADR / RESEARCH）
 
 - RESEARCH：`docs/RESEARCH-0001-agent-questioning.md`
-- ADR：待 P2（机制级红线，必走）
+- ADR：`docs/ADR-0001-agent-questioning.md`（P2 创建）
