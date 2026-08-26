@@ -4,42 +4,43 @@
 > 只存**最新状态**；历史由 git 承担（`git log` 本文件）。阶段完成/收尾时**覆盖**更新，不追加。
 > 新对话/压缩后按红线 15 重读：根 `AGENTS.md` → 模板 `AGENTS.md` → `private/AGENTS.md` → 本文件 → 「任务影响清单 → 要读文档清单」。
 
-- 最后更新：2026-08-27 00:55
+- 最后更新：2026-08-27 01:14
 
 ## 当前任务
 
-- 需求：阶段卡/合规/反定型合并紧凑模块 + 红线 17 提问与共识确认机制（已完成）
-  ——反定型为条件块（仅关键/风险节点）；本次发版 v1.4.1.patch0（2026-08-27）收口。
-- 目标/验收：模板【通用】+ skills 全链改造 → 版本同步 v1.4.1.patch0 → 六处副本重装
-  + 全链验证绿 → 本地 tag v1.4.1.patch0（无远端，push/Release 待远端配置）。
+- 需求：第九轮全面审计（专业审计视角，实测优先；已完成审计、待确认修复）
+- 目标/验收：全链实测取证（同步链/副本校验/初始化冒烟/冒烟项目骨架脚本自检/
+  版本与安全扫描）→ 审计报告 `docs/AUDIT-2026-08-27.md` → 发现
+  P1×1 / P2×2 / P3×2 待用户确认修复方案后实施并复检。
 
 ## 当前阶段
 
-- 模块：交付发布阶段（节点 14-16）｜ 子阶段：发布收口｜ 状态：✅ 已完成（本地发版）
+- 模块：审计验证阶段（节点 12-13）｜ 子阶段：审计结论与修复放行 ｜ 状态：🔄 进行中（等待用户确认修复范围）
 
 ## 📇 阶段卡（最新）
 
-## 📍 阶段卡（✅ 已完成 · 已发布 v1.4.1.patch0）
+## 📍 阶段卡（🔄 进行中 · 等待确认）
 
-交付发布阶段：14 展示与提交 → **15 发布** → 16 经验沉淀与汇报
+审计验证阶段：12 自审与独立验证 → **13 验证与结论**
 
 合规：
-✓（已完成）：文档同步；状态落盘；阶段提交；质量校验；阶段确认；经验沉淀
-⏳（待完成）：无
+✓（已完成）：文档同步；状态落盘；质量校验；经验沉淀
+⏳（待完成）：阶段提交；修复实施与复检（等待用户确认）
 
 ## 任务影响清单
 
-- 影响文件：模板 `project-template/{AGENTS.md, private/AGENTS.md,
-  private/dev/{PHASES,STATUS}.md, docs/audit-checklist.md}`、
-  `skills/agent-rules/SKILL.md`、`skills/init-project/assets/project-template/`（镜像）、
-  工作区 `AGENTS.md`、`docs/{STATUS,CHANGELOG,EXPERIENCE-TO-KB}.md`、六处安装副本（重装）
-- 依赖文档：共识确认（阶段卡合并模块设计：注释修订 2 轮 + 用户确认）
-- 要读文档清单（恢复时逐份读）：根 `AGENTS.md` → 模板 `project-template/AGENTS.md` →
-  模板 `project-template/private/AGENTS.md` → 本文件 → 模板
-  `project-template/private/dev/PHASES.md`
+- 影响文件：`docs/AUDIT-2026-08-27.md`（新增）、`docs/STATUS.md`（本文件）、
+  `docs/EXPERIENCE-TO-KB.md`（新增条目）、`docs/CHANGELOG.md`（未发版区段）；
+  待修复（确认后）：模板 `scripts/check_dev_docs.py`、`private/dev/STATUS.md`
+  骨架、`skills/init-project/{scripts/init_project.py,references/init-steps.md}`、
+  工作区 `docs/FLOW.md`、`docs/PRD-0001-agent-questioning.md`、sync 镜像排除项
+- 依赖文档：审计报告 `docs/AUDIT-2026-08-27.md`（证据台账与修复建议）
+- 要读文档清单（恢复时逐份读）：根 `AGENTS.md` → 本文件 →
+  `docs/AUDIT-2026-08-27.md` → 模板 `project-template/AGENTS.md`
 
 ## 下一阶段输入预告
 
-- 下一阶段：无（v1.4.1.patch0 已本地发布）
-- 输入：未发版变更区段（v1.4.1 之后，当前为空）；如需 push/Release 先配置 git remote
-- 预期产物：下次发版 `v1.4.2.patch0` 或 `v1.4.1.patch1`（按变更类型）
+- 下一阶段：修复实施（按确认的 F1-F5 范围，属新一轮开发阶段）
+- 输入：用户对审计报告修复建议的表态（全修 / 部分修 / 暂缓）
+- 预期产物：修复提交 + 冒烟自检四连复检绿 + 六处副本重装（如涉及
+  `skills/`）+ 全链验证 + 发版 `v1.4.1.patch1` 或 `v1.4.2.patch0`（按变更类型）
