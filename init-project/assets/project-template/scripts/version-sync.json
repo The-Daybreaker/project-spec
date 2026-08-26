@@ -1,7 +1,0 @@
-{
-  "package.json": {"type": "json", "key": "version"},
-  "Cargo.toml": {"type": "regex", "pattern": "(?m)^version\\s*=\\s*\"[^\"]+\"", "replacement": "version = \"{version}\""},
-  "src-tauri/Cargo.toml": {"type": "regex", "pattern": "(?m)^version\\s*=\\s*\"[^\"]+\"", "replacement": "version = \"{version}\""},
-  "src-tauri/tauri.conf.json": {"type": "json", "key": "version"},
-  "pyproject.toml": {"type": "regex", "pattern": "(?m)^version\\s*=\\s*\"[^\"]+\"", "replacement": "version = \"{version}\""}
-}

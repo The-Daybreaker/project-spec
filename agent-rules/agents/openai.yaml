@@ -1,4 +1,0 @@
-interface:
-  display_name: "Agent Universal Rules (Lite)"
-  short_description: "Global agent behavior rules (derived from the universal project template); loaded only for non-project, non-chat tasks."
-  default_prompt: "Follow the agent-rules skill (general behavior rules) for this task."
