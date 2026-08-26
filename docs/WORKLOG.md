@@ -16,11 +16,11 @@
   relative_to / 输入校验与安全 / 校验覆盖冗余 / 模块标注 / 细节一致性 / 版本示例。
 - 流程位置：01 需求提出 → 10 确认开工 直达（M 档修复任务，无开发前登记册）；
   已完成：01 需求提出（审计报告交付）、10 用户确认（双产品=替换 .qwenworkcn、
-  范围=P1+P2+P3 全部）、11 实施（t2 模板内改动 / t4 机制化 / t3 工作区文档 /
-  t6 版本递增全部完成）、13 验证（t5 补装 + t7 发版链验证全过：sync 36 文件
-  0 差异 / validate×2 / py_compile×8 / 冒烟 / pre_release 占位拦截预期 +
-  allow-placeholder 全绿 / 六处副本哈希复核）；下一步：14 展示提交 + 15 发布
-  （t8 提交发版：private 骨架强制跟踪 + 主仓库 commit + tag v1.2.2）。
+  范围=P1+P2+P3 全部）、11 实施（t2/t4/t3/t6 全部完成）、12 自动审计 + 13 验证
+  （t5 补装 + t7 发版链验证全过：sync 36 文件 0 差异 / validate×2 / py_compile×8 /
+  冒烟 / pre_release 占位拦截预期 + allow-placeholder 全绿 / 六处副本哈希复核）、
+  14 展示提交 + 15 发布（t8 提交 01435a0 + tag v1.2.2）、16 沉淀汇报（t9 收尾
+  完成）；本任务完结，待用户确认后归档。
 - 计划步骤：
   1. 启动前置：WORKLOG 切换（本步）+ CHANGELOG 未发版区段
   2. 模板内改动（P2-1~P2-4 + P3 组B 组C）
@@ -29,7 +29,7 @@
   5. ✅ P1-1 落地：装 .qwenworkcn 两 skill + 哈希复核 + 清 .qoderworkcn 副本 + 安装表更新
   6. ✅ 版本四件套递增 1.2.1→1.2.2
   7. ✅ 发版链验证：sync → validate×2 → py_compile×8 → 冒烟 → pre_release → grep
-  8. ⏳ 提交发版：private 骨架强制跟踪 + 主仓库 commit + tag v1.2.2（需权限升级）
+  8. ✅ 提交发版：private 骨架强制跟踪 + 主仓库 commit 01435a0 + tag v1.2.2
   9. 收尾：WORKLOG 校准 + EXP-KB 沉淀 + 索引核对 + 汇报
 
 ## 阶段记录
@@ -351,6 +351,16 @@
   清理 __pycache__、冒烟产物移入 _trash/trae_2026-08-26_1351 | 六处 agent 目录 +
   多文件 | sync / validate / py_compile / 冒烟 / pre_release / grep 全过 |
   t8 提交发版 |
+| 52 第七轮审计·t8 提交发版 + t9 收尾 | ✅ | t8：核实 private 子 git 不存在属既定
+  设计（工作区不建 private 子 git，`git -C project-template/private` 落回主仓库
+  正常；private 骨架凭 `git add -f` 强制跟踪在提交内）；CHANGELOG 未发版区段
+  收口为正式 v1.2.2 条目（IDE 内存视图覆盖两处编辑，重做 + 整篇回读确认落盘，
+  期间一次短块替换产生脏行已清理）；发布提交 01435a0（49 files，+748/−134；
+  审计报告文件不入仓库，保持未跟踪）+ 附注 tag v1.2.2 指向 HEAD。t9：WORKLOG
+  校准（本阶段 + 待办/遗留完结）、EXP-KB 沉淀 3 条（sync 先于安装 / IDE 覆盖
+  落盘核对 / 沙箱边界实测 + 放行协作）双置顶、索引核对（CHANGELOG 无未发版
+  残留、EXP-KB 索引与正文一致、工作树干净） | docs/CHANGELOG.md docs/WORKLOG.md
+  docs/EXPERIENCE-TO-KB.md | git log/tag/status + 回读核对 | 汇报 |
 
 ## 待办/遗留
 
@@ -385,6 +395,8 @@
       六处重装哈希复核
 - [x] 本任务（发版 v1.2.1）完结：提交 946b8ac + 附注 tag v1.2.1；六处重装哈希
       一致（收尾提交 b1607fc）
+- [x] 本任务（第七轮全面审计修复 v1.2.2）完结：提交 01435a0 + 附注 tag v1.2.2；
+      六处副本 v1.2.2 哈希复核一致
 
 ## 历史记录
 
