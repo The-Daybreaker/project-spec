@@ -8,26 +8,22 @@
 
 ## 当前任务
 
-- 需求：模板 v1.3.1（patch，用户已确认）——**src/ 代码区实体化与分区约定**：
-  `src/` 从文档提及提升为实体代码区（`src/.gitkeep` 随初始化存在），全部业务源码
-  入 `src/`（子目录由项目按技术栈自定），根目录（工程区：AGENTS/docs/scripts/
-  .github/private 等）不直接放业务代码，提高模板通用性；同步 init-steps 校验清单
-  + INIT_STEPS_COVERAGE + UPGRADE 迁移要点，发版 v1.3.1。
-- 流程位置：01 需求提出 → 05 PRD 定稿（src 分区方案经用户确认）→ 10 确认开工
-  （v1.3.1 已确认）；当前 11 实施（u1 切换 → u2 模板改动 → u3 init-project →
-  u4 版本递增 → u5 文档 → u6 验证 → u7 提交/发版/收尾）。
+- 需求：v1.3.1 发版后全面审计（独立子代理，不共享本对话上下文）——按工作区
+  AGENTS 维护约定与模板 `docs/audit-checklist.md` 逐项核对：自动化验证（sync 38
+  文件 0 差异 + 六处副本哈希、quick_validate ×2、py_compile、版本/占位符 grep、
+  git log/tag/status）+ 文档一致性（CHANGELOG 新在前、EXP-KB 双置顶、WORKLOG
+  硬事实、UPGRADE 迁移要点、红线 16 指纹、src 分区约定一致）；输出 P0-P3 清单，
+  修复 + 复检后汇报。
+- 流程位置：01 需求提出（v1.3.1 已完成发版）→ 12 自动审计；当前 12 自动审计
+  （独立子代理执行中）；后续 13 验证 → 16 汇报。
 - 计划步骤：
-  1. 启动前置：WORKLOG 切换（本步）+ CHANGELOG 未发版区段（v1.3.1 候选）
-  2. 模板内改动：`src/.gitkeep` 实体化 + 分区约定（根/私有 AGENTS「代码区」描述、
-     模板 README 结构树补 src/、DESIGN 项目形态小节）
-  3. init-project：INIT_STEPS_COVERAGE 补 src/.gitkeep + init-steps 校验清单
-     补 src/ 检查项
-  4. 版本递增 1.3.0 → 1.3.1（根/project-template version.json、SKILL metadata
-     ×2、继承矩阵版本表、AGENTS/README 当前版本；grep 无残留）
-  5. UPGRADE 补 v1.3.1 迁移要点 + CHANGELOG 未发版区段登记
-  6. 验证链：sync / quick_validate×2 / py_compile / 冒烟（验证 src/.gitkeep 生成）
-  7. 六处副本重装 + 全量哈希 + 提交 + tag v1.3.1 + 收尾（EXP-KB / WORKLOG 校准）
-- 状态：✅ 本任务完结（发布提交 + 附注 tag v1.3.1），待用户确认后归档。
+  1. WORKLOG 当前任务切换（本步）
+  2. 派独立子代理全面审计（不共享上下文，只给路径/清单/验证命令）
+  3. 汇总审计发现，逐项修复（P0/P1 必清，P2/P3 记录待定）
+  4. 复检（修复影响面大时再次审计）+ git 状态确认
+  5. WORKLOG 校准 + EXP-KB 沉淀（如适用）+ 汇报
+- 状态：✅ 本任务完结（审计结论通过，P0/P1 零项；P2/P3 建议已处理并提交），
+  待用户确认后归档。
 
 ## 阶段记录
 
@@ -398,6 +394,17 @@
   sync_template.py、AGENTS.md、README.md、docs/CHANGELOG.md、docs/WORKLOG.md、
   version.json ×2 + 六处 agent 目录 | sync / quick_validate / py_compile / 冒烟 /
   副本哈希 全过 | 收尾汇报 |
+| 55 v1.3.1 发版后全面审计（独立子代理） | ✅ | 独立子代理（不共享本对话上下文）
+  按模板 audit-checklist 与工作区维护约定全面审计：自动化验证全绿（sync 38 文件
+  0 差异 + installed verified、verify exit 0、quick_validate ×2 valid、py_compile
+  8 OK、版本 1.3.1 无残留、tag v1.3.1 指向 d9b1e1f、红线 16 指纹 1a89754aa5ba
+  一致且模板/精简版各 16 条）；文档一致性全达标（CHANGELOG 新在前、EXP-KB 双置顶、
+  WORKLOG 阶段 54 硬事实与实际一致、UPGRADE v1.3.1、src 分区五处一致、16 节点
+  不变式、图可视化规范双落点）；结论**通过**（P0/P1 零项）。处理子代理建议：
+  P2-1 WORKLOG 当前任务切换随本审计收尾提交；P3-1 清理 skills/init-project/
+  scripts/__pycache__（审计方复核：源 42 文件口径正确） | docs/WORKLOG.md
+  docs/EXPERIENCE-TO-KB.md + 清理 __pycache__ | verify exit 0 + git 干净 |
+  汇报 |
 
 ## 待办/遗留
 
