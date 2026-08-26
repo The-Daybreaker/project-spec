@@ -59,8 +59,16 @@
 > `git log v1.4.1.patch0..HEAD` 记录为准，不固定提交号。
 
 - 第九轮全面审计收口：新增审计报告 `docs/AUDIT-2026-08-27.md`（实测优先，
-  发现 P1×1 / P2×2 / P3×2，修复待确认）；STATUS 快照切换至审计任务；
-  EXPERIENCE-TO-KB 新增「骨架脚本自检穿透冒烟」经验条目。
+  首轮发现 P1×1 / P2×2 / P3×2）。
+- 审计修复全链（F1-F5 + 表述面 sweep）：`check_dev_docs.py` STATUS 断言改合并
+  阶段卡合规两行锚点（修复新项目首跑即红）；旧阶段卡表述 9 处全量清理
+  （init_project 输出 / init-steps×2 / 两侧 README / 模板 DESIGN×2 / 两侧
+  LOADING×2 / init-project SKILL×2）；工作区 FLOW 同步红线 17 状态机；
+  PRD-0001 回填实现版本；sync 增排除项清理（镜像 `__pycache__` 根因修复）；
+  六处副本重装。
+- 防再发机制：新增 `scripts/smoke_init.py`（开箱即用冒烟自检：初始化 + 回读 +
+  冒烟项目内骨架脚本自检四连，发版前必绿）；`AGENTS.md` 维护约定 #10 +
+  `README.md` 维护约定（断言面联动核对）；审计报告 §六根因分析。
 
 ## v1.4.0（2026-08-26）
 
