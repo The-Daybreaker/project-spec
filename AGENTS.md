@@ -20,8 +20,11 @@
 |---|---|---|
 | 新对话 / 压缩后恢复 | 必读 | 本文件 → 模板 AGENTS×2 → `docs/STATUS.md` 快照 |
 | 红线规范 | 始终必读 | 模板 AGENTS 红线小节 |
-| 阶段定义 / 切换规则 | 按需 | 模板 `private/dev/PHASES.md` |
+| 阶段定义 / 切换规则 | 按需 | 模板 `project-template/private/dev/PHASES.md` |
 | 流程 / 状态机 | 按需 | `docs/FLOW.md` |
+| 实施任务 | 必读 | 模板 `private/dev/DESIGN.md` + 对应 PRD |
+| 审计任务 | 必读 | 模板 `docs/audit-checklist.md` |
+| 发布任务 | 必读 | 模板 `private/AGENTS.md` 发布流程 → CHANGELOG → pre_release_check |
 | 母项目改模板 / 同步 | 必读 | 本文件「维护约定」→ `scripts/sync_template.py` |
 | 历史决策 / 追溯 | **默认不读** | `docs/CHANGELOG.md` / 模板 ADR |
 

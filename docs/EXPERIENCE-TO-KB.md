@@ -9,7 +9,7 @@
 > `project-template/` 与 `skills/init-project/`，不设 EXPERIENCE-TO-TEMPLATE 暂存；
 > 本文件只记录可进知识库的经验，**不混入模板内部**（模板内部另有给目标项目用的
 > 同名骨架文件，见 `project-template/private/dev/EXPERIENCE-TO-KB.md`）。
-- 最后更新：2026-08-26
+- 最后更新：2026-08-26 19:13
 
 ## 索引
 
@@ -51,7 +51,7 @@
 
 ## 2026-08-26 · v1.4.0 整体架构重构：引导式需求讨论 + 阶段模块化/渐进披露/STATUS 快照（可观察性模式）+ 三坑实录
 
-- 来源项目/任务：通用项目模板工作区（整体架构重构，D1-D15 定稿实施，v1.4.0 候选）
+- 来源项目/任务：通用项目模板工作区（整体架构重构，D1-D15 定稿实施，v1.4.0）
 - 做法：
   1. **引导式需求讨论**（用户硬性偏好）：agent 不抛选项，先复述意图 + 提开放问题
      引导用户发现真正需求（痛点溯源→阶段粒度→披露深度→恢复机制→切换节奏逐层
@@ -205,7 +205,7 @@
 ## 2026-08-26 · TRAE IDE 内存视图覆盖磁盘编辑：SearchReplace 成功后须整篇回读核对
 
 - 来源项目/任务：通用项目模板工作区（第七轮审计修复 t8 收尾；历史 t2 曾复发）
-- 背景与上下文：对 `docs/WORKLOG.md` 与 `docs/CHANGELOG.md` 执行 SearchReplace，
+- 背景与上下文：对 `docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md） 与 `docs/CHANGELOG.md` 执行 SearchReplace，
   diff 输出显示成功；随后整篇 Read 发现部分 hunk 仍是旧内容（被 IDE 内存视图
   回写覆盖）；另一次改用过短 old_str 的替换还产生新旧内容拼接的脏行。
 - 需求/问题：如何确认编辑真正落盘、避免脏拼接？
@@ -771,7 +771,7 @@
     「新特性 → skill 全部承载文件」覆盖度复查（特性核对清单的补充动作）。
 - 验证/效果：quick_validate 通过；sync 31 文件 0 差异；六处副本文件级哈希一致。
 - 相关文件：`init-project/references/init-steps.md`、`docs/CHANGELOG.md`、
-  `docs/WORKLOG.md`
+  `docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/教训`；`domain=文档治理/Agent 工程实践`；
   `tags=[skill, 校验清单, 发版后审计, 覆盖度, 派生文档]`；`project=通用项目模板`
@@ -817,7 +817,7 @@
   哈希一致；v1.1.2 发版完成。
 - 相关文件：`project-template/archive/ARCHIVE.md`、`project-template/dist/.gitkeep`、
   `project-template/docs/TESTING.md`、`project-template/.gitignore`、
-  `AGENTS.md`、`README.md`、`docs/CHANGELOG.md`、`docs/WORKLOG.md`
+  `AGENTS.md`、`README.md`、`docs/CHANGELOG.md`、`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/方案`；`domain=项目管理/文档治理/工程实践`；
   `tags=[模板, 实体目录, 双置顶, 测试指引, 多 agent 安装]`；`project=通用项目模板`
@@ -894,7 +894,7 @@
     会虚高。
 - 验证/效果：修复后索引/顺序/日期/文件数与仓库实际一致；sync / quick_validate /
   git status 通过。
-- 相关文件：`docs/WORKLOG.md`、`docs/EXPERIENCE-TO-KB.md`、`docs/CHANGELOG.md`
+- 相关文件：`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）、`docs/EXPERIENCE-TO-KB.md`、`docs/CHANGELOG.md`
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/教训`；`domain=文档治理/项目管理`；
   `tags=[文档治理, 审计, 状态文档, 索引, 未发版清单]`；`project=通用项目模板`
@@ -1000,7 +1000,7 @@
 - 验证/效果：审计定位 init-project 过时项 3 类（摘要缺新特性 / 策略措辞偏差 /
   编码提示未随修复更新）；agent-rules 因刚创建且含继承矩阵，仅 1 条正文硬编码建议。
 - 相关文件：`init-project/SKILL.md`、`init-project/references/init-steps.md`、
-  `project-template/docs/CHANGELOG.md`、`agent-rules/`、`docs/WORKLOG.md`
+  `project-template/docs/CHANGELOG.md`、`agent-rules/`、`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/教训`；`domain=文档治理/Agent 工程实践`；
   `tags=[skill, 过时审计, 派生文档, 特性核对清单, 自动化校验]`；`project=通用项目模板`
@@ -1038,7 +1038,7 @@
   - 全局规范类 skill 安装到多 agent 时，把「安装位置表」写进工作区 README，
     便于复现与后续更新。
 - 验证/效果：五处均安装 4 文件、SKILL.md 哈希一致；quick_validate 通过。
-- 相关文件：`agent-rules/`、`README.md`（使用方法 4）、`docs/WORKLOG.md`
+- 相关文件：`agent-rules/`、`README.md`（使用方法 4）、`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/方案`；`domain=本机环境/Agent 工程实践`；
   `tags=[skill 安装, 多 agent, Windows, 目录定位, 沙箱权限]`；`project=通用项目模板`
@@ -1069,7 +1069,7 @@
   - 已安装位置表写入 README 后，用户能一眼发现路径错误，是纠错最快途径。
 - 验证/效果：init-project / agent-rules 各五处哈希一致；误装目录已清理；
   README 安装表更新为双 skill + 正确路径。
-- 相关文件：`README.md`（使用方法 4）、`docs/WORKLOG.md`、`docs/CHANGELOG.md`
+- 相关文件：`README.md`（使用方法 4）、`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）、`docs/CHANGELOG.md`
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/教训`；`domain=本机环境/Agent 工程实践`；
   `tags=[skill 安装, 多 agent, 目录纠错, qcoderworkcn]`；`project=通用项目模板`
@@ -1109,7 +1109,7 @@
     并让项目级规范声明优先级，避免双规范冲突。
 - 验证/效果：方案阶段（待用户确认后实施验证）；审计确认当前 sync/校验机制可扩展。
 - 相关文件：`project-template/AGENTS.md`、`project-template/private/AGENTS.md`、
-  `docs/audit-checklist.md`、`scripts/sync_template.py`、`docs/WORKLOG.md`
+  `docs/audit-checklist.md`、`scripts/sync_template.py`、`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/方案`；`domain=项目管理/Agent 工程实践`；
   `tags=[skill, 规范派生, 继承矩阵, 版本同步, 自动化校验]`；`project=通用项目模板`
@@ -1175,7 +1175,7 @@
   - 未发版清单建议只列面向用户的变更要点，避免把工作区内部文档修复（如 WORKLOG
     自身校准）全部计入，防止区段膨胀与混淆。
 - 验证/效果：修复后区段不再依赖提交号，不会随后续提交过时；条目与提交记录一致。
-- 相关文件：`docs/CHANGELOG.md`、`docs/WORKLOG.md`、`docs/EXPERIENCE-TO-KB.md`（本文件）
+- 相关文件：`docs/CHANGELOG.md`、`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）、`docs/EXPERIENCE-TO-KB.md`（本文件）
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/教训`；`domain=项目管理/文档治理`；
   `tags=[文档治理, CHANGELOG, 版本管理, 审计]`；`project=通用项目模板`
@@ -1209,7 +1209,7 @@
     把完整候选经验写入本文件，沉淀与否、沉淀到哪由用户决定。
 - 验证/效果：修复后 WORKLOG 硬事实与实际一致；规则补强已同步进模板
   （`project-template/private/dev/WORKLOG.md` 等），初始化出的新项目直接继承。
-- 相关文件：`docs/WORKLOG.md`、`docs/EXPERIENCE-TO-KB.md`（本文件）、根 `AGENTS.md`、
+- 相关文件：`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）、`docs/EXPERIENCE-TO-KB.md`（本文件）、根 `AGENTS.md`、
   `project-template/private/dev/WORKLOG.md`、`project-template/private/AGENTS.md`
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/教训`；`domain=项目管理/文档治理`；
@@ -1244,7 +1244,7 @@
     建议审计先跑自动化，再人工核对文档引用。
 - 验证/效果：修复后 grep `1.1.0` 仅剩历史记录/CHANGELOG 中的合法引用；
   quick_validate 通过；同步 29 文件 0 差异；初始化冒烟通过。
-- 相关文件：`docs/WORKLOG.md`、`docs/EXPERIENCE-TO-KB.md`（本文件）、根 `AGENTS.md`
+- 相关文件：`docs/WORKLOG.md`（v1.4.0 起改名 STATUS.md）、`docs/EXPERIENCE-TO-KB.md`（本文件）、根 `AGENTS.md`
 - 建议 KB 属性（沉淀时参考，可调整）：`type=knowledge`；
   `knowledge_type=经验方法/教训`；`domain=项目管理/文档治理`；
   `tags=[文档治理, 版本管理, 审计]`；`project=通用项目模板`

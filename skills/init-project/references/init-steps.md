@@ -36,7 +36,7 @@
 | `{{PROJECT_DESCRIPTION}}` | 一句话描述 |
 | `{{DEFAULT_BRANCH}}` | 默认分支名 |
 | `{{AUTHOR}}` | 作者 |
-| `{{YEAR}}` / `{{DATE}}` | 当前年份 / 当前日期（YYYY-MM-DD，写入 CHANGELOG 与 TEST-REPORT） |
+| `{{YEAR}}` / `{{DATE}}` / `{{DATETIME}}` | 当前年份 / 当前日期（YYYY-MM-DD）/ 当前日期时间（YYYY-MM-DD HH:MM，精确到分钟）；写入 CHANGELOG 与 TEST-REPORT 等时间标签 |
 | `{{VERSION}}` | `version.json` 的 `version` 字段内容（初始 `0.0.1`，版本规则见模板 AGENTS.md「版本管理」） |
 | `{{LICENSE_NOTICE}}` | 许可声明（默认「本项目使用 MIT 许可，详见 LICENSE。」） |
 | `{{AUTO_RELEASE}}` | 发布策略（默认「不自动发布，用户确认后发布」；`--auto-release` 为「每次改动完成后自动发布」） |

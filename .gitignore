@@ -18,6 +18,9 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
+# WorkBuddy 工作区数据（.workbuddy/ 存放工作日志等，不纳入版本管理）
+.workbuddy/
+
 # 日志
 *.log
 

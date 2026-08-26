@@ -3,7 +3,7 @@
 > 模块：混合（【通用】= 阶段体系/阶段卡可随模板升级；【项目专用】= 本工作区实例）。
 > 读者：项目主人/使用者。**目的：防止遗忘**——随时查「项目有几个阶段、每个阶段做什么、
 > 产出什么、你什么时候需要确认、阶段卡怎么看」。
-> 流程图与状态机总图见 `FLOW.md`；阶段权威定义见 `private/dev/PHASES.md`。
+> 流程图与状态机总图见 `FLOW.md`；阶段权威定义见 `project-template/private/dev/PHASES.md`。
 
 ## 1. 一句话
 
@@ -60,15 +60,15 @@ agent 恢复顺序：读 AGENTS → 读 STATUS 快照（看阶段卡判断进度
 
 | 阶段 | 看什么文档 |
 |---|---|
-| P1 | `private/dev/prd/`、`research/` |
-| P2 | `private/dev/rfc/`、`adr/`、`prototype/`、`DESIGN.md` |
+| P1 | `project-template/private/dev/prd/`、`research/` |
+| P2 | `project-template/private/dev/rfc/`、`adr/`、`prototype/`、`DESIGN.md` |
 | P3 | `DESIGN.md` + 对应 PRD（只读） |
 | P4 | `TEST-REPORT.md`、审计结论 |
 | P5 | `CHANGELOG.md`、发布产物 |
 
 ## 7. 常见问题
 
-- **「agent 现在在哪？」** → 直接问，agent 会展示阶段卡（或打开 `private/dev/STATUS.md`）。
+- **「agent 现在在哪？」** → 直接问，agent 会展示阶段卡（或打开 `docs/STATUS.md`）。
 - **「这个阶段算完成了吗？」** → 看阶段卡状态：🔄 进行中 / ✅ 已收尾，且合规清单无 ✗。
 - **「我能不能跳过阶段？」** → S 档小需求可 P1 简化直达 P3；其余按需与 agent 确认。
 - **「历史记录哪去了？」** → STATUS 只存最新状态；历史由 git 承担（`git log`）。

@@ -13,7 +13,7 @@
   2. 复制模板（默认 <skill>/assets/project-template/）到目标目录，
      跳过 .git / __pycache__ / .DS_Store 等。
   3. 全文件替换占位符 {{PROJECT_NAME}} {{PROJECT_DESCRIPTION}} {{DEFAULT_BRANCH}}
-     {{AUTHOR}} {{YEAR}} {{DATE}} {{VERSION}} {{LICENSE_NOTICE}} {{AUTO_RELEASE}}
+     {{AUTHOR}} {{YEAR}} {{DATE}} {{DATETIME}} {{VERSION}} {{LICENSE_NOTICE}} {{AUTO_RELEASE}}
      （UTF-8 文本；二进制文件跳过）。
   4. 许可：默认 MIT；--license-file 用自定义 LICENSE 替换模板文件。
   5. 默认初始化 git：主仓库（-b <branch>）与 private 子 git，各完成首次提交；
@@ -41,6 +41,7 @@ PLACEHOLDERS = [
     'AUTHOR',
     'YEAR',
     'DATE',
+    'DATETIME',
     'VERSION',
     'LICENSE_NOTICE',
     'AUTO_RELEASE',
@@ -88,11 +89,15 @@ def _valid_name(name: str) -> bool:
 def _kebab_slug(s: str) -> str:
     """把任意名称规范化为 kebab-case（小写、分隔符统一为连字符、去首尾连字符）。
 
-    无法保留的有效字符（如中文、重音符号）会被去除；结果为空的场景由调用方
-    保留原值并告警。
+    无法保留的有效字符（如中文、重音符号）会被去除；结果为空的场景回退原始名
+    （保留目录名原样，避免 {{PROJECT_NAME}} 替换为空）并提示。
     """
     slug = re.sub(r'[^0-9A-Za-z\-_ .]+', '-', s).strip('-_ .')
     slug = re.sub(r'[\-_ .]+', '-', slug).strip('-').lower()
+    if not slug:
+        print(f'  [提示] 目录名含非 ASCII 字符，项目名回退为目录名原样: {s!r}'
+              '（如需规范项目名请用 --name 指定）')
+        return s.strip()
     return slug
 
 
@@ -279,6 +284,7 @@ def main() -> int:
         except (json.JSONDecodeError, OSError):
             pass
     today = datetime.date.today()
+    now = datetime.datetime.now()
     values = {
         'PROJECT_NAME': name,
         'PROJECT_DESCRIPTION': desc,
@@ -286,6 +292,7 @@ def main() -> int:
         'AUTHOR': author,
         'YEAR': str(today.year),
         'DATE': f'{today.year}-{today.month:02d}-{today.day:02d}',
+        'DATETIME': f'{today.year}-{today.month:02d}-{today.day:02d} {now.hour:02d}:{now.minute:02d}',
         'VERSION': version,
         'LICENSE_NOTICE': license_notice,
         'AUTO_RELEASE': (

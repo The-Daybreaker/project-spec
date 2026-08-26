@@ -43,6 +43,8 @@ REGISTERS = {
 DOC_RE = re.compile(r"^(PRD|RFC|ADR|RESEARCH)-(\d{4})-(.+)\.md$")
 ROW_ID_RE = re.compile(r"^(PRD|RFC|ADR|RESEARCH)-(\d{4})$")
 ADR_STATUS_RE = re.compile(r"^已被 ADR-(\d{4}) 取代$")
+# PRD/RFC 允许「已废弃（由 XX-XXXX 取代）」复合状态（INDEX.md 状态机：被新文档取代）
+DEPRECATED_RE = re.compile(r"^已废弃（由 (PRD|RFC)-(\d{4}) 取代）$")
 
 
 def _configure_utf8() -> None:
@@ -100,9 +102,18 @@ def _check_doc(typ: str, path: Path, statuses: set, problems: list) -> None:
         return
     status = _header_field(text, "状态")
     if statuses is not None and status and status not in statuses:
-        problems.append(
-            f"{rel}: invalid status {status!r} (allowed: {sorted(statuses)})"
-        )
+        m_dep = DEPRECATED_RE.match(status) if typ in ("PRD", "RFC") else None
+        if m_dep:
+            # 复合废弃状态：被取代的文档必须真实存在（INDEX 状态机，防手误）
+            n = int(m_dep.group(2))
+            if not list((DEV / typ.lower()).glob(f"{typ}-{n:04d}-*.md")):
+                problems.append(
+                    f"{rel}: status={status} but replaced doc {typ}-{n:04d} missing"
+                )
+        else:
+            problems.append(
+                f"{rel}: invalid status {status!r} (allowed: {sorted(statuses)})"
+            )
 
     if typ == "PRD":
         if not _header_field(text, "优先级"):
@@ -216,7 +227,10 @@ def _check_register(typ: str, dirname: str, statuses: set, problems: list) -> No
         p = file_by_id.get(n)
         if not p:
             continue
-        header_status = _header_field(p.read_text(encoding="utf-8"), "状态")
+        doc_text = _read_text(p, problems)
+        if doc_text is None:
+            continue
+        header_status = _header_field(doc_text, "状态")
         row_status = cells[2]
         if header_status and row_status and header_status != row_status:
             problems.append(

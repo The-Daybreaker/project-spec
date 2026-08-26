@@ -9,19 +9,19 @@
 
 | 场景 | 优先级 | 文件路径 |
 |---|---|---|
-| **每次新对话 / 上下文压缩后恢复** | 必读 | 根 `AGENTS.md` → 模板 `AGENTS.md` → `private/AGENTS.md` → `private/dev/STATUS.md`（快照） |
+| **每次新对话 / 上下文压缩后恢复** | 必读 | 根 `AGENTS.md` → 模板 `project-template/AGENTS.md` → `project-template/private/AGENTS.md` → `docs/STATUS.md`（快照） |
 | **红线规范** | 始终必读 | AGENTS 红线小节 / agent-rules 精简版 |
-| 需要阶段定义 / 产物 / 切换规则 / 生命周期 | 按需读 | `private/dev/PHASES.md` |
+| 需要阶段定义 / 产物 / 切换规则 / 生命周期 | 按需读 | `project-template/private/dev/PHASES.md` |
 | 需要流程图 / 状态机 / 动作链路 | 按需读 | `docs/FLOW.md` |
 | 需要全量加载规则 | 按需读 | `docs/LOADING.md`（本文件） |
-| 需求 / 方案 / 调研任务 | 按需读 | `private/dev/{prd,rfc,adr,research}/INDEX.md` → 目标文档 |
-| 实施任务 | 必读 | `private/dev/DESIGN.md`、对应 PRD |
+| 需求 / 方案 / 调研任务 | 按需读 | `project-template/private/dev/{prd,rfc,adr,research}/INDEX.md` → 目标文档 |
+| 实施任务 | 必读 | `project-template/private/dev/DESIGN.md`、对应 PRD |
 | 审计任务 | 必读 | `project-template/docs/audit-checklist.md` |
 | 验证任务 | 必读 | `scripts/ci_check.py` 说明、`project-template/docs/TESTING.md` |
-| 发布任务 | 必读 | 发布流程（`private/AGENTS.md`）→ `private/dev/CHANGELOG.md` → `pre_release_check.py` |
+| 发布任务 | 必读 | 发布流程（`project-template/private/AGENTS.md`）→ `project-template/private/dev/CHANGELOG.md` → `pre_release_check.py` |
 | 母项目改模板 / 同步 | 必读 | 根 `AGENTS.md` 维护约定 → `scripts/sync_template.py` |
 | **历史决策 / 追溯** | **默认不读，按需** | `CHANGELOG` / `ADR`（用户明确要求或确需追溯时） |
-| 经验沉淀 | 按需读 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` / `EXPERIENCE-TO-KB.md` |
+| 经验沉淀 | 按需读 | `project-template/private/dev/EXPERIENCE-TO-TEMPLATE.md` / `EXPERIENCE-TO-KB.md` |
 
 ## 阶段 → 文档映射（披露隔离，D11）
 
@@ -40,7 +40,7 @@
 
 1. 读根 `AGENTS.md`（红线 + 加载规则摘要）→ 定位场景行；
 2. 读模板 `AGENTS.md` / `private/AGENTS.md`（私有加载规则 + 当前状态）；
-3. 读 `private/dev/STATUS.md` 快照——由「📇 阶段卡 → 当前阶段/正在完成的任务」判断进度；
+3. 读 `docs/STATUS.md` 快照——由「📇 阶段卡 → 当前阶段/正在完成的任务」判断进度；
 4. 按快照「任务影响清单 → 要读文档清单」逐份读；
 5. 阶段卡缺失/空白时：`git log` 查本文件最近提交推断，仍不确定则**询问用户**；
 6. 展示阶段卡（📍 模块·子阶段 + 生命周期合规清单）后继续。
