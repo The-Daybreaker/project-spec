@@ -1,231 +1,110 @@
 # 通用项目模板（Universal Project Template）
 
-一套**自洽自足的通用项目管理模板** + 基于它的 **init-project skill**（agent 可一键
-初始化任意项目文件夹）。模板吸收了 PinNotes 与 KnowOps 两个项目的实战经验，面向
-「Agent + 人协作」的长期迭代开发。
+一套**开箱即用、人和 AI 都能看懂的通用项目管理模板**。它把「AI 助手 + 人协作」
+开发过程中的规范、流程、检查和版本管理都固化下来：你说一句话，AI 助手就能按
+模板初始化一个新项目，之后整个项目从需求到发布都按清晰步骤推进。
 
-## 目录结构
+项目里附带两个 AI 助手技能（skill）：
 
-```text
-通用项目模板/
-├── AGENTS.md                 # 本项目（工作区）专属规范入口
-├── README.md                 # 本文件
-├── version.json              # 版本（version）与模板版本（template_version）单一事实来源
-├── .gitignore                # 工作区忽略规则
-├── .gitattributes            # 工作区行尾归一化（LF，与模板一致）
-├── install-targets.json      # 机器可读安装表（两 skill × 六处 agent 目录，单一事实来源）
-├── docs/                     # 工作区自身文档
-│   ├── CHANGELOG.md          # 模板版本变更历史（升级比对依据）
-│   ├── STATUS.md             # 当前状态快照（阶段卡 + 生命周期合规清单，历史由 git 承担）
-│   ├── FLOW.md               # 流程与状态机总图（mermaid）
-│   ├── USER-GUIDE.md         # 面向人的阶段流程简明指南
-│   ├── LOADING.md            # 加载规则表（渐进式披露协议）
-│   └── EXPERIENCE-TO-KB.md   # 可沉淀进知识库的经验（不混入模板内部）
-├── scripts/
-│   ├── sync_template.py      # 同步脚本：project-template/ → skills/init-project/assets/
-│   ├── verify_installed_copies.py  # 安装副本全量哈希 + 版本哨兵校验
-│   └── smoke_init.py         # 开箱即用冒烟自检（发版前必绿，维护约定 #10）
-├── project-template/         # 通用项目模板（权威副本，人类可读）
-│   ├── AGENTS.md             #   Agent 接手入口（公开版，随仓库发布）
-│   ├── README.md / LICENSE / version.json / .gitignore / .gitattributes / .editorconfig
-│   ├── docs/                 #   公开文档（DOCS.md / audit-checklist.md / UPGRADE.md / CONTRIBUTING.md / TESTING.md）
-│   ├── scripts/              #   自动化脚本 + version-sync.json
-│   ├── .github/workflows/    #   CI 检查 + 自动版本递增发布
-│   ├── dist/                 #   发布产物目录（C 区实体占位，Release 自动 attach）
-│   ├── archive/              #   归档区（A 区，归档/退役时放归档说明与快照）
-│   └── private/              #   私有区（不进 GitHub，内部子 git 管理）
-│       ├── PRIVATE.md        #     私有区说明与子 git 管理
-│       ├── AGENTS.md         #     开发指引（唯一常青开发记忆）
-│       └── dev/              #     PHASES（阶段定义）/ STATUS（状态快照）/ DESIGN / CHANGELOG / TEST-REPORT / 登记册 / 经验文档
-└── skills/                   # skill 目录
-    ├── init-project/         # skill：根据模板初始化指定项目文件夹
-    │   ├── SKILL.md
-    │   ├── references/init-steps.md     # 初始化执行细节
-    │   ├── scripts/init_project.py      # 复制 + 占位符替换 + git 初始化
-    │   └── assets/project-template/     # 模板副本（skill 分发用，与 project-template/ 同步）
-    └── agent-rules/          # skill：Agent 通用行为规范（精简版，全局基线）
-        ├── SKILL.md                     # 规范正文（自包含）+ 触发规则（仅非项目且非纯聊天加载）
-        ├── references/
-        │   ├── inheritance-map.md       # 继承矩阵：模板红线 ↔ 精简条目 + 正文指纹（防漂移）
-        │   └── audit-checklist-lite.md  # 精简审计清单（自审/独立审计共用）
-        └── agents/openai.yaml           # agent 平台接口描述
+- **init-project**：一键把任意文件夹初始化成符合模板规范的新项目；
+- **agent-rules**：AI 助手的通用行为底线（在对话不属于任何项目、且不是纯聊天时
+  生效）。
 
-## 模板设计要点
+## 它能帮你做什么
 
-1. **AGENTS.md 拆分**：根目录 `AGENTS.md`（公开，可发布到 GitHub，不写进
-   .gitignore）承载任何 agent 从零接手的入口；`private/AGENTS.md`（私有）承载开发
-   规范、本机环境、用户决策——**冲突时私有版优先**。
-2. **private 子 git**：`private/` 整体写入主仓库 `.gitignore`，内部由独立 git 管理
-   （本地、无远端）。**每次发布前**，agent 用 `git -C private status --short` 检查
-   变动，有更新自动提交（`scripts/pre_release_check.py` 一键完成），再进入主仓库
-   发布。
-3. **三区文件归属**：A 公开（主仓库）/ B 私有（private 子 git）/ C 不管理
-   （生成物、缓存）。新增文件必须先判区再落盘。
-4. **Agent 开发红线**（写入模板，任何 agent 接手即生效）：
-   - 实施之前必须对齐需求和计划，**得到确认之后再实施**；
-   - 实施之后**自动审计**，推荐委托独立子 agent（只看 diff + 审计清单）复审；
-   - 变更分级、删除纪律、回读校验、相似检查、密钥安全、文档同步、**阶段落盘**、
-     **上下文恢复重读**等 16 条（含**立项调研先行**：讨论项目思路/需求/架构/
-     功能/产品时优先在 GitHub 调研现成参考，并提醒用户「先调研再立项」；
-     红线 16 范围克制与纠错清零：不做需求外添加、不为未做之事补写说明）。
-5. **开发工作流（阶段体系）**：P1 需求 → P2 方案 → P3 开发 → P4 审计验证 → P5 交付
-   发布，五模块串行（每次专注一个，严禁跨阶段；权威定义 `private/dev/PHASES.md`）；
-   每阶段/子阶段完成**落盘 STATUS 快照 + 展示阶段卡（含生命周期合规清单）+ git 提交**
-   （红线 14）→ 自动审计（推荐独立子 agent）→ 验证（ci_check + TEST-REPORT）
-   → 展示与提交（先 private 子 git）→ 发布（版本递增 + tag + Release）→
-   **经验沉淀**（每轮对话后把完整候选经验写入 EXPERIENCE-TO-TEMPLATE /
-   EXPERIENCE-TO-KB，并提醒用户真正沉淀）→ 汇报（附完成检查清单）。
-6. **版本管理与 CI/CD**：版本号**从 `0.0.1.patch0` 开始**，格式
-   `X.Y.Z.patchN`（第 4 段为字面 `patch` + 数字，从 0 开始）：补丁/小修复默认只升
-   第 4 段、普通功能升级升第 3 段并将第 4 段归零、大功能升级升第 2 段并将后两段
-   归零，**前两位（major/minor）增加必须向用户确认**；`version.json` 单一事实来源
-   + git tag `vX.Y.Z.patchN`；版本递增由 agent 本地完成（`bump_version.py
-   --part patchn|patch|minor|major`，默认 `patchn`，按 `scripts/version-sync.json`
-   同步 `package.json` / `Cargo.toml` / `pyproject.toml` 等与 CHANGELOG），推送
-   main 后 `.github/workflows/release.yml` 对尚无 tag 的当前版本自动打 tag 并建
-   Release（不会二次递增，手动/自动发布二选一）；
-   `.github/workflows/ci.yml` 提供 CI 检查入口。发布策略默认**不自动发布**
-   （用户确认后执行发布流程；初始化时可用 `--auto-release` 开启自动发布）。
-7. **不依赖任何 agent 与上下文**：AGENTS.md 自带 bootstrap（任何新对话从零接手）；
-   脚本自洽（仅依赖 Python 标准库，Python 3.9+ 跨平台运行，UTF-8）；
-   `private/AGENTS.md` 是唯一常青开发记忆。
-8. **适配各种类型项目**：技术栈无关的骨架；CI 与检查命令留出明确适配点（见模板内
-   注释与 README）。
-9. **文档双模块 + 治理**：每份文档标注【通用】/【项目专用】；通用模块改动可沉淀回
-   模板，项目专用模块不受模板更新覆盖；**正文 = 当前有效状态**（决策修改直接覆盖、
-   禁止 AI 在正文追加历史、留痕只在 CHANGELOG 一行；详见模板
-   `project-template/docs/DOCS.md`「文档治理」）。
-10. **模板升级机制**：项目根 `version.json` 的 `template_version` 记录模板版本；
-    模板 `CHANGELOG.md` 记录版本变更历史；升级按 `docs/UPGRADE.md` 只应用
-    【通用】模块。
-11. **删除纪律**：对话内删除先移入 `_trash/<agent产品名>_<日期>_<时分>/`（如
-    `codex_2026-08-25_2330`；不设固定 agent 列表），任务结束时用 `scripts/trash.py`
-    整体进回收站（避免小文件堆积）。
-12. **发布产物与归档**：构建/打包产物统一输出 `dist/`（C 区、不进 git、Release
-    自动 attach）；项目停止主动开发时有「项目归档/退役」流程（最终发布 + README
-    归档标记 + 产物归档 + 经验沉淀，agent 不擅自删除）。
-13. **开发前规范与阶段卡**：M/L 需求先走开发前门禁——需求（PRD）/方案（RFC）/
-    调研（RESEARCH）/架构决策（ADR）四登记册
-    （`private/dev/{prd,rfc,adr,research}/`，各含 INDEX.md 状态机/编号/模板骨架，
-    S 档可跳过）；`scripts/check_dev_docs.py` 自动校验登记册一致性 + STATUS 快照
-    （并入 ci_check 与发布前检查）；每次对话展示**合并紧凑阶段卡**（标题含状态 +
-    横置阶段线当前节点加粗 + 合规两行 + 反定型条件块仅关键/风险节点；全中文不显示
-    字母缩写，以 `private/dev/STATUS.md`「📇 阶段卡」为单一真相）。
-14. **图可视化确认（先出图再确认）**：涉及界面/交互、架构/结构、流程/状态的改动
-    先出图——流程图随 PRD/RFC、架构图随 RFC/ADR（Mermaid/SVG 单文件同目录）、
-    页面原型/设计稿落 `private/dev/prototype/`（轻量目录，随初始化存在）——向
-    用户展示获确认后才实施。
+- **开新项目不再从零开始**：模板自带规范文档、目录结构、检查脚本和 git 初始化，
+  AI 助手一条指令就能搭好骨架并完成首次提交。
+- **任何 AI 助手接手都能读懂项目**：项目根目录的 `AGENTS.md` 写清楚了该怎么做，
+  不依赖某个特定的 AI 工具或之前的对话记录。
+- **该确认的确认、该自动的自动**：重要决策由你拍板，重复性检查交给脚本
+  （文档一致性、版本一致性、发布前检查等）。
+- **公开与私有分开**：适合发布到 GitHub 的内容放主仓库；个人偏好、机器专属信息、
+  开发过程文档放 `private/`，单独管理、不进 GitHub。
+- **一套规范装给所有助手**：两个技能可以复制到多个 AI 助手的用户级技能目录，
+  让所有助手遵循同一套规则。
 
-## 使用方法
+## 快速开始
 
-### 1. 安装 skill（把 init-project 放入 agent 的 skill 目录）
+### 方式一：安装技能使用（推荐）
 
-将 `skills/init-project/` 整个目录复制到 agent 的用户级 skill 目录（如 DeepSeek
-Harness：`$DSH_HOME/skills` 或 `C:\Users\<你>\.dsh\skills\`；其他 agent 见其文档），
-重启/刷新后即可用：
+把 `skills/init-project/` 整个目录复制到 AI 助手的用户级技能目录（例如 Codex 是
+`~/.codex/skills/`，其他助手的目录见其文档），重启或刷新后，对助手说：
 
-> 「用 init-project skill 把 <目标目录> 初始化为一个新项目」
+> 「用 init-project 技能把 <目标目录> 初始化为一个新项目」
 
-skill 会：复制模板 → 替换占位符（项目名/描述/分支/作者）→ 初始化主 git 与
-private 子 git 并完成首次提交 → 按清单回读校验。初始化是高风险操作，skill 强制
-先与用户对齐参数与方案。
+它会按清单执行：复制模板 → 替换项目名、描述等占位符 → 初始化主 git 和
+private 子 git 并完成首次提交 → 回读校验。初始化会创建文件，属于高风险操作，
+所以它会先和你确认参数与方案再动手。
 
-### 2. 手动应用模板（不用 skill）
+`skills/agent-rules/` 是 AI 助手的通用行为规范（精简版），建议也装到每个助手：
+它**只在对话不属于任何项目、且不是纯聊天时**加载；一旦进入某个项目，就以那个
+项目自己的 `AGENTS.md` 为准。
+
+### 方式二：手动应用模板
+
+不想用技能也可以手动复制模板：
 
 ```bash
-# 复制模板并替换占位符（{{PROJECT_NAME}} {{PROJECT_DESCRIPTION}} {{DEFAULT_BRANCH}}
-# {{AUTHOR}} {{YEAR}} {{DATE}} {{VERSION}} {{LICENSE_NOTICE}}）
-# 推荐：用 init_project.py 只复制+替换、不建 git
+# 复制模板并替换占位符（不建 git）
 python skills/init-project/scripts/init_project.py <目标目录> --name my-app --desc "..." --no-git
-# 初始化两个 git 仓库
+
+# 初始化主 git
 git -C <目标目录> init -b main
 git -C <目标目录> add -A -- . && git -C <目标目录> commit -m "chore: init"
+
+# 初始化 private 子 git（放私有内容）
 git -C <目标目录>/private init
 git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commit -m "docs: private v0.0.1.patch0 - init"
 ```
 
-### 3. 初始化后的下一步（模板内已写明）
+### 初始化之后
 
-读新项目的 `AGENTS.md` → 补 `private/AGENTS.md` 的「本机环境」与「用户决策」→
-按技术栈实现 `scripts/ci_check.py` 与 `.github/workflows/ci.yml` → 用户确认后配置
-远端并推送（首个 push 不自动发 Release）。
+1. 读新项目的 `AGENTS.md`（这是 AI 助手的接手入口）；
+2. 按你的环境补充 `private/AGENTS.md`（本机环境、你的偏好）；
+3. 按技术栈实现 `scripts/ci_check.py` 和 CI 配置；
+4. 确认后配置远端仓库并推送（首次推送不会自动发版）。
 
-### 4. 安装 agent-rules 与 init-project 到各 agent
+## 目录结构（简要）
 
-`skills/agent-rules/` 是从通用模板【通用】部分派生的**精简版 agent 全局行为规范**：
-**仅当对话不在任何项目/工作区内**（无项目 `AGENTS.md`、不属于已打开的工作区）
-**且非纯聊天**（编码、文档、分析、调研、规划、文件操作、事实性问答等）时加载；
-**项目内对话以项目自身 `AGENTS.md` 为准，不加载本 skill**。除项目专属的需求/规定
-外，模板要求一律继承（继承矩阵 + sync 自动化校验保证随模板版本同步，不漂移）。
-`skills/init-project/` 是**项目初始化 skill**（用模板初始化新项目文件夹），同样
-建议装到每个 agent。
+```text
+通用项目模板/
+├── AGENTS.md                 # 工作区规范入口（AI 助手先读这里）
+├── README.md                 # 本文件
+├── version.json              # 版本号单一事实来源
+├── install-targets.json      # 两个技能的安装位置表
+├── docs/                     # 工作区文档（CHANGELOG / STATUS / FLOW / USER-GUIDE 等）
+├── scripts/                  # 维护脚本（同步、副本校验、冒烟自检）
+├── project-template/         # 通用项目模板本体（权威副本）
+│   ├── AGENTS.md             #   AI 助手接手入口（公开版）
+│   ├── docs/ scripts/ .github/ dist/ archive/
+│   └── private/              #   私有区（不进 GitHub，单独管理）
+└── skills/
+    ├── init-project/         # 项目初始化技能（SKILL.md + 脚本 + 模板副本）
+    └── agent-rules/          # AI 助手通用行为规范技能
+```
 
-安装：把 `skills/agent-rules/` 与 `skills/init-project/` 整个目录复制到各 agent
-的用户级 skill 目录（重启/刷新后生效）。本机已安装位置以根目录 `install-targets.json`
-（**机器可读安装表，单一事实来源**）为准，下表为概览（两个 skill 都装在下列目录下；
-增删 agent 需同步更新安装表，并可用 `python scripts/verify_installed_copies.py`
-全量哈希 + 版本哨兵复验）：
+## 版本与升级
 
-| Agent | skill 目录 |
-|---|---|
-| Codex | `~/.codex/skills`（agent-rules / init-project） |
-| DSH | `~/.dsh/skills`（agent-rules / init-project） |
-| WorkBuddy | `~/.workbuddy/skills`（agent-rules / init-project） |
-| TraeWork（TRAE Work CN） | `~/.trae-cn/skills`（agent-rules / init-project） |
-| 千问办公（QwenWork CN） | `~/.qwenworkcn/skills`（agent-rules / init-project） |
-| Qoder（Qoder CN） | `~/.qoder-cn/skills`（agent-rules / init-project） |
+- 版本号格式 `X.Y.Z.patchN`（例如 `1.4.2.patch0`），以 `version.json` 为准，
+  并打 git tag `vX.Y.Z.patchN`。
+- 本项目当前版本：**v1.4.2.patch0**。
+- 模板每次发版的变更记录在 `docs/CHANGELOG.md`；初始化出的项目需要升级模板时，
+  按项目内 `docs/UPGRADE.md` 的说明操作（只应用【通用】部分，不动你的项目内容）。
 
-其他机器/agent：找到对应用户级 skill 目录（如 `~/.codex/skills`、`~/.dsh/skills`、
-`~/.workbuddy/skills`、`~/.trae-cn/skills`、`~/.qwenworkcn/skills`、
-`~/.qoder-cn/skills`），把 `skills/agent-rules/` 与 `skills/init-project/` 复制进去
-即可。
-
-## 维护约定
+## 给维护者的几条约定
 
 - **改模板必同步**：修改 `project-template/` 后运行
-  `python scripts/sync_template.py`，把改动镜像到
-  `skills/init-project/assets/project-template/`（skill 分发的是副本，两份必须一致）；
-  模板【通用】变更还需同步 `skills/agent-rules/`（精简版全局规范正文或继承矩阵
-  指纹复核），sync 会一并校验（版本一致性 + 矩阵覆盖 + 红线正文指纹）。
-- **private/ 骨架的跟踪**：模板自身的 `.gitignore` 会忽略 `private/`（这正是设计
-  目标——目标项目中的 private/ 永不进主仓库），因此本工作区仓库需要用
-  `git add -f project-template/private skills/init-project/assets/project-template/private`
-  强制跟踪这些骨架文件；改动它们后提交时同样用 `-f`。
-- **skill 校验**：改完 skill 用 skill-creator 的 quick_validate 校验（参数为
-  skill 目录路径，不是 skill 名）：
-  `python <skill-creator>/scripts/quick_validate.py skills/init-project`
-  `python <skill-creator>/scripts/quick_validate.py skills/agent-rules`
-  （中文 Windows 默认 GBK 编码下若报 UnicodeDecodeError，先设置 `PYTHONUTF8=1`）。
-- **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
-  （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
-  `skills/init-project/SKILL.md metadata.version`、
-  `skills/agent-rules/SKILL.md metadata.version` 与
-  `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
-  版本号**（如 `1.4.2.patch0` / `1.4.3.patch0`）核对所有文档内嵌版本字样（`SKILL.md` 仅
-  `metadata.version`；`references/init-steps.md` 已改为引用 `version.json`；模板
-  内部文件一律用占位符、不写死版本），确认无残留后再走模板发布流程。
-  `scripts/sync_template.py` 会自动校验各 `SKILL.md metadata.version`、
-  `agent-rules` 继承矩阵版本/覆盖/指纹与 `project-template/version.json` 的
-  `template_version` 一致，并校验 `init-steps.md` 对模板关键文件的覆盖
-  （`INIT_STEPS_COVERAGE`，缺失即拦截）；改模板/发版后按「skill 覆盖度复查」核对
-  SKILL 摘要 / init-steps 校验清单与路线图 / agent-rules（如涉红线）/
-  全部已安装副本重装并哈希复核。
-- **版本**：本模板工作区自身用 git 管理并按同样规则打 tag（当前 v1.4.2.patch0；
-  版本号见 `version.json`）。
-- **阶段卡展示（dogfood）**：工作区汇报/阶段落盘/收尾展示合并紧凑阶段卡（标题含
-  状态 + 横置阶段线当前节点加粗 + 合规两行 + 反定型条件块仅关键/风险节点；全中文
-  不显示字母缩写），以 docs/STATUS.md「📇 阶段卡」为单一真相。
-- **发布前开箱即用自检**：模板发布前运行 `python scripts/smoke_init.py` 且全绿
-  （初始化 + 回读 + 冒烟项目内骨架脚本自检四连）；改展示格式/字段类红线时另须
-  grep 枚举「断言面」影响点（脚本字面断言 / 输出文案 / init-steps 清单与路线图）。
-- **索引/未发版区段纪律**：「新条目在前」的文档（EXP-KB 索引与正文、CHANGELOG
-  未发版区段）新增条目须**正文与索引同时置顶**；收尾核对索引顺序、日期、未发版
-  条目与 `git log` 一致。
-
-## 经验来源
-
-- [PinNotes](<项目路径>)：CI/CD 自动版本递增发布、
-  CLAUDE.md 作为 agent 入口、提交信息与分支约定。
-- [KnowOps](<项目路径>)：AGENTS.md 公开/私有拆分、
-  private 子 git、三区文件归属、开发工作流（先对齐后实施、实施后审计、验证后发布）、
-  完成检查清单、文档职责划分、唯一常青开发记忆。
+  `python scripts/sync_template.py`，把改动同步到
+  `skills/init-project/assets/project-template/`（两份必须一致）；模板【通用】规则
+  有变时还要同步 `skills/agent-rules/`。
+- **private 骨架强制跟踪**：模板自己的 `.gitignore` 忽略 `private/`，提交骨架用
+  `git add -f project-template/private skills/init-project/assets/project-template/private`。
+- **技能校验**：改完技能用 skill-creator 的 quick_validate 校验
+  （`PYTHONUTF8=1 python <skill-creator>/scripts/quick_validate.py skills/init-project`，
+  agent-rules 同理）。
+- **发版同步**：版本递增时同步更新 `version.json`、`docs/CHANGELOG.md`、两个
+  SKILL.md 的 `metadata.version`、agent-rules 继承矩阵，并全局 grep 新旧版本号
+  确认无残留。
+- **发布前冒烟自检**：`python scripts/smoke_init.py` 必须全绿。
+- **删除纪律**：删除先移入 `_trash/<AI助手产品名>_<日期>_<时分>/`，任务结束时用
+  `python project-template/scripts/trash.py` 整体进回收站。
