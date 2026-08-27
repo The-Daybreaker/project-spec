@@ -111,6 +111,8 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
       `assets/project-template/version.json` 的 `template_version` 字段为准）
 - [ ] `docs/USER-GUIDE.md`、`docs/LOADING.md` 已生成（v1.4.0
       特性：面向人阶段指南 / 加载规则表；流程图随 `private/dev/PHASES.md`）
+- [ ] `docs/TEST-MAP.md` 已生成（测试台账：每个脚本在保护什么/能测出什么/盲区）；
+      `scripts/check_consistency.py` 已生成（漂移免疫门禁：事实唯一家+摘要限长+指纹）
 - [ ] `private/dev/STATUS.md`、`private/dev/PHASES.md`、`EXPERIENCE-TO-TEMPLATE.md`、
       `EXPERIENCE-TO-KB.md` 已生成（v1.4.0：WORKLOG 改名 STATUS 快照 + 阶段模块
       权威定义；阶段落盘与经验沉淀载体）

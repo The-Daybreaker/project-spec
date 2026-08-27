@@ -33,7 +33,7 @@
 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进模板的经验（完整条目） |
 | `private/dev/EXPERIENCE-TO-KB.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进知识库的经验（完整条目） |
 | `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
-| `docs/` | 公开 | 通用 | 公开文档（DOCS / USER-GUIDE / LOADING / audit-checklist / TESTING / UPGRADE / CONTRIBUTING；流程图在 `private/dev/PHASES.md`） |
+| `docs/` | 公开 | 通用 | 公开文档（DOCS / USER-GUIDE / LOADING / audit-checklist / TESTING / TEST-MAP / UPGRADE / CONTRIBUTING；流程图在 `private/dev/PHASES.md`） |
 | `docs/CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
 | `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
 | （按项目补充：架构、API、使用手册等） | | | |
