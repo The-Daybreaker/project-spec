@@ -200,6 +200,8 @@ def git_init_repo(repo: Path, branch: str, commit_msg: str, remote: str = '') ->
     if r.returncode != 0:
         print(f'  [警告] git init 失败: {r.stderr.strip()}')
         return False
+    # 推送前安全门禁：版本化钩子目录（.githooks/pre-push → scan_secrets --strict）
+    run_git(['config', 'core.hooksPath', '.githooks'], repo)
     if remote:
         rr = run_git(['remote', 'add', 'origin', remote], repo)
         if rr is not None and rr.returncode != 0:

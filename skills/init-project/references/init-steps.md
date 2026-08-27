@@ -133,6 +133,10 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
 - [ ] `scripts/pre_release_check.py` 可运行（当前状态应提示「可以发布」或仅警告
        CHANGELOG 已就绪后通过；占位检查未实现时会失败，可用 `--allow-placeholder`
        临时放行）
+- [ ] `scripts/scan_secrets.py` 可运行（`python scripts/scan_secrets.py --strict`
+      退出码 0；内容级安全扫描，红线 19）
+- [ ] `.githooks/pre-push` 存在且 `git config core.hooksPath` 为 `.githooks`
+      （推送前安全门禁：扫描失败阻止推送；红线 19）
 - [ ] `scripts/trash.py` 可运行（`python scripts/trash.py --help` 退出码 0）
 
 ## 6. 常见问题
@@ -193,6 +197,9 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
 3. 更新 `.github/workflows/ci.yml`：按技术栈补 setup / 依赖安装 / 检查步骤
    （文件内已有示例注释）；
 4. 跑通 `python scripts/ci_check.py`，结果记入 `private/dev/TEST-REPORT.md`。
+5. 跑通 `python scripts/scan_secrets.py --strict`（推送前安全门禁：`.githooks/
+   pre-push` 已由初始化配置 `core.hooksPath`，扫描失败会阻止推送；发布链
+   `pre_release_check.py` 与 CI 另有扫描步骤）。
 
 ### 阶段 3 · 首个需求（走开发工作流）
 

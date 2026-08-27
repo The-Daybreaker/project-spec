@@ -11,9 +11,12 @@ Behavior:
   2) private sub-git: if it has changes -> auto add + commit
      ("docs: private vX.Y.Z.patchN - desc") and confirm it is clean
      (required before every release; see root AGENTS.md release flow);
+     private sub-git must have NO remote (红线 19: 禁设远端);
   3) main repo status: list uncommitted changes (the agent commits them, not this
      script); safety scan: no private/ path or gitlink may enter the main repo
      index/working tree or be already tracked, no secret-named files;
+     content-level security scan (scan_secrets.py --strict: 高危凭据 + 个人信息);
+     dist/ must not contain private/ (红线 19: 禁打包);
   4) version consistency: version.json 'version' vs top of CHANGELOG;
   5) ci_check.py must be implemented (no template placeholder), unless
      --allow-placeholder is given;
@@ -200,6 +203,17 @@ def main() -> int:
     else:
         print("[2/7] private sub-git sync skipped (--skip-subgit).")
 
+    # --- 红线 19：private 子 git 禁设远端 ---
+    if (REPO_ROOT / "private" / ".git").exists():
+        remotes = _run(["git", "-C", "private", "remote", "-v"])
+        if remotes.stdout.strip():
+            print("[error] private sub-git must have NO remote (红线 19):")
+            for line in remotes.stdout.splitlines():
+                print(f"    {line}")
+            fail = True
+        else:
+            print("    private sub-git has no remote (红线 19 ok).")
+
     # --- 3. main repo status + safety scan ---
     print("[3/7] main repo status:")
     pairs = _status_paths()
@@ -237,6 +251,32 @@ def main() -> int:
         for line in secret_hits:
             print(f"    {line}")
         fail = True
+
+    # 内容级安全扫描（红线 10/12/19：跟踪目录禁个人信息/密钥）
+    scan = _run([sys.executable, "scripts/scan_secrets.py", "--strict"])
+    if scan.returncode != 0:
+        print("[error] content-level security scan failed (scan_secrets.py --strict):")
+        print(scan.stdout, end="")
+        print(scan.stderr, end="")
+        fail = True
+    else:
+        print("    content-level security scan passed (scan_secrets.py --strict).")
+
+    # 红线 19：发布产物不得包含 private/
+    dist = REPO_ROOT / "dist"
+    if dist.is_dir():
+        leaked = [
+            str(p.relative_to(REPO_ROOT))
+            for p in dist.rglob("*")
+            if p.is_dir() and p.name == "private"
+        ]
+        if leaked:
+            print("[error] dist/ contains private/ (must not be packaged, 红线 19):")
+            for p in leaked:
+                print(f"    {p}")
+            fail = True
+        else:
+            print("    dist/ contains no private/ directory (红线 19 ok).")
 
     # --- 4. version consistency (version.json vs CHANGELOG top) ---
     changelog = REPO_ROOT / "private" / "dev" / "CHANGELOG.md"

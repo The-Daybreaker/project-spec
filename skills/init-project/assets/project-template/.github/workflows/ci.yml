@@ -28,6 +28,9 @@ jobs:
       - name: Run project checks
         run: python scripts/ci_check.py
 
+      - name: Security scan (content-level; local pre-push + release chain are primary)
+        run: python scripts/scan_secrets.py --strict
+
       # --- 按项目技术栈追加（示例） ---
       # Node 项目：
       # - name: Setup Node

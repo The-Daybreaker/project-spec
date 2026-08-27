@@ -1,0 +1,20 @@
+#!/bin/sh
+# 推送前安全门禁：内容级扫描（高危凭据 + 个人信息），失败阻止推送。
+# 三层防线：本钩子（本地推送前）→ pre_release_check（发布链）→ CI（兜底）。
+# 说明：钩子不随 clone 分发；由 init_project.py 初始化时配置
+#   git config core.hooksPath .githooks 启用。
+repo="$(git rev-parse --show-toplevel)" || exit 1
+cd "$repo" || exit 1
+
+if [ -f scripts/scan_secrets.py ]; then
+    python scripts/scan_secrets.py --strict
+    rc=$?
+    if [ $rc -ne 0 ]; then
+        echo "[pre-push] 安全扫描未通过，已阻止推送（临时绕过：git push --no-verify；发布链仍有 pre_release_check 门禁）" >&2
+        exit 1
+    fi
+    echo "[pre-push] 安全扫描通过"
+else
+    echo "[pre-push] 警告：scripts/scan_secrets.py 不存在，跳过本地扫描（发布链/CI 仍强制）" >&2
+fi
+exit 0
