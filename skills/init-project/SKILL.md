@@ -1,7 +1,7 @@
 ---
 name: init-project
 metadata:
-  version: 1.4.2.patch0
+  version: 1.5.0.patch0
 description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（AGENTS.md 公开/私有拆分、private 子 git、.gitignore、CI/CD 工作流、自动化脚本、Agent+人协作开发工作流与通用红线），替换项目占位符，初始化主 git 与 private 子 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
 ---
 
@@ -40,7 +40,8 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   / `EXPERIENCE-TO-KB.md`（每轮对话后写入完整候选经验）。
 - **私有开发指引**：`private/AGENTS.md` 含本机环境、用户确认的设计决策、定案清单、
   必须询问人类清单；`private/dev/` 承载 PHASES（阶段模块定义）/ STATUS（状态快照）/
-  DESIGN / CHANGELOG / TEST-REPORT / 经验文档。
+  DESIGN / CHANGELOG / TEST-REPORT / ROADMAP（长期需求与展望，唯一长期入口）/
+  经验文档。
 - **阶段体系模块化**：16 节点收敛为 P1-P5 五阶段（需求/方案/开发/审计验证/交付发布）
   + 子阶段两级；每阶段有输入/明确产物/完成标志/生命周期；阶段/子阶段完成展示
   **阶段卡**（进度 + 生命周期合规清单 + 下一阶段输入预告）；🔵 决策型阶段/子阶段须

@@ -39,7 +39,7 @@
   （同步脚本）、`project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill
   目录）：`init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
-- **版本**：根 `version.json`（当前 1.4.2.patch0）+ git tag `vX.Y.Z.patchN`；模板自身变更历史见
+- **版本**：根 `version.json`（当前 1.5.0.patch0）+ git tag `vX.Y.Z.patchN`；模板自身变更历史见
   `private/dev/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
