@@ -33,7 +33,8 @@ FACT_RE = re.compile(r"<!--\s*FACT:([a-z0-9-]+)\s*-->(.*?)<!--\s*/FACT\s*-->", r
 REF_RE = re.compile(r"<!--\s*REF:([a-z0-9-]+)\s*-->(.*?)<!--\s*/REF\s*-->", re.S)
 INJECT_RE = re.compile(r"<!--\s*INJECT:([a-z0-9-]+)\s*-->(.*?)<!--\s*/INJECT\s*-->", re.S)
 
-REF_SUMMARY_MAX = 120  # REF 摘要归一化后的最大字符数，超过视为「变相完整展开」
+REF_SUMMARY_MAX = 160  # REF 摘要归一化后的最大字符数；中文信息密度高，160 足以容纳
+                       # 「一句摘要+指针」，超过即视为「变相完整展开」
 
 EXCLUDE_DIR_NAMES = {".git", "__pycache__", "_trash", "node_modules", "dist", "build"}
 EXCLUDE_PATH_PARTS = ("skills/init-project/assets",)  # 自动镜像，字节级由同步脚本保证
