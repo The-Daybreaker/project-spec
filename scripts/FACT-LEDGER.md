@@ -20,5 +20,5 @@
 | release-flow | 发布流程 | 已登记 | project-template/private/AGENTS.md | bc7dddd0452c | 发布流程节全量正文（含发版状态机）；公开指引简化版 B2 第三步改指针 |
 | doc-governance | 文档治理规则 | 已登记 | project-template/private/AGENTS.md | 5cb54a402d36 | 文档治理节 0-5 条；红线 13 保留红线级表述、DOCS 近逐字段 B2 改指针 |
 | completion-checklist | 完成检查清单 | 已登记 | project-template/private/AGENTS.md | cb9dc29c0d7f | 清单全量正文；与阶段契约的派生对齐在 B3 |
-| doc-duty | 文档职责表 | 待安家 | — | — | 5 个表格变体（两份 AGENTS/DOCS/init-steps 等），B2 第四步归一到文档总览 |
+| doc-duty | 文档职责表 | 已登记 | project-template/docs/DOCS.md | a3e946cf9ab8 | 职责表+维护清单；各文档内摘要+指针指向本家 |
 | loading | 加载规则 | 已登记 | project-template/docs/LOADING.md | f45ed517cb40 | 全量加载规则表；母项目副本废除在 B2 第五步 |

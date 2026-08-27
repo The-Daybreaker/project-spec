@@ -14,7 +14,7 @@
   阶段输入预告）；🔵 决策型须用户确认、🟢 执行型展示即走；流程状态机见
   模板 `project-template/private/dev/PHASES.md`（§0 总图、§4 子流程与状态机）。
 - **披露协议**：什么场景读什么按下方加载规则表；历史默认不读、红线始终必读；
-  全量规则见 `docs/LOADING.md`。
+  全量规则见模板 `project-template/docs/LOADING.md`。
 
 | 场景 | 优先级 | 读什么 |
 |---|---|---|
@@ -35,7 +35,7 @@
 - **目录**：`README.md`（面向使用者的说明）+ `private/dev/`（工作区开发期文档：
   状态快照 / 变更日志 / 经验 / 需求方案决策调研登记册（prd|rfc|adr|research）/
   审计报告 / 路线图 / 测试记录；B 区，private 子 git 管理，不进 GitHub）+
-  `docs/`（公开指引：USER-GUIDE / LOADING）、`scripts/sync_template.py`
+  `scripts/sync_template.py`
   （同步脚本）、`project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill
   目录）：`init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
@@ -164,8 +164,6 @@
 | `AGENTS.md`（本文件） | 混合 | 工作区专属规范入口 |
 | `README.md` | 项目专用 | 面向使用者的说明 |
 | `private/dev/STATUS.md` | 项目专用 | 当前状态快照（阶段卡 + 生命周期合规清单 + 影响清单；历史由 git 承担） |
-| `docs/USER-GUIDE.md` | 混合 | 面向人的阶段流程简明指南（防遗忘） |
-| `docs/LOADING.md` | 混合 | 加载规则表全量版（渐进式披露协议） |
 | `private/dev/CHANGELOG.md` | 项目专用 | 模板版本变更历史（升级比对依据） |
 | `private/dev/EXPERIENCE-TO-KB.md` | 项目专用 | 可沉淀进知识库的经验（完整条目） |
 | `private/dev/ROADMAP.md` | 项目专用 | 长期需求与展望（愿景/需求地图/版本排期；唯一长期入口，覆盖式更新） |

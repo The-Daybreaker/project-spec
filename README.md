@@ -72,7 +72,6 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 ├── README.md                 # 本文件
 ├── version.json              # 版本号单一事实来源
 ├── install-targets.json      # 两个技能的安装位置表
-├── docs/                     # 工作区文档（CHANGELOG / STATUS / FLOW / USER-GUIDE 等）
 ├── scripts/                  # 维护脚本（同步、副本校验、冒烟自检）
 ├── project-template/         # 通用项目模板本体（权威副本）
 │   ├── AGENTS.md             #   AI 助手接手入口（公开版）
