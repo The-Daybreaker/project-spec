@@ -125,6 +125,7 @@ def _extract_redlines(text: str) -> dict:
     Returns {number: normalized_text}. A bullet may wrap across lines; whitespace is
     normalized so fingerprints are stable against formatting-only changes.
     """
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.S)
     m = re.search(r"## 【通用】通用红线（Agent 开发，强制）(.*?)(?=\n## )", text, re.S)
     if not m:
         return {}
