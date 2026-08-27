@@ -11,6 +11,8 @@
     {"id": "workbuddy", "display": "WorkBuddy", "dir": "~/.workbuddy/skills"},
     {"id": "trae-cn", "display": "TraeWork（TRAE Work CN）", "dir": "~/.trae-cn/skills"},
     {"id": "qwenworkcn", "display": "千问办公（QwenWork CN）", "dir": "~/.qwenworkcn/skills"},
-    {"id": "qoder-cn", "display": "Qoder（Qoder CN）", "dir": "~/.qoder-cn/skills"}
+    {"id": "qoder-cn", "display": "Qoder（Qoder CN）", "dir": "~/.qoder-cn/skills"},
+    {"id": "cc-switch", "display": "CC Switch", "dir": "~/.cc-switch/skills"},
+    {"id": "zcode", "display": "ZCode", "dir": "~/.zcode/skills"}
   ]
 }
