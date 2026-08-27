@@ -70,7 +70,7 @@ def main() -> int:
         return 1
 
     print("==> ci-check: defensive-phrase scan (红线 17, commit messages gate)")
-    # 模板自带：提交信息辩护性措辞硬拦（撤菜不解释）；注释/文档候选人工复核。
+    # 模板自带：提交信息辩护性措辞硬拦（撤菜不留疤）；注释/文档候选人工复核。
     r = _run([sys.executable, "scripts/scan_defensive.py", "--check"])
     if r.returncode != 0:
         print(r.stdout, end="", file=sys.stderr)
