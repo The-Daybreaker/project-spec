@@ -28,6 +28,9 @@
 > 以下为 v1.4.2 发布后、尚未发版的累积变更；发版时并入对应版本条目。条目以
 > `git log v1.4.2.patch0..HEAD` 记录为准，不固定提交号。
 
+- 维护：第十轮审计修复——未发版区段漏登补录（本清单）；维护约定 #4 措辞校准
+  （骨架 `version` 字段为设计固定、发版只更新 `template_version`）；全局 git 身份
+  切换为 noreply（与仓库本地一致）。
 - 安全：历史遗留解决——全历史作者邮箱由真实邮箱重写为 GitHub noreply 邮箱
   （`filter-branch --env-filter` 元数据重写，82 提交 + 14 tag 全部重映射，旧对象
   物理清除）；审计报告邮箱字面残留清除；`scan_secrets.py` 白名单 noreply 邮箱；
@@ -35,6 +38,14 @@
   3 提交的旧身份再污染（根因：本地 git 身份配置未随重写同步），仓库本地
   `user.email` 已同步为 noreply；脱敏前历史 blob 中的邮箱字面以局部内容重写
   （tree-filter）清除，全历史 `--history --strict` 门禁验收绿。
+- 安全：历史泄露处置（第一轮）——当前文件本机路径残留清理后，全历史重写
+  （filter-branch tree-filter）清除旧泄露（本机路径/用户名），旧对象物理清除
+  （update-ref/reflog expire/gc prune），全历史复扫验收。
+- 安全：新增发版前安全扫描 `scripts/scan_secrets.py`（高危凭据零容忍门禁 +
+  个人信息人工复核，`--history` 覆盖全部历史 blob），接入维护约定 #11 与
+  README；修复扫描器用户名模式自排除（历史清洗副作用）。
+- 文档：重写 README（去具体项目来源引用、通俗化面向用户）。
+- 发布：v1.4.2.patch0 GitHub Release 创建与远端推送收口（gh 认证恢复后）。
 - 维护：配置远端仓库 `origin` → `https://github.com/The-Daybreaker/Project-Template.git`
   （push/Release 前置）。
 

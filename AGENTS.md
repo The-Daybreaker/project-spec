@@ -58,7 +58,8 @@
    skills/init-project`（以及 `skills/agent-rules`；脚本参数为 skill 目录路径，
    不是 skill 名；中文 Windows 默认 GBK 需 PYTHONUTF8=1）。
 4. **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
-   （`version` 与 `template_version` 两字段）、`docs/CHANGELOG.md`、
+   的 `template_version` 字段（其 `version` 字段为设计固定的 `0.0.1.patch0`——
+   `init_project.py` 原样读取为新项目初始版本，不随发版变动）、`docs/CHANGELOG.md`、
    `skills/init-project/SKILL.md metadata.version`、
    `skills/agent-rules/SKILL.md metadata.version` 与
    `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
