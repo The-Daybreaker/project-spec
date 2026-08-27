@@ -43,7 +43,7 @@ npm test
         ├── prd/             # 需求登记册（PRD-XXXX，开发前门禁）
         ├── rfc/             # 方案登记册（RFC-XXXX，评审后冻结）
         ├── adr/             # 决策登记册（ADR-XXXX，只增不改）
-        ├── research/        # 调研登记册（RESEARCH-XXXX，红线 13 结果）
+        ├── research/        # 调研登记册（RESEARCH-XXXX，红线 14 结果）
         ├── prototype/       # 页面原型/设计稿（界面/交互改动的可视化产物）
         └── DESIGN / CHANGELOG / TEST-REPORT / STATUS / 经验文档
 ```
@@ -62,13 +62,13 @@ npm test
   加粗 + 合规两行 + 反定型条件块仅关键/风险节点；全中文不显示字母缩写），以
   `private/dev/STATUS.md`「📇 阶段卡」为准。
 - **立项调研先行**：与 agent 讨论项目思路/需求/架构/功能/产品时，agent 会优先在
-  GitHub 调研现成参考并提醒「先调研再立项」（见 `AGENTS.md` 红线 13）。
+  GitHub 调研现成参考并提醒「先调研再立项」（见 `AGENTS.md` 红线 14）。
 - **人类贡献**：见 `docs/CONTRIBUTING.md`。
 - **版本管理**：`version.json` 的 `version` 字段 + git tag `vX.Y.Z.patchN`；版本递增由 agent 本地执行
   （`scripts/bump_version.py --part patchn|patch|minor|major`，默认 `patchn`），CI 对尚无 tag 的当前版本自动打 tag 并发布
   （`.github/workflows/release.yml`）。
 - **阶段落盘**：任务中每完成一小阶段先更新 `private/dev/STATUS.md` 与受影响文档
-  （红线 14），防止上下文压缩丢失进度。
+  （红线 15），防止上下文压缩丢失进度。
 - **模板升级**：项目根 `version.json` 的 `template_version` 记录模板版本；升级按 `docs/UPGRADE.md`
   只应用【通用】模块变更。
 - **归档/退役**：项目停止主动开发时按根 `AGENTS.md`「项目归档/退役」执行

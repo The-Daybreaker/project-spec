@@ -297,7 +297,7 @@ def main() -> int:
         'LICENSE_NOTICE': license_notice,
         'AUTO_RELEASE': (
             '每次改动完成后自动执行发布（提交、推送、tag/Release、分发/部署），不再等待'
-            '用户明确要求；自动发布视为用户对发布/推送的预授权（根 AGENTS.md 红线 2 '
+            '用户明确要求；自动发布视为用户对发布/推送的预授权（根 AGENTS.md 红线 3 '
             '对常规发布的同意要求视为已满足），破坏性变更、永久删除等高风险操作仍须'
             '单独确认（如需关闭，见「用户确认的设计决策」）。'
             if args.auto_release else
@@ -346,7 +346,7 @@ def main() -> int:
     print('  6. 按项目技术栈实现 scripts/ci_check.py 与 .github/workflows/ci.yml')
     print('  7. 用户确认后配置远端并推送首个提交（首次 push 不自动发 Release）')
     print('  8. 立项初期先调研: 与 agent 讨论项目思路/需求/架构/功能/产品时，'
-          '要求 agent 优先在 GitHub 调研现成参考并提醒「先调研再立项」（AGENTS.md 红线 13）')
+          '要求 agent 优先在 GitHub 调研现成参考并提醒「先调研再立项」（AGENTS.md 红线 14）')
     return 0
 
 

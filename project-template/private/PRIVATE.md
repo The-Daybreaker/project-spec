@@ -27,7 +27,7 @@ GitHub** 的内容。
 | `dev/prd/` | 需求登记册（PRD-XXXX：为什么做/做什么/验收/优先级） |
 | `dev/rfc/` | 方案登记册（RFC-XXXX：怎么做/候选对比/推荐） |
 | `dev/adr/` | 决策登记册（ADR-XXXX：决定了什么/为什么，只增不改） |
-| `dev/research/` | 调研登记册（RESEARCH-XXXX：红线 13 调研结果，发现记录追加） |
+| `dev/research/` | 调研登记册（RESEARCH-XXXX：红线 14 调研结果，发现记录追加） |
 | `dev/` | 开发期文档：DESIGN（设计）/ CHANGELOG（变更历史）/ TEST-REPORT（测试记录） |
 | `test/` | 本地测试素材（测试库、测试项目等） |
 | （按需） | 个人笔记、未公开素材、密钥（密钥不提交子 git 或加密后提交） |

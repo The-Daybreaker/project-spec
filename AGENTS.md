@@ -4,7 +4,7 @@
 > 本文件是**本项目（模板工作区）**的专属规范入口：任何 agent 在本工作区工作时先读
 > 本文件，再读模板规范（`project-template/AGENTS.md` 与
 > `project-template/private/AGENTS.md`）与 `docs/STATUS.md` 快照。上下文压缩后或
-> 新对话开始时，必须重读本文件、模板规范与 `docs/STATUS.md` 后再继续（红线 15）。
+> 新对话开始时，必须重读本文件、模板规范与 `docs/STATUS.md` 后再继续（红线 16）。
 
 ## 摘要与加载规则（渐进式披露）
 
@@ -86,7 +86,7 @@
    阶段标识，D14）；任务收尾/汇报前回读校准硬事实（文件数、版本号、提交号）与实际
    仓库状态一致后再汇报。
 7. **经验自动沉淀**：每轮对话结束后**自动**把完整候选经验写入
-   `docs/EXPERIENCE-TO-KB.md`（必做、不需询问，与模板红线 9 对齐）；沉淀与否、
+   `docs/EXPERIENCE-TO-KB.md`（必做、不需询问，与模板红线 10 对齐）；沉淀与否、
    沉淀到哪由用户决定。
 8. **索引/未发版区段纪律（收尾核对）**：「新条目在前」的文档（如
    `docs/EXPERIENCE-TO-KB.md` 索引与正文、`docs/CHANGELOG.md` 未发版区段），新增
@@ -138,7 +138,7 @@
 - agent 安装目标：六处（codex / dsh / workbuddy / trae-cn / qwenworkcn / qoder-cn），
   由 `install-targets.json` 单一事实来源承载 + `verify_installed_copies.py` 全量
   哈希+版本哨兵校验（qwenworkcn 替换原 qoderworkcn，P1-1）。
-- agent 提问与共识确认机制（红线 17，2026-08-27）：禁面板（禁止问题面板/选择面板类
+- agent 提问与共识确认机制（红线 18，2026-08-27）：禁面板（禁止问题面板/选择面板类
   UI）/ 回答≠确认（回答=新信息输入并重检问题空间）/ 共识快照+逐项表态 / 反定型 6 项
   关键/风险节点展示（平时内部思考）/ 确认不锁定（需求阶段内新信息可回审，PRD 定稿
   后走变更流程=开新 PRD 取代）；本工作区按轻量流程实施（不建 DESIGN 文件，ADR-0001
