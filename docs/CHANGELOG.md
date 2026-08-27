@@ -28,6 +28,10 @@
 > 以下为 v1.4.2 发布后、尚未发版的累积变更；发版时并入对应版本条目。条目以
 > `git log v1.4.2.patch0..HEAD` 记录为准，不固定提交号。
 
+- 安全：历史遗留解决——全历史作者邮箱由真实邮箱重写为 GitHub noreply 邮箱
+  （`filter-branch --env-filter` 元数据重写，82 提交 + 14 tag 全部重映射，旧对象
+  物理清除）；审计报告邮箱字面残留清除；`scan_secrets.py` 白名单 noreply 邮箱；
+  覆盖强推远端 main + 全部 tag（公开面零个人信息）。
 - 维护：配置远端仓库 `origin` → `https://github.com/The-Daybreaker/Project-Template.git`
   （push/Release 前置）。
 
