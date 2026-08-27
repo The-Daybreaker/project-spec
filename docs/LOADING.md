@@ -17,7 +17,7 @@
 | 需求 / 方案 / 调研任务 | 按需读 | `project-template/private/dev/{prd,rfc,adr,research}/INDEX.md` → 目标文档 |
 | 实施任务 | 必读 | `project-template/private/dev/DESIGN.md`、对应 PRD |
 | 审计任务 | 必读 | `project-template/docs/audit-checklist.md` |
-| 验证任务 | 必读 | `scripts/ci_check.py` 说明、`project-template/docs/TESTING.md` |
+| 验证任务 | 必读 | `project-template/scripts/ci_check.py` 说明、`project-template/docs/TESTING.md` |
 | 发布任务 | 必读 | 发布流程（`project-template/private/AGENTS.md`）→ `project-template/private/dev/CHANGELOG.md` → `pre_release_check.py` |
 | 母项目改模板 / 同步 | 必读 | 根 `AGENTS.md` 维护约定 → `scripts/sync_template.py` |
 | **历史决策 / 追溯** | **默认不读，按需** | `CHANGELOG` / `ADR`（用户明确要求或确需追溯时） |

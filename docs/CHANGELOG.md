@@ -28,6 +28,11 @@
 > 以下为 v1.4.2 发布后、尚未发版的累积变更；发版时并入对应版本条目。条目以
 > `git log v1.4.2.patch0..HEAD` 记录为准，不固定提交号。
 
+- 维护：第十一轮全面审计（敏感信息删除后全量复核）——修复冒烟自检中文 Windows
+  GBK 解码缺陷（`scripts/smoke_init.py` 子进程按 UTF-8 输出、父进程按 GBK 解码，
+  照文档首跑必红；`_run` 增加 `encoding="utf-8", errors="replace"`，无
+  `PYTHONUTF8` 复跑全绿）；补 init-project SKILL.md 红线 17 摘要（16 条→17 条）；
+  校准 install-targets 注释与 LOADING 验证任务路径；六处副本重装 + 全链验证绿。
 - 维护：第十轮审计修复——未发版区段漏登补录（本清单）；维护约定 #4 措辞校准
   （骨架 `version` 字段为设计固定、发版只更新 `template_version`）；全局 git 身份
   切换为 noreply（与仓库本地一致）。

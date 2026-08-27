@@ -54,7 +54,8 @@ def _env() -> dict:
 
 def _run(cmd: list, cwd: Path) -> subprocess.CompletedProcess:
     return subprocess.run(
-        cmd, cwd=str(cwd), env=_env(), capture_output=True, text=True
+        cmd, cwd=str(cwd), env=_env(), capture_output=True, text=True,
+        encoding="utf-8", errors="replace",
     )
 
 
