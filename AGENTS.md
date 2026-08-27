@@ -19,19 +19,21 @@
 | 场景 | 优先级 | 读什么 |
 |---|---|---|
 | 新对话 / 压缩后恢复 | 必读 | 本文件 → 模板 AGENTS×2 → `private/dev/STATUS.md` 快照 |
-| 红线规范 | 始终必读 | 模板 AGENTS 红线小节 |
+| 红线规范 | 始终必读 | 模板 `project-template/AGENTS.md` 红线小节 |
 | 阶段定义 / 切换规则 | 按需 | 模板 `project-template/private/dev/PHASES.md` |
 | 流程 / 状态机 | 按需 | 模板 `project-template/private/dev/PHASES.md` §0/§4 |
-| 实施任务 | 必读 | 模板 `private/dev/DESIGN.md` + 对应 PRD |
-| 审计任务 | 必读 | 模板 `docs/audit-checklist.md` |
-| 发布任务 | 必读 | 模板 `private/AGENTS.md` 发布流程 → CHANGELOG → pre_release_check |
+| 实施任务 | 必读 | 模板 `project-template/private/dev/DESIGN.md` + 对应 PRD |
+| 审计任务 | 必读 | 模板 `project-template/docs/audit-checklist.md` |
+| 发布任务 | 必读 | 模板 `project-template/private/AGENTS.md` 发布流程 → CHANGELOG → pre_release_check |
 | 母项目改模板 / 同步 | 必读 | 本文件「维护约定」→ `scripts/sync_template.py` |
-| 历史决策 / 追溯 | **默认不读** | `private/dev/CHANGELOG.md` / 模板 ADR |
+| 历史决策 / 追溯 | **默认不读** | `private/dev/CHANGELOG.md` / 模板 `project-template/private/dev/adr/` |
 
 ## 【项目专用】项目概览
 
 - **定位**：通用项目模板 + init-project skill 的维护工作区（本项目本身就是模板的
   「母项目」）。
+- **三大组成**：权威模板 `project-template/` + 初始化技能 `skills/init-project/`
+  + 精简规范技能 `skills/agent-rules/`（详见下方目录细目）。
 - **目录**：`README.md`（面向使用者的说明）+ `private/dev/`（工作区开发期文档：
   状态快照 / 变更日志 / 经验 / 需求方案决策调研登记册（prd|rfc|adr|research）/
   审计报告 / 路线图 / 测试记录；B 区，private 子 git 管理，不进 GitHub）+
