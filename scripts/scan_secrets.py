@@ -66,7 +66,7 @@ PERSONAL_PATTERNS = [
 # 命中值里的占位符/示例特征 -> 忽略
 IGNORE_VALUE = re.compile(
     r"\{\{|<[^>]*>|xxx+|example|placeholder|\.\.\.|your-|@example\.(com|org|net)|"
-    r"localhost|REPLACE|git@github\.com",
+    r"localhost|REPLACE|git@github\.com|@users\.noreply\.github\.com",
     re.I,
 )
 # 命中值含正则元字符 -> 疑似代码中的正则字面量，忽略（防误报）
