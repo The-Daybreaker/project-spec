@@ -9,20 +9,50 @@
 - 每份文档在文件开头写明读者对象与维护者（负责随改动同步更新的人/角色）。
 - 文档语言按项目约定（建议中文，双语项目按 README 约定同步）。
 
-## 文档清单
+## 文档职责表（唯一家）
 
-| 文档 | 职责 |
+<!-- FACT:doc-duty -->
+
+- **动机**：职责表散在多处时，「这个信息该写哪、改这里要同步谁」必然各说各话；
+  集中到一张表，写新内容先查表定归属，改完按维护清单核对同步。
+
+**每份文档唯一职责**：
+
+| 文档 | 位置 | 模块 | 职责 |
+|---|---|---|---|
+| 根 `AGENTS.md` | 公开 | 混合 | 公开入口（面向使用者/贡献者/接手 agent） |
+| `private/AGENTS.md` | 私有 | 混合 | 开发入口与完整开发规范（唯一常青开发记忆） |
+| `private/dev/PHASES.md` | 私有 | 通用 | 阶段模块权威定义（含流程图与状态机） |
+| `private/dev/STATUS.md` | 私有 | 项目专用 | 当前状态快照（历史由 git 承担） |
+| `private/dev/ROADMAP.md` | 私有 | 项目专用 | 长期需求与展望（唯一长期入口，覆盖式更新） |
+| `private/dev/DESIGN.md` | 私有 | 混合 | 当前设计 + 开发规范（引用不重复） |
+| `private/dev/prd|rfc|adr|research/` | 私有 | 项目专用 | 四登记册（需求/方案/决策/调研，各含 INDEX 与状态机） |
+| `private/dev/prototype/` | 私有 | 项目专用 | 页面原型/设计稿（一文件一原型） |
+| `private/dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
+| `private/dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
+| `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进模板的经验（完整条目） |
+| `private/dev/EXPERIENCE-TO-KB.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进知识库的经验（完整条目） |
+| `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
+| `docs/` | 公开 | 通用 | 公开文档（DOCS / LOADING / audit-checklist / TESTING / TEST-MAP / UPGRADE / CONTRIBUTING；流程图在 `private/dev/PHASES.md`；面向用户的内容在 `README.md`） |
+| `docs/CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
+| `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
+| （按项目补充：架构、API、使用手册等） | | | |
+
+**文档维护清单**（变更类型 → 必须同步的文档）：
+
+| 变更类型 | 必须同步的文档 |
 |---|---|
-| `DOCS.md` | 本文件：docs 目录说明与文档治理 |
-| `USER-GUIDE.md` | 面向人的阶段流程简明指南（阶段/产物/何时确认/阶段卡怎么读，防遗忘） |
-| `LOADING.md` | 文档加载规则表全量版（渐进式披露：场景→必读/按需读/默认不读） |
-| `audit-checklist.md` | 实施后审计清单（自审与独立 agent 审计共用） |
-| `TESTING.md` | 测试落地指引（pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应） |
-| `UPGRADE.md` | 模板升级指南（只应用【通用】模块变更） |
-| `CONTRIBUTING.md` | 人类贡献者与 agent 的协作约定 |
-| （按项目补充：架构、API、使用手册等） | |
-
-> 改动涉及用户视角时，必须同步更新对应文档（「改动完成即文档就绪」红线）。
+| 决策/选型/红线类 | `private/AGENTS.md`「用户确认的设计决策」（覆盖原文）+ CHANGELOG 一行摘要 |
+| 需求/方案/调研 | `private/dev/prd|rfc|research/`（登记册状态+索引同步）+ DESIGN（定稿吸收） |
+| 架构决策 | `private/dev/adr/`（只增不改）+ `private/AGENTS.md` D-xxx 一行摘要 + `详见 ADR-XXXX` + CHANGELOG 一行摘要 |
+| 进度/状态/环境 | `private/dev/STATUS.md`（当前做到哪里）+ 受影响文档 |
+| 设计/架构/数据流 | `private/dev/DESIGN.md` |
+| 功能/接口实现 | DESIGN / README / docs（按项目实际） |
+| 测试/验证 | `private/dev/TEST-REPORT.md` |
+| 版本/发布 | `version.json` / CHANGELOG / README |
+| 用户视角/流程 | README / docs（audit-checklist / UPGRADE / CONTRIBUTING 等）/ 根 AGENTS.md |
+| 模板升级 | 按 `docs/UPGRADE.md` 流程 + `version.json` + CHANGELOG/STATUS |
+<!-- /FACT -->
 
 ## 文档地图（每份文档回答什么问题）
 
@@ -42,9 +72,8 @@
 | `private/dev/TEST-REPORT.md` | 验证过什么：测试记录 |
 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 可沉淀进模板的经验 |
 | `private/dev/EXPERIENCE-TO-KB.md` | 可沉淀进知识库的经验 |
-| `README.md` | 使用者视角 |
+| `README.md` | 使用者视角：项目全貌/五阶段/阶段卡怎么读（唯一用户文档） |
 | `docs/DOCS.md` | docs 目录说明与文档治理 |
-| `docs/USER-GUIDE.md` | 项目有几个阶段/产物/何时确认：面向人的防遗忘指南 |
 | `docs/LOADING.md` | 什么场景读什么：加载规则表全量版（渐进式披露） |
 | `docs/audit-checklist.md` | 改动对不对：实施后审计清单（自审/独立审计共用） |
 | `docs/TESTING.md` | 怎么测：pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应 |
@@ -74,16 +103,6 @@
 
 ## 文档治理（正文即当前状态）
 
-0. **历史文档区例外**：`private/dev/prd|rfc|adr|research/` 是唯一允许正文留史的
-   位置（PRD/RFC 定稿后冻结、ADR 只增不改、RESEARCH 发现记录只追加），按各自
-   `INDEX.md` 状态机维护；其余文档一律遵守第 1-5 条。
-1. **正文 = 当前有效状态**：决策被修改时**直接覆盖原文**，不保留旧决策段落，禁止写
-   「⚠️ 已取代 by …」这类历史标注。
-2. **禁止 AI 追加历史**：AI 改决策时，不得自动在正文里追加大段历史决策说明
-   （上下文卫生红线）。
-3. **追溯用一行记录**：确需留痕时，只在 `private/dev/CHANGELOG.md` 记一行摘要
-   （如 `vX.Y.Z.patchN：决策 A → B`），由用户决定是否记录，不进决策正文。
-4. **废案/临时内容**：按用户意愿直接删除，不强制留痕；删除走
-   `_trash/<agent产品名>_<日期>_<时分>/`（如 `codex_2026-08-25_2330`）→
-   `python scripts/trash.py` → 回收站，保证可恢复即可。
-5. **可恢复性由删除机制保证**，不由「正文留废案」保证。
+<!-- REF:doc-governance -->
+正文=当前有效状态：决策修改直接覆盖原文，禁历史标注，禁 AI 追加历史；留痕只记 CHANGELOG 一行；历史文档区（四登记册）例外。完整规则见 `private/AGENTS.md`「文档治理」节。
+<!-- /REF -->

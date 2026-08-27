@@ -1,16 +1,17 @@
 # agent-rules 继承矩阵（维护用）
 
 > 本文件是「随模板每个版本及时更新」的核对依据。模板【通用】要求变更时，必须同步
-> 更新本矩阵（指纹）与 `../SKILL.md` 正文；`scripts/sync_template.py` 会自动校验
-> 版本一致性、矩阵覆盖完整性、红线正文指纹——校验失败即拦截，防止精简版与模板漂移。
+> 更新本矩阵（双侧指纹）与 `../SKILL.md` 正文；`scripts/sync_template.py` 会自动
+> 校验版本一致性、矩阵覆盖完整性、红线正文双侧指纹（模板侧 + 精简版条目侧）——
+> 校验失败即拦截，防止精简版与模板漂移。
 
 ## 1. 版本对照
 
 | 项 | 版本 |
 |---|---|
-| 模板 `template_version`（权威） | 1.5.0.patch0 |
-| `../SKILL.md` `metadata.version` | 1.5.0.patch0 |
-| 上次核对模板版本 | 1.5.0.patch0 |
+| 模板 `template_version`（权威） | 1.6.0.patch0 |
+| `../SKILL.md` `metadata.version` | 1.6.0.patch0 |
+| 上次核对模板版本 | 1.6.0.patch0 |
 
 ## 2. 模板红线覆盖（project-template/AGENTS.md「通用红线」）
 
