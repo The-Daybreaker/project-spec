@@ -9,7 +9,7 @@
 
 | 场景 | 优先级 | 文件路径 |
 |---|---|---|
-| **每次新对话 / 上下文压缩后恢复** | 必读 | 根 `AGENTS.md` → 模板 `project-template/AGENTS.md` → `project-template/private/AGENTS.md` → `docs/STATUS.md`（快照） |
+| **每次新对话 / 上下文压缩后恢复** | 必读 | 根 `AGENTS.md` → 模板 `project-template/AGENTS.md` → `project-template/private/AGENTS.md` → `private/dev/STATUS.md`（快照） |
 | **红线规范** | 始终必读 | AGENTS 红线小节 / agent-rules 精简版 |
 | 需要阶段定义 / 产物 / 切换规则 / 生命周期 | 按需读 | `project-template/private/dev/PHASES.md` |
 | 需要流程图 / 状态机 / 动作链路 | 按需读 | `docs/FLOW.md` |
@@ -40,7 +40,7 @@
 
 1. 读根 `AGENTS.md`（红线 + 加载规则摘要）→ 定位场景行；
 2. 读模板 `AGENTS.md` / `private/AGENTS.md`（私有加载规则 + 当前状态）；
-3. 读 `docs/STATUS.md` 快照——由「📇 阶段卡（当前阶段节点 + 标题状态）」判断进度；
+3. 读 `private/dev/STATUS.md` 快照——由「📇 阶段卡（当前阶段节点 + 标题状态）」判断进度；
 4. 按快照「任务影响清单 → 要读文档清单」逐份读；
 5. 阶段卡缺失/空白时：`git log` 查本文件最近提交推断，仍不确定则**询问用户**；
 6. 展示合并紧凑阶段卡（标题含状态 + 横置阶段线 + 合规两行）后继续。

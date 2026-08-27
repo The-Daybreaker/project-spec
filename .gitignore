@@ -26,3 +26,6 @@ Thumbs.db
 
 # 临时删除区（对话内删除先移入，任务结束整体进回收站）
 _trash/
+
+# 私有区（开发期文档，private 子 git 管理，不进 GitHub）
+private/

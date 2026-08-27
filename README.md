@@ -88,7 +88,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 - 版本号格式 `X.Y.Z.patchN`（例如 `1.4.2.patch0`），以 `version.json` 为准，
   并打 git tag `vX.Y.Z.patchN`。
 - 本项目当前版本：**v1.4.2.patch0**。
-- 模板每次发版的变更记录在 `docs/CHANGELOG.md`；初始化出的项目需要升级模板时，
+- 模板每次发版的变更记录在 `private/dev/CHANGELOG.md`；初始化出的项目需要升级模板时，
   按项目内 `docs/UPGRADE.md` 的说明操作（只应用【通用】部分，不动你的项目内容）。
 
 ## 给维护者的几条约定
@@ -102,7 +102,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 - **技能校验**：改完技能用 skill-creator 的 quick_validate 校验
   （`PYTHONUTF8=1 python <skill-creator>/scripts/quick_validate.py skills/init-project`，
   agent-rules 同理）。
-- **发版同步**：版本递增时同步更新 `version.json`、`docs/CHANGELOG.md`、两个
+- **发版同步**：版本递增时同步更新 `version.json`、`private/dev/CHANGELOG.md`、两个
   SKILL.md 的 `metadata.version`、agent-rules 继承矩阵，并全局 grep 新旧版本号
   确认无残留。
 - **发布前冒烟自检**：`python scripts/smoke_init.py` 必须全绿。

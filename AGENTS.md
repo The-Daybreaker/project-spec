@@ -3,8 +3,8 @@
 > 模块：混合（【通用】= 沿用模板规范；【项目专用】= 本工作区维护约定）。
 > 本文件是**本项目（模板工作区）**的专属规范入口：任何 agent 在本工作区工作时先读
 > 本文件，再读模板规范（`project-template/AGENTS.md` 与
-> `project-template/private/AGENTS.md`）与 `docs/STATUS.md` 快照。上下文压缩后或
-> 新对话开始时，必须重读本文件、模板规范与 `docs/STATUS.md` 后再继续（红线 16）。
+> `project-template/private/AGENTS.md`）与 `private/dev/STATUS.md` 快照。上下文压缩后或
+> 新对话开始时，必须重读本文件、模板规范与 `private/dev/STATUS.md` 后再继续（红线 16）。
 
 ## 摘要与加载规则（渐进式披露）
 
@@ -18,7 +18,7 @@
 
 | 场景 | 优先级 | 读什么 |
 |---|---|---|
-| 新对话 / 压缩后恢复 | 必读 | 本文件 → 模板 AGENTS×2 → `docs/STATUS.md` 快照 |
+| 新对话 / 压缩后恢复 | 必读 | 本文件 → 模板 AGENTS×2 → `private/dev/STATUS.md` 快照 |
 | 红线规范 | 始终必读 | 模板 AGENTS 红线小节 |
 | 阶段定义 / 切换规则 | 按需 | 模板 `project-template/private/dev/PHASES.md` |
 | 流程 / 状态机 | 按需 | `docs/FLOW.md` |
@@ -26,25 +26,27 @@
 | 审计任务 | 必读 | 模板 `docs/audit-checklist.md` |
 | 发布任务 | 必读 | 模板 `private/AGENTS.md` 发布流程 → CHANGELOG → pre_release_check |
 | 母项目改模板 / 同步 | 必读 | 本文件「维护约定」→ `scripts/sync_template.py` |
-| 历史决策 / 追溯 | **默认不读** | `docs/CHANGELOG.md` / 模板 ADR |
+| 历史决策 / 追溯 | **默认不读** | `private/dev/CHANGELOG.md` / 模板 ADR |
 
 ## 【项目专用】项目概览
 
 - **定位**：通用项目模板 + init-project skill 的维护工作区（本项目本身就是模板的
   「母项目」）。
-- **目录**：`README.md`（面向使用者的说明）+ `docs/`（工作区自身文档：CHANGELOG /
-  STATUS / EXPERIENCE-TO-KB / FLOW / USER-GUIDE / LOADING）、`scripts/sync_template.py`
+- **目录**：`README.md`（面向使用者的说明）+ `private/dev/`（工作区开发期文档：
+  状态快照 / 变更日志 / 经验 / 需求方案决策调研登记册（prd|rfc|adr|research）/
+  审计报告 / 路线图 / 测试记录；B 区，private 子 git 管理，不进 GitHub）+
+  `docs/`（公开指引：FLOW / USER-GUIDE / LOADING）、`scripts/sync_template.py`
   （同步脚本）、`project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill
   目录）：`init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
 - **版本**：根 `version.json`（当前 1.4.2.patch0）+ git tag `vX.Y.Z.patchN`；模板自身变更历史见
-  `docs/CHANGELOG.md`。
+  `private/dev/CHANGELOG.md`。
 
 ## 【通用】红线与工作流
 
 - 遵循模板规范：红线、工作流、版本/发布、审计，见 `project-template/AGENTS.md` 与
   `project-template/private/AGENTS.md`（冲突时私有版优先）。
-- 阶段落盘：每完成一小阶段先更新 `docs/STATUS.md` 快照与受影响文档再继续。
+- 阶段落盘：每完成一小阶段先更新 `private/dev/STATUS.md` 快照与受影响文档再继续。
 
 ## 【项目专用】维护约定（强制）
 
@@ -59,7 +61,7 @@
    不是 skill 名；中文 Windows 默认 GBK 需 PYTHONUTF8=1）。
 4. **发版同步**：版本递增时同步更新根 `version.json`、`project-template/version.json`
    的 `template_version` 字段（其 `version` 字段为设计固定的 `0.0.1.patch0`——
-   `init_project.py` 原样读取为新项目初始版本，不随发版变动）、`docs/CHANGELOG.md`、
+   `init_project.py` 原样读取为新项目初始版本，不随发版变动）、`private/dev/CHANGELOG.md`、
    `skills/init-project/SKILL.md metadata.version`、
    `skills/agent-rules/SKILL.md metadata.version` 与
    `skills/agent-rules/references/inheritance-map.md` 版本对照，并**全局 grep 新旧
@@ -81,20 +83,20 @@
    （如 `codex_2026-08-25_2330`；不设固定 agent 列表，以执行 agent 的产品名为准），
    任务结束时整体进回收站（`python project-template/scripts/trash.py`），
    避免小文件堆积。
-6. **STATUS 快照纪律（dogfood）**：新任务开始先更新 `docs/STATUS.md`「当前任务」；
+6. **STATUS 快照纪律（dogfood）**：新任务开始先更新 `private/dev/STATUS.md`「当前任务」；
    每完成阶段/子阶段**覆盖更新**快照 + 展示阶段卡 + git 提交（主仓库，提交信息带
    阶段标识，D14）；任务收尾/汇报前回读校准硬事实（文件数、版本号、提交号）与实际
    仓库状态一致后再汇报。
 7. **经验自动沉淀**：每轮对话结束后**自动**把完整候选经验写入
-   `docs/EXPERIENCE-TO-KB.md`（必做、不需询问，与模板红线 10 对齐）；沉淀与否、
+   `private/dev/EXPERIENCE-TO-KB.md`（必做、不需询问，与模板红线 10 对齐）；沉淀与否、
    沉淀到哪由用户决定。
 8. **索引/未发版区段纪律（收尾核对）**：「新条目在前」的文档（如
-   `docs/EXPERIENCE-TO-KB.md` 索引与正文、`docs/CHANGELOG.md` 未发版区段），新增
+   `private/dev/EXPERIENCE-TO-KB.md` 索引与正文、`private/dev/CHANGELOG.md` 未发版区段），新增
    条目必须**正文与索引同时置顶**；任务收尾/汇报前核对：索引顺序与正文一致、
    「最后更新」日期与最新提交一致、未发版区段与 `git log <tag>..HEAD` 逐条比对。
 9. **流程提示（dogfood）**：工作区汇报/阶段落盘/收尾展示**合并紧凑阶段卡**（标题含
    状态 + 横置阶段线当前节点加粗 + 合规已完成/待完成两行 + 反定型紧凑内容（仅关键/
-   风险节点）；**只用中文名称、不显示字母缩写**），以 `docs/STATUS.md`「📇 阶段卡」
+   风险节点）；**只用中文名称、不显示字母缩写**），以 `private/dev/STATUS.md`「📇 阶段卡」
    为单一真相。
 10. **发布前开箱即用自检（强制，AUDIT-2026-08-27 机制）**：模板发布前必须运行
     `python scripts/smoke_init.py` 且全绿——初始化临时项目 + 占位符回读 + 冒烟项目
@@ -108,6 +110,10 @@
     `python scripts/scan_secrets.py --check`（并跑 `--history` 复核全部 git 历史），
     高危凭据零命中、个人信息命中经人工确认零残留后再发版；脚本门禁（退出码 1）
     随发布前校验链执行，防本机路径/用户名/凭据再次泄漏到公开仓库。
+12. **母项目 private 子 git 纪律（2026-08-27 结构改造）**：根 `private/`（B 区）
+    由 private 子 git 管理，主仓库 `.gitignore` 忽略、绝不推送；开发期文档一律
+    落 `private/dev/`（公开指引仍在 `docs/`）；阶段落盘/收尾时 `git -C private
+    status --short` 须干净（变更先提交 private 子 git 再提交主仓库）。
 
 ## 【项目专用】本机环境
 
@@ -123,10 +129,13 @@
 - 删除纪律：`_trash/` 临时删除区（命名 = `<agent产品名>_<YYYY-MM-DD>_<HHMM>`，
   如 `codex_2026-08-25_2330`；不设固定 agent 列表）+ 整轮进回收站。
 - 经验文档放 `private/dev/`，完整条目、不预设沉淀位置。
-- 工作区不建 private 子 git（避免与模板 private 骨架混淆）。
+- 工作区 private 子 git（2026-08-27 用户指示按模板规范改造）：母项目新增根
+  `private/`（B 区，开发期文档由 private 子 git 管理，本地无远端、主仓库忽略）；
+  覆盖原「工作区不建 private 子 git」决策；与 `project-template/private/`
+  （模板私有骨架，主仓库强制跟踪）路径明确区分。
 - 母项目不设 EXPERIENCE-TO-TEMPLATE 暂存：可复用进模板的经验直接改进
   `project-template/` 与 `skills/init-project/`；可进知识库的经验记于
-  `docs/EXPERIENCE-TO-KB.md`，不混入模板内部。
+  `private/dev/EXPERIENCE-TO-KB.md`，不混入模板内部。
 - 工作区根补 `.gitattributes`（LF 归一化，与模板一致；P3 #6 落地）。
 - 模板【通用】模块补「项目归档/退役」流程与 `dist/` 发布产物目录约定
   （P3 #7 + 产物治理落地）。
@@ -142,7 +151,7 @@
   UI）/ 回答≠确认（回答=新信息输入并重检问题空间）/ 共识快照+逐项表态 / 反定型 6 项
   关键/风险节点展示（平时内部思考）/ 确认不锁定（需求阶段内新信息可回审，PRD 定稿
   后走变更流程=开新 PRD 取代）；本工作区按轻量流程实施（不建 DESIGN 文件，ADR-0001
-  确认后直接进入实现）；详见 `docs/ADR-0001-agent-questioning.md`。
+  确认后直接进入实现）；详见 `private/dev/adr/ADR-0001-agent-questioning.md`。
 
 ## 文档职责
 
@@ -150,12 +159,15 @@
 |---|---|---|
 | `AGENTS.md`（本文件） | 混合 | 工作区专属规范入口 |
 | `README.md` | 项目专用 | 面向使用者的说明 |
-| `docs/STATUS.md` | 项目专用 | 当前状态快照（阶段卡 + 生命周期合规清单 + 影响清单；历史由 git 承担） |
+| `private/dev/STATUS.md` | 项目专用 | 当前状态快照（阶段卡 + 生命周期合规清单 + 影响清单；历史由 git 承担） |
 | `docs/FLOW.md` | 混合 | 流程与状态机总图（主流程 + 每阶段子流程 + 动作状态机，mermaid） |
 | `docs/USER-GUIDE.md` | 混合 | 面向人的阶段流程简明指南（防遗忘） |
 | `docs/LOADING.md` | 混合 | 加载规则表全量版（渐进式披露协议） |
-| `docs/CHANGELOG.md` | 项目专用 | 模板版本变更历史（升级比对依据） |
-| `docs/EXPERIENCE-TO-KB.md` | 项目专用 | 可沉淀进知识库的经验（完整条目） |
+| `private/dev/CHANGELOG.md` | 项目专用 | 模板版本变更历史（升级比对依据） |
+| `private/dev/EXPERIENCE-TO-KB.md` | 项目专用 | 可沉淀进知识库的经验（完整条目） |
+| `private/dev/ROADMAP.md` | 项目专用 | 长期需求与展望（愿景/需求地图/版本排期；唯一长期入口，覆盖式更新） |
+| `private/dev/prd|rfc|adr|research/` | 项目专用 | 需求/方案/决策/调研登记册（含 INDEX，按模板状态机维护） |
+| `private/dev/audit/` | 项目专用 | 审计报告（AUDIT-*） |
 | `install-targets.json` | 项目专用 | 机器可读安装表：两 skill 在各 agent 用户级 skill 目录的位置（单一事实来源） |
 | `scripts/sync_template.py` | 项目专用 | 同步脚本（project-template/ → skills/init-project/assets/ + 全链校验） |
 | `scripts/verify_installed_copies.py` | 项目专用 | 安装副本校验：读安装表 → 逐目录 × 逐 skill 全量 SHA-256 + 版本哨兵（随 sync 并入发版链） |
