@@ -12,7 +12,7 @@
   P5 交付发布），权威定义见 `project-template/private/dev/PHASES.md`；每次专注一个
   阶段，严禁跨阶段；阶段/子阶段完成展示**阶段卡**（进度 + 生命周期合规清单 + 下一
   阶段输入预告）；🔵 决策型须用户确认、🟢 执行型展示即走；流程状态机见
-  `docs/FLOW.md`。
+  模板 `project-template/private/dev/PHASES.md`（§0 总图、§4 子流程与状态机）。
 - **披露协议**：什么场景读什么按下方加载规则表；历史默认不读、红线始终必读；
   全量规则见 `docs/LOADING.md`。
 
@@ -21,7 +21,7 @@
 | 新对话 / 压缩后恢复 | 必读 | 本文件 → 模板 AGENTS×2 → `private/dev/STATUS.md` 快照 |
 | 红线规范 | 始终必读 | 模板 AGENTS 红线小节 |
 | 阶段定义 / 切换规则 | 按需 | 模板 `project-template/private/dev/PHASES.md` |
-| 流程 / 状态机 | 按需 | `docs/FLOW.md` |
+| 流程 / 状态机 | 按需 | 模板 `project-template/private/dev/PHASES.md` §0/§4 |
 | 实施任务 | 必读 | 模板 `private/dev/DESIGN.md` + 对应 PRD |
 | 审计任务 | 必读 | 模板 `docs/audit-checklist.md` |
 | 发布任务 | 必读 | 模板 `private/AGENTS.md` 发布流程 → CHANGELOG → pre_release_check |
@@ -35,7 +35,7 @@
 - **目录**：`README.md`（面向使用者的说明）+ `private/dev/`（工作区开发期文档：
   状态快照 / 变更日志 / 经验 / 需求方案决策调研登记册（prd|rfc|adr|research）/
   审计报告 / 路线图 / 测试记录；B 区，private 子 git 管理，不进 GitHub）+
-  `docs/`（公开指引：FLOW / USER-GUIDE / LOADING）、`scripts/sync_template.py`
+  `docs/`（公开指引：USER-GUIDE / LOADING）、`scripts/sync_template.py`
   （同步脚本）、`project-template/`（权威模板，同步到 skill 资产）、`skills/`（skill
   目录）：`init-project/`（skill：SKILL.md / references / scripts / assets）、
   `agent-rules/`（skill：精简版 agent 全局行为规范，仅非项目且非纯聊天对话加载）。
@@ -164,7 +164,6 @@
 | `AGENTS.md`（本文件） | 混合 | 工作区专属规范入口 |
 | `README.md` | 项目专用 | 面向使用者的说明 |
 | `private/dev/STATUS.md` | 项目专用 | 当前状态快照（阶段卡 + 生命周期合规清单 + 影响清单；历史由 git 承担） |
-| `docs/FLOW.md` | 混合 | 流程与状态机总图（主流程 + 每阶段子流程 + 动作状态机，mermaid） |
 | `docs/USER-GUIDE.md` | 混合 | 面向人的阶段流程简明指南（防遗忘） |
 | `docs/LOADING.md` | 混合 | 加载规则表全量版（渐进式披露协议） |
 | `private/dev/CHANGELOG.md` | 项目专用 | 模板版本变更历史（升级比对依据） |

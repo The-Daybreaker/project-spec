@@ -14,7 +14,6 @@
 | 文档 | 职责 |
 |---|---|
 | `DOCS.md` | 本文件：docs 目录说明与文档治理 |
-| `FLOW.md` | 项目运转流程与状态机总图（主流程 + 每阶段子流程 + 动作状态机，mermaid） |
 | `USER-GUIDE.md` | 面向人的阶段流程简明指南（阶段/产物/何时确认/阶段卡怎么读，防遗忘） |
 | `LOADING.md` | 文档加载规则表全量版（渐进式披露：场景→必读/按需读/默认不读） |
 | `audit-checklist.md` | 实施后审计清单（自审与独立 agent 审计共用） |
@@ -31,7 +30,7 @@
 |---|---|
 | 根 `AGENTS.md` | Agent 入口：红线摘要、必读顺序、文档职责、维护清单 |
 | `private/AGENTS.md` | 开发规范全集、当前状态、环境、决策、定案/询问清单 |
-| `private/dev/PHASES.md` | 阶段模块权威定义：每阶段输入/产物/生命周期/16节点映射/切换规则/需求引导/文档映射 |
+| `private/dev/PHASES.md` | 阶段模块权威定义：每阶段输入/产物/生命周期/16节点映射/切换规则/需求引导/文档映射/流程图与状态机 |
 | `private/dev/DESIGN.md` | 怎么做：设计、关键不变量、影响面 |
 | `private/dev/STATUS.md` | 做到哪了：当前状态快照（阶段卡 + 影响清单 + 生命周期合规清单 + 下阶段输入预告） |
 | `private/dev/prd/` | 为什么做/做什么：需求登记册（状态+优先级，定稿门禁） |
@@ -45,7 +44,6 @@
 | `private/dev/EXPERIENCE-TO-KB.md` | 可沉淀进知识库的经验 |
 | `README.md` | 使用者视角 |
 | `docs/DOCS.md` | docs 目录说明与文档治理 |
-| `docs/FLOW.md` | 流程长什么样：主流程 + 每阶段子流程 + 动作状态机总图 |
 | `docs/USER-GUIDE.md` | 项目有几个阶段/产物/何时确认：面向人的防遗忘指南 |
 | `docs/LOADING.md` | 什么场景读什么：加载规则表全量版（渐进式披露） |
 | `docs/audit-checklist.md` | 改动对不对：实施后审计清单（自审/独立审计共用） |
@@ -61,7 +59,7 @@
 | 新对话/压缩后恢复 | 必读 | 根 AGENTS → private/AGENTS → `STATUS.md` 快照 |
 | 红线规范 | 始终必读 | AGENTS 红线小节 |
 | 阶段定义/切换规则 | 按需 | `PHASES.md` |
-| 流程图/状态机 | 按需 | `FLOW.md` |
+| 流程图/状态机 | 按需 | `PHASES.md` §0/§4 |
 | 需求/方案/调研 | 按需 | 登记册 INDEX → 目标文档 |
 | 实施 | 必读 | DESIGN + 对应 PRD |
 | 发布 | 必读 | 发布流程 → CHANGELOG → pre_release_check |

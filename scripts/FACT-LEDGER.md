@@ -16,9 +16,9 @@
 | archiving | 项目归档/退役流程 | 已登记 | project-template/AGENTS.md | 277412b41935 | 归档节全量正文；私有指引归档节 B2 第三步改指针 |
 | phases | 阶段体系（五阶段/16节点） | 已登记 | project-template/private/dev/PHASES.md | bd2a8cf4431a | §1 节点映射；其余 12+ 处完整展开 B2 归一 |
 | stage-card | 阶段卡机制 | 已登记 | project-template/private/dev/PHASES.md | 26393d6a2a04 | §5 全量正文；USER-GUIDE 旧三段式为活体漂移（B2 第七步修） |
-| req-guide | 需求引导方法论 | 已登记 | project-template/private/dev/PHASES.md | 625b7175a016 | §6 全量正文；转译损耗还原（发现+逐层收敛）在 B4 |
-| release-flow | 发布流程 | 已登记 | project-template/private/AGENTS.md | b679a24348f9 | 发布流程节全量正文；公开指引简化版 B2 第三步改指针 |
+| req-guide | 需求引导方法论 | 已登记 | project-template/private/dev/PHASES.md | 9f281beaf4d5 | §6 全量正文（含状态机）；转译损耗还原（发现+逐层收敛）在 B4 |
+| release-flow | 发布流程 | 已登记 | project-template/private/AGENTS.md | bc7dddd0452c | 发布流程节全量正文（含发版状态机）；公开指引简化版 B2 第三步改指针 |
 | doc-governance | 文档治理规则 | 已登记 | project-template/private/AGENTS.md | 5cb54a402d36 | 文档治理节 0-5 条；红线 13 保留红线级表述、DOCS 近逐字段 B2 改指针 |
 | completion-checklist | 完成检查清单 | 已登记 | project-template/private/AGENTS.md | cb9dc29c0d7f | 清单全量正文；与阶段契约的派生对齐在 B3 |
 | doc-duty | 文档职责表 | 待安家 | — | — | 5 个表格变体（两份 AGENTS/DOCS/init-steps 等），B2 第四步归一到文档总览 |
-| loading | 加载规则 | 待安家 | — | — | LOADING 为家，B2 第二步打锚点登记 |
+| loading | 加载规则 | 已登记 | project-template/docs/LOADING.md | f45ed517cb40 | 全量加载规则表；母项目副本废除在 B2 第五步 |

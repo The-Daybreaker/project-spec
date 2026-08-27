@@ -46,7 +46,7 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   + 子阶段两级；每阶段有输入/明确产物/完成标志/生命周期；阶段/子阶段完成展示
   **阶段卡**（进度 + 生命周期合规清单 + 下一阶段输入预告）；🔵 决策型阶段/子阶段须
   用户确认放行、🟢 执行型展示即走；双维度模型（主流程串行 + 贯穿动作不占阶段）；
-  权威定义 `private/dev/PHASES.md`，流程图 `docs/FLOW.md`。
+  权威定义与流程图在 `private/dev/PHASES.md`。
 - **渐进式披露**：`docs/LOADING.md` 加载规则表（场景→必读/按需/默认不读，历史默认
   不读、红线始终必读）；`docs/USER-GUIDE.md` 面向人的阶段流程指南（防遗忘）；
   新对话/压缩后读 AGENTS → private/AGENTS → STATUS 快照恢复。
@@ -116,7 +116,8 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
      （以 `assets/project-template/version.json` 的 `template_version` 字段为准）；
    - `private/dev/STATUS.md`、`PHASES.md`、`EXPERIENCE-TO-TEMPLATE.md`、
      `EXPERIENCE-TO-KB.md` 已生成；
-   - `docs/{FLOW,USER-GUIDE,LOADING}.md` 已生成（流程状态机图 / 用户指南 / 加载规则表）；
+   - `docs/{USER-GUIDE,LOADING}.md` 已生成（用户指南 / 加载规则表；流程图在
+     `private/dev/PHASES.md`）；
    - `private/dev/{prd,rfc,adr,research}/INDEX.md` 已生成（开发前四登记册）；
    - `private/dev/prototype/README.md` 已生成（页面原型/设计稿目录说明）；
    - `private/dev/STATUS.md`「📇 阶段卡」为合并紧凑模块（标题含状态 + 横置阶段线

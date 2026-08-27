@@ -12,7 +12,7 @@
 - **项目运转**：5 大阶段串行（P1 需求 → P2 方案 → P3 开发 → P4 审计验证 → P5 交付
   发布），每次专注一个阶段；阶段内分子阶段；阶段/子阶段完成展示**阶段卡**（进度 +
   生命周期合规清单 + 下一阶段输入预告）。🔵 决策型阶段/子阶段须**用户确认**放行，
-  🟢 执行型展示即走。细节见 `private/dev/PHASES.md` 与 `docs/FLOW.md`。
+  🟢 执行型展示即走。细节见 `private/dev/PHASES.md`（含流程图与状态机）。
 - **文档披露**：渐进式——什么场景读什么，按下方加载规则表；历史决策默认不读；
   红线始终必读。全量规则见 `docs/LOADING.md`。
 - **双维度**：主流程阶段串行、严禁跨阶段；文档维护/STATUS 落盘/git 提交/经验沉淀等
@@ -23,7 +23,7 @@
 | 新对话 / 压缩后恢复 | 必读 | 本文件 → `private/AGENTS.md` → `private/dev/STATUS.md` 快照 |
 | 红线规范 | 始终必读 | 本文件「通用红线」小节 |
 | 阶段定义 / 切换规则 | 按需 | `private/dev/PHASES.md` |
-| 流程图 / 状态机 | 按需 | `docs/FLOW.md` |
+| 流程图 / 状态机 | 按需 | `private/dev/PHASES.md` §0/§4 |
 | 需求 / 方案 / 调研 | 按需 | `private/dev/{prd,rfc,adr,research}/INDEX.md` → 目标文档 |
 | 实施 | 必读 | `private/dev/DESIGN.md` + 对应 PRD |
 | 历史决策 / 追溯 | **默认不读** | CHANGELOG / ADR |
@@ -86,7 +86,7 @@
 6. 任何实施开始前，必须先走阶段体系：**对齐需求与计划、获用户确认**（P1 需求 /
    P2 方案为决策型，须用户确认放行）。
 
-## 【通用】开发工作流（阶段体系摘要；权威定义见 `private/dev/PHASES.md`，流程图见 `docs/FLOW.md`）
+## 【通用】开发工作流（阶段体系摘要；权威定义与流程图见 `private/dev/PHASES.md`）
 
 **5 大阶段串行**（16 节点收敛，每次只专注一个，严禁跨阶段）：
 
@@ -401,7 +401,7 @@
 | `private/dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
 | `private/dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
 | `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
-| `docs/` | 公开 | 通用（DOCS / FLOW / USER-GUIDE / LOADING / audit-checklist / UPGRADE 等） | 公开文档（FLOW=流程状态机图、USER-GUIDE=面向人指南、LOADING=加载规则表全量） |
+| `docs/` | 公开 | 通用（DOCS / USER-GUIDE / LOADING / audit-checklist / UPGRADE 等） | 公开文档（USER-GUIDE=面向人指南、LOADING=加载规则表全量；流程图见 `private/dev/PHASES.md`） |
 | `docs/CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
 | `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
 

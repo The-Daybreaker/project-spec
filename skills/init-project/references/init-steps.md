@@ -109,8 +109,8 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
 - [ ] `version.json`：`version` = `0.0.1.patch0`；`private/dev/CHANGELOG.md` 顶部 = `v0.0.1.patch0`
 - [ ] `version.json`：`template_version` 与 skill/模板版本一致（以
       `assets/project-template/version.json` 的 `template_version` 字段为准）
-- [ ] `docs/FLOW.md`、`docs/USER-GUIDE.md`、`docs/LOADING.md` 已生成（v1.4.0
-      特性：流程状态机总图 / 面向人阶段指南 / 加载规则表）
+- [ ] `docs/USER-GUIDE.md`、`docs/LOADING.md` 已生成（v1.4.0
+      特性：面向人阶段指南 / 加载规则表；流程图随 `private/dev/PHASES.md`）
 - [ ] `private/dev/STATUS.md`、`private/dev/PHASES.md`、`EXPERIENCE-TO-TEMPLATE.md`、
       `EXPERIENCE-TO-KB.md` 已生成（v1.4.0：WORKLOG 改名 STATUS 快照 + 阶段模块
       权威定义；阶段落盘与经验沉淀载体）

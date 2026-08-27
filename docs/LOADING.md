@@ -12,7 +12,7 @@
 | **每次新对话 / 上下文压缩后恢复** | 必读 | 根 `AGENTS.md` → 模板 `project-template/AGENTS.md` → `project-template/private/AGENTS.md` → `private/dev/STATUS.md`（快照） |
 | **红线规范** | 始终必读 | AGENTS 红线小节 / agent-rules 精简版 |
 | 需要阶段定义 / 产物 / 切换规则 / 生命周期 | 按需读 | `project-template/private/dev/PHASES.md` |
-| 需要流程图 / 状态机 / 动作链路 | 按需读 | `docs/FLOW.md` |
+| 需要流程图 / 状态机 / 动作链路 | 按需读 | 模板 `project-template/private/dev/PHASES.md`（§0 总图、§4 子流程与状态机） |
 | 需要全量加载规则 | 按需读 | `docs/LOADING.md`（本文件） |
 | 需求 / 方案 / 调研任务 | 按需读 | `project-template/private/dev/{prd,rfc,adr,research}/INDEX.md` → 目标文档 |
 | 实施任务 | 必读 | `project-template/private/dev/DESIGN.md`、对应 PRD |

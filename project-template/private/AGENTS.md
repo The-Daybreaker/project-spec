@@ -6,7 +6,7 @@
 > 用户决策，是**唯一常青开发记忆**（任何新对话从零接手本项目都先读本文件）。
 > 与根 `AGENTS.md`（公开版）冲突时，本文件中的开发/机器/个人专属细节以本文件为准。
 > **阶段体系权威定义见 `dev/PHASES.md`（I/O/产物/生命周期/16节点映射/切换规则/需求引导/
-> 文档映射）；流程图见 `../docs/FLOW.md`；当前进度见 `dev/STATUS.md` 快照。**
+> 文档映射/流程图与状态机）；当前进度见 `dev/STATUS.md` 快照。**
 > **新对话/上下文压缩后必须先重读本文件、根 `AGENTS.md`、`dev/STATUS.md` 与
 > DESIGN/CHANGELOG/TEST-REPORT 后再继续（红线 16）。**
 
@@ -176,6 +176,20 @@ B 区；C 区内容两者都不得出现。
    内容（红线 19：禁打包）**。
 7. **汇报**：附「完成检查清单」。
 
+**发版状态机**：
+
+```mermaid
+stateDiagram-v2
+    [*] --> 待发版
+    待发版 --> 版本递增: bump_version（minor/major须确认）
+    版本递增 --> 文档就绪: CHANGELOG/文档同步
+    文档就绪 --> private同步: pre_release_check
+    private同步 --> 提交推送
+    提交推送 --> tag与Release: 手动或CI
+    tag与Release --> 已发布
+    已发布 --> [*]
+```
+
 > `scripts/pre_release_check.py` 可一键完成发布前检查（private 子 git 同步、
 > 版本一致性、泄漏扫描、ci_check 实现检查、文档一致性）。
 <!-- /FACT -->
@@ -263,7 +277,7 @@ B 区；C 区内容两者都不得出现。
 | `dev/prototype/` | 私有 | 项目专用 | 页面原型/设计稿（界面/交互改动的可视化产物；一文件一原型，轻量目录无状态机） |
 | `dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
 | `dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
-| `README.md` / `docs/` | 公开 | 项目专用 / 通用 | 面向使用者/贡献者；通用文档（DOCS / FLOW / USER-GUIDE / LOADING / audit-checklist / UPGRADE） |
+| `README.md` / `docs/` | 公开 | 项目专用 / 通用 | 面向使用者/贡献者；通用文档（DOCS / USER-GUIDE / LOADING / audit-checklist / UPGRADE；流程图在 `dev/PHASES.md`） |
 | `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
 
 ## 【通用】文档治理（正文即当前状态）

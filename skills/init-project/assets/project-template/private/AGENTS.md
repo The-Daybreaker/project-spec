@@ -6,7 +6,7 @@
 > 用户决策，是**唯一常青开发记忆**（任何新对话从零接手本项目都先读本文件）。
 > 与根 `AGENTS.md`（公开版）冲突时，本文件中的开发/机器/个人专属细节以本文件为准。
 > **阶段体系权威定义见 `dev/PHASES.md`（I/O/产物/生命周期/16节点映射/切换规则/需求引导/
-> 文档映射）；流程图见 `../docs/FLOW.md`；当前进度见 `dev/STATUS.md` 快照。**
+> 文档映射/流程图与状态机）；当前进度见 `dev/STATUS.md` 快照。**
 > **新对话/上下文压缩后必须先重读本文件、根 `AGENTS.md`、`dev/STATUS.md` 与
 > DESIGN/CHANGELOG/TEST-REPORT 后再继续（红线 16）。**
 
@@ -146,6 +146,11 @@ B 区；C 区内容两者都不得出现。
 
 ## 【通用】发布流程（每次发布时执行，md 驱动、agent 执行）
 
+<!-- FACT:release-flow -->
+
+- **动机**：发布动作不可逆且对外可见；按固定顺序执行、先同步私有子仓库再进
+  主仓库，保证「发出的版本 = 验证过的状态」，私有内容绝不外发。
+
 1. **版本递增**：默认只升补丁段（第 4 段）；运行 `scripts/bump_version.py
    --part patchn|patch|minor|major`（默认 `patchn`；按 `scripts/version-sync.json`
    同步 `version.json` 与 `package.json` / `Cargo.toml` / `pyproject.toml` 等），
@@ -171,8 +176,23 @@ B 区；C 区内容两者都不得出现。
    内容（红线 19：禁打包）**。
 7. **汇报**：附「完成检查清单」。
 
+**发版状态机**：
+
+```mermaid
+stateDiagram-v2
+    [*] --> 待发版
+    待发版 --> 版本递增: bump_version（minor/major须确认）
+    版本递增 --> 文档就绪: CHANGELOG/文档同步
+    文档就绪 --> private同步: pre_release_check
+    private同步 --> 提交推送
+    提交推送 --> tag与Release: 手动或CI
+    tag与Release --> 已发布
+    已发布 --> [*]
+```
+
 > `scripts/pre_release_check.py` 可一键完成发布前检查（private 子 git 同步、
 > 版本一致性、泄漏扫描、ci_check 实现检查、文档一致性）。
+<!-- /FACT -->
 
 ## 【通用】项目归档/退役（停止主动开发时，md 驱动、agent 执行）
 
@@ -193,6 +213,11 @@ B 区；C 区内容两者都不得出现。
   「快速上手」重新 bootstrap。
 
 ## 【通用】完成检查清单（每次交付附在最终回复中）
+
+<!-- FACT:completion-checklist -->
+
+- **动机**：交付质量靠逐项核对，不靠印象；清单让「完成」可以被用户逐条验证，
+  也防止生命周期动作漏项。
 
 - [ ] 需求已复述并获用户确认
 - [ ] **阶段卡已展示**且与 `dev/STATUS.md`「📇 阶段卡」一致（每次实质回复/
@@ -225,6 +250,7 @@ B 区；C 区内容两者都不得出现。
 - [ ] 立项类话题（思路/需求/架构/功能/产品）已做 GitHub 调研并提醒用户
       「先调研再立项」（根 AGENTS.md 红线 14；如适用）
 - [ ] 已向用户展示成果、Release 链接与回退方式
+<!-- /FACT -->
 
 ## 【通用】模板升级（详见 `../docs/UPGRADE.md`）
 
@@ -251,10 +277,15 @@ B 区；C 区内容两者都不得出现。
 | `dev/prototype/` | 私有 | 项目专用 | 页面原型/设计稿（界面/交互改动的可视化产物；一文件一原型，轻量目录无状态机） |
 | `dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
 | `dev/TEST-REPORT.md` | 私有 | 项目专用 | 当前测试记录与运行方式（每次发布必更新） |
-| `README.md` / `docs/` | 公开 | 项目专用 / 通用 | 面向使用者/贡献者；通用文档（DOCS / FLOW / USER-GUIDE / LOADING / audit-checklist / UPGRADE） |
+| `README.md` / `docs/` | 公开 | 项目专用 / 通用 | 面向使用者/贡献者；通用文档（DOCS / USER-GUIDE / LOADING / audit-checklist / UPGRADE；流程图在 `dev/PHASES.md`） |
 | `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
 
 ## 【通用】文档治理（正文即当前状态）
+
+<!-- FACT:doc-governance -->
+
+- **动机**：文档与实现漂移会误导接手者，过时文档比没有文档更危险；正文只写
+  当前状态、历史交给 git，文档才可信，也避免「留痕」造成多处重复。
 
 0. **历史文档区例外**：`dev/prd/`、`dev/rfc/`、`dev/adr/`、`dev/research/` 是
    唯一允许正文留史的位置（PRD/RFC 定稿后冻结、ADR 只增不改、RESEARCH 发现记录
@@ -270,6 +301,7 @@ B 区；C 区内容两者都不得出现。
 5. **可恢复性由删除机制保证**，不由「正文留废案」保证。
 
 （细则见 `../docs/DOCS.md`「文档治理」。）
+<!-- /FACT -->
 
 ## 【项目专用】本机环境
 
