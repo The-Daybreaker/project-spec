@@ -19,6 +19,9 @@ so the pre-development docs cannot silently drift:
   7) STATUS.md snapshot: 阶段卡 + 任务影响清单（含要读文档清单）+ 合规两行锚点
      （生命周期合规清单以「✓（已完成）/⏳（待完成）」承载，合并紧凑阶段卡格式）
      present, 当前阶段 module in P1-P5 (phase carrier for recovery / observability).
+  8) ROADMAP.md（长期需求与展望）: 骨架小节齐全；已定稿/已实现 PRD 的
+     「关联路线图条目」必须在路线图登记；版本排期与 version.json 对齐
+     （模板骨架含占位符时跳过）。
 
 Empty registers (INDEX.md only) pass, so freshly initialized projects are fine.
 Stdlib-only, read-only, Python 3.9+; repo root resolved from script location.
@@ -27,6 +30,7 @@ Usage: python scripts/check_dev_docs.py
 Exit code: 0 pass; 1 issues found (fix before release).
 """
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -122,6 +126,15 @@ def _check_doc(typ: str, path: Path, statuses: set, problems: list) -> None:
         if status in ("已定稿", "已实现"):
             if _header_field(text, "定稿") in ("", "—"):
                 problems.append(f"{rel}: status={status} but 定稿 date missing")
+            if _header_field(text, "所属版本") in ("", "—"):
+                problems.append(
+                    f"{rel}: status={status} but 所属版本 missing (ROADMAP 分层)"
+                )
+            if _header_field(text, "关联路线图条目") in ("", "—"):
+                problems.append(
+                    f"{rel}: status={status} but 关联路线图条目 missing "
+                    "(ROADMAP 分层，定稿必登记)"
+                )
             for sec in ("背景与目标", "用户与场景", "需求范围", "验收标准", "不在范围"):
                 if not _has_section(text, sec):
                     problems.append(f"{rel}: status={status} but missing section ## {sec}")
@@ -290,6 +303,69 @@ def _check_status(problems: list) -> None:
                 "(lifecycle checklist in merged compact phase card; see PHASES.md §5)"
             )
 
+    # 红线 18：共识卡锚点（决策型等待确认的状态快照必须携带；出现时必须结构完整）。
+    # 改共识卡格式时须同步本断言与 PHASES.md §5 / STATUS 骨架。
+    card_labels = ("认知基线", "缺口", "质疑", "推进结论")
+    has_card = "📌 共识卡" in text
+    needs_card = any(
+        k in text for k in ("等待确认", "待确认", "暂停待决策", "等待决策")
+    )
+    if needs_card and not has_card:
+        problems.append(
+            "STATUS.md 阶段卡为决策型等待确认状态，缺少 📌 共识卡 块 "
+            "(红线 18；见 PHASES.md §5)"
+        )
+    if has_card:
+        for label in card_labels:
+            if not re.search(re.escape(label) + r"\s*[：:]\s*\S", text):
+                problems.append(
+                    f"STATUS.md 📌 共识卡 missing non-empty section {label} (红线 18)"
+                )
+        if not re.search(r"(?m)^\s*重检[：:]\s*\S", text):
+            problems.append("STATUS.md 📌 共识卡 missing 重检行 (红线 18)")
+
+
+def _check_roadmap(problems: list) -> None:
+    """ROADMAP.md（长期需求与展望）一致性：骨架 + 与 PRD/版本交叉引用。"""
+    roadmap = DEV / "ROADMAP.md"
+    if not roadmap.is_file():
+        problems.append("missing private/dev/ROADMAP.md (长期需求与展望，唯一长期入口)")
+        return
+    text = _read_text(roadmap, problems)
+    if text is None:
+        return
+    for sec in ("愿景与长期目标", "需求地图", "版本排期", "文档治理"):
+        if f"## {sec}" not in text:
+            problems.append(f"ROADMAP.md missing section ## {sec}")
+
+    # 已定稿/已实现 PRD 必须在路线图需求地图登记（关联条目引用存在）
+    for p in sorted((DEV / "prd").glob("PRD-*.md")):
+        doc = _read_text(p, problems)
+        if doc is None:
+            continue
+        status = _header_field(doc, "状态")
+        if status in ("已定稿", "已实现"):
+            entry = _header_field(doc, "关联路线图条目")
+            if entry and entry not in text:
+                problems.append(
+                    f"{p.relative_to(REPO_ROOT)}: 关联路线图条目 {entry!r} "
+                    "not found in ROADMAP.md 需求地图 (定稿必登记)"
+                )
+
+    # 版本排期与当前版本对齐（模板骨架含占位符时跳过）
+    if "<v" in text or "{{VERSION}}" in text:
+        return
+    version_file = REPO_ROOT / "version.json"
+    if version_file.is_file():
+        try:
+            version = json.loads(version_file.read_text(encoding="utf-8"))["version"]
+        except (json.JSONDecodeError, KeyError, OSError):
+            version = ""
+        if version and f"当前：v{version}" not in text:
+            problems.append(
+                f"ROADMAP.md 版本排期 missing 当前：v{version} (version.json 对齐)"
+            )
+
 
 def main() -> int:
     _configure_utf8()
@@ -302,6 +378,7 @@ def main() -> int:
             _check_register(typ, dirname, statuses, problems)
         _check_cross_refs(problems)
         _check_status(problems)
+        _check_roadmap(problems)
 
     print(f"==> check_dev_docs: {len(problems)} issue(s)")
     for p in problems:

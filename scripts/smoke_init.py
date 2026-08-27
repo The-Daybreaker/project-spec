@@ -14,6 +14,10 @@
      `ci_check.py` / `check_dev_docs.py` / `trash.py --help` /
      `pre_release_check.py --allow-placeholder`；
   4) `version.json` 回读（version 与 template_version 字段齐全）。
+  5) 新机制自检（PRD-0002，v1.5.0）：`.githooks/pre-push` + `core.hooksPath`；
+     `scan_secrets --strict` 全绿且注入样例被拦截；`scan_defensive --check`
+     全绿；`ROADMAP.md` 存在且小节齐全；测试报告含自测区/用户验收区；状态快照
+     含 📌 共识卡与重检行。
 
 冒烟项目默认直接建在删除纪律暂存区 `_trash/qwenwork_<日期>_<时分>/` 内，
 成功后任务结束时随 `python project-template/scripts/trash.py` 整体进回收站
@@ -99,17 +103,17 @@ def main() -> int:
         if not ok:
             failures.append(name)
 
-    print(f"[1/4] 初始化冒烟项目: {target}")
+    print(f"[1/5] 初始化冒烟项目: {target}")
     r = _run([sys.executable, str(INIT_SCRIPT), str(target),
               "--name", f"smoke-{stamp}", "--desc", "smoke test",
-              "--license", "mit"], cwd=ROOT)
+              "--license", "mit", "--author", "smoke-user"], cwd=ROOT)
     step("init_project.py 退出码 0", r.returncode == 0,
          (r.stderr or r.stdout).strip()[-300:])
     if r.returncode != 0:
         print(f"[error] 初始化失败，现场保留: {target}", file=sys.stderr)
         return 1
 
-    print("[2/4] 回读校验（占位符 / 双仓状态 / private 忽略）")
+    print("[2/5] 回读校验（占位符 / 双仓状态 / private 忽略）")
     r = _git(["grep", "-q", "-E", PLACEHOLDER_RE], cwd=target)
     step("无 {{占位符}} 残留", r.returncode == 1,
          f"git grep exit={r.returncode}")
@@ -122,7 +126,7 @@ def main() -> int:
     r = _git(["check-ignore", "private/"], cwd=target)
     step("private/ 被主仓库忽略", r.returncode == 0)
 
-    print("[3/4] 冒烟项目内骨架脚本自检四连")
+    print("[3/5] 冒烟项目内骨架脚本自检四连")
     for label, cmd in [
         ("ci_check.py", [sys.executable, "scripts/ci_check.py"]),
         ("check_dev_docs.py", [sys.executable, "scripts/check_dev_docs.py"]),
@@ -134,13 +138,55 @@ def main() -> int:
         step(f"{label} 退出码 0", r.returncode == 0,
              (r.stderr or r.stdout).strip()[-300:])
 
-    print("[4/4] version.json 回读")
+    print("[4/5] version.json 回读")
     try:
         data = json.loads((target / "version.json").read_text(encoding="utf-8"))
         ok = bool(data.get("version")) and bool(data.get("template_version"))
         step("version/template_version 字段齐全", ok, json.dumps(data))
     except (OSError, json.JSONDecodeError) as e:
         step("version.json 可读", False, str(e))
+
+    print("[5/5] 新机制自检（推送门禁 / 路线图 / 测试报告双区 / 共识卡锚点）")
+    r = _run([sys.executable, "scripts/scan_secrets.py", "--strict"], cwd=target)
+    step("scan_secrets.py --strict 退出码 0", r.returncode == 0,
+         (r.stderr or r.stdout).strip()[-300:])
+    r = _run([sys.executable, "scripts/scan_defensive.py", "--check"], cwd=target)
+    step("scan_defensive.py --check 退出码 0", r.returncode == 0,
+         (r.stderr or r.stdout).strip()[-300:])
+    hook = target / ".githooks" / "pre-push"
+    step(".githooks/pre-push 存在", hook.is_file())
+    r = _git(["config", "--get", "core.hooksPath"], cwd=target)
+    step("core.hooksPath=.githooks", r.returncode == 0 and r.stdout.strip() == ".githooks",
+         f"hooksPath={r.stdout.strip()!r}")
+    roadmap = target / "private" / "dev" / "ROADMAP.md"
+    roadmap_ok = roadmap.is_file() and all(
+        f"## {sec}" in roadmap.read_text(encoding="utf-8")
+        for sec in ("愿景与长期目标", "需求地图", "版本排期", "文档治理")
+    )
+    step("ROADMAP.md 存在且小节齐全", roadmap_ok)
+    trep = (target / "private" / "dev" / "TEST-REPORT.md").read_text(
+        encoding="utf-8", errors="replace"
+    )
+    step("TEST-REPORT 含自测区/用户验收区",
+         "自测区" in trep and "用户验收区" in trep)
+    status_text = (target / "private" / "dev" / "STATUS.md").read_text(
+        encoding="utf-8", errors="replace"
+    )
+    step("STATUS 含 📌 共识卡 + 重检行",
+         "📌 共识卡" in status_text and "重检：" in status_text)
+
+    # 注入样例：扫描器必须拦截（推送前门禁的验收面）
+    fake = target / "leak_test.txt"
+    fake.write_text("ghp_" + "FAKE123456789012345678901234\n", encoding="utf-8")
+    _git(["add", "-A", "--", "."], cwd=target)
+    r = _run([sys.executable, "scripts/scan_secrets.py", "--strict"], cwd=target)
+    step("注入样例被 scan_secrets 拦截", r.returncode != 0)
+    _git(["rm", "--cached", "--ignore-unmatch", "leak_test.txt"], cwd=target)
+    fake.unlink(missing_ok=True)
+    r = _git(["status", "--porcelain"], cwd=target)
+    if r.stdout.strip():
+        _git(["add", "-A", "--", "."], cwd=target)
+        _git(["commit", "-m", "chore: smoke cleanup"], cwd=target)
 
     print()
     if failures:

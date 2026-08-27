@@ -10,6 +10,7 @@
 | 场景 | 优先级 | 文件路径 |
 |---|---|---|
 | **每次新对话 / 上下文压缩后恢复** | 必读 | 根 `AGENTS.md` → `private/AGENTS.md` → `private/dev/STATUS.md`（快照） |
+| **需要全局需求 / 排期** | 必读 | `private/dev/ROADMAP.md`（长期入口）→ 当前版本需求文档 |
 | **红线规范** | 始终必读 | AGENTS 红线小节 / agent-rules 精简版 |
 | 需要阶段定义 / 产物 / 切换规则 / 生命周期 | 按需读 | `private/dev/PHASES.md` |
 | 需要流程图 / 状态机 / 动作链路 | 按需读 | `docs/FLOW.md` |
@@ -28,7 +29,7 @@
 
 | 阶段 | 本阶段读写 | 只读（上游产物） | 默认不读 |
 |---|---|---|---|
-| P1 需求 | `prd/`、`research/` | — | 方案 / 实现 / 历史 |
+| P1 需求 | `prd/`、`research/` | `ROADMAP.md`（只读长期入口） | 方案 / 实现 / 历史 |
 | P2 方案 | `rfc/`、`adr/`、`prototype/`、`DESIGN.md` | 定稿 PRD | 调研过程 / 候选对比 / 历史 |
 | P3 开发 | `src/` 实现 + 受影响文档 | DESIGN.md + PRD | 调研 / 候选方案 / 历史 |
 | P4 审计验证 | TEST-REPORT.md、审计结论 | 实现产物 + DESIGN | 中间过程 |

@@ -29,7 +29,7 @@
 | 区 | 位置 | 内容 | 版本管理 |
 |---|---|---|---|
 | A. 公开 | 仓库根 + `src/` `docs/` `scripts/` `.github/` `archive/` | README / LICENSE / 根 AGENTS.md（公开版）/ docs/（audit-checklist、UPGRADE、CONTRIBUTING 等）/ 运行时代码与资源 / 归档区 | 主仓库 git 跟踪，随 Release 发布 |
-| B. 私有 | `private/` | 本文件（AGENTS.md）、`dev/`（开发期文档：PRD/RFC/ADR/RESEARCH 登记册、PROTOTYPE（页面原型/设计稿）、DESIGN / CHANGELOG / TEST-REPORT / STATUS / 经验文档）、`test/`（本地测试素材） | private 子 git（本地、无远端） |
+| B. 私有 | `private/` | 本文件（AGENTS.md）、`dev/`（开发期文档：ROADMAP（长期需求/排期）、PRD/RFC/ADR/RESEARCH 登记册、PROTOTYPE（页面原型/设计稿）、DESIGN / CHANGELOG / TEST-REPORT / STATUS / 经验文档）、`test/`（本地测试素材） | private 子 git（本地、无远端） |
 | C. 不版本管理 | 各处 | `node_modules/`、`dist/`、`build/`、日志、缓存、临时文件、打包产物、`_trash/` | 无（.gitignore 忽略） |
 
 归属判定规则：
@@ -68,7 +68,8 @@ B 区；C 区内容两者都不得出现。
 - **调研（红线 14）**：立项类话题先 GitHub 调研现成参考，向用户展示结果并提醒
   「先调研再立项」；正式调研落 `dev/research/RESEARCH-XXXX.md`（小调研内嵌对应节）；
 - **PRD**：`dev/prd/PRD-XXXX-<slug>.md` 草稿 → 评审（图随稿展示确认）→ 用户确认定稿
-  （门禁 1：字段齐全，见 `dev/prd/INDEX.md`）→ 同步 PRD INDEX；
+  （门禁 1：字段齐全，含「所属版本」「关联路线图条目」，见 `dev/prd/INDEX.md`）→
+  同步 PRD INDEX + `dev/ROADMAP.md` 需求地图；
 - **RFC**（M 复杂 / L 必走）：`dev/rfc/RFC-XXXX-<slug>.md` 候选对比 → 用户拍板
   （已采纳/已否决）→ 同步 RFC INDEX；
 - **ADR**（架构级）：用户确认后新建 `dev/adr/ADR-XXXX-<slug>.md`（只增不改）→ 同步
@@ -235,6 +236,7 @@ B 区；C 区内容两者都不得出现。
 
 | 文档 | 位置 | 模块 | 职责 |
 |---|---|---|---|
+| `dev/ROADMAP.md` | 私有 | 项目专用 | 长期需求与展望（愿景/需求地图/版本排期；唯一长期入口，覆盖式更新） |
 | 根 `AGENTS.md` | 公开 | 混合 | 公开入口（面向使用者/贡献者/接手 agent） |
 | 本文件 `AGENTS.md` | 私有 | 混合 | 开发入口与当前状态（唯一常青开发记忆） |
 | `dev/PHASES.md` | 私有 | 通用 | 阶段模块权威定义（I/O/产物/生命周期/16节点映射/切换规则/需求引导/文档映射） |

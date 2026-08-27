@@ -123,8 +123,9 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
 - [ ] 根/私有 `AGENTS.md` 含红线 17「范围克制与纠错清零」与开发工作流
       「可视化确认」小节（v1.3.0 特性）
 - [ ] `private/dev/STATUS.md`「📇 阶段卡」为合并紧凑模块（标题含状态 + 横置阶段线
-      当前节点加粗 + 合规两行（✓ 已完成 / ⏳ 待完成）+ 反定型条件块；全中文不显示
-      字母缩写）+ 任务影响清单含要读文档清单（v1.4.0 引入、v1.4.1 合并紧凑）
+      当前节点加粗 + 合规两行（✓ 已完成 / ⏳ 待完成，七项含「红线遵循」）+
+      决策型推进前 📌 共识卡（四项内容 + 重检行）；全中文不显示字母缩写）+
+      任务影响清单含要读文档清单（v1.4.0 引入、v1.4.1 合并紧凑、v1.5.0 共识卡）
 - [ ] `private/AGENTS.md`「发布策略」已按所选模式生成（默认不自动发布；
       `--auto-release` 为自动发布）
 - [ ] `scripts/ci_check.py` 可运行（`python scripts/ci_check.py` 退出码 0）
@@ -135,6 +136,8 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
        临时放行）
 - [ ] `scripts/scan_secrets.py` 可运行（`python scripts/scan_secrets.py --strict`
       退出码 0；内容级安全扫描，红线 19）
+- [ ] `scripts/scan_defensive.py` 可运行（`python scripts/scan_defensive.py --check`
+      退出码 0；提交信息辩护性措辞硬拦，红线 17）
 - [ ] `.githooks/pre-push` 存在且 `git config core.hooksPath` 为 `.githooks`
       （推送前安全门禁：扫描失败阻止推送；红线 19）
 - [ ] `scripts/trash.py` 可运行（`python scripts/trash.py --help` 退出码 0）
@@ -180,12 +183,16 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
 - `private/dev/prd/INDEX.md` / `rfc/INDEX.md` / `adr/INDEX.md` /
   `research/INDEX.md`：模板自带登记册（状态机/编号/模板骨架）；首个 M/L 需求时
   按它创建文档（S 档可跳过）。
+- `private/dev/ROADMAP.md`：模板自带（长期需求与展望：愿景/需求地图/版本排期，
+  唯一长期入口）；首个需求定稿时在需求地图登记（`check_dev_docs.py` 校验，
+  「每版本只看长期文档 + 本版本文档」）。
 - `private/dev/prototype/README.md`：模板自带（页面原型/设计稿目录说明）；首个
   涉及界面/交互的改动时按它产出原型（一文件一原型），向用户展示**获确认后**再
   实施（「先出图再确认」；流程图/架构图随所属 PRD/RFC/ADR 同目录，Mermaid/SVG
   单文件）。
 - 「阶段卡展示」：每次对话展示合并紧凑阶段卡（标题含状态 + 横置阶段线当前节点
-  加粗 + 合规两行 + 反定型条件块仅关键/风险节点；全中文不显示字母缩写），以
+  加粗 + 合规两行七项 + 决策型推进前 📌 共识卡（四项内容 + 重检行）；全中文不
+  显示字母缩写），以
   `private/dev/STATUS.md`「📇 阶段卡」为单一真相。
 
 ### 阶段 2 · 首个功能开发前（实现 CI，一次做完）
@@ -200,6 +207,8 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
 5. 跑通 `python scripts/scan_secrets.py --strict`（推送前安全门禁：`.githooks/
    pre-push` 已由初始化配置 `core.hooksPath`，扫描失败会阻止推送；发布链
    `pre_release_check.py` 与 CI 另有扫描步骤）。
+6. 跑通 `python scripts/scan_defensive.py --check`（提交信息辩护性措辞硬拦；
+   注释/文档候选人工复核清单随输出查看，红线 17）。
 
 ### 阶段 3 · 首个需求（走开发工作流）
 

@@ -262,6 +262,16 @@ def main() -> int:
     else:
         print("    content-level security scan passed (scan_secrets.py --strict).")
 
+    # 红线 17：辩护性措辞扫描（提交信息硬拦；注释/文档候选人工复核）
+    defensive = _run([sys.executable, "scripts/scan_defensive.py", "--check"])
+    if defensive.returncode != 0:
+        print("[error] defensive-phrase scan failed (scan_defensive.py --check):")
+        print(defensive.stdout, end="")
+        print(defensive.stderr, end="")
+        fail = True
+    else:
+        print("    defensive-phrase scan passed (scan_defensive.py --check).")
+
     # 红线 19：发布产物不得包含 private/
     dist = REPO_ROOT / "dist"
     if dist.is_dir():
