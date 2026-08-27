@@ -31,7 +31,9 @@
 - 安全：历史遗留解决——全历史作者邮箱由真实邮箱重写为 GitHub noreply 邮箱
   （`filter-branch --env-filter` 元数据重写，82 提交 + 14 tag 全部重映射，旧对象
   物理清除）；审计报告邮箱字面残留清除；`scan_secrets.py` 白名单 noreply 邮箱；
-  覆盖强推远端 main + 全部 tag（公开面零个人信息）。
+  覆盖强推远端 main + 全部 tag（公开面零个人信息）。另发现并修复重写后新增
+  3 提交的旧身份再污染（根因：本地 git 身份配置未随重写同步），仓库本地
+  `user.email` 已同步为 noreply。
 - 维护：配置远端仓库 `origin` → `https://github.com/The-Daybreaker/Project-Template.git`
   （push/Release 前置）。
 

@@ -4,15 +4,16 @@
 > 只存**最新状态**；历史由 git 承担（`git log` 本文件）。阶段完成/收尾时**覆盖**更新，不追加。
 > 新对话/压缩后按红线 15 重读：根 `AGENTS.md` → 模板 `AGENTS.md` → `private/AGENTS.md` → 本文件 → 「任务影响清单 → 要读文档清单」。
 
-- 最后更新：2026-08-27 18:10
+- 最后更新：2026-08-27 18:20
 
 ## 当前任务
 
 - 需求：历史遗留解决（用户已确认）——全历史作者邮箱重写为 GitHub noreply
   邮箱 + 覆盖强推远端，实现公开面零个人信息。
-- 目标/验收：✅ 全部达成——全历史唯一身份 = noreply（82 提交）；旧对象零残留
-  （fsck 空）；跟踪文件邮箱字面零残留；全历史复扫门禁绿（0 高危 / 0 个人信息）；
-  远端 main + 全部 14 tag 与本地重写后历史逐一对照一致；Release 指针随 tag 核实。
+- 目标/验收：✅ 全部达成——全历史唯一身份 = noreply；旧对象零残留（fsck 空）；
+  跟踪文件邮箱字面零残留；全历史复扫门禁绿（0 高危 / 0 个人信息）；远端
+  main + 全部 14 tag = 重写后历史（引用逐一对照一致）；Release 指针随 tag 核实；
+  仓库本地 `user.email` 已同步为 noreply（防再污染）。
 
 ## 当前阶段
 
@@ -29,10 +30,12 @@
 合规：
 ✓（已完成）：重写前备份（bundle 恢复点）；env-filter 全历史身份重写（82 提交 +
 14 tag 全重映射）；旧对象物理清除（fsck 空）；审计报告邮箱字面残留清除；扫描器
-noreply 白名单；全历史复扫门禁绿；强推 main + 全部 tag；远端引用全量对照一致
-（远端 main=`47c9bd8`、tag `v1.4.2.patch0`=`06ee9f8`）；Release 指针核实
+noreply 白名单；全历史复扫门禁绿；发现并修复重写后新增 3 提交的旧身份再污染
+（二次局部重写 + 本地 `user.email` 配置同步）；强推 main + 全部 tag；远端引用
+全量对照一致；Release 指针核实
 ⏳（待完成）：无阻断项——第十轮审计遗留 P2-1（CHANGELOG 历史漏登补录）/
-P3-1（维护约定 #4 措辞）待用户确认；备份 bundle 经用户确认后可弃
+P3-1（维护约定 #4 措辞）待用户确认；全局 git 身份仍为旧邮箱（影响其他仓库，
+待用户决策）；备份 bundle 经确认后可弃
 
 ## 任务影响清单
 
@@ -40,7 +43,9 @@ P3-1（维护约定 #4 措辞）待用户确认；备份 bundle 经用户确认�
   `docs/AUDIT-2026-08-27-r10.md`（邮箱字面清除 + 进展补注）、`docs/STATUS.md`、
   `docs/CHANGELOG.md`（未发版区段）、`docs/EXPERIENCE-TO-KB.md`
 - 关键事实：远端仓库 = GitHub 公开（The-Daybreaker/Project-Template），
-  main=`47c9bd8`；备份恢复点 `pre_noreply_rewrite_backup.bundle` 存工作区临时目录
+  main/tag = 重写后历史（远端 SHA 以 `git ls-remote origin` 为准；
+  tag `v1.4.2.patch0`=`06ee9f8` 固定）；备份恢复点
+  `pre_noreply_rewrite_backup.bundle` 存工作区临时目录
 - 要读文档清单（恢复时逐份读）：根 `AGENTS.md`（维护约定 #11）→ 本文件 →
   `docs/AUDIT-2026-08-27-r10.md` §四 P3-2 → `docs/CHANGELOG.md` 顶部
 
