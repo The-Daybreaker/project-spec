@@ -33,7 +33,8 @@
   物理清除）；审计报告邮箱字面残留清除；`scan_secrets.py` 白名单 noreply 邮箱；
   覆盖强推远端 main + 全部 tag（公开面零个人信息）。另发现并修复重写后新增
   3 提交的旧身份再污染（根因：本地 git 身份配置未随重写同步），仓库本地
-  `user.email` 已同步为 noreply。
+  `user.email` 已同步为 noreply；脱敏前历史 blob 中的邮箱字面以局部内容重写
+  （tree-filter）清除，全历史 `--history --strict` 门禁验收绿。
 - 维护：配置远端仓库 `origin` → `https://github.com/The-Daybreaker/Project-Template.git`
   （push/Release 前置）。
 
