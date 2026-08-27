@@ -135,6 +135,22 @@ def _extract_redlines(text: str) -> dict:
     return result
 
 
+def _extract_skill_entries(text: str) -> dict:
+    """Extract numbered entries from agent-rules SKILL.md section 2 (精简红线).
+
+    Returns {number: normalized_text}; normalization identical to red lines so
+    fingerprints are stable against formatting-only changes.
+    """
+    m = re.search(r"## 2\. 通用行为规范（精简红线，全部强制）(.*?)(?=\n## )", text, re.S)
+    if not m:
+        return {}
+    items = re.findall(r"(?m)^(\d+)\.\s+(.*?)(?=^\d+\.\s+|\Z)", m.group(1), re.S)
+    result = {}
+    for num, body in items:
+        result[int(num)] = re.sub(r"\s+", " ", body).strip()
+    return result
+
+
 def _parse_inheritance_map(text: str) -> tuple:
     """Parse agent-rules inheritance-map.md.
 
@@ -150,7 +166,8 @@ def _parse_inheritance_map(text: str) -> tuple:
 
     rows = {}
     for m in re.finditer(
-        r"\|\s*红线 (\d+)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*(原样|通用化)\s*\|\s*([0-9a-f]+)\s*\|",
+        r"\|\s*红线 (\d+)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*(原样|通用化)\s*\|"
+        r"\s*([0-9a-f]+)\s*\|(?:\s*([0-9a-f]+)\s*\|)?",
         text,
     ):
         rows[int(m.group(1))] = {
@@ -158,6 +175,7 @@ def _parse_inheritance_map(text: str) -> tuple:
             "entry": m.group(3).strip(),
             "mode": m.group(4),
             "fingerprint": m.group(5),
+            "entry_fingerprint": m.group(6) or "",
         }
     return version_table, rows
 
@@ -199,8 +217,11 @@ def _check_agent_rules(tpl_version: str, problems: list) -> None:
             f"map={version_table.get('skill_version')!r}, expected={tpl_version!r}"
         )
 
-    # 3. red-line coverage + body fingerprints
+    # 3. red-line coverage + body fingerprints (双侧台账：模板侧 + 精简版条目侧)
     redlines = _extract_redlines((SRC / "AGENTS.md").read_text(encoding="utf-8"))
+    skill_entries = _extract_skill_entries(
+        AGENT_RULES_SKILL_MD.read_text(encoding="utf-8")
+    )
     if not redlines:
         problems.append("cannot find '通用红线' section in project-template/AGENTS.md")
         return
@@ -214,9 +235,23 @@ def _check_agent_rules(tpl_version: str, problems: list) -> None:
         fp = hashlib.sha256(redlines[num].encode("utf-8")).hexdigest()[:12]
         if rows[num]["fingerprint"] != fp:
             problems.append(
-                f"红线 {num} body changed (fingerprint {rows[num]['fingerprint']} -> {fp}): "
-                f"re-review agent-rules/SKILL.md entry and update inheritance-map fingerprint"
+                f"红线 {num} 正文已变更（模板侧指纹 {rows[num]['fingerprint']} -> {fp}）："
+                f"请复核 SKILL.md 对应条目（{rows[num]['entry']}）语义是否需要同步，"
+                f"然后运行 `python scripts/sync_template.py --update-map` 重新登记双侧指纹"
             )
+        entry_match = re.search(r"(\d+)", rows[num]["entry"])
+        if entry_match:
+            entry_num = int(entry_match.group(1))
+            if entry_num in skill_entries:
+                efp = hashlib.sha256(
+                    skill_entries[entry_num].encode("utf-8")
+                ).hexdigest()[:12]
+                if rows[num]["entry_fingerprint"] != efp:
+                    problems.append(
+                        f"红线 {num} 对应精简版条目（规范 {entry_num}）已变更或未登记"
+                        f"精简侧指纹（台账 {rows[num]['entry_fingerprint'] or '空'}，"
+                        f"实际 {efp}）：请复核该条目后运行 --update-map 重新登记"
+                    )
     for num in sorted(rows):
         if num not in redlines:
             problems.append(f"inheritance-map has obsolete mapping for 红线 {num}")
@@ -237,8 +272,46 @@ def _check_init_steps_coverage(problems: list) -> None:
         )
 
 
+def _update_map_fingerprints() -> int:
+    """Recompute both fingerprint columns in inheritance-map.md after human review."""
+    redlines = _extract_redlines((SRC / "AGENTS.md").read_text(encoding="utf-8"))
+    skill_entries = _extract_skill_entries(
+        AGENT_RULES_SKILL_MD.read_text(encoding="utf-8")
+    )
+    if not redlines or not skill_entries:
+        print("[error] cannot extract red lines / skill entries", file=sys.stderr)
+        return 1
+
+    def fp(text: str) -> str:
+        return hashlib.sha256(text.encode("utf-8")).hexdigest()[:12]
+
+    def row_repl(m: "re.Match") -> str:
+        num = int(m.group(1))
+        entry_num_m = re.search(r"(\d+)", m.group(3))
+        tfp = fp(redlines[num]) if num in redlines else m.group(5)
+        efp = m.group(6) or ""
+        if entry_num_m and int(entry_num_m.group(1)) in skill_entries:
+            efp = fp(skill_entries[int(entry_num_m.group(1))])
+        return (
+            f"| 红线 {num} | {m.group(2).strip()} | {m.group(3).strip()} | "
+            f"{m.group(4)} | {tfp} | {efp} |"
+        )
+
+    pattern = (
+        r"\|\s*红线 (\d+)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*(原样|通用化)\s*\|"
+        r"\s*([0-9a-f]+)\s*\|(?:\s*([0-9a-f]+)\s*\|)?"
+    )
+    text = INHERITANCE_MAP.read_text(encoding="utf-8")
+    new_text = re.sub(pattern, row_repl, text)
+    INHERITANCE_MAP.write_text(new_text, encoding="utf-8")
+    print("inheritance-map 双侧指纹已重新登记（请确认已复核对应精简版条目）。")
+    return 0
+
+
 def main() -> int:
     _configure_utf8()
+    if "--update-map" in sys.argv:
+        return _update_map_fingerprints()
     if not SRC.is_dir():
         print(f"[error] template source not found: {SRC}", file=sys.stderr)
         return 1

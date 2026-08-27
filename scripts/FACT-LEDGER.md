@@ -9,16 +9,16 @@
 
 | 事实ID | 中文名 | 状态 | 家 | 指纹 | 备注 |
 |---|---|---|---|---|---|
-| redlines | 通用红线（19 条） | 已登记 | project-template/AGENTS.md | d6b25ebbe1d4 | 红线节全量正文；各处摘要/精简版为引用点（B2 打 REF） |
+| redlines | 通用红线（19 条） | 已登记 | project-template/AGENTS.md | b31aaa50db62 | 红线节全量正文（19 条均三要素齐全）；精简版由继承矩阵双侧台账联动 |
 | principles | 设计原则（规范三层顶层） | 已登记 | project-template/AGENTS.md | bc15e96ca9e0 | 「设计原则」节；原则→规范→红线三层（F13） |
-| three-zones | 三区表 | 已登记 | project-template/AGENTS.md | 6ebfef1d993c | 仓库布局节；私有指引三区表 B2 第三步改指针 |
+| three-zones | 三区表 | 已登记 | project-template/AGENTS.md | 6ebfef1d993c | 仓库布局节；私有指引已改摘要+指针 |
 | version-rules | 版本规则 | 已登记 | project-template/AGENTS.md | d9048a043602 | 版本管理节全量正文 |
-| archiving | 项目归档/退役流程 | 已登记 | project-template/AGENTS.md | 277412b41935 | 归档节全量正文；私有指引归档节 B2 第三步改指针 |
-| phases | 阶段体系（五阶段/16节点） | 已登记 | project-template/private/dev/PHASES.md | bd2a8cf4431a | §1 节点映射；其余 12+ 处完整展开 B2 归一 |
-| stage-card | 阶段卡机制 | 已登记 | project-template/private/dev/PHASES.md | 26393d6a2a04 | §5 全量正文；USER-GUIDE 旧三段式为活体漂移（B2 第七步修） |
+| archiving | 项目归档/退役流程 | 已登记 | project-template/AGENTS.md | 277412b41935 | 归档节全量正文；私有指引已改摘要+指针 |
+| phases | 阶段体系（五阶段/16节点） | 已登记 | project-template/private/dev/PHASES.md | bd2a8cf4431a | §1 节点映射；两份入口完整展开已改摘要+指针，流程图已迁入 |
+| stage-card | 阶段卡机制 | 已登记 | project-template/private/dev/PHASES.md | 26393d6a2a04 | §5 全量正文；USER-GUIDE 旧三段式已修复对齐 |
 | req-guide | 需求引导方法论 | 已登记 | project-template/private/dev/PHASES.md | 9f281beaf4d5 | §6 全量正文（含状态机）；转译损耗还原（发现+逐层收敛）在 B4 |
-| release-flow | 发布流程 | 已登记 | project-template/private/AGENTS.md | bc7dddd0452c | 发布流程节全量正文（含发版状态机）；公开指引简化版 B2 第三步改指针 |
-| doc-governance | 文档治理规则 | 已登记 | project-template/private/AGENTS.md | 5cb54a402d36 | 文档治理节 0-5 条；红线 13 保留红线级表述、DOCS 近逐字段 B2 改指针 |
+| release-flow | 发布流程 | 已登记 | project-template/private/AGENTS.md | bc7dddd0452c | 发布流程节全量正文（含发版状态机）；公开指引已改摘要+指针 |
+| doc-governance | 文档治理规则 | 已登记 | project-template/private/AGENTS.md | 5cb54a402d36 | 文档治理节 0-5 条；红线 13 保留红线级表述、DOCS 已改摘要+指针 |
 | completion-checklist | 完成检查清单 | 已登记 | project-template/private/AGENTS.md | cb9dc29c0d7f | 清单全量正文；与阶段契约的派生对齐在 B3 |
 | doc-duty | 文档职责表 | 已登记 | project-template/docs/DOCS.md | a3e946cf9ab8 | 职责表+维护清单；各文档内摘要+指针指向本家 |
-| loading | 加载规则 | 已登记 | project-template/docs/LOADING.md | f45ed517cb40 | 全量加载规则表；母项目副本废除在 B2 第五步 |
+| loading | 加载规则 | 已登记 | project-template/docs/LOADING.md | f45ed517cb40 | 全量加载规则表；母项目副本已废除改指针 |
