@@ -4,27 +4,28 @@
 > 只存**最新状态**；历史由 git 承担（`git log` 本文件）。阶段完成/收尾时**覆盖**更新，不追加。
 > 新对话/压缩后按红线 15 重读：根 `AGENTS.md` → 模板 `AGENTS.md` → `private/AGENTS.md` → 本文件 → 「任务影响清单 → 要读文档清单」。
 
-- 最后更新：2026-08-27 16:07
+- 最后更新：2026-08-27 16:10
 
 ## 当前任务
 
-- 需求：配置远端仓库 `origin` → `https://github.com/The-Daybreaker/Project-Template.git`
-  （push/Release 前置；已完成）。
-- 目标/验收：`git remote add origin` 成功 + `git remote -v` 可见 fetch/push 两条 URL。
+- 需求：推送 `main` 与 tag `v1.4.2.patch0` 至远端 + 创建 GitHub Release（用户已确认执行）。
+- 目标/验收：`git push origin main` + `git push origin v1.4.2.patch0` 成功；
+  GitHub Release `v1.4.2.patch0` 创建成功（gh 令牌失效，需重新认证）。
 
 ## 当前阶段
 
-- 模块：贯穿动作（仓库远端配置，不占 P1-P5 阶段）｜ 状态：✅ 已完成
+- 模块：交付发布阶段（节点 14-16）｜ 子阶段：发布（远端 push + Release）｜
+  状态：🔄 进行中
 
 ## 📇 阶段卡（最新）
 
-## 📍 阶段卡（✅ 已完成 · 已发布 v1.4.2.patch0 · 远端已配置）
+## 📍 阶段卡（🔄 进行中 · 远端发布）
 
 交付发布阶段：14 展示与提交 → **15 发布** → 16 经验沉淀与汇报
 
 合规：
-✓（已完成）：文档同步；状态落盘；阶段提交；质量校验；阶段确认；经验沉淀
-⏳（待完成）：push 至远端 / Release（远端已配置，待用户发起）
+✓（已完成）：远端配置；本地发版；质量校验；阶段确认
+⏳（待完成）：push main + tag；创建 Release；状态落盘；汇报
 
 ## 任务影响清单
 

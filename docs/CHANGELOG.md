@@ -28,6 +28,9 @@
 > 以下为 v1.4.2 发布后、尚未发版的累积变更；发版时并入对应版本条目。条目以
 > `git log v1.4.2.patch0..HEAD` 记录为准，不固定提交号。
 
+- 维护：配置远端仓库 `origin` → `https://github.com/The-Daybreaker/Project-Template.git`
+  （push/Release 前置）。
+
 ## v1.4.1.patch0（2026-08-27）
 
 > 本次发版：红线 17 提问与共识确认机制 + 阶段卡/合规/反定型合并紧凑模块 + 审计修复
