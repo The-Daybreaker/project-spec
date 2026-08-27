@@ -149,10 +149,11 @@
   归档流程显式引用。
 - 测试落地指引：新增 `project-template/docs/TESTING.md`（pytest 示例、覆盖率、
   CI 接入、TEST-REPORT 对应），`ci_check.py` 内含接入示例注释。
-- agent 安装目标：八处（codex / dsh / workbuddy / trae-cn / qwenworkcn / qoder-cn /
-  cc-switch / zcode），由 `install-targets.json` 单一事实来源承载 +
+- agent 安装目标：九处（codex / dsh / workbuddy / trae-cn / qwenworkcn / qoder-cn /
+  cc-switch / zcode / doubao-work），由 `install-targets.json` 单一事实来源承载 +
   `verify_installed_copies.py` 全量哈希+版本哨兵校验（2026-08-28 新增
-  cc-switch、zcode；CodeBuddy CN 无用户级技能目录，暂不列）。
+  cc-switch、zcode、doubao-work；Qoder CN IDE 与 qoder-cn 共用 `~/.qoder-cn/skills`；
+  CodeBuddy CN 无用户级技能目录，暂不列）。
 - agent 提问与共识确认机制（红线 18，2026-08-27）：禁面板（禁止问题面板/选择面板类
   UI）/ 回答≠确认（回答=新信息输入并重检问题空间）/ 共识快照+逐项表态 / 反定型 6 项
   关键/风险节点展示（平时内部思考）/ 确认不锁定（需求阶段内新信息可回审，PRD 定稿

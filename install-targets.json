@@ -13,6 +13,7 @@
     {"id": "qwenworkcn", "display": "千问办公（QwenWork CN）", "dir": "~/.qwenworkcn/skills"},
     {"id": "qoder-cn", "display": "Qoder（Qoder CN）", "dir": "~/.qoder-cn/skills"},
     {"id": "cc-switch", "display": "CC Switch", "dir": "~/.cc-switch/skills"},
-    {"id": "zcode", "display": "ZCode", "dir": "~/.zcode/skills"}
+    {"id": "zcode", "display": "ZCode", "dir": "~/.zcode/skills"},
+    {"id": "doubao-work", "display": "豆包工作（DoubaoWork）", "dir": "~/DoubaoWork/skills"}
   ]
 }
