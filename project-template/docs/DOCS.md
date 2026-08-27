@@ -33,7 +33,7 @@
 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进模板的经验（完整条目） |
 | `private/dev/EXPERIENCE-TO-KB.md` | 私有 | 项目专用·沉淀暂存 | 可沉淀进知识库的经验（完整条目） |
 | `README.md` | 公开 | 项目专用 | 面向使用者/贡献者 |
-| `docs/` | 公开 | 通用 | 公开文档（DOCS / USER-GUIDE / LOADING / audit-checklist / TESTING / TEST-MAP / UPGRADE / CONTRIBUTING；流程图在 `private/dev/PHASES.md`） |
+| `docs/` | 公开 | 通用 | 公开文档（DOCS / LOADING / audit-checklist / TESTING / TEST-MAP / UPGRADE / CONTRIBUTING；流程图在 `private/dev/PHASES.md`；面向用户的内容在 `README.md`） |
 | `docs/CONTRIBUTING.md` | 公开 | 混合 | 人类贡献者与 agent 的协作约定 |
 | `version.json` | 公开 | 通用 | 版本（`version`）与模板版本（`template_version`）单一事实来源 |
 | （按项目补充：架构、API、使用手册等） | | | |
@@ -72,9 +72,8 @@
 | `private/dev/TEST-REPORT.md` | 验证过什么：测试记录 |
 | `private/dev/EXPERIENCE-TO-TEMPLATE.md` | 可沉淀进模板的经验 |
 | `private/dev/EXPERIENCE-TO-KB.md` | 可沉淀进知识库的经验 |
-| `README.md` | 使用者视角 |
+| `README.md` | 使用者视角：项目全貌/五阶段/阶段卡怎么读（唯一用户文档） |
 | `docs/DOCS.md` | docs 目录说明与文档治理 |
-| `docs/USER-GUIDE.md` | 项目有几个阶段/产物/何时确认：面向人的防遗忘指南 |
 | `docs/LOADING.md` | 什么场景读什么：加载规则表全量版（渐进式披露） |
 | `docs/audit-checklist.md` | 改动对不对：实施后审计清单（自审/独立审计共用） |
 | `docs/TESTING.md` | 怎么测：pytest 示例、覆盖率、CI 接入、TEST-REPORT 对应 |

@@ -47,7 +47,6 @@ INIT_STEPS_COVERAGE = [
     "version.json",
     "archive/ARCHIVE.md",
     "dist/.gitkeep",
-    "docs/USER-GUIDE.md",
     "docs/LOADING.md",
     "docs/TESTING.md",
     "docs/TEST-MAP.md",

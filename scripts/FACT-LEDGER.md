@@ -16,11 +16,11 @@
 | archiving | 项目归档/退役流程 | 已登记 | project-template/AGENTS.md | 277412b41935 | 归档节全量正文；私有指引已改摘要+指针 |
 | phases | 阶段体系（五阶段/16节点） | 已登记 | project-template/private/dev/PHASES.md | bd2a8cf4431a | §1 节点映射；两份入口完整展开已改摘要+指针，流程图已迁入 |
 | stage-card | 阶段卡机制 | 已登记 | project-template/private/dev/PHASES.md | 26393d6a2a04 | §5 全量正文；USER-GUIDE 旧三段式已修复对齐 |
-| req-guide | 需求引导方法论 | 已登记 | project-template/private/dev/PHASES.md | 9f281beaf4d5 | §6 全量正文（含状态机）；转译损耗还原（发现+逐层收敛）在 B4 |
+| req-guide | 需求引导方法论 | 已登记 | project-template/private/dev/PHASES.md | 036e2add95c2 | §6 全量正文（含状态机）；转译损耗已还原（引导发现+逐层收敛） |
 | release-flow | 发布流程 | 已登记 | project-template/private/AGENTS.md | bc7dddd0452c | 发布流程节全量正文（含发版状态机）；公开指引已改摘要+指针 |
 | doc-governance | 文档治理规则 | 已登记 | project-template/private/AGENTS.md | 5cb54a402d36 | 文档治理节 0-5 条；红线 13 保留红线级表述、DOCS 已改摘要+指针 |
 | completion-checklist | 完成检查清单 | 已登记 | project-template/private/AGENTS.md | 494dec89734d | 清单全量正文；已含契约对应项（冲突检测/裁剪声明） |
-| doc-duty | 文档职责表 | 已登记 | project-template/docs/DOCS.md | cf74e5fce3a5 | 职责表+维护清单；各文档内摘要+指针指向本家 |
+| doc-duty | 文档职责表 | 已登记 | project-template/docs/DOCS.md | 57e32790a435 | 职责表+维护清单；各文档内摘要+指针指向本家 |
 | stage-contract | 阶段契约（必做项+裁剪属性） | 已登记 | project-template/private/dev/PHASES.md | b5593d614063 | §8：每阶段必做清单+裁剪规则+需求冲突检测（F14/F15） |
 | test-map | 测试台账 | 已登记 | project-template/docs/TEST-MAP.md | ee239c64063d | 每个脚本断言什么/能测出什么/盲区（F11） |
 | loading | 加载规则 | 已登记 | project-template/docs/LOADING.md | f45ed517cb40 | 全量加载规则表；母项目副本已废除改指针 |

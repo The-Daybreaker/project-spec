@@ -48,10 +48,11 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
   用户确认放行、🟢 执行型展示即走；双维度模型（主流程串行 + 贯穿动作不占阶段）；
   权威定义与流程图在 `private/dev/PHASES.md`。
 - **渐进式披露**：`docs/LOADING.md` 加载规则表（场景→必读/按需/默认不读，历史默认
-  不读、红线始终必读）；`docs/USER-GUIDE.md` 面向人的阶段流程指南（防遗忘）；
+  不读、红线始终必读）；面向用户的阶段指南已并入 `README.md`（唯一用户文档）；
   新对话/压缩后读 AGENTS → private/AGENTS → STATUS 快照恢复。
-- **需求引导方法论（P1 内嵌）**：先复述意图、提开放问题帮用户澄清真实需求，
-  未澄清前禁止直接抛方案选项。
+- **需求引导方法论（P1 内嵌）**：先复述意图、提发散性问题引导用户发现真正需求
+  （痛点溯源→阶段粒度→披露深度→恢复机制→切换节奏逐层收敛），未发现/未澄清前
+  禁止直接抛方案选项。
 - **质量门禁**：文档 / 常规代码 / 架构变更三级门禁；发布前自测（产物可运行、关键
   文件齐全、无密钥/运行时数据混入）。
 - **发布产物与归档**：构建/打包产物统一输出 `dist/`（不进 git，Release 自动
@@ -116,8 +117,8 @@ description: 根据通用项目模板初始化指定项目文件夹：复制完�
      （以 `assets/project-template/version.json` 的 `template_version` 字段为准）；
    - `private/dev/STATUS.md`、`PHASES.md`、`EXPERIENCE-TO-TEMPLATE.md`、
      `EXPERIENCE-TO-KB.md` 已生成；
-   - `docs/{USER-GUIDE,LOADING}.md` 已生成（用户指南 / 加载规则表；流程图在
-     `private/dev/PHASES.md`）；
+   - `docs/LOADING.md` 已生成（加载规则表；流程图在 `private/dev/PHASES.md`；
+     面向用户的指南在 `README.md`）；
    - `private/dev/{prd,rfc,adr,research}/INDEX.md` 已生成（开发前四登记册）；
    - `private/dev/prototype/README.md` 已生成（页面原型/设计稿目录说明）；
    - `private/dev/STATUS.md`「📇 阶段卡」为合并紧凑模块（标题含状态 + 横置阶段线
