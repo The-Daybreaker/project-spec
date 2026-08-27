@@ -177,6 +177,8 @@ def main() -> int:
 
     # 注入样例：扫描器必须拦截（推送前门禁的验收面）
     fake = target / "leak_test.txt"
+    # 运行时拼接，避免源码字面量被 scan_secrets 误判为真实凭据；
+    # 注入文件内容仍为完整假 token，可被扫描器拦截（验收面）。
     fake.write_text("ghp_" + "FAKE123456789012345678901234\n", encoding="utf-8")
     _git(["add", "-A", "--", "."], cwd=target)
     r = _run([sys.executable, "scripts/scan_secrets.py", "--strict"], cwd=target)
