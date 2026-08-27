@@ -106,5 +106,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
   SKILL.md 的 `metadata.version`、agent-rules 继承矩阵，并全局 grep 新旧版本号
   确认无残留。
 - **发布前冒烟自检**：`python scripts/smoke_init.py` 必须全绿。
+- **发版前安全扫描**：发布前运行 `python scripts/scan_secrets.py --check`
+  （建议加 `--history` 复核全部 git 历史）——高危凭据零命中、个人信息零残留再发版。
 - **删除纪律**：删除先移入 `_trash/<AI助手产品名>_<日期>_<时分>/`，任务结束时用
   `python project-template/scripts/trash.py` 整体进回收站。

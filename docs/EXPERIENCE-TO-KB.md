@@ -1362,8 +1362,8 @@
      `TRAE Work CN.lnk`（traework）、`QoderWork CN.lnk`（qcoderwork）、
      `WorkBuddy.lnk`；`WScript.Shell` 可解析快捷方式目标/工作目录；
   3. 产品数据目录：TraeWork → `<用户主目录>\.trae-cn\skills`（与 Trae CN
-     共用用户目录，`<工作区路径>` 只是工作区）；QoderWork →
-     `<用户主目录>\.qoderworkcn\skills`（真实用户目录为 qcoderworkcn，
+  共用用户目录，`<工作区路径>` 只是工作区）；QoderWork →
+  `<用户主目录>\.qoderworkcn\skills`（真实用户目录为 qcoderworkcn，
      早期误用 `.qoderwork`，经用户反馈后纠正并清理）；
      WorkBuddy → `.workbuddy/skills`；Codex → `.codex/skills`；DSH → `.dsh/skills`；
   4. 安装：沙箱无写权限 → 升级权限获批后 `Copy-Item -Recurse`，装完核对文件数与
