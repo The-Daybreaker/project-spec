@@ -55,7 +55,7 @@ HIGH_PATTERNS = [
 
 PERSONAL_PATTERNS = [
     # 排除仓库自身账号名 The-Daybreaker（公开仓库 URL 固有标识，非泄漏）
-    ("USERNAME", r"(?<![\w-])<用户名>(?![\w-])"),
+    ("USERNAME", r"(?<![\w-])Daybreaker(?![\w-])"),
     ("WIN_PATH", r"[A-Za-z]:\\[^\"'\s\\]*(?:\\[^\"'\s\\]*)+"),
     ("UNIX_HOME", r"(?<![A-Za-z0-9])/(?:home|Users)/[A-Za-z0-9._\-]+"),
     ("EMAIL", r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}"),
@@ -115,6 +115,8 @@ def main() -> int:
 
     for f in files:
         p = ROOT / f
+        if p.name == "scan_secrets.py":
+            continue  # 自身源码含模式字面量，不参与扫描
         if not p.is_file():
             continue
         data = p.read_text(encoding="utf-8", errors="replace")
@@ -136,6 +138,8 @@ def main() -> int:
             data = _git("cat-file", "blob", sha)
             if not data or "\x00" in data:
                 continue
+            if any(str(pa).endswith("scan_secrets.py") for pa in paths):
+                continue  # 自身历史版本同理跳过
             hist_count += 1
             label = f"{sorted(paths)[0]} (历史 blob {sha[:10]})"
             _scan_text(data, HIGH_PATTERNS + PERSONAL_PATTERNS, hits, label, placeholders)
