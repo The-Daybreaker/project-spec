@@ -86,7 +86,7 @@ git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commi
 
 - 版本号格式 `X.Y.Z.patchN`（例如 `1.4.2.patch0`），以 `version.json` 为准，
   并打 git tag `vX.Y.Z.patchN`。
-- 本项目当前版本：**v1.6.0.patch0**。
+- 本项目当前版本：**v1.6.1.patch0**。
 - 模板每次发版的变更记录在 `private/dev/CHANGELOG.md`；初始化出的项目需要升级模板时，
   按项目内 `docs/UPGRADE.md` 的说明操作（只应用【通用】部分，不动你的项目内容）。
 
