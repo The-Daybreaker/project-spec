@@ -68,6 +68,7 @@ INIT_STEPS_COVERAGE = [
     "private/dev/EXPERIENCE-TO-KB.md",
     "private/dev/EXPERIENCE-TO-TEMPLATE.md",
     "private/dev/DESIGN.md",
+    "private/dev/design/README.md",
     "private/dev/prd/INDEX.md",
     "private/dev/rfc/INDEX.md",
     "private/dev/adr/INDEX.md",

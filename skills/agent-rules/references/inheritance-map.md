@@ -47,6 +47,7 @@
 
 | 模板来源 | 内容 | 精简版位置 | 处理 |
 |---|---|---|---|
+| 模板「设计契约」（`private/dev/design/`） | 契约场景化呈现（审场景不审技术）+ 确认后冻结 + 验收联动 | SKILL 第 3 节实施步 | 泛化 |
 | 根 AGENTS.md「开发工作流」 | 对齐→确认→实施→审计→验证→汇报+沉淀 | SKILL 第 3 节 | 精简为 6 步 |
 | private/AGENTS.md「文档治理」 | 正文即状态/禁 AI 追加历史/一行留痕 | SKILL 规范 11 | 原样 |
 | docs/audit-checklist.md | 审计清单 | references/audit-checklist-lite.md | 精简 |

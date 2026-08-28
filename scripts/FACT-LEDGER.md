@@ -20,7 +20,7 @@
 | release-flow | 发布流程 | 已登记 | project-template/private/AGENTS.md | bc7dddd0452c | 发布流程节全量正文（含发版状态机）；公开指引已改摘要+指针 |
 | doc-governance | 文档治理规则 | 已登记 | project-template/private/AGENTS.md | 5cb54a402d36 | 文档治理节 0-5 条；红线 13 保留红线级表述、DOCS 已改摘要+指针 |
 | completion-checklist | 完成检查清单 | 已登记 | project-template/private/AGENTS.md | 494dec89734d | 清单全量正文；已含契约对应项（冲突检测/裁剪声明） |
-| doc-duty | 文档职责表 | 已登记 | project-template/docs/DOCS.md | 57e32790a435 | 职责表+维护清单；各文档内摘要+指针指向本家 |
-| stage-contract | 阶段契约（必做项+裁剪属性） | 已登记 | project-template/private/dev/PHASES.md | b5593d614063 | §8：每阶段必做清单+裁剪规则+需求冲突检测（F14/F15） |
+| doc-duty | 文档职责表 | 已登记 | project-template/docs/DOCS.md | 2a484e770fe9 | 职责表+维护清单（含 design/ 契约文件夹）；各文档内摘要+指针指向本家 |
+| stage-contract | 阶段契约（必做项+裁剪属性） | 已登记 | project-template/private/dev/PHASES.md | 1054cbbf2c6f | §8：每阶段必做清单+裁剪规则+需求冲突检测+设计契约定稿/按契约实施（F14/F15/PRD-0004） |
 | test-map | 测试台账 | 已登记 | project-template/docs/TEST-MAP.md | ee239c64063d | 每个脚本断言什么/能测出什么/盲区（F11） |
 | loading | 加载规则 | 已登记 | project-template/docs/LOADING.md | f45ed517cb40 | 全量加载规则表；母项目副本已废除改指针 |

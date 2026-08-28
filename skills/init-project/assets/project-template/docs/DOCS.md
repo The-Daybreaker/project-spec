@@ -25,7 +25,8 @@
 | `private/dev/PHASES.md` | 私有 | 通用 | 阶段模块权威定义（含流程图与状态机） |
 | `private/dev/STATUS.md` | 私有 | 项目专用 | 当前状态快照（历史由 git 承担） |
 | `private/dev/ROADMAP.md` | 私有 | 项目专用 | 长期需求与展望（唯一长期入口，覆盖式更新） |
-| `private/dev/DESIGN.md` | 私有 | 混合 | 当前设计 + 开发规范（引用不重复） |
+| `private/dev/DESIGN.md` | 私有 | 混合 | 设计总览 + 开发规范（契约索引指向 `design/`） |
+| `private/dev/design/` | 私有 | 混合 | 设计契约文件夹（架构/接口/数据/安全契约；适用必做/不适用须声明） |
 | `private/dev/prd|rfc|adr|research/` | 私有 | 项目专用 | 四登记册（需求/方案/决策/调研，各含 INDEX 与状态机） |
 | `private/dev/prototype/` | 私有 | 项目专用 | 页面原型/设计稿（一文件一原型） |
 | `private/dev/CHANGELOG.md` | 私有 | 项目专用 | 完整版本历史（每次发布必更新） |
@@ -46,7 +47,7 @@
 | 需求/方案/调研 | `private/dev/prd|rfc|research/`（登记册状态+索引同步）+ DESIGN（定稿吸收） |
 | 架构决策 | `private/dev/adr/`（只增不改）+ `private/AGENTS.md` D-xxx 一行摘要 + `详见 ADR-XXXX` + CHANGELOG 一行摘要 |
 | 进度/状态/环境 | `private/dev/STATUS.md`（当前做到哪里）+ 受影响文档 |
-| 设计/架构/数据流 | `private/dev/DESIGN.md` |
+| 设计/架构/数据流 | `private/dev/DESIGN.md` + `private/dev/design/` 对应契约（接口契约变更须重新确认） |
 | 功能/接口实现 | DESIGN / README / docs（按项目实际） |
 | 测试/验证 | `private/dev/TEST-REPORT.md` |
 | 版本/发布 | `version.json` / CHANGELOG / README |
@@ -61,7 +62,8 @@
 | 根 `AGENTS.md` | Agent 入口：红线摘要、必读顺序、文档职责、维护清单 |
 | `private/AGENTS.md` | 开发规范全集、当前状态、环境、决策、定案/询问清单 |
 | `private/dev/PHASES.md` | 阶段模块权威定义：每阶段输入/产物/生命周期/16节点映射/切换规则/需求引导/文档映射/流程图与状态机 |
-| `private/dev/DESIGN.md` | 怎么做：设计、关键不变量、影响面 |
+| `private/dev/DESIGN.md` | 怎么做：设计总览 + 契约索引 + 关键不变量 + 影响面 |
+| `private/dev/design/` | 接口/数据/权限长什么样：设计契约（审核面=场景映射表） |
 | `private/dev/STATUS.md` | 做到哪了：当前状态快照（阶段卡 + 影响清单 + 生命周期合规清单 + 下阶段输入预告） |
 | `private/dev/prd/` | 为什么做/做什么：需求登记册（状态+优先级，定稿门禁） |
 | `private/dev/rfc/` | 怎么做：方案登记册（候选对比/评审结果，采纳后冻结） |

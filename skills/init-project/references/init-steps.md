@@ -122,6 +122,8 @@ git -C private commit -m "docs: private v0.0.1.patch0 - init"
 - [ ] `private/dev/prototype/README.md` 已生成（页面原型/设计稿目录说明，
       v1.3.0 特性：图可视化规范「先出图再确认」；流程图随 `prd/` `rfc/`、
       架构图随 `rfc/` `adr/`、页面原型落 `prototype/`）
+- [ ] `private/dev/design/README.md` 已生成（设计契约文件夹说明；DESIGN 含
+      设计总览与契约索引，不适用契约已声明）
 - [ ] 根/私有 `AGENTS.md` 含红线 17「范围克制与纠错清零」与开发工作流
       「可视化确认」小节（v1.3.0 特性）
 - [ ] `private/dev/STATUS.md`「📇 阶段卡」为合并紧凑模块（标题含状态 + 横置阶段线
