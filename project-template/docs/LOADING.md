@@ -19,6 +19,7 @@
 | 需要全量加载规则 | 按需读 | `docs/LOADING.md`（本文件） |
 | 需求 / 方案 / 调研任务 | 按需读 | `private/dev/{prd,rfc,adr,research}/INDEX.md` → 目标文档 |
 | 实施任务 | 必读 | `private/dev/DESIGN.md`、对应 PRD |
+| 改动 / 新增文档 | 必读 | `docs/DOCS.md`「文档质量标准」（改前读标准、改完对照审） |
 | 审计任务 | 必读 | `docs/audit-checklist.md` |
 | 验证任务 | 必读 | `scripts/ci_check.py` 说明、`docs/TESTING.md` |
 | 发布任务 | 必读 | 发布流程（`private/AGENTS.md`）→ `private/dev/CHANGELOG.md` → `pre_release_check.py` |
