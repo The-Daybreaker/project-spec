@@ -2,7 +2,7 @@
 name: init-project
 description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（七件套 + spec 机制 + 密钥钩子），替换项目占位符，初始化 git 并完成首次提交、配置推送前密钥门禁。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
 agent_created: true
-version: 0.1.0
+version: 0.9.0
 ---
 
 # init-project 项目初始化
