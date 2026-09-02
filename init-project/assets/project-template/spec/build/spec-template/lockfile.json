@@ -1,0 +1,10 @@
+{
+  "lockfileVersion": 1,
+  "spec": {
+    "source": "cloud",
+    "origin": "cloud/<spec-id>",
+    "version": "0.1.0",
+    "hash": ""
+  },
+  "modules": {}
+}

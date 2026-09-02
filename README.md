@@ -1,111 +1,117 @@
-# 通用项目模板（Universal Project Template）
+# Project-Template（通用项目模板）
 
-一套**开箱即用、人和 AI 都能看懂的通用项目管理模板**。它把「AI 助手 + 人协作」
-开发过程中的规范、流程、检查和版本管理都固化下来：你说一句话，AI 助手就能按
-模板初始化一个新项目，之后整个项目从需求到发布都按清晰步骤推进。
+一套**开箱即用、人和 AI 都能看懂的通用项目模板**。它把「AI 助手 + 人协作」
+开发的骨架与规范固化下来：你说一句话，AI 助手就能按模板初始化一个新项目；
+之后整个项目任何 agent 都能从零接手——冷启动读一遍 `AGENTS.md` 就恢复全貌，
+不依赖某个特定的 AI 工具，也不依赖之前的对话记录。
 
-项目里附带两个 AI 助手技能（skill）：
+核心理念是「结构是地基，工作流是 spec」：七件套骨架保证任何项目最低限度
+可运转；文档种类、流程编排、仪式轻重全部由 spec 包声明——spec 是模子，
+context 是模子出的件。
 
-- **init-project**：一键把任意文件夹初始化成符合模板规范的新项目；
-- **agent-rules**：AI 助手的通用行为底线（在对话不属于任何项目、且不是纯聊天时
-  生效）。
+仓库附带两个 AI 助手技能（skill）：
+
+- **init-project**：一键把任意空文件夹初始化成符合模板规范的新项目（复制
+  骨架、替换占位符、建 git、配置密钥门禁）；
+- **agent-rules**：AI 助手的通用行为底线（仅在对话不属于任何项目、且不是
+  纯聊天时生效）。
 
 ## 它能帮你做什么
 
-- **开新项目不再从零开始**：模板自带规范文档、目录结构、检查脚本和 git 初始化，
-  AI 助手一条指令就能搭好骨架并完成首次提交。
-- **任何 AI 助手接手都能读懂项目**：项目根目录的 `AGENTS.md` 写清楚了该怎么做，
-  不依赖某个特定的 AI 工具或之前的对话记录。
-- **该确认的确认、该自动的自动**：重要决策由你拍板，重复性检查交给脚本
-  （文档一致性、版本一致性、发布前检查等）。
-- **公开与私有分开**：适合发布到 GitHub 的内容放主仓库；个人偏好、机器专属信息、
-  开发过程文档放 `private/`，单独管理、不进 GitHub。
-- **一套规范装给所有助手**：两个技能可以复制到多个 AI 助手的用户级技能目录，
-  让所有助手遵循同一套规则。
+- **开新项目不再从零开始**：模板自带协作总纲、任务板、人机交流三件套和
+  历史归档，AI 助手一条指令就能搭好骨架并完成首次提交。
+- **任何 AI 助手接手都能读懂项目**：项目根目录的 `AGENTS.md` 写清了冷启动
+  链路；agent 的上下文是易失内存，任务板与三件套就是磁盘上的状态——会话
+  中断、换新对话都不丢状态。
+- **要文档有文档，不要也不背包袱**：需要文档体系 / 工作流时，引入预置
+  spec `software-dev`（愿景 / 设计 / 需求 / 决策 / 开发 / 测试 / 审计 /
+  发布 8 个模块）；没有 spec，项目以地基形态轻装运转。
+- **该确认的确认、该自动的自动**：不可逆操作（发布、永久删除、写交付物）
+  agent 会先找你确认；重复性检查交给脚本——推送前自动扫描密钥与个人
+  信息，高危凭据零容忍。
+- **一套规范装给所有助手**：两个技能可以复制到多个 AI 助手的用户级技能
+  目录，让所有助手遵循同一套规则。
 
 ## 快速开始
 
 ### 方式一：安装技能使用（推荐）
 
-把 `skills/init-project/` 整个目录复制到 AI 助手的用户级技能目录（例如 Codex 是
-`~/.codex/skills/`，其他助手的目录见其文档），重启或刷新后，对助手说：
+把 `init-project/` 整个目录复制到 AI 助手的用户级技能目录（例如 Codex 是
+`~/.codex/skills/`，其他助手见其文档），建议连同 `agent-rules/` 一起装，
+之后对助手说：
 
 > 「用 init-project 技能把 <目标目录> 初始化为一个新项目」
 
-它会按清单执行：复制模板 → 替换项目名、描述等占位符 → 初始化主 git 和
-private 子 git 并完成首次提交 → 回读校验。初始化会创建文件，属于高风险操作，
-所以它会先和你确认参数与方案再动手。
+它会按清单执行：确认参数与方案 → 复制模板骨架 → 替换项目名占位符 →
+初始化 git 并完成首次提交 → 配置推送前密钥门禁 → 回读校验。初始化会
+创建 git 仓库、批量落盘，属于高风险操作，所以它会先和你确认再动手。
 
-`skills/agent-rules/` 是 AI 助手的通用行为规范（精简版），建议也装到每个助手：
-它**只在对话不属于任何项目、且不是纯聊天时**加载；一旦进入某个项目，就以那个
-项目自己的 `AGENTS.md` 为准。
+`agent-rules/` 是 AI 助手的通用行为规范（精简版），建议也装到每个助手：
+它**只在对话不属于任何项目、且不是纯聊天时**加载；一旦进入某个项目，
+就以那个项目自己的 `AGENTS.md` 为准。
 
 ### 方式二：手动应用模板
 
-不想用技能也可以手动复制模板：
+不想用技能也可以手动来：
 
 ```bash
-# 复制模板并替换占位符（不建 git）
-python skills/init-project/scripts/init_project.py <目标目录> --name my-app --desc "..." --no-git
+# 一条命令：复制模板 + 替换占位符 + 建 git + 首次提交 + 密钥门禁
+python init-project/scripts/init_project.py <目标目录> --name my-app
 
-# 初始化主 git
-git -C <目标目录> init -b main
-git -C <目标目录> add -A -- . && git -C <目标目录> commit -m "chore: init"
-
-# 初始化 private 子 git（放私有内容）
-git -C <目标目录>/private init
-git -C <目标目录>/private add -A -- . && git -C <目标目录>/private commit -m "docs: private v0.0.1.patch0 - init"
+# 只复制文件，不建 git
+python init-project/scripts/init_project.py <目标目录> --name my-app --no-git
 ```
+
+也可以直接把 `project-template/` 下的七件套复制到新项目目录（不含
+`_trash/`、`.git/`），首次对话让 agent 冷启动。
 
 ### 初始化之后
 
-1. 读新项目的 `AGENTS.md`（这是 AI 助手的接手入口）；
-2. 按你的环境补充 `private/AGENTS.md`（本机环境、你的偏好）；
-3. 按技术栈实现 `scripts/ci_check.py` 和 CI 配置；
-4. 确认后配置远端仓库并推送（首次推送不会自动发版）。
+1. 首次对话让 agent 冷启动（它会读 `AGENTS.md` 恢复上下文），对齐项目
+   背景与目标；
+2. 需要文档体系 / 工作流时，引入或自建 spec 包（构建规则见
+   `project-template/spec/build/`）；没有 spec，项目照常运转；
+3. 确认后配置远端仓库并推送（agent 不擅自推送）。
 
 ## 目录结构（简要）
 
 ```text
-通用项目模板/
-├── AGENTS.md                 # 工作区规范入口（AI 助手先读这里）
-├── README.md                 # 本文件
-├── version.json              # 版本号单一事实来源
-├── install-targets.json      # 两个技能的安装位置表
-├── scripts/                  # 维护脚本（同步、副本校验、冒烟自检）
-├── project-template/         # 通用项目模板本体（权威副本）
-│   ├── AGENTS.md             #   AI 助手接手入口（公开版）
-│   ├── docs/ scripts/ .github/ dist/ archive/
-│   └── private/              #   私有区（不进 GitHub，单独管理）
-└── skills/
-    ├── init-project/         # 项目初始化技能（SKILL.md + 脚本 + 模板副本）
-    └── agent-rules/          # AI 助手通用行为规范技能
+Project-Template/
+├── README.md                     # 本文件
+├── CHANGELOG.md                  # 发布版本变更记录
+├── project-template/             # 模板本体
+│   ├── AGENTS.md                 #   AI 助手接手入口（协作总纲 + 宪章 6 条）
+│   ├── README.md                 #   使用手册（含给用户的 13 条协作规范）
+│   ├── package.json              #   模板版本
+│   ├── CHANGELOG.md              #   模板变更记录
+│   ├── context/                  #   项目上下文（种类由 spec 决定，零固有件）
+│   ├── process/                  #   任务板 + inbox / pending / reviews 三件套
+│   ├── workspace/                #   source（源产物）+ delivery（交付物）
+│   ├── logs/                     #   历史归档
+│   ├── spec/                     #   声明式规范（build/ 构建规则 + preset/ 预置）
+│   ├── scripts/                  #   密钥扫描脚本
+│   └── .githooks/                #   pre-push 推送门禁
+├── init-project/                 # 项目初始化技能
+│   ├── SKILL.md
+│   ├── scripts/init_project.py
+│   └── assets/project-template/  # 内嵌模板镜像（构建时从本体同步）
+└── agent-rules/                  # AI 助手通用行为规范技能
+    └── SKILL.md
 ```
 
 ## 版本与升级
 
-- 版本号格式 `X.Y.Z.patchN`（例如 `1.4.2.patch0`），以 `version.json` 为准，
-  并打 git tag `vX.Y.Z.patchN`。
-- 本项目当前版本：**v1.6.1.patch1**。
-- 模板每次发版的变更记录在 `private/dev/CHANGELOG.md`；初始化出的项目需要升级模板时，
-  按项目内 `docs/UPGRADE.md` 的说明操作（只应用【通用】部分，不动你的项目内容）。
+- 本仓库发布版本 **v1.7.0**（继承 v1 版本序列）；模板本体版本
+  0.1.0（`project-template/package.json`），二者解耦、各自演进。
+- 变更记录：本仓库见 `CHANGELOG.md`；模板本体见
+  `project-template/CHANGELOG.md`。
+- v1 老项目注意：v1.7.0 起目录结构整体重设计，v1 项目无法原地升级；老项目
+  继续按 v1 运转即可，新项目用本版。
 
 ## 给维护者的几条约定
 
-- **改模板必同步**：修改 `project-template/` 后运行
-  `python scripts/sync_template.py`，把改动同步到
-  `skills/init-project/assets/project-template/`（两份必须一致）；模板【通用】规则
-  有变时还要同步 `skills/agent-rules/`。
-- **private 骨架强制跟踪**：模板自己的 `.gitignore` 忽略 `private/`，提交骨架用
-  `git add -f project-template/private skills/init-project/assets/project-template/private`。
-- **技能校验**：改完技能用 skill-creator 的 quick_validate 校验
-  （`PYTHONUTF8=1 python <skill-creator>/scripts/quick_validate.py skills/init-project`，
-  agent-rules 同理）。
-- **发版同步**：版本递增时同步更新 `version.json`、`private/dev/CHANGELOG.md`、两个
-  SKILL.md 的 `metadata.version`、agent-rules 继承矩阵，并全局 grep 新旧版本号
-  确认无残留。
-- **发布前冒烟自检**：`python scripts/smoke_init.py` 必须全绿。
-- **发版前安全扫描**：发布前运行 `python scripts/scan_secrets.py --check`
-  （建议加 `--history` 复核全部 git 历史）——高危凭据零命中、个人信息零残留再发版。
-- **删除纪律**：删除先移入 `_trash/<AI助手产品名>_<日期>_<时分>/`，任务结束时用
-  `python project-template/scripts/trash.py` 整体进回收站。
+- **单一事实源**：本仓库是构建产物——改动一律在开发仓库进行，运行其
+  `build_delivery.py` 重建本仓库，不直接手改这里的内容。
+- **发布前安全扫描**：推送前运行
+  `python project-template/scripts/scan_secrets.py --check`，高危凭据零
+  命中、个人信息零残留再发版。

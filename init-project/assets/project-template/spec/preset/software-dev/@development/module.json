@@ -1,0 +1,29 @@
+{
+  "id": "development",
+  "name": "开发执行",
+  "version": "0.1.0",
+  "description": "根据需求和方案设定目标和任务，实施开发",
+
+  "input": [
+    "当期 PRD（做什么）",
+    "方案与设计（怎么建）"
+  ],
+
+  "output": [
+    "代码 / 产物 + 小问题遗留记录"
+  ],
+
+  "depends_on": ["prd", "design"],
+
+  "workspace": {
+    "source": "workspace/source/"
+  },
+
+  "enable": {
+    "instantiate": []
+  },
+
+  "disable": {
+    "keep": []
+  }
+}

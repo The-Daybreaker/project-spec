@@ -1,0 +1,28 @@
+{
+  "id": "audit",
+  "name": "审计",
+  "version": "0.1.0",
+  "description": "收口前进行对抗性审查，查项目隐患",
+
+  "input": [
+    "一期完整产物（development + test）"
+  ],
+
+  "output": [
+    "审计报告"
+  ],
+
+  "depends_on": ["development", "test", "adr"],
+
+  "workspace": {
+    "audit": "process/reviews/"
+  },
+
+  "enable": {
+    "instantiate": []
+  },
+
+  "disable": {
+    "keep": []
+  }
+}
