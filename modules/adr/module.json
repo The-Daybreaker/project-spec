@@ -1,0 +1,21 @@
+{
+  "id": "adr",
+  "name": "决策记录",
+  "version": "0.1.0",
+  "description": "用于记录重要决策、归档被推翻的决策",
+
+  "input": [
+    "对话中产生的重要决策"
+  ],
+
+  "output": [
+    "decisions.md（当前有效的决策）+ history.md（被取代的决策，默认不读）"
+  ],
+
+  "depends_on": [],
+
+  "workspace": {
+    "decisions": "context/adr/decisions.md",
+    "history": "context/adr/history.md"
+  }
+}

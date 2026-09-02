@@ -1,0 +1,20 @@
+{
+  "id": "vision",
+  "name": "愿景与排期",
+  "version": "0.1.0",
+  "description": "项目的长期需求总览和排期",
+
+  "input": [
+    "用户的想法和需求"
+  ],
+
+  "output": [
+    "vision.md：定位 / 需求正文 / 远期方向 / 演进原则 / 里程碑 / 未排期池 / 近三期排期表"
+  ],
+
+  "depends_on": [],
+
+  "workspace": {
+    "vision": "context/vision.md"
+  }
+}

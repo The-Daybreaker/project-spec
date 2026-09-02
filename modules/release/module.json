@@ -1,0 +1,24 @@
+{
+  "id": "release",
+  "name": "收口",
+  "version": "0.1.0",
+  "description": "一期完成的收口，做法项目自定",
+
+  "input": [
+    "审计放行的产物"
+  ],
+
+  "output": [
+    "交付物（tag / 上传 / 本地安装）",
+    "变更日志（CHANGELOG，随发布）"
+  ],
+
+  "depends_on": ["audit"],
+
+  "workspace": {
+    "delivery": "workspace/delivery/",
+    "changelog": "workspace/CHANGELOG.md"
+  },
+
+  "self_implemented": true
+}

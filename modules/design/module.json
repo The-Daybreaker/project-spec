@@ -1,0 +1,21 @@
+{
+  "id": "design",
+  "name": "方案与设计",
+  "version": "0.1.0",
+  "description": "产出方案文档 + 设计文档，把需求和决策组织成整体方案和设计图",
+
+  "input": [
+    "全局愿景（长期往哪走）",
+    "决策记录（选了什么路）"
+  ],
+
+  "output": [
+    "方案文档（design.md）+ 架构图 / 接口契约 / 数据模型 / 关键流程走查 / 交互原型 等按需图纸（可扩展）"
+  ],
+
+  "depends_on": ["vision", "adr"],
+
+  "workspace": {
+    "design": "context/design/"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "spec-id",
+  "name": "spec 名",
+  "version": "0.1.0",
+  "description": "一句话说明这套 spec 管什么场景",
+
+  "modules": [
+    "module-a", "module-b"
+  ],
+
+  "entries": [
+    {
+      "id": "entry-id",
+      "name": "入口名",
+      "modules": ["module-a"]
+    }
+  ]
+}
