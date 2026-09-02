@@ -79,7 +79,7 @@ flowchart LR
 「启用的模块」是集合、不表顺序；执行顺序与依赖看上面的全景图。路径外的
 模块不启用。入口判定拿不准时，先和用户对齐一句再动手。
 
-## 四、模块字段表（module.json 12 字段）
+## 四、模块字段表（module.json 10 字段）
 
 填模块的 `module.json` 时查这张表：
 
@@ -93,15 +93,13 @@ flowchart LR
 | `output` | string[] | 产出物（下游认领的契约） | 视为 `[]` |
 | `depends_on` | string[] | 依赖的模块 id | 视为 `[]`（无依赖） |
 | `workspace` | object | 键 = 产物名，值 = 落点路径 | 视为 `{}` |
-| `enable.instantiate` | string[] | 启用时例化的文件路径 | 视为 `[]` |
-| `disable.keep` | string[] | 停用时保留的文件路径 | 视为 `[]` |
 | `private` | bool | `true` = 项目私有外挂模块 | 视为 `false` |
 | `self_implemented` | bool | `true` = 占空自实现，项目自填 | 视为 `false` |
 
 补充约定：
 
 - **json 放脚本会读的**：字段供脚本解析（构建 / 例化脚本读 id / name /
-  version / depends_on / workspace / instantiate / keep；清单脚本读
+  version / depends_on / workspace；清单脚本读
   description / input / output）。脚本不消费、纯给人 / agent 读的语义（适用
   与边界、依赖哪个产出、运行过程、产物内容），写进 `MODULE.md` 或
   `README.md`，不进 json。

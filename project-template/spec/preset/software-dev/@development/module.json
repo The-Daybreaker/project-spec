@@ -17,13 +17,5 @@
 
   "workspace": {
     "source": "workspace/source/"
-  },
-
-  "enable": {
-    "instantiate": []
-  },
-
-  "disable": {
-    "keep": []
   }
 }

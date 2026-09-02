@@ -17,13 +17,5 @@
 
   "workspace": {
     "design": "context/design/"
-  },
-
-  "enable": {
-    "instantiate": ["context/design/"]
-  },
-
-  "disable": {
-    "keep": ["context/design/"]
   }
 }

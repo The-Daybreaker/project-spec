@@ -7,6 +7,25 @@
 条目粒度与 GitHub Release 对齐；更细的版本明细可按 git tag
 （`v1.0.1` \~ `v1.6.1.patch1`）追溯对应提交。
 
+## \[1.8.0] - 2026-09-03
+
+云端模块库接入 + spec 模块字段精简。
+
+### Added
+
+- 云端模块库机制：`github.com/The-Daybreaker/project-spec` 作为 spec / 模块
+  唯一事实源（SSOT），仓库结构 `registry.json`（目录索引）+ `build/`（构建
+  规则）+ `specs/`（spec 真身）+ `modules/`（模块真身）。
+- 锁文件落账：`spec/build/scripts/lockfile.py`（生成 + 校验两模式），
+  `origin` 记真实仓库路径；预置 spec 锁文件已落真实账（来源 + 版本 + 指纹）。
+- spec 的 `AGENTS.md` 新增「锁文件：引入与冷启动校验」一节——引入 spec 的
+  拉取流程 + 冷启动 hash 校验（拉取交 agent，不写拉取脚本）。
+
+### Removed
+
+- module.json 的 `enable.instantiate` / `disable.keep` 字段（启停运行态由
+  `manifest.json` 的 entries 表达，字段 12 → 10）。
+
 ## \[1.7.0] - 2026-09-02
 
 断代版本：模板整体重设计为 v3，目录结构全新。v1 项目无法原地升级，

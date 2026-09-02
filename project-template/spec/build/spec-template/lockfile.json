@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "spec": {
     "source": "cloud",
-    "origin": "cloud/<spec-id>",
+    "origin": "github.com/The-Daybreaker/project-spec/specs/<spec-id>",
     "version": "0.1.0",
     "hash": ""
   },

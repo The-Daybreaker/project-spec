@@ -16,13 +16,5 @@
 
   "workspace": {
     "vision": "context/vision.md"
-  },
-
-  "enable": {
-    "instantiate": ["context/vision.md"]
-  },
-
-  "disable": {
-    "keep": ["context/vision.md"]
   }
 }

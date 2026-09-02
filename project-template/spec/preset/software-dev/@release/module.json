@@ -20,13 +20,5 @@
     "changelog": "workspace/CHANGELOG.md"
   },
 
-  "enable": {
-    "instantiate": []
-  },
-
-  "disable": {
-    "keep": []
-  },
-
   "self_implemented": true
 }

@@ -18,13 +18,5 @@
 
   "workspace": {
     "test": "context/test/"
-  },
-
-  "enable": {
-    "instantiate": ["context/test/"]
-  },
-
-  "disable": {
-    "keep": ["context/test/"]
   }
 }

@@ -11,13 +11,6 @@
 
   "workspace": {},
 
-  "enable": {
-    "instantiate": []
-  },
-  "disable": {
-    "keep": []
-  },
-
   "private": false,
   "self_implemented": false
 }

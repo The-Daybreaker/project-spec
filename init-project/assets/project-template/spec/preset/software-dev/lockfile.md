@@ -20,14 +20,14 @@
   "lockfileVersion": 1,
   "spec": {
     "source": "cloud",
-    "origin": "cloud/software-dev",
+    "origin": "github.com/The-Daybreaker/project-spec/specs/software-dev",
     "version": "1.0.0",
     "hash": "abc123"
   },
   "modules": {
     "vision": {
       "source": "cloud",
-      "origin": "cloud/software-dev/vision",
+      "origin": "github.com/The-Daybreaker/project-spec/modules/vision",
       "version": "1.0.0",
       "hash": "def456"
     },
@@ -47,7 +47,7 @@
 | ---- | ---- |
 | `lockfileVersion` | 锁文件格式版本（整数，格式变更时递增） |
 | `source` | `cloud`（云端副本）/ `fork`（fork 自云端）/ `private`（项目私有） |
-| `origin` | 云端 spec / 模块的 id；`private` 时为 `null` |
+| `origin` | 云端 spec / 模块的真实位置（仓库 + 路径，如 `github.com/The-Daybreaker/project-spec/modules/vision`）；`private` 时为 `null` |
 | `version` | 来源版本（云端版本）；`private` 时是自身版本 |
 | `hash` | 内容指纹，用于校验「副本是否被改」（识别 fork / 漂移） |
 

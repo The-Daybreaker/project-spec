@@ -16,13 +16,5 @@
 
   "workspace": {
     "audit": "process/reviews/"
-  },
-
-  "enable": {
-    "instantiate": []
-  },
-
-  "disable": {
-    "keep": []
   }
 }

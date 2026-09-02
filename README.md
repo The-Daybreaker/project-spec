@@ -101,7 +101,7 @@ Project-Template/
 
 ## 版本与升级
 
-- 本仓库发布版本 **v1.7.0**（继承 v1 版本序列）；模板本体版本
+- 本仓库发布版本 **v1.8.0**（继承 v1 版本序列）；模板本体版本
   0.1.0（`project-template/package.json`），二者解耦、各自演进。
 - 变更记录：本仓库见 `CHANGELOG.md`；模板本体见
   `project-template/CHANGELOG.md`。

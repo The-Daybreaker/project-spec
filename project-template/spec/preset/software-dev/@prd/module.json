@@ -18,13 +18,5 @@
 
   "workspace": {
     "prd": "context/prd/"
-  },
-
-  "enable": {
-    "instantiate": ["context/prd/"]
-  },
-
-  "disable": {
-    "keep": ["context/prd/"]
   }
 }

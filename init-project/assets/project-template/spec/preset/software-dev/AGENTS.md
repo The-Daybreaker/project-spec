@@ -84,7 +84,7 @@ prd 与 design 并行（都只依赖 vision），adr 横切（design、audit 都
 「启用的模块」是集合、不表顺序；执行顺序与依赖看上面的全景图。adr 横切、
 不列入入口。路径外的模块不启用。入口判定拿不准时，先和用户对齐一句再动手。
 
-## 四、模块字段表（module.json 12 字段）
+## 四、模块字段表（module.json 10 字段）
 
 填模块的 `module.json` 时查这张表：
 
@@ -98,15 +98,13 @@ prd 与 design 并行（都只依赖 vision），adr 横切（design、audit 都
 | `output` | string[] | 产出物（下游认领的契约） | 视为 `[]` |
 | `depends_on` | string[] | 依赖的模块 id | 视为 `[]`（无依赖） |
 | `workspace` | object | 键 = 产物名，值 = 落点路径 | 视为 `{}` |
-| `enable.instantiate` | string[] | 启用时例化的文件路径 | 视为 `[]` |
-| `disable.keep` | string[] | 停用时保留的文件路径 | 视为 `[]` |
 | `private` | bool | `true` = 项目私有外挂模块 | 视为 `false` |
 | `self_implemented` | bool | `true` = 占空自实现，项目自填 | 视为 `false` |
 
 补充约定：
 
 - **json 放脚本会读的**：字段供脚本解析（构建 / 例化脚本读 id / name /
-  version / depends_on / workspace / instantiate / keep；清单脚本读
+  version / depends_on / workspace；清单脚本读
   description / input / output）。脚本不消费、纯给人 / agent 读的语义（适用
   与边界、依赖哪个产出、运行过程、产物内容），写进 `MODULE.md` 或
   `README.md`，不进 json。
@@ -135,3 +133,29 @@ prd 与 design 并行（都只依赖 vision），adr 横切（design、audit 都
   是有效信息。
 - **不适用 → 删字段，不写 `null`**：字段对本模块无意义时直接删，不占位。
 - **适用但值暂缺 → 留 `null`** 显式标注（如版本约束未定时）。
+
+## 七、锁文件：引入与冷启动校验
+
+锁文件（`lockfile.json`）是本 spec 包的溯源账本：记录 spec 和每个模块从云端
+哪个版本例化来 + 内容指纹（hash），防止副本漂移。字段定义和完整生命周期见
+`lockfile.md`（低频才读，只讲字段）；这里写 agent 日常要做的两件事。
+
+### 引入本 spec（从云端拉取）
+
+项目还没有本 spec 时，从云端仓库 `github.com/The-Daybreaker/project-spec` 拉取：
+
+1. 读云端根目录 `registry.json`，确认有哪些 spec、哪些模块、各在什么路径；
+2. `git clone` 云端仓库到临时目录，把需要的 spec 目录和模块目录复制进项目 `spec/`；
+3. 跑 `lockfile.py`（生成模式）扫描 spec 包，生成 `lockfile.json`，记下来源与指纹。
+
+拉取交给 agent 判断执行，**不写拉取脚本**：拉什么、哪个版本是决策，`git clone` +
+复制只是几条命令，脚本帮不上忙；而且拉取脚本也没法放进云端仓库——否则拉取之前
+就得先拉取脚本。
+
+### 冷启动校验
+
+每次冷启动（新会话恢复上下文）时，跑 `lockfile.py --verify` 比对本地内容指纹与
+锁文件记录：
+
+- 一致 → 无漂移，正常干活；
+- 不一致 → 有未登记的 fork / 改动，停下来提示用户，不要擅自继续。

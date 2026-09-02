@@ -17,13 +17,5 @@
   "workspace": {
     "decisions": "context/adr/decisions.md",
     "history": "context/adr/history.md"
-  },
-
-  "enable": {
-    "instantiate": ["context/adr/"]
-  },
-
-  "disable": {
-    "keep": ["context/adr/"]
   }
 }
