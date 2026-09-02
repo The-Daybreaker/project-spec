@@ -1,35 +1,15 @@
 # CHANGELOG
 
 发布仓库的版本历史（三产物：project-template / init-project / agent-rules）。
-模板本体的变更记录另见 `project-template/CHANGELOG.md`，其版本号与发布版本
-解耦、各自演进。
+模板本体的变更记录另见 `project-template/CHANGELOG.md`。
 
-条目粒度与 GitHub Release 对齐；更细的版本明细可按 git tag
-（`v1.0.1` \~ `v1.6.1.patch1`）追溯对应提交。
+v3 是新模板的断代重设计，版本序列从 0.1.0 重新起算、不再继承 v1；
+下方 v1.x 系列是旧模板（v1/v2）的历史，已归档，仅作追溯参考。
 
-## \[1.8.0] - 2026-09-03
+## \[0.1.0] - 2026-09-03
 
-云端模块库接入 + spec 模块字段精简。
-
-### Added
-
-- 云端模块库机制：`github.com/The-Daybreaker/project-spec` 作为 spec / 模块
-  唯一事实源（SSOT），仓库结构 `registry.json`（目录索引）+ `build/`（构建
-  规则）+ `specs/`（spec 真身）+ `modules/`（模块真身）。
-- 锁文件落账：`spec/build/scripts/lockfile.py`（生成 + 校验两模式），
-  `origin` 记真实仓库路径；预置 spec 锁文件已落真实账（来源 + 版本 + 指纹）。
-- spec 的 `AGENTS.md` 新增「锁文件：引入与冷启动校验」一节——引入 spec 的
-  拉取流程 + 冷启动 hash 校验（拉取交 agent，不写拉取脚本）。
-
-### Removed
-
-- module.json 的 `enable.instantiate` / `disable.keep` 字段（启停运行态由
-  `manifest.json` 的 entries 表达，字段 12 → 10）。
-
-## \[1.7.0] - 2026-09-02
-
-断代版本：模板整体重设计为 v3，目录结构全新。v1 项目无法原地升级，
-老项目继续按 v1 运转即可，新项目用本版。
+断代版本：模板整体重设计为 v3，目录结构全新（v1/v2 项目无法原地升级），
+并接入云端模块库 + 精简 spec 模块字段。
 
 ### Added
 
@@ -45,22 +25,32 @@
 - 推送前密钥门禁（保留自 v1 并参数化）：`scripts/scan_secrets.py` +
   `.githooks/pre-push`，排除名单外置 `scan_secrets.ignore`（不入库）。
 
-- 发布仓库顶层 `CHANGELOG.md`（本文件，含 v1 各版本摘要）。
+- 云端模块库：`github.com/The-Daybreaker/project-spec` 作为 spec / 模块唯一
+  事实源（SSOT），仓库结构 `registry.json`（目录索引）+ `build/` + `specs/` +
+  `modules/`；锁文件落账（`lockfile.py` 生成 + 校验，`origin` 记真实路径）。
+
+- spec 的 `AGENTS.md` 锁文件节：引入 spec 的拉取流程 + 冷启动 hash 校验
+  （拉取交 agent，不写拉取脚本）。
 
 ### Changed
 
 - `init-project` skill 重构：内嵌 v3 模板镜像，初始化含 hooksPath 配置与
   回读校验清单（内联 SKILL.md）。
 
-- `agent-rules` skill 重构：模板宪章的项目外精简形态（version 1.7.0）。
+- `agent-rules` skill 重构：模板宪章的项目外精简形态。
 
 - 发布 README 重写（价值主张 / 快速开始 / 目录结构 / 版本说明）。
 
 ### Removed
 
-- v1 结构整体移除：`private/` 子仓库、`docs/`、`dist/`、`archive/`、
+- v1/v2 结构整体移除：`private/` 子仓库、`docs/`、`dist/`、`archive/`、
   `.github/workflows/`、`version.json`、`install-targets.json` 及大部分
   维护脚本。
+
+- module.json 的 `enable.instantiate` / `disable.keep` 字段（启停运行态由
+  `manifest.json` 的 entries 表达，字段 12 → 10）。
+
+## —— 以下为 v1/v2 旧模板（已归档，仅追溯参考）——
 
 ## \[1.6.1] - 2026-08-28
 
