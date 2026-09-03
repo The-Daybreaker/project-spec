@@ -43,7 +43,9 @@
 1. 复制本模板七件套到新项目目录（不含 `_trash/`、`.git/`）。
 2. 首次对话让 agent 冷启动（它会读 AGENTS.md 恢复上下文），对齐项目
    背景与目标，task.md 开始记录。
-3. 需要文档体系 / 工作流时，引入或自建 spec 包（构建规则见 `spec/build/`）；
+3. 需要文档体系 / 工作流时，从云端模块库 `github.com/The-Daybreaker/project-spec`
+   拉取 spec 包（如 software-dev：愿景 / 设计 / 需求 / 决策 / 开发 / 测试 /
+   审计 / 发布 8 模块），或按构建规则自建（`spec/build/`）；
    没有 spec，项目照常运转。
 4. （可选）启用推送前密钥门禁：`git config core.hooksPath .githooks`，
    之后每次 push 自动扫描密钥与个人信息（`scripts/scan_secrets.py`）；
@@ -54,7 +56,7 @@
 
 | 目录           | 放什么                                              |
 | ------------ | ------------------------------------------------ |
-| `spec/`      | 模子：构建规则（`build/`）+ 预置 spec（`preset/`）     |
+| `spec/`      | 模子：构建规则（`build/`）+ 已引入的 spec 包（云端拉取） |
 | `context/`   | 模子出的件：PRD / ADR……种类与有无由 spec 决定，零固有件 |
 | `process/`   | 运行时：task.md + inbox / pending / reviews 三件套，只放活的 |
 | `workspace/` | 对外产出：source（源产物）+ delivery（交付物）；发布的是这里           |

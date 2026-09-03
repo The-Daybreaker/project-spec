@@ -23,9 +23,10 @@ context 是模子出的件。
 - **任何 AI 助手接手都能读懂项目**：项目根目录的 `AGENTS.md` 写清了冷启动
   链路；agent 的上下文是易失内存，任务板与三件套就是磁盘上的状态——会话
   中断、换新对话都不丢状态。
-- **要文档有文档，不要也不背包袱**：需要文档体系 / 工作流时，引入预置
-  spec `software-dev`（愿景 / 设计 / 需求 / 决策 / 开发 / 测试 / 审计 /
-  发布 8 个模块）；没有 spec，项目以地基形态轻装运转。
+- **要文档有文档，不要也不背包袱**：需要文档体系 / 工作流时，从云端模块库
+  拉取 spec 包（`github.com/The-Daybreaker/project-spec`，如 software-dev：
+  愿景 / 设计 / 需求 / 决策 / 开发 / 测试 / 审计 / 发布 8 模块）；没有 spec，
+  项目以地基形态轻装运转。
 - **该确认的确认、该自动的自动**：不可逆操作（发布、永久删除、写交付物）
   agent 会先找你确认；重复性检查交给脚本——推送前自动扫描密钥与个人
   信息，高危凭据零容忍。
@@ -69,7 +70,8 @@ python init-project/scripts/init_project.py <目标目录> --name my-app --no-gi
 
 1. 首次对话让 agent 冷启动（它会读 `AGENTS.md` 恢复上下文），对齐项目
    背景与目标；
-2. 需要文档体系 / 工作流时，引入或自建 spec 包（构建规则见
+2. 需要文档体系 / 工作流时，从云端模块库拉取 spec 包或自建
+   （`github.com/The-Daybreaker/project-spec`；构建规则见
    `project-template/spec/build/`）；没有 spec，项目照常运转；
 3. 确认后配置远端仓库并推送（agent 不擅自推送）。
 
@@ -88,7 +90,7 @@ Project-Template/
 │   ├── process/                  #   任务板 + inbox / pending / reviews 三件套
 │   ├── workspace/                #   source（源产物）+ delivery（交付物）
 │   ├── logs/                     #   历史归档
-│   ├── spec/                     #   声明式规范（build/ 构建规则 + preset/ 预置）
+│   ├── spec/                     #   声明式规范（build/ 构建规则；spec 包按需云端拉取）
 │   ├── scripts/                  #   密钥扫描脚本
 │   └── .githooks/                #   pre-push 推送门禁
 ├── init-project/                 # 项目初始化技能

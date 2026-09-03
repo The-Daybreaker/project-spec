@@ -20,6 +20,10 @@
 
 - module.json 的 `enable.instantiate` / `disable.keep` 字段（字段 12 → 10；
   启停运行态由 manifest 的 entries 表达，例化语义归 MODULE.md）。
+- 预置 spec `spec/preset/software-dev`（8 模块）：地基走查确认模板不依赖
+  spec 即可以地基形态运转；preset 与云端模块库内容逐字节一致，改为唯一
+  事实源在云端、按需拉取（拉取指引见根 `AGENTS.md` / `README.md` /
+  `spec/build/build.md`）。
 
 ## [0.1.0] - 2026-09-02
 
