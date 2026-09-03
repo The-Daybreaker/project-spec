@@ -18,7 +18,17 @@
 - spec 的 `AGENTS.md` 锁文件节：引入 spec 的拉取流程 + 冷启动 hash 校验
   （拉取交 agent，不写拉取脚本）。
 
+- 框架新增 `process/memory.md`：agent 记忆固有件（踩过的坑与被验证过的
+  判断，冷启动必读；只存当前有效条目，失效归档 `logs/memory/`）。
+
 ### Changed
+
+- 术语全局更名：「地基」→「框架」（语义不变）；文档措辞不再用
+  「七件套」之类清点式表述。
+
+- 口径修订（用户定）：根 README 去「版本与升级 / 给维护者的几条约定」节、
+  模板 README 用户规范瘦身重写为「写给用户」、init-project SKILL 前置确认
+  精简（删「先调研再立项」步骤）。
 
 - 仓库结构简化：模板本体从根目录 `project-template/` 移入
   `init-project/assets/project-template/`，全仓只存一份（单一事实源，

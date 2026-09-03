@@ -1,6 +1,6 @@
 ---
 name: init-project
-description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（七件套 + spec 机制），替换项目占位符，初始化 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
+description: 根据通用项目模板初始化指定项目文件夹：复制完整模板框架（含 agent 记忆与 spec 机制），替换项目占位符，初始化 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
 agent_created: true
 version: 0.9.0
 ---
@@ -13,12 +13,12 @@ version: 0.9.0
 生成一个**自洽自足**的项目骨架：任何 agent 从零接手都能按根 `AGENTS.md` 继续开发，
 不依赖本次对话上下文。模板自带：
 
-- **七件套骨架**：`AGENTS.md`（协作总纲 + 宪章 6 条）/ `README.md`（使用手册）/
+- **框架结构**：`AGENTS.md`（协作总纲 + 宪章 6 条）/ `README.md`（使用手册）/
   `context/`（项目上下文）/ `workspace/`（source + delivery）/ `process/`
-  （任务板 + 三件套）/ `logs/`（历史）/ `spec/`（声明式规范）。
+  （任务板 + agent 记忆 + 三件套）/ `logs/`（历史）/ `spec/`（声明式规范）。
 - **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）+ `lockfile.py` /
   `lockfile.md` 常驻；spec 包与构建规则按需从云端模块库拉取
-  （`github.com/The-Daybreaker/project-spec`）；空 spec 时项目以地基形态轻装运转。
+  （`github.com/The-Daybreaker/project-spec`）；空 spec 时项目以框架形态轻装运转。
 
 ## 前置确认（必须）
 
@@ -36,9 +36,10 @@ version: 0.9.0
      `git init` + 首次提交；
      `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
-   - **结构**：七件套齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
-     `process/` / `logs/` / `spec/`）；`_trash/` 未随模板复制进来；
-     `spec/AGENTS.md`、`spec/lockfile.py`、`spec/lockfile.md` 存在。
+   - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
+     `process/` / `logs/` / `spec/`）；`process/memory.md`、
+     `spec/AGENTS.md`、`spec/lockfile.py`、`spec/lockfile.md` 存在；
+     `_trash/` 未随模板复制进来；
    - **参数**（若指定了 `--name`）：`package.json` 的 `name` 已替换为项目名，
      `version` 保持模板原值不变（不随初始化改动）。
    - **git**：主仓库 `.git` 存在；`git status` 干净；首次提交信息为

@@ -12,9 +12,17 @@
 
 ### Added
 
+- `process/memory.md`：agent 记忆固有件（踩过的坑与被验证过的判断，
+  冷启动必读；只存当前有效条目，失效归档 `logs/memory/`）。
 - 云端模块库接入：锁文件 `origin` 记真实指向
   （`github.com/The-Daybreaker/project-spec`）；preset 锁文件落真实账
   （spec + 8 模块的 origin / version / hash）。
+
+### Changed
+
+- 术语全局更名：「地基」→「框架」（语义不变）；文档措辞不再用
+  「七件套」之类清点式表述。
+- README「给用户的规范」瘦身重写为「写给用户」（用户本人重写）。
 
 ### Removed
 

@@ -1,7 +1,8 @@
 # AGENTS.md — 协作总纲
 
-> 新会话 agent 的唯一必读入口。读完本文件 → `process/task.md` → 扫  
-> `process/` 三件套（inbox / pending / reviews），即可恢复项目全貌并开工。  
+> 新会话 agent 的唯一必读入口。读完本文件 → `process/task.md` → 读  
+> `process/memory.md` → 扫 `process/` 三件套（inbox / pending / reviews），即可  
+> 恢复项目全貌并开工。  
 > 本文件只写协议与不变量，不写状态——状态一律在 `process/task.md`。
 
 **维护权分区**：「规范」节为用户维护区（agent 不代写内容，仅格式整理）；  
@@ -16,6 +17,7 @@
 | `workspace/source/`   | 源产物；内部结构由 agent 按项目设计                            | 自由写            |
 | `workspace/delivery/` | 交付物（终稿 / 构建产物）                                   | 写入需确认          |
 | `process/task.md`     | 任务板：进行中 / 下一步 / 阻塞                               | 自由写            |
+| `process/memory.md`   | agent 记忆：踩过的坑与被验证过的判断（只存当前有效）                | 自由写            |
 | `process/inbox/`      | 用户的异步输入（人 → agent）                               | 读取 + 处理 + 归档   |
 | `process/pending/`    | agent 的决策请求（agent → 用户）                          | 自由写            |
 | `process/reviews/`    | agent 的验收请求（agent → 用户）                          | 自由写            |
@@ -26,7 +28,7 @@
 未创建的目录视为空。关键分界：
 
 - **spec 是模子，context 是模子出的件**——context 零固有件，空 spec 时  
-  context 为空，项目以地基形态运转（地基即 spec 缺失的回退）。
+  context 为空，项目以框架形态运转（框架即 spec 缺失的回退）。
 - **process 只放活的**——处理完一律归档进 logs，扫一眼就是全部待办，  
   不用翻历史。
 - **delivery 的 git 策略**：可再生的构建产物不进 git，不可再生的终稿进  
@@ -45,7 +47,8 @@
 > 三件套是磁盘——开始 = 读盘，检查点 = 写盘。轮次与操作不设独立协议  
 > （轮次独立协议是 v1 膨胀的死因，操作独立协议由 task.md 状态流转与 review 判断承载）。
 
-1. **开始（读盘）**：读本文件 → `process/task.md` → 扫三件套（未创建  
+1. **开始（读盘）**：读本文件 → `process/task.md` → 读 `process/memory.md`  
+   （里面是踩过的坑与验证过的判断，别重蹈覆辙）→ 扫三件套（未创建  
    视为空）→ 一段话汇报「当前状态 + 本次计划」。inbox 有内容先处理  
    （见下节）。
 2. **进行中（常态，无独立仪式）**：规则即本文件全文；纪律是反应式的——  
@@ -100,13 +103,21 @@
 
 用户批复一句话即可：批准 / 返工 / 部分接受。关闭后归档 `logs/reviews/`。
 
+### memory.md —— agent 记忆
+
+agent 在开发过程中踩过的坑、被验证过的判断，写进 `process/memory.md`  
+（框架固有件，与三件套并列）：什么情境 + 什么坑 / 什么判断，一条一段。  
+只放**当前有效**的条目——失效 / 过时的整段移出，归档 `logs/memory/`  
+（日期前缀）。冷启动必读，遇到相似情境先查这里再动手。
+
 ### 归档与命名
 
 logs/ 下镜像三子目录（`logs/inbox/`、`logs/pending/`、`logs/reviews/`）；  
+memory 条目失效后归档 `logs/memory/`。  
 讨论记录为可选件，放 `logs/discussion/`（一主题一文件，跨对话追加，  
 宁合勿拆）。除这些固定分类外，模块产生需要归档的历史（调研、goal 等  
-临时文档）时，若地基无合适分类，必须在 `logs/` 下新建子分类文件夹  
-（如 `logs/research/`、`logs/goal/`），按归档规则落盘，不随手丢进  
+临时文档）时，若框架无合适分类，必须在 `logs/` 下新建子分类文件夹（  
+如 `logs/research/`、`logs/goal/`），按归档规则落盘，不随手丢进  
 `logs/` 根。归档文件日期前缀（如 `2026-08-31-<slug>.md`）；新建  
 连字符小写命名，存量不改。
 

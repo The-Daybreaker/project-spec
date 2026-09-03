@@ -1,7 +1,7 @@
 # 通用项目模板
 
 这是一套面向人+Agent协作开发的通用项目模板。模板分为两大部分，框架和spec：
-七件套骨架（冷启动、任务板、异步交流、git 管理）保证任何项目最低
+框架（冷启动、任务板、agent 记忆、异步交流、git 管理）保证任何项目最低
 限度可运转，更加详细的工作流编排由 spec 包声明。
 
 ## 写给用户
@@ -23,7 +23,7 @@
 | ------------ | ------------------------------------------- |
 | `spec/`      | spec 包与构建规则按需从云端拉取（指引见 `spec/AGENTS.md`）    |
 | `context/`   | 由spec驱动的文档存放区，spec生成的文档默认会存放在这个位置。          |
-| `process/`   | runtime：task.md + inbox / pending / reviews |
+| `process/`   | runtime：task.md + memory.md + inbox / pending / reviews |
 | `workspace/` | 开发主工作区，默认包含两个子目录: source + delivery         |
 | `logs/`      | 归档文件夹，存放已经过期的文件                             |
 
