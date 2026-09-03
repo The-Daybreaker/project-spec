@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """lockfile.py - spec 锁文件生成与校验
 
-锁文件是 spec 包的溯源账本（规范见 spec/build/spec-template/lockfile.md）：
+锁文件是 spec 包的溯源账本（规范见 spec/lockfile.md）：
 记录 spec 与每个模块的来源、版本、内容指纹，防止副本漂移。
 
 两种模式：

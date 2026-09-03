@@ -90,7 +90,7 @@ Project-Template/
 │   ├── process/                  #   任务板 + inbox / pending / reviews 三件套
 │   ├── workspace/                #   source（源产物）+ delivery（交付物）
 │   ├── logs/                     #   历史归档
-│   ├── spec/                     #   声明式规范（build/ 构建规则；spec 包按需云端拉取）
+│   ├── spec/                     #   声明式规范（AGENTS.md 机制说明书 + lockfile 工具；spec 包按需拉取）
 │   ├── scripts/                  #   密钥扫描脚本
 │   └── .githooks/                #   pre-push 推送门禁
 ├── init-project/                 # 项目初始化技能

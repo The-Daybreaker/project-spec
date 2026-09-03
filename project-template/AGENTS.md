@@ -19,7 +19,7 @@
 | `process/inbox/`      | 用户的异步输入（人 → agent）                               | 读取 + 处理 + 归档   |
 | `process/pending/`    | agent 的决策请求（agent → 用户）                          | 自由写            |
 | `process/reviews/`    | agent 的验收请求（agent → 用户）                          | 自由写            |
-| `spec/`               | 声明式规范：构建规则（`build/`）+ 已引入的 spec 包与模块（从云端模块库拉取，见下） | spec 机制        |
+| `spec/`               | 声明式规范：spec 包与构建规则按需从云端拉取（指引见 `spec/AGENTS.md`） | spec 机制        |
 | `logs/`               | 固有历史：三件套归档 + 讨论记录 + 模块归档（可选件）                    | 只追加            |
 | `scripts/`            | 机制脚本（密钥扫描 `scan_secrets.py` + 排除名单）                      | agent 维护        |
 | `.githooks/`          | git 钩子（pre-push 安全门禁），初始化时 `core.hooksPath` 指向此处        | agent 维护        |
@@ -29,10 +29,6 @@
 
 - **spec 是模子，context 是模子出的件**——context 零固有件，空 spec 时  
   context 为空，项目以地基形态运转（地基即 spec 缺失的回退）。
-- **spec 从云端拉取**：需要文档体系 / 工作流时，从云端模块库  
-  `github.com/The-Daybreaker/project-spec` 拉取（读其 `registry.json` 选 spec  
-  与模块，复制进 `spec/`，跑 `spec/build/scripts/lockfile.py` 生成锁文件）；  
-  拉取后的 spec 自带 `AGENTS.md`（含拉取与冷启动校验规范）。
 - **process 只放活的**——处理完一律归档进 logs，扫一眼就是全部待办，  
   不用翻历史。
 - **delivery 的 git 策略**：可再生的构建产物不进 git，不可再生的终稿进  
@@ -184,9 +180,10 @@ logs/ 下镜像三子目录（`logs/inbox/`、`logs/pending/`、`logs/reviews/`�
 - **本仓库即模板本体**：单一来源，不建镜像、不建模板副本目录、不建  
   同步机制；仓库按自身规范运转。
 - **模块规范按需读取**：spec 模块自带的 agent 规范是 `MODULE.md`，位于
-  `spec/@<模块 id>/MODULE.md`（spec 从云端模块库拉取例化而来）；当 agent
-  维护某模块产出时，按该模块的 `MODULE.md` 执行，随模块例化、按需加载。
+  `spec/<spec id>/@<模块 id>/MODULE.md`（spec 从云端模块库拉取例化而来）；
+  当 agent 维护某模块产出时，按该模块的 `MODULE.md` 执行，随模块例化、
+  按需加载。
 - **构建规则 vs 使用规则**：使用规则（根 `AGENTS.md`、各 spec 的 `AGENTS.md`、
   各模块的 `MODULE.md`）默认读；构建规则（怎么造 / 改 spec 和模块）默认不读，
-  集中放 `spec/build/`（`build.md` + spec / module 两个模板），造 / 改 spec 或
+  需要时从云端拉取到 `spec/build/`（指引见 `spec/AGENTS.md`），造 / 改 spec 或
   模块时按需读。

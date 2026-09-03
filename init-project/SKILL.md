@@ -16,7 +16,8 @@ version: 0.9.0
 - **七件套骨架**：`AGENTS.md`（协作总纲 + 宪章 6 条）/ `README.md`（使用手册）/
   `context/`（项目上下文）/ `workspace/`（source + delivery）/ `process/`
   （任务板 + 三件套）/ `logs/`（历史）/ `spec/`（声明式规范）。
-- **spec 机制**：构建规则（`spec/build/`）+ spec 包按需从云端模块库拉取
+- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）+ `lockfile.py` /
+  `lockfile.md` 常驻；spec 包与构建规则按需从云端模块库拉取
   （`github.com/The-Daybreaker/project-spec`）；空 spec 时项目以地基形态轻装运转。
 - **密钥钩子**：`scripts/scan_secrets.py`（高危凭据零容忍 + 个人信息复核）+
   `.githooks/pre-push` 推送门禁（初始化时自动 `git config core.hooksPath .githooks`）。
@@ -41,7 +42,8 @@ version: 0.9.0
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
    - **结构**：七件套齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
      `process/` / `logs/` / `spec/`）；密钥钩子就位（`scripts/scan_secrets.py` +
-     `.githooks/pre-push`）；`_trash/` 未随模板复制进来；`spec/build/` 存在。
+     `.githooks/pre-push`）；`_trash/` 未随模板复制进来；`spec/AGENTS.md`、
+     `spec/lockfile.py`、`spec/lockfile.md` 存在。
    - **参数**（若指定了 `--name`）：`package.json` 的 `name` 已替换为项目名，
      `version` 保持模板原值不变（不随初始化改动）。
    - **git**：主仓库 `.git` 存在；`git config core.hooksPath` 输出 `.githooks`；
