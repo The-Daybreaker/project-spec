@@ -49,7 +49,7 @@
 | `source` | `cloud`（云端副本）/ `fork`（fork 自云端）/ `private`（项目私有） |
 | `origin` | 云端 spec / 模块的真实位置（仓库 + 路径，如 `github.com/The-Daybreaker/project-spec/modules/vision`）；`private` 时为 `null` |
 | `version` | 来源版本（云端版本）；`private` 时是自身版本 |
-| `hash` | 内容指纹，用于校验「副本是否被改」（识别 fork / 漂移）；模块顶层 `add.md`（项目内补充，见 `spec/AGENTS.md`）不参与指纹，改它不算漂移 |
+| `hash` | 内容指纹，用于校验「副本是否被改」（识别 fork / 漂移）；模块顶层 `add.md`（项目内补充，见 `spec/AGENTS.md`）不参与指纹，改它不算漂移；`private` 时为 `null`（项目私有模块不参与指纹校验） |
 
 ## 四、生命周期
 
@@ -69,5 +69,6 @@
 
 - **进 git**：锁文件是溯源账本，随 spec 一起版本管理。
 - **维护者**：agent 冷启动时校验（`lockfile.py --verify`）、变更时更新
-  （`lockfile.py` 生成模式）。
+  （`lockfile.py` 生成模式；生成是合并语义——保留既有 fork / private 条目
+  的 source / origin，只重算 hash / version，手工登记的溯源不会被冲掉）。
 - **纪律**：日常干活不碰锁文件；只有「引入 / 移除 / fork / 升级」才更新。
