@@ -34,17 +34,18 @@ spec 包（内置默认 + 外部导入 + 自建；单项目单 spec）
 ```
 
 - **构建规则**：本目录，spec 无关——任何 spec 都照它造。
-- **spec 包**：具体一套工作流（如 software-dev），预置在 `preset/` 下。
+- **spec 包**：具体一套工作流（如 software-dev），从云端模块库拉取例化。
 - **项目补丁**：项目对 spec 的增量修改，靠锁文件的 `source` 字段标记
   （`private` / `fork`），见各 spec 的 `lockfile.md`。
 
-来源是两层的：spec 从云端来（最佳实践 / 预置模板），模块从云端模块库来。
-溯源统一归锁文件，不在 spec / 模块文件里重复记。
+来源是两层的：spec 与模块都从云端模块库来（拉取流程见 §九；首次拉取的
+入口指引在仓库根 `AGENTS.md` 与 `README.md`）。溯源统一归锁文件，不在
+spec / 模块文件里重复记。
 
-## 三、本目录与 preset 的分工
+## 三、spec/ 的布局
 
-`spec/` 下分两块：**`build/` 放模板**（造 spec / 模块的骨架），**`preset/`
-放预置 spec**（现成的、可直接例化使用）。
+模板出厂只有 `build/`（构建规则层）；spec 包按需从云端拉取，例化后与
+`build/` 并存于 `spec/` 根：
 
 ```
 spec/
@@ -52,8 +53,9 @@ spec/
     build.md                 ← 本文件
     spec-template/           ← spec 模板（造新 spec 骨架）
     module-template/         ← module 模板（造新模块骨架）
-  preset/                    ← 预置 spec（现成）
-    software-dev/            ← 软件开发 spec
+    scripts/lockfile.py      ← 锁文件生成与校验
+  （拉取例化后）AGENTS.md / manifest.json / CHANGELOG.md /
+  lockfile.json / @<模块>/   ← spec 包（来源与拉取见 §九）
 ```
 
 模板是「源头」，例化 = 从模板复制出实例，实例自带模板里的东西。
@@ -113,13 +115,15 @@ AGENTS.md」：
   一眼看懂、让 AI 能拓扑排序；`depends_on` 只是 agent 运行某模块时才读的字段，
   不做全局依赖唯一来源。
 
-## 九、预置库结构
+## 九、spec 的来源：云端模块库
 
-`preset/` 放多套预置 spec（如 software-dev），每套内含 `manifest.json` +
-`AGENTS.md` + 预置模块（modules 预置）。新项目初始化时从 `preset/` **选一套**
-例化，展开成项目自己的 `spec/`。模板本体是「库」（摆多套供选），项目是
-「单套」（选一套用）；单项目单 spec，缩放靠入口解决，不需要一个项目挂多套
-spec。
+spec 包的唯一事实源在云端模块库 `github.com/The-Daybreaker/project-spec`
+（README + `registry.json` 目录索引 + `build/` + `specs/` + `modules/`）。
+项目需要 spec 时从云端拉取：读 `registry.json` 选 spec 与模块 → `git clone`
+云端仓库到临时目录 → 把 spec 目录与模块目录复制进项目 `spec/` → 跑
+`lockfile.py`（生成模式）生成锁文件记来源与指纹。拉取交 agent 判断执行，
+不写拉取脚本；拉取与冷启动校验的详细规范随 spec 自带（各 spec 的
+`AGENTS.md`）。单项目单 spec，缩放靠入口解决，不需要一个项目挂多套 spec。
 
 ## 十、版本号规则与 CHANGELOG
 
