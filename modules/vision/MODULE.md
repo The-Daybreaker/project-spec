@@ -1,6 +1,6 @@
 # MODULE.md — 愿景与排期（模块规范）
 
-> **适用范围**：当 agent 负责维护本模块的产出`context/vision.md` 时，加载并遵循本文件。项目级总纲见仓库根 `AGENTS.md`。
+> **适用范围**：当 agent 负责维护本模块的产出——`context/vision.md` 时，加载并遵循本文件。项目级总纲见仓库根 `AGENTS.md`。
 > 
 > 本文件是「愿景与排期」模块自带的 agent 规范，随模块例化。
 

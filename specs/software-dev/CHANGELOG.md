@@ -6,7 +6,6 @@
 ## [0.1.0] - 2026-09-02
 ### Added
 - 初始版本：8 个模块（vision / design / prd / adr / development / test /
-  audit / release）+ 三入口（微调 / 小功能 / 一期）
-### Removed
-- module.json 的 `enable.instantiate` / `disable.keep` 字段（启停归 entries，
-  字段 12 → 10）
+  audit / release）+ 三入口（微调 / 小功能 / 一期）；模块声明采用精简后
+  的 10 字段表（无早期设计的 `enable.instantiate` / `disable.keep`，
+  启停归 entries）
