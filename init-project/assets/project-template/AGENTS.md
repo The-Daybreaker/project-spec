@@ -10,20 +10,20 @@
 
 ## 一、目录地图
 
-| 路径                    | 语义                                               | 权限             |
-| --------------------- | ------------------------------------------------ | -------------- |
-| `README.md`           | 模板使用手册；「给用户的规范」节为用户维护区                           | agent 维护（该节除外） |
-| `context/`            | 项目上下文文档（PRD / ADR / 知识库……）——种类、骨架、有无均由 spec 决定   | 按 spec         |
-| `workspace/source/`   | 源产物；内部结构由 agent 按项目设计                            | 自由写            |
-| `workspace/delivery/` | 交付物（终稿 / 构建产物）                                   | 写入需确认          |
-| `process/task.md`     | 任务板：进行中 / 下一步 / 阻塞                               | 自由写            |
-| `process/memory.md`   | agent 记忆：踩过的坑与被验证过的判断（只存当前有效）                | 自由写            |
-| `process/inbox/`      | 用户的异步输入（人 → agent）                               | 读取 + 处理 + 归档   |
-| `process/pending/`    | agent 的决策请求（agent → 用户）                          | 自由写            |
-| `process/reviews/`    | agent 的验收请求（agent → 用户）                          | 自由写            |
+| 路径                    | 语义                                             | 权限             |
+| --------------------- | ---------------------------------------------- | -------------- |
+| `README.md`           | 模板使用手册；「给用户的规范」节为用户维护区                         | agent 维护（该节除外） |
+| `context/`            | 项目上下文文档（PRD / ADR / 知识库……）——种类、骨架、有无均由 spec 决定 | 按 spec         |
+| `workspace/source/`   | 源产物；内部结构由 agent 按项目设计                          | 自由写            |
+| `workspace/delivery/` | 交付物（终稿 / 构建产物）                                 | 写入需确认          |
+| `process/task.md`     | 任务板：进行中 / 下一步 / 阻塞                             | 自由写            |
+| `process/memory.md`   | agent 记忆：踩过的坑与被验证过的判断（只存当前有效）                  | 自由写            |
+| `process/inbox/`      | 用户的异步输入（人 → agent）                             | 读取 + 处理 + 归档   |
+| `process/pending/`    | agent 的决策请求（agent → 用户）                        | 自由写            |
+| `process/reviews/`    | agent 的验收请求（agent → 用户）                        | 自由写            |
 | `spec/`               | 声明式规范：spec 包与构建规则按需从云端拉取（指引见 `spec/AGENTS.md`） | spec 机制        |
-| `logs/`               | 固有历史：三件套归档 + 讨论记录 + 模块归档（可选件）                    | 只追加            |
-| `_trash/`             | 临时删除区（已进 .gitignore）                             | 自由写            |
+| `logs/`               | 固有历史：三件套归档 + 讨论记录 + 模块归档（可选件）                  | 只追加            |
+| `_trash/`             | 临时删除区（已进 .gitignore）                           | 自由写            |
 
 未创建的目录视为空。关键分界：
 
@@ -194,3 +194,7 @@ memory 条目失效后归档 `logs/memory/`。
   各模块的 `MODULE.md`）默认读；构建规则（怎么造 / 改 spec 和模块）默认不读，
   需要时从云端拉取到 `spec/build/`（指引见 `spec/AGENTS.md`），造 / 改 spec 或
   模块时按需读。
+
+## 七、项目自己的规定
+
+这个章节存放每个项目自己定的规范，可根据需要填入。
