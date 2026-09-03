@@ -5,6 +5,11 @@
       "id": "software-dev",
       "name": "软件开发",
       "path": "specs/software-dev"
+    },
+    {
+      "id": "skills-dev",
+      "name": "skill 开发",
+      "path": "specs/skills-dev"
     }
   ],
   "modules": [

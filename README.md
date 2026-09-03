@@ -45,6 +45,7 @@ spec 包结构、manifest / module.json 字段表、命名、状态灯、空值�
 ### specs
 
 - **software-dev**（软件开发）—— `specs/software-dev/`
+- **skills-dev**（skill 开发）—— `specs/skills-dev/`
 
 ### modules
 
