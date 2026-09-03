@@ -15,8 +15,8 @@
 - `process/memory.md`：agent 记忆固有件（踩过的坑与被验证过的判断，
   冷启动必读；只存当前有效条目，失效归档 `logs/memory/`）。
 - 云端模块库接入：锁文件 `origin` 记真实指向
-  （`github.com/The-Daybreaker/project-spec`）；preset 锁文件落真实账
-  （spec + 8 模块的 origin / version / hash）。
+  （`github.com/The-Daybreaker/project-spec`）；拉取 spec 包时落真实账
+  （spec 与各模块的 origin / version / hash）。
 
 ### Changed
 
@@ -29,13 +29,26 @@
 - module.json 的 `enable.instantiate` / `disable.keep` 字段（字段 12 → 10；
   启停运行态由 manifest 的 entries 表达，例化语义归 MODULE.md）。
 - 预置 spec `spec/preset/software-dev`（8 模块）与内置构建规则
-  `spec/build/`：地基走查确认模板不依赖 spec 即可以地基形态运转；两者与
+  `spec/build/`：框架走查确认模板不依赖 spec 即可以框架形态运转；两者与
   云端模块库内容一致，改为唯一事实源在云端、按需拉取——出厂 `spec/` 只留
   机制三件（`AGENTS.md` 机制说明书 + `lockfile.py` 工具 + `lockfile.md`
   字段规范），spec 包落地为自己的子目录 `spec/<id>/`。
 - 密钥门禁（`scripts/scan_secrets.py` + `.githooks/pre-push`）：模板不再
   携带，密钥防护的机械防线只留 .gitignore 的密钥文件名模式；要不要
   额外的门禁与钩子由使用者自行决定。
+
+### Fixed
+
+- `lockfile.py`：指纹计算归一化行尾（CRLF / LF 不再造成跨平台漂移误报）；
+  `generate` 改合并语义——保留既有 fork / private 条目的 source / origin，
+  private 模块按规范不参与指纹校验（hash 为 null）；module.json 缺
+  version 时报错（与字段表「必须填」一致）；`verify` 增加「模块目录存在
+  但 manifest 未声明」检查。
+- `init_project.py`：目标目录非空时改为警告并继续（跳过已有文件、不覆
+  盖），与 SKILL.md 对齐；目标为已存在文件时友好报错；git 缺失或失败
+  时以非零退出码反映部分失败。
+- 模板 `.gitignore` 补 `__pycache__/` / `*.pyc`；AGENTS.md 两处用户维护
+  区指针同步为「写给用户」；README 修正 `AGENTS.md` 大小写。
 
 ## [0.8.0] - 2026-09-02
 

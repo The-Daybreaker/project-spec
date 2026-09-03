@@ -1,3 +1,7 @@
+# Python 字节码缓存不入库（跑 spec/lockfile.py 会产生）
+__pycache__/
+*.pyc
+
 # 宪章红线落地：删除先进 _trash/（临时删除区，不入版本库）
 _trash/
 
