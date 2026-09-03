@@ -1,0 +1,14 @@
+# Python 字节码缓存不入库
+__pycache__/
+
+# 临时删除区（对话内删除先进这里，任务结束整体进回收站）
+_trash/
+
+# 密钥不入库（常见密钥文件名模式，机械防线，宁可误伤不可漏收）
+.env
+*.env
+*.key
+*.pem
+secrets/
+credentials*
+*_secret*
