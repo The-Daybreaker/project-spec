@@ -19,8 +19,8 @@
 - **开新项目不再从零开始**：模板自带协作总纲、任务板、人机交流规范和
   历史归档，Agent 一条指令就能搭好骨架并完成首次提交。
 - **任何 Agent 接手都能读懂项目**：项目根目录的 `AGENTS.md` 写清了冷启动
-  链路；agent 的上下文是易失内存，任务板与三件套就是磁盘上的状态——会话
-  中断、换新对话都不丢状态。
+  链路；agent 的上下文是易失内存，任务板、agent 记忆与三件套就是磁盘上
+  的状态——会话中断、换新对话都不丢状态。
 - **按需选择spec**：需要文档体系 / 工作流时，从云端模块库
   拉取 spec 包（`github.com/The-Daybreaker/project-spec`，如 software-dev：
   愿景 / 设计 / 需求 / 决策 / 开发 / 测试 / 审计 / 发布 8 模块）；没有 spec，
@@ -62,7 +62,7 @@ python init-project/scripts/init_project.py <目标目录> --name my-app --no-gi
 ```
 
 也可以直接把 `init-project/assets/project-template/` 下的模板复制到新项目
-目录（不含 `_trash/`、`.git/`），首次对话让 agent 冷启动。
+目录（不含 `_trash/`、`.git/`、`__pycache__/`），首次对话让 agent 冷启动。
 
 ### 初始化之后
 
@@ -87,7 +87,7 @@ Project-Template/
 │       ├── package.json          #   模板版本
 │       ├── CHANGELOG.md          #   模板变更记录
 │       ├── context/              #   项目上下文（种类由 spec 决定，零固有件）
-│       ├── process/              #   任务板 + inbox / pending / reviews 三件套
+│       ├── process/              #   任务板 + agent 记忆 + inbox / pending / reviews 三件套
 │       ├── workspace/            #   source（源产物）+ delivery（交付物）
 │       ├── logs/                 #   历史归档
 │       └── spec/                 #   声明式规范（AGENTS.md 机制说明书 + lockfile 工具；spec 包按需拉取）

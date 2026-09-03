@@ -5,3 +5,12 @@ __pycache__/
 _trash/
 
 *.lnk
+
+# 密钥不入库（常见密钥文件名模式，机械防线，宁可误伤不可漏收）
+.env
+*.env
+*.key
+*.pem
+secrets/
+credentials*
+*_secret*

@@ -44,6 +44,13 @@
   本仓不再携带；密钥防护的机械防线只留 .gitignore 的密钥文件名模式，
   要不要额外门禁由使用者自行决定。
 
+### Fixed
+
+- 审计修补：`lockfile.py` 指纹行尾归一化 + 生成模式保留 fork / private
+  溯源；`init_project.py` 目标目录非空改为警告并继续（对齐 SKILL）+
+  健壮性修正；模板 `.gitignore` 补 `__pycache__`；AGENTS.md「写给用户」
+  节名指针同步；根 README 补 agent 记忆；仓根补 `.gitattributes`。
+
 ## [0.8.0] - 2026-09-02
 
 断代版本：模板整体重设计，目录结构全新（旧版项目无法原地升级）。
