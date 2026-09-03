@@ -5,6 +5,22 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/spec/v2.0.0.html)。
 
+## [0.9.0] - 2026-09-03
+
+版本号对齐 delivery 发布序列（0.1.0 → 0.9.0）：模板本体是 delivery 的核心
+资产，此后版本号以本体 `package.json` 为单一事实源，delivery 跟随演进。
+
+### Added
+
+- 云端模块库接入：锁文件 `origin` 记真实指向
+  （`github.com/The-Daybreaker/project-spec`）；preset 锁文件落真实账
+  （spec + 8 模块的 origin / version / hash）。
+
+### Removed
+
+- module.json 的 `enable.instantiate` / `disable.keep` 字段（字段 12 → 10；
+  启停运行态由 manifest 的 entries 表达，例化语义归 MODULE.md）。
+
 ## [0.1.0] - 2026-09-02
 
 ### Added

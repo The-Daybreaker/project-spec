@@ -101,8 +101,8 @@ Project-Template/
 
 ## 版本与升级
 
-- 本仓库发布版本 **v0.9.0**（版本号 0.x 顺延，跟随模板本体
-  `package.json` 版本 0.1.0）。
+- 本仓库发布版本 **v0.9.0**，与模板本体一致——版本号单一事实源是
+  `project-template/package.json`。
 - 变更记录：本仓库见 `CHANGELOG.md`；模板本体见
   `project-template/CHANGELOG.md`。
 - 老项目注意：模板整体重设计，旧版项目无法原地升级；老项目继续按旧版运转

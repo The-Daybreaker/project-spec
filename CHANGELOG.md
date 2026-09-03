@@ -3,7 +3,7 @@
 发布仓库的版本历史（三产物：project-template / init-project / agent-rules）。
 模板本体的变更记录另见 `project-template/CHANGELOG.md`。
 
-版本号从 0.1.0 起顺延递增，本版为 0.9.0。
+版本号与模板本体一致（单一事实源：`project-template/package.json`），当前 0.9.0。
 
 ## [0.9.0] - 2026-09-03
 
