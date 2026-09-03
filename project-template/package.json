@@ -1,6 +1,6 @@
 {
   "name": "project-template",
   "version": "0.9.0",
-  "description": "通用项目模板 v3 —— 以 agent 为第一读者的项目模板",
+  "description": "通用项目模板 —— 以 agent 为第一读者的项目模板",
   "private": true
 }
