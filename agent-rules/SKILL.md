@@ -7,7 +7,7 @@ version: 0.9.0
 
 # agent-rules — Agent 通用行为规范（精简版）
 
-> 来源：通用项目模板 `project-template/AGENTS.md` 的宪章（模板版本 0.9.0）。
+> 来源：通用项目模板 `init-project/assets/project-template/AGENTS.md` 的宪章（模板版本 0.9.0）。
 > 本 skill 是「项目外对话」的全局基线：仅当对话不在任何项目内、且非纯聊天时加载。
 
 ## 触发与优先级
@@ -27,4 +27,4 @@ version: 0.9.0
 
 ## 版本
 
-- `version: 0.9.0`；源自模板宪章（模板版本 0.1.0），模板宪章变更时同步本 skill。
+- `version: 0.9.0`；源自模板宪章（模板版本 0.9.0），模板宪章变更时同步本 skill。

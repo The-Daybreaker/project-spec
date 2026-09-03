@@ -69,7 +69,7 @@ def main() -> int:
     args = parser.parse_args()
 
     if not TEMPLATE_DIR.is_dir():
-        print(f"错误：模板镜像缺失：{TEMPLATE_DIR}")
+        print(f"错误：模板目录缺失：{TEMPLATE_DIR}")
         return 1
 
     target = Path(args.target).resolve()
