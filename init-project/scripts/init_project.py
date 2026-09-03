@@ -6,7 +6,6 @@
   1) 复制模板（排除 _trash、.git 等临时内容）
   2) 可选替换 package.json 的项目名
   3) git init + 首次提交（默认分支 main）
-  4) 配置推送前密钥门禁（git config core.hooksPath .githooks）
 
 Stdlib-only，Python 3.9+。
 """
@@ -46,13 +45,12 @@ def _set_project_name(target: Path, name: str) -> None:
 
 
 def _git_init(target: Path, branch: str) -> bool:
-    """git init + 暂存 + hooksPath + 首次提交。返回是否完成提交。"""
+    """git init + 暂存 + 首次提交。返回是否完成提交。"""
     r = _run(target, "git", "init", "-b", branch)
     if r.returncode != 0:
         print("警告：git init 失败，跳过 git 初始化")
         return False
     _run(target, "git", "add", "-A")
-    _run(target, "git", "config", "core.hooksPath", ".githooks")
     r = _run(target, "git", "commit", "-m", "chore: init from project template")
     if r.returncode != 0:
         print("警告：首次提交未完成（可能未配置 git user.name/email），已暂存，请手动提交：")
@@ -88,7 +86,6 @@ def main() -> int:
         committed = _git_init(target, args.branch)
 
     print(f"\n初始化完成：{target}")
-    print("  密钥门禁：git config core.hooksPath .githooks 已配置")
     if committed:
         print("  首次提交：已完成")
     return 0

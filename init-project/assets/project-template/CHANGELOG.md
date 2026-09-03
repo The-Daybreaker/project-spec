@@ -25,12 +25,15 @@
   云端模块库内容一致，改为唯一事实源在云端、按需拉取——出厂 `spec/` 只留
   机制三件（`AGENTS.md` 机制说明书 + `lockfile.py` 工具 + `lockfile.md`
   字段规范），spec 包落地为自己的子目录 `spec/<id>/`。
+- 密钥门禁（`scripts/scan_secrets.py` + `.githooks/pre-push`）：模板不再
+  携带，密钥防护的机械防线只留 .gitignore 的密钥文件名模式；要不要
+  额外的门禁与钩子由使用者自行决定。
 
-## [0.1.0] - 2026-09-02
+## [0.8.0] - 2026-09-02
 
 ### Added
 
-- v3 本体首次成型：以 agent 为第一读者的项目模板。
+- 重构后的模板地基首次成型：以 agent 为第一读者的项目模板。
 - spec 机制：构建规则（spec/build/）+ 预置 spec（spec/preset/software-dev，含 8 模块）。
 - 四步链设计（场景理顺 → 拆模块 → 组装 spec → 抽象 L0）完整落地。
 - 宪章 6 条、协作总纲（AGENTS.md）、模板使用手册（README.md）。

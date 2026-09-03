@@ -1,13 +1,13 @@
 # CHANGELOG
 
 发布仓库的版本历史（三产物：project-template / init-project / agent-rules）。
-模板本体的变更记录另见 `project-template/CHANGELOG.md`。
+模板本体只在 `init-project/assets/project-template/` 存一份。
 
-版本号与模板本体一致（单一事实源：`project-template/package.json`），当前 0.9.0。
+版本号与模板本体一致（单一事实源：`init-project/assets/project-template/package.json`），当前 0.9.0。
 
 ## [0.9.0] - 2026-09-03
 
-云端模块库接入 + spec 模块字段精简。
+云端模块库接入 + spec 模块字段精简 + 仓库结构简化。
 
 ### Added
 
@@ -18,10 +18,21 @@
 - spec 的 `AGENTS.md` 锁文件节：引入 spec 的拉取流程 + 冷启动 hash 校验
   （拉取交 agent，不写拉取脚本）。
 
+### Changed
+
+- 仓库结构简化：模板本体从根目录 `project-template/` 移入
+  `init-project/assets/project-template/`，全仓只存一份（单一事实源，
+  不再是「根目录真身 + assets 镜像」两层复制）；根目录只剩两个 skill +
+  README + CHANGELOG。
+
 ### Removed
 
 - module.json 的 `enable.instantiate` / `disable.keep` 字段（启停运行态由
   `manifest.json` 的 entries 表达，字段 12 → 10）。
+
+- 密钥门禁（`scripts/scan_secrets.py` + `.githooks/pre-push`）：模板与
+  本仓不再携带；密钥防护的机械防线只留 .gitignore 的密钥文件名模式，
+  要不要额外门禁由使用者自行决定。
 
 ## [0.8.0] - 2026-09-02
 

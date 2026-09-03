@@ -12,7 +12,7 @@ context 是模子出的件。
 仓库附带两个 AI 助手技能（skill）：
 
 - **init-project**：一键把任意空文件夹初始化成符合模板规范的新项目（复制
-  骨架、替换占位符、建 git、配置密钥门禁）；
+  骨架、替换占位符、建 git）；
 - **agent-rules**：AI 助手的通用行为底线（仅在对话不属于任何项目、且不是
   纯聊天时生效）。
 
@@ -28,8 +28,8 @@ context 是模子出的件。
   愿景 / 设计 / 需求 / 决策 / 开发 / 测试 / 审计 / 发布 8 模块）；没有 spec，
   项目以地基形态轻装运转。
 - **该确认的确认、该自动的自动**：不可逆操作（发布、永久删除、写交付物）
-  agent 会先找你确认；重复性检查交给脚本——推送前自动扫描密钥与个人
-  信息，高危凭据零容忍。
+  agent 会先找你确认；`.gitignore` 预置常见密钥文件名模式，宁可误伤不
+  可漏收。
 - **一套规范装给所有助手**：两个技能可以复制到多个 AI 助手的用户级技能
   目录，让所有助手遵循同一套规则。
 
@@ -44,7 +44,7 @@ context 是模子出的件。
 > 「用 init-project 技能把 <目标目录> 初始化为一个新项目」
 
 它会按清单执行：确认参数与方案 → 复制模板骨架 → 替换项目名占位符 →
-初始化 git 并完成首次提交 → 配置推送前密钥门禁 → 回读校验。初始化会
+初始化 git 并完成首次提交 → 回读校验。初始化会
 创建 git 仓库、批量落盘，属于高风险操作，所以它会先和你确认再动手。
 
 `agent-rules/` 是 AI 助手的通用行为规范（精简版），建议也装到每个助手：
@@ -56,23 +56,23 @@ context 是模子出的件。
 不想用技能也可以手动来：
 
 ```bash
-# 一条命令：复制模板 + 替换占位符 + 建 git + 首次提交 + 密钥门禁
+# 一条命令：复制模板 + 替换占位符 + 建 git + 首次提交
 python init-project/scripts/init_project.py <目标目录> --name my-app
 
 # 只复制文件，不建 git
 python init-project/scripts/init_project.py <目标目录> --name my-app --no-git
 ```
 
-也可以直接把 `project-template/` 下的七件套复制到新项目目录（不含
-`_trash/`、`.git/`），首次对话让 agent 冷启动。
+也可以直接把 `init-project/assets/project-template/` 下的七件套复制到新项目
+目录（不含 `_trash/`、`.git/`），首次对话让 agent 冷启动。
 
 ### 初始化之后
 
 1. 首次对话让 agent 冷启动（它会读 `AGENTS.md` 恢复上下文），对齐项目
    背景与目标；
 2. 需要文档体系 / 工作流时，从云端模块库拉取 spec 包或自建
-   （`github.com/The-Daybreaker/project-spec`；构建规则见
-   `project-template/spec/build/`）；没有 spec，项目照常运转；
+   （`github.com/The-Daybreaker/project-spec`，构建规则同在云端）；没有 spec，
+   项目照常运转；
 3. 确认后配置远端仓库并推送（agent 不擅自推送）。
 
 ## 目录结构（简要）
@@ -81,22 +81,19 @@ python init-project/scripts/init_project.py <目标目录> --name my-app --no-gi
 Project-Template/
 ├── README.md                     # 本文件
 ├── CHANGELOG.md                  # 发布版本变更记录
-├── project-template/             # 模板本体
-│   ├── AGENTS.md                 #   AI 助手接手入口（协作总纲 + 宪章 6 条）
-│   ├── README.md                 #   使用手册（含给用户的 13 条协作规范）
-│   ├── package.json              #   模板版本
-│   ├── CHANGELOG.md              #   模板变更记录
-│   ├── context/                  #   项目上下文（种类由 spec 决定，零固有件）
-│   ├── process/                  #   任务板 + inbox / pending / reviews 三件套
-│   ├── workspace/                #   source（源产物）+ delivery（交付物）
-│   ├── logs/                     #   历史归档
-│   ├── spec/                     #   声明式规范（AGENTS.md 机制说明书 + lockfile 工具；spec 包按需拉取）
-│   ├── scripts/                  #   密钥扫描脚本
-│   └── .githooks/                #   pre-push 推送门禁
 ├── init-project/                 # 项目初始化技能
 │   ├── SKILL.md
 │   ├── scripts/init_project.py
-│   └── assets/project-template/  # 内嵌模板镜像（构建时从本体同步）
+│   └── assets/project-template/  # 模板本体（唯一一份）
+│       ├── AGENTS.md             #   AI 助手接手入口（协作总纲 + 宪章 6 条）
+│       ├── README.md             #   使用手册（含给用户的 13 条协作规范）
+│       ├── package.json          #   模板版本
+│       ├── CHANGELOG.md          #   模板变更记录
+│       ├── context/              #   项目上下文（种类由 spec 决定，零固有件）
+│       ├── process/              #   任务板 + inbox / pending / reviews 三件套
+│       ├── workspace/            #   source（源产物）+ delivery（交付物）
+│       ├── logs/                 #   历史归档
+│       └── spec/                 #   声明式规范（AGENTS.md 机制说明书 + lockfile 工具；spec 包按需拉取）
 └── agent-rules/                  # AI 助手通用行为规范技能
     └── SKILL.md
 ```
@@ -104,16 +101,15 @@ Project-Template/
 ## 版本与升级
 
 - 本仓库发布版本 **v0.9.0**，与模板本体一致——版本号单一事实源是
-  `project-template/package.json`。
+  `init-project/assets/project-template/package.json`。
 - 变更记录：本仓库见 `CHANGELOG.md`；模板本体见
-  `project-template/CHANGELOG.md`。
+  `init-project/assets/project-template/CHANGELOG.md`。
 - 老项目注意：模板整体重设计，旧版项目无法原地升级；老项目继续按旧版运转
   即可，新项目用本版。
 
 ## 给维护者的几条约定
 
-- **单一事实源**：本仓库是构建产物——改动一律在开发仓库进行，运行其
-  `build_delivery.py` 重建本仓库，不直接手改这里的内容。
-- **发布前安全扫描**：推送前运行
-  `python project-template/scripts/scan_secrets.py --check`，高危凭据零
-  命中、个人信息零残留再发版。
+- **模板唯一落点**：模板本体只在 `init-project/assets/project-template/`
+  存一份——改模板就是改这份，不另建镜像、不建同步机制。
+- **发布前安全扫描**：推送前自行做密钥与个人信息检查（方法自选），
+  高危凭据零命中、个人信息零残留再发版。

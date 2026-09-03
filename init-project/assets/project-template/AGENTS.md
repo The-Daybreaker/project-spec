@@ -21,8 +21,6 @@
 | `process/reviews/`    | agent 的验收请求（agent → 用户）                          | 自由写            |
 | `spec/`               | 声明式规范：spec 包与构建规则按需从云端拉取（指引见 `spec/AGENTS.md`） | spec 机制        |
 | `logs/`               | 固有历史：三件套归档 + 讨论记录 + 模块归档（可选件）                    | 只追加            |
-| `scripts/`            | 机制脚本（密钥扫描 `scan_secrets.py` + 排除名单）                      | agent 维护        |
-| `.githooks/`          | git 钩子（pre-push 安全门禁），初始化时 `core.hooksPath` 指向此处        | agent 维护        |
 | `_trash/`             | 临时删除区（已进 .gitignore）                             | 自由写            |
 
 未创建的目录视为空。关键分界：

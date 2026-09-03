@@ -11,9 +11,3 @@ _trash/
 secrets/
 credentials*
 *_secret*
-
-# 密钥扫描脚本自身不是密钥（名字含 secret 被上一条 *_secret* 误伤），显式放行
-!scripts/scan_secrets.py
-
-# 排除名单会写本机用户名等个人信息，绝不入库
-scripts/scan_secrets.ignore

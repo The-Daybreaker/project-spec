@@ -1,6 +1,6 @@
 ---
 name: init-project
-description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（七件套 + spec 机制 + 密钥钩子），替换项目占位符，初始化 git 并完成首次提交、配置推送前密钥门禁。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
+description: 根据通用项目模板初始化指定项目文件夹：复制完整模板骨架（七件套 + spec 机制），替换项目占位符，初始化 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
 agent_created: true
 version: 0.9.0
 ---
@@ -19,8 +19,6 @@ version: 0.9.0
 - **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）+ `lockfile.py` /
   `lockfile.md` 常驻；spec 包与构建规则按需从云端模块库拉取
   （`github.com/The-Daybreaker/project-spec`）；空 spec 时项目以地基形态轻装运转。
-- **密钥钩子**：`scripts/scan_secrets.py`（高危凭据零容忍 + 个人信息复核）+
-  `.githooks/pre-push` 推送门禁（初始化时自动 `git config core.hooksPath .githooks`）。
 
 ## 前置确认（必须）
 
@@ -37,20 +35,19 @@ version: 0.9.0
 1. **运行脚本**（确定性的复制与初始化）：
    `python <skill>/scripts/init_project.py <目标目录> --name <项目名> [--branch main] [--no-git]`
    - 脚本复制模板（排除 `_trash/`、`.git/`）、替换 `package.json` 项目名、
-     `git init` + 首次提交、配置 `core.hooksPath .githooks`；
+     `git init` + 首次提交；
      `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
    - **结构**：七件套齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
-     `process/` / `logs/` / `spec/`）；密钥钩子就位（`scripts/scan_secrets.py` +
-     `.githooks/pre-push`）；`_trash/` 未随模板复制进来；`spec/AGENTS.md`、
-     `spec/lockfile.py`、`spec/lockfile.md` 存在。
+     `process/` / `logs/` / `spec/`）；`_trash/` 未随模板复制进来；
+     `spec/AGENTS.md`、`spec/lockfile.py`、`spec/lockfile.md` 存在。
    - **参数**（若指定了 `--name`）：`package.json` 的 `name` 已替换为项目名，
      `version` 保持模板原值不变（不随初始化改动）。
-   - **git**：主仓库 `.git` 存在；`git config core.hooksPath` 输出 `.githooks`；
-     `git status` 干净；首次提交信息为 `chore: init from project template`。
+   - **git**：主仓库 `.git` 存在；`git status` 干净；首次提交信息为
+     `chore: init from project template`。
    - **常见问题**：首次提交失败多半是未配置 `git user.name` / `user.email`，让
-     用户配置后手动提交；`--no-git` 模式不含 git 与 hooksPath 配置。
-3. **收尾汇报**：向用户汇报初始化位置、git 仓库、密钥门禁已启用，以及下一步建议
+     用户配置后手动提交；`--no-git` 模式不建 git。
+3. **收尾汇报**：向用户汇报初始化位置、git 仓库，以及下一步建议
    （首次对话让 agent 冷启动对齐项目背景与目标；需要文档体系/工作流时引入 spec 包；
    配置远端后推送）。
 

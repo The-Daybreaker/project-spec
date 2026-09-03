@@ -46,10 +46,6 @@
 3. 需要文档体系 / 工作流时，按 `spec/AGENTS.md` 的指引从云端模块库拉取
    spec 包（如 software-dev：8 模块）与构建规则；
    没有 spec，项目照常运转。
-4. （可选）启用推送前密钥门禁：`git config core.hooksPath .githooks`，
-   之后每次 push 自动扫描密钥与个人信息（`scripts/scan_secrets.py`）；
-   正常出现的本机标识按需加进 `scripts/scan_secrets.ignore` 排除
-   （该文件已进 .gitignore，内容不会提交）。
 
 ## 目录速览
 
