@@ -32,7 +32,7 @@ spec/<spec-id>/
   CHANGELOG.md       ← 版本变更日志（跨版本迁移看它）
   lockfile.json      ← 锁文件账本（拉取时由 lockfile.py 生成）
   @<模块 id>/        ← 模块目录，每个内含 MODULE.md / module.json /
-                       README.md / CHANGELOG.md / assets
+                       README.md / CHANGELOG.md / assets / add.md（按需）
 ```
 
 ### manifest.json 字段
@@ -61,7 +61,7 @@ spec/<spec-id>/
 | `description` | string | 一句话职责（看板 / 清单展示） | 必须填 |
 | `input` | string[] | 输入来源（组装画依赖线 / 看板展示） | 视为 `[]` |
 | `output` | string[] | 产出物（下游认领的契约） | 视为 `[]` |
-| `depends_on` | string[] | 依赖的模块 id | 视为 `[]`（无依赖） |
+| `depends_on` | string[] | 强依赖的模块 id（仅必要才写，默认空） | 视为 `[]`（无强依赖） |
 | `workspace` | object | 键 = 产物名，值 = 落点路径 | 视为 `{}` |
 | `private` | bool | `true` = 项目私有外挂模块 | 视为 `false` |
 | `self_implemented` | bool | `true` = 占空自实现，项目自填 | 视为 `false` |
@@ -72,8 +72,10 @@ spec/<spec-id>/
   version / depends_on / workspace；清单脚本读 description / input /
   output）。脚本不消费、纯给人 / agent 读的语义（适用与边界、依赖哪个产出、
   运行过程、产物内容），写进 `MODULE.md` 或 `README.md`，不进 json。
-- **依赖只记模块 id**：`depends_on` 只列「依赖哪些模块」；「依赖它的哪个
-  产出」是语义，写在 `MODULE.md`。
+- **依赖只记强依赖**：`depends_on` 只写「不依赖对方模块就无法运转」的依赖
+  （如 release → audit），默认为空；模块是独立能力，不感知其他模块，内部
+  描述如非必要不提其他模块。谁依赖谁、执行顺序、检查点等编排语义，由各
+  spec 的 `AGENTS.md` 依赖全景图表达。
 - **来源标注归锁文件**：模块是「云端例化副本」还是「项目私有」，源头与
   版本不进 `module.json`，归锁文件（见第四节）。
 
@@ -109,6 +111,12 @@ spec/<spec-id>/
   是有效信息。
 - **不适用 → 删字段，不写 `null`**：字段对本模块无意义时直接删，不占位。
 - **适用但值暂缺 → 留 `null`** 显式标注（如版本约束未定时）。
+
+### 模块本地补充：add.md
+
+模块目录可按需带一个顶层 `add.md`：记这个项目里对模块的补充信息——项目
+特有的约定、参数、踩坑备注等。它是例化后项目自己的增补：云端模块不带它，
+不参与锁文件指纹（改它不算漂移）。
 
 ## 四、锁文件与冷启动校验
 

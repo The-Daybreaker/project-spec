@@ -16,7 +16,8 @@
 
 指纹语义（与 lockfile.md 一致）：
   - spec.hash：spec 声明层（manifest.json + AGENTS.md + CHANGELOG.md）的指纹；
-  - modules.<id>.hash：@模块 目录全部文件的指纹；
+  - modules.<id>.hash：@模块 目录全部文件的指纹（顶层 add.md 除外——
+                     项目内补充，改它不算漂移）；
   - lockfile.json / lockfile.md 自身不参与指纹（它们是账本，不是被溯源内容）。
 
 Stdlib-only，Python 3.9+。
@@ -47,11 +48,16 @@ def _hash_files(files) -> str:
 
 
 def _hash_dir(d: Path) -> str:
-    """对目录下全部文件计算 sha256 指纹（相对路径 + 内容，排序稳定）。"""
+    """对目录下全部文件计算 sha256 指纹（相对路径 + 内容，排序稳定）。
+
+    模块顶层 add.md（项目内补充，见 spec/AGENTS.md）不参与指纹。
+    """
     h = hashlib.sha256()
     for f in sorted(d.rglob("*")):
         if f.is_file():
             rel = f.relative_to(d).as_posix()
+            if rel == "add.md":
+                continue
             h.update(rel.encode("utf-8"))
             h.update(b"\0")
             h.update(f.read_bytes())
