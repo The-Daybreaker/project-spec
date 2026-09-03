@@ -24,8 +24,7 @@ context/adr/
 1. 决策及时记录：在对话中确定一个重要决策后，马上写进 decisions.md 顶部。
 2. 过程归讨论记录：选路的对比过程（比了哪些路、当时怎么想）写进
    logs/discussion，不写进 decisions.md。
-3. 取代：决策被推翻时，从 decisions.md 整段移出，记入 history.md 顶部，
-   加一行「何时被何取代」；旧文不涂改。
+3. 取代：每次写入时，回读全文，发现决策重复或被推翻时，从 decisions.md 整段移出，记入 history.md 顶部，加一行「何时被何取代」；旧文不涂改。
 
 ## 三、规范
 

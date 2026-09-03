@@ -2,7 +2,7 @@
   "id": "release",
   "name": "收口",
   "version": "0.1.0",
-  "description": "一期完成的收口，做法项目自定",
+  "description": "一期完成后的收口，做法项目自定",
 
   "input": [
     "审计放行的产物"
