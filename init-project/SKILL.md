@@ -27,11 +27,6 @@ version: 0.9.0
 - **项目外 + 非纯聊天** → 走用途 2，照 `assets/project-template/AGENTS.md`
   的宪章办。
 
-> **为什么指向而不复制**：宪章 6 条的**唯一事实源**是模板本体
-> `assets/project-template/AGENTS.md`。此前另有一个 `agent-rules` skill 复制
-> 了这 6 条，两处副本必然漂移；现已删除该 skill，改由本 skill 指向那份唯一
-> 事实源，彻底消除漂移。
-
 ## 定位
 
 > 以下「定位 / 前置确认 / 执行流程 / 执行红线」四节是**用途 1（项目初始化）**的流程。
