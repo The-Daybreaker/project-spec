@@ -120,12 +120,14 @@ spec/<spec-id>/
 
 ## 四、锁文件与冷启动校验
 
-锁文件（`spec/<id>/lockfile.json`）是 spec 包的溯源账本：记录 spec 和每个
-模块从云端哪个版本例化来 + 内容指纹（hash），防止副本漂移。字段定义和完整
-生命周期见同目录 `lockfile.md`（低频才读，只讲字段）。
+锁文件（`spec/<id>/lockfile.json`）是 spec 包的溯源账本：记录每个模块从云端
+哪个版本例化来 + 内容指纹（hash），防止副本漂移；spec 本身只留血缘备注
+（origin + version），不做漂移锁。字段定义和完整生命周期见同目录
+`lockfile.md`（低频才读，只讲字段）。
 
 每次冷启动（新会话恢复上下文）时，跑
-`python spec/lockfile.py spec/<id> --verify` 比对本地内容指纹与锁文件记录：
+`python spec/lockfile.py spec/<id> --verify` 比对本地模块内容指纹与锁文件
+记录（hash 为 null 的 private / self_implemented 模块跳过，spec 不参与校验）：
 
 - 一致 → 无漂移，正常干活；
 - 不一致 → 有未登记的 fork / 改动，停下来提示用户，不要擅自继续。
