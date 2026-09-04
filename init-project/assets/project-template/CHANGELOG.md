@@ -27,7 +27,7 @@
 ### Removed
 
 - module.json 的 `enable.instantiate` / `disable.keep` 字段（字段 12 → 10；
-  启停运行态由 manifest 的 entries 表达，例化语义归 MODULE.md）。
+  启停运行态由 manifest 的 entries 表达，实例化语义归 MODULE.md）。
 - 预置 spec `spec/preset/software-dev`（8 模块）与内置构建规则
   `spec/build/`：框架走查确认模板不依赖 spec 即可以框架形态运转；两者与
   云端模块库内容一致，改为唯一事实源在云端、按需拉取——出厂 `spec/` 只留

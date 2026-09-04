@@ -1,6 +1,6 @@
 ---
 name: init-project
-description: 根据通用项目模板初始化指定项目文件夹：复制完整模板框架（含 agent 记忆与 spec 机制），替换项目占位符，初始化 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹、套用项目模板时使用。
+description: 根据通用项目模板初始化指定项目文件夹：复制完整模板框架（含 agent 记忆与 spec 机制），替换项目占位符，初始化 git 并完成首次提交。当用户要求新建项目、初始化项目仓库/文件夹，且意图套用本通用项目模板时使用。
 agent_created: true
 version: 0.9.0
 ---
@@ -32,7 +32,7 @@ version: 0.9.0
 
 1. **运行脚本**（确定性的复制与初始化）：
    `python <skill>/scripts/init_project.py <目标目录> --name <项目名> [--branch main] [--no-git]`
-   - 脚本复制模板（排除 `_trash/`、`.git/`）、替换 `package.json` 项目名、
+   - 脚本复制模板（排除 `_trash/`、`.git/`、`__pycache__/`）、替换 `package.json` 项目名、
      `git init` + 首次提交；
      `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：

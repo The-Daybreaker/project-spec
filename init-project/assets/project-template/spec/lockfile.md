@@ -1,8 +1,9 @@
 # lockfile — 锁文件规范
 
 > spec 包的溯源账本：记录每个模块的来源、版本、内容指纹，防止漂移；spec 本身
-> 只留血缘备注（origin + version），不做漂移锁。生成 / 校验工具是同目录的
-> `lockfile.py`：拉取后跑生成模式落账，冷启动跑校验模式比对。
+> 只留血缘备注（source + origin + version），不做漂移锁。生成 / 校验 / fork 登记
+> 工具是同目录的 `lockfile.py`：拉取后跑生成模式落账，冷启动跑校验模式比对，
+> fork 内置模块跑 `--fork`。
 
 ## 一、为什么需要锁文件
 
@@ -14,8 +15,9 @@
 - 有没有被本地改过（未登记的 fork / 漂移）。
 
 spec 不设漂移锁：spec 是用户可自由编排的装配图（改入口、改依赖全景都是正常
-操作），锁它只会让每次编排都被误报成漂移。锁文件对 spec 只记 origin + version
-作血缘备注——「这套 spec 最初基于云端哪个 spec 的哪一版」，不算指纹、不校验。
+操作），锁它只会让每次编排都被误报成漂移。锁文件对 spec 只记 source + origin +
+version 作血缘备注——「这套 spec 是云端拉来的还是自建的、最初基于云端哪个 spec
+的哪一版」，不算指纹、不校验；自建 spec 的 source 记 private、origin 记 null。
 
 ## 二、结构
 
@@ -23,6 +25,7 @@ spec 不设漂移锁：spec 是用户可自由编排的装配图（改入口、�
 {
   "lockfileVersion": 1,
   "spec": {
+    "source": "cloud",
     "origin": "github.com/The-Daybreaker/project-spec/specs/software-dev",
     "version": "0.1.0"
   },
@@ -71,8 +74,13 @@ baseline 记云端骨架版本）；`my-mod` 项目私有（origin 与 hash 均�
 
 | 字段 | 含义 |
 | ---- | ---- |
-| `origin` | 这套 spec 最初基于的云端位置（仓库 + 路径）；自建 spec 可为 `null` |
+| `source` | `cloud`（云端拉来）/ `private`（项目自建，云端无此 spec） |
+| `origin` | 这套 spec 最初基于的云端位置（仓库 + 路径）；`private`（自建）时恒为 `null` |
 | `version` | spec 自身版本（取自 `manifest.json` 的 `version`） |
+
+> 自建 spec 首次生成时用 `lockfile.py <spec> --spec-source private` 声明，工具即把
+> `source` 记 `private`、`origin` 记 `null`，不再硬拼一个指向云端的假地址；之后
+> 重跑 generate 按合并语义保留这一声明。
 
 **`modules.<id>` 条目**（溯源 + 防漂移）：
 
@@ -94,12 +102,13 @@ baseline 记云端骨架版本）；`my-mod` 项目私有（origin 与 hash 均�
    生成锁文件。
 2. **更新**（只有以下显式操作才动锁文件）：
    - 加私有模块 → 该模块 `source` 记 `private`（origin / hash 为 null）；
-   - fork 内置模块 → 该模块 `source` 由 `cloud` 改 `fork`、记下 `baseline`
-     （fork 时的云端版本）、重算 `hash`；fork 自己的迭代滚模块 `module.json`
-     的 `version`、改动记模块 `CHANGELOG.md`；
+   - fork 内置模块 → 跑 `lockfile.py <spec> --fork <模块id>`：工具把该模块
+     `source` 由 `cloud` 改 `fork`、`baseline` 记登记时锁文件里的云端版本、
+     重算 `hash`（顺序由脚本保证，不必手改 lockfile.json）；fork 自己的迭代
+     滚模块 `module.json` 的 `version`、改动记模块 `CHANGELOG.md`；
    - self_implemented 模块（如 release）→ 云端给骨架、项目自填，`hash` 记
      null 不校验、`baseline` 记云端骨架版本；
-   - 升级云端模块 → 显式重新例化，更新 `version` + `hash`；
+   - 升级云端模块 → 显式重新实例化，更新 `version` + `hash`；
    - 移除模块 → 删对应条目。
 3. **校验**：冷启动时比对「本地模块内容 hash vs 锁文件 hash」（hash 为 null
    的 private / self_implemented 模块跳过），不一致说明有未登记的 fork / 漂移，
@@ -111,6 +120,7 @@ baseline 记云端骨架版本）；`my-mod` 项目私有（origin 与 hash 均�
 
 - **进 git**：锁文件是溯源账本，随 spec 一起版本管理。
 - **维护者**：agent 冷启动时校验（`lockfile.py --verify`）、变更时更新
-  （`lockfile.py` 生成模式；生成是合并语义——保留既有 fork / private 条目的
-  source / origin / baseline，只重算 hash / version，手工登记的溯源不会被冲掉）。
+  （`lockfile.py` 生成模式；fork 登记用 `lockfile.py <spec> --fork <模块id>`；
+  生成是合并语义——保留既有 fork / private 条目的 source / origin / baseline，
+  只重算 hash / version，手工登记的溯源不会被冲掉）。
 - **纪律**：日常干活不碰锁文件；只有「引入 / 移除 / fork / 升级」才更新。
