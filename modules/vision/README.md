@@ -8,6 +8,6 @@ vision 是活文档，随时可写。
 - **不管**：当期具体怎么做、技术选型。
 
 - **启用**：agent 按 `assets/vision-template.md`（仅参考格式）在 `context/`
-  下例化 `vision.md`，之后负责维护。
+  下实例化 `vision.md`，之后负责维护。
 
 给 agent 的规范见 `MODULE.md`，结构化声明见 `module.json`。

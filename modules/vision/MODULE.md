@@ -2,9 +2,9 @@
 
 > **适用范围**：当 agent 负责维护本模块的产出——`context/vision.md` 时，加载并遵循本文件。项目级总纲见仓库根 `AGENTS.md`。
 > 
-> 本文件是「愿景与排期」模块自带的 agent 规范，随模块例化。
+> 本文件是「愿景与排期」模块自带的 agent 规范，随模块实例化。
 
-## 一、产物目录与例化
+## 一、产物目录与实例化
 
 本模块的全部产物只落在 `context/` 下，一个文件：
 
@@ -15,7 +15,7 @@ context/vision.md
 vision.md 包含：定位 / 需求正文（用户故事与详细需求）/ 远期方向 / 演进原则 /
 里程碑 / 未排期池 / 近三期排期表。
 
-启用时按 `assets/vision-template.md`（仅参考格式）例化 `context/vision.md`，
+启用时按 `assets/vision-template.md`（仅参考格式）实例化 `context/vision.md`，
 内容由项目自行实现和改动。
 
 ## 二、运行过程

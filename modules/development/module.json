@@ -16,6 +16,7 @@
   "depends_on": [],
 
   "workspace": {
-    "source": "workspace/source/"
+    "source": "workspace/source/",
+    "goal": "process/goal.md"
   }
 }

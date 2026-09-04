@@ -2,9 +2,9 @@
 
 本项目是 [The-Daybreaker/Project-Template](https://github.com/The-Daybreaker/Project-Template)
 的配套项目，用于存放 spec 和 modules，是 spec 与模块的**唯一事实源**。本地（项目
-例化后的 `spec/`）里的
-spec 和模块都是这里的**例化副本**；防漂移靠锁文件——副本记录「从哪个云端
-模块、哪个版本例化来」+ 内容指纹。
+实例化后的 `spec/`）里的
+spec 和模块都是这里的**实例化副本**；防漂移靠锁文件——副本记录「从哪个云端
+模块、哪个版本实例化来」+ 内容指纹。
 
 ## 结构
 
@@ -24,7 +24,7 @@ specs/<spec-id>/            ← spec
   CHANGELOG.md                版本变更日志
 
 modules/<module-id>/        ← 模块
-  MODULE.md                   agent 规范（产物目录与例化 / 运行过程）
+  MODULE.md                   agent 规范（产物目录与实例化 / 运行过程）
   module.json                 结构化声明（机器读）
   README.md                   给人读（一句话定位 + 适用与边界）
   CHANGELOG.md                版本变更日志

@@ -4,9 +4,9 @@
 > decisions.md 与 history.md 时，加载并遵循本文件。项目级总纲见仓库根
 > `AGENTS.md`。
 > 
-> 本文件是「决策记录」模块自带的 agent 规范，随模块例化。
+> 本文件是「决策记录」模块自带的 agent 规范，随模块实例化。
 
-## 一、产物目录与例化
+## 一、产物目录与实例化
 
 本模块的产物落在 `context/adr/`，两个文件：
 
@@ -16,7 +16,7 @@ context/adr/
   history.md     ← 被取代的决策（默认不读）
 ```
 
-启用时按 `assets/decisions-template.md`（格式仅供参考）例化 decisions.md，
+启用时按 `assets/decisions-template.md`（格式仅供参考）实例化 decisions.md，
 内容由项目自行实现和改动。
 
 ## 二、运行过程
