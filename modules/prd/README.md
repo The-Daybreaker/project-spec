@@ -8,6 +8,5 @@ PRD 是当期活文档：开发中随时改，交付即定格。
 
 - **启用**：agent 按 `assets/prd-template.md`（仅参考格式）在 `context/prd/`
   下例化当期 PRD，之后负责维护。
-- **停用**：只停维护，不删 `context/prd/`（文件留在原处）。
 
 给 agent 的规范见 `MODULE.md`，结构化声明见 `module.json`。

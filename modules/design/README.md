@@ -9,6 +9,4 @@
 - **启用**：agent 在 `context/design/` 下按需生成图纸（画什么见
   `assets/design-template.md`），之后负责维护。
 
-- **停用**：只停维护，不删 `context/design/`（文件留在原处）。
-
 给 agent 的规范见 `MODULE.md`，结构化声明见 `module.json`。

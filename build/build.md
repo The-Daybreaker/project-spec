@@ -53,7 +53,7 @@ spec 包（从云端拉取；单项目单 spec）
 <模块 id>/                      ← 一个模块一个目录（例化后目录名 = @ + id）
   MODULE.md                     ← agent 规范（开头声明适用范围）+ 产物目录与例化
   module.json                   ← 结构化声明（机器读；10 字段表见模板 spec/AGENTS.md）
-  README.md                     ← 给人读：一句话定位 + 适用与边界 + 启用/停用
+  README.md                     ← 给人读：一句话定位 + 适用与边界 + 启用后做什么
   CHANGELOG.md                  ← 版本变更日志（跨版本迁移看它）
   assets/                       ← 附件（模板 / 清单 / 脚本，随模块走）
 ```

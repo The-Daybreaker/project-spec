@@ -9,6 +9,5 @@ vision 是活文档，随时可写。
 
 - **启用**：agent 按 `assets/vision-template.md`（仅参考格式）在 `context/`
   下例化 `vision.md`，之后负责维护。
-- **停用**：只停维护，不删 `context/vision.md`（文件留在原处）。
 
 给 agent 的规范见 `MODULE.md`，结构化声明见 `module.json`。
