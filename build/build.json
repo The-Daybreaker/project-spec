@@ -1,6 +1,0 @@
-{
-  "id": "build",
-  "name": "构建规则",
-  "version": "0.1.0",
-  "description": "怎么造 / 改 spec 和模块的构建规则层：build.md + spec-template/ + module-template/"
-}
