@@ -44,7 +44,7 @@ spec/<spec-id>/
 | `version` | string | 版本（semver） |
 | `description` | string | 一句话说明这套 spec 管什么场景 |
 | `modules` | string[] | 模块声明：这个 spec 需要哪些模块 |
-| `entries` | object[] | 入口列表（缩放旋钮） |
+| `entries` | object[] | 入口列表：预设的模块组合档位，按场景选入口、控制工作流轻重（大活开全模块入口、小活开轻量入口） |
 | `entries[].id` | string | 入口标识（连字符小写命名） |
 | `entries[].name` | string | 入口名 |
 | `entries[].modules` | string[] | 这个入口启用哪些模块（集合，不表顺序） |
@@ -137,3 +137,8 @@ spec/<spec-id>/
   `module.json` 声明 `private: true` 后重跑生成（hash 置 null、不校验）；
   ④ fork 内置模块自改 → 跑 `lockfile.py <spec> --fork <模块id>` 显式登记
   （source 改 fork、记 baseline、重算 hash）。
+
+`lockfile.py` 只用 Python 标准库、不装任何依赖，机器上有 Python 就能跑；
+非 Python 项目确实无法安装 Python 时，冷启动降级为人工核对——读
+`lockfile.json` 里各模块登记的 version / source，与模块目录现状和云端版本
+比对，对不上按上面四条出路处理。

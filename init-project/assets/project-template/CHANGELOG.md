@@ -15,8 +15,13 @@
 - `process/memory.md`：agent 记忆固有件（踩过的坑与被验证过的判断，
   冷启动必读；只存当前有效条目，失效归档 `logs/memory/`）。
 - 云端模块库接入：锁文件 `origin` 记真实指向
-  （`github.com/The-Daybreaker/project-spec`）；拉取 spec 包时落真实账
-  （spec 与各模块的 origin / version / hash）。
+  （`github.com/The-Daybreaker/project-spec`）；拉取 spec 包时落真实账：
+  模块记 source / origin / version / hash（fork 另记 baseline），spec 只记
+  source / origin / version 血缘备注，不算指纹、不参与漂移校验。
+- 锁文件 source 三态：模块分 cloud / fork / private（self_implemented
+  占位同 private、不校验）；source 表来源、hash 有无表是否校验。
+  `--fork <id>` 显式登记改造，自建 spec 用 `--spec-source private` 声明
+  （origin 留空）。
 
 ### Changed
 
