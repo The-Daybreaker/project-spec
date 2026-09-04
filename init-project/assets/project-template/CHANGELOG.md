@@ -5,6 +5,23 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/spec/v2.0.0.html)。
 
+## [Unreleased]
+
+### Changed
+
+- spec 机制单文档化：一个 spec 塌成一份 `spec.md` + 同级 `assets/`（产出
+  骨架）。`spec/AGENTS.md` 瘦身为机制说明书（spec 是什么 / 怎么拉 /
+  怎么读 / 状态灯约定）；本体 `AGENTS.md`（§一 spec 行、§二 冷启动
+  读盘、§六 读取约定）、`README.md`、`init-project/SKILL.md` 同步为新
+  口径。配套云端库（project-spec）同步重构：模块装置 / manifest /
+  registry 退休。
+
+### Removed
+
+- 锁文件三件：`spec/lockfile.py`、`spec/lockfile.md`（及实例化后的
+  `lockfile.json`）——spec 拉进项目即自由编辑、无只读副本可锁，防漂移
+  校验退休；冷启动不再跑 `lockfile.py --verify`。
+
 ## [0.9.0] - 2026-09-03
 
 版本号对齐发布仓序列（0.1.0 → 0.9.0）：模板本体是发布仓的核心资产，

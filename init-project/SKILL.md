@@ -15,10 +15,11 @@ version: 0.9.0
 
 - **框架结构**：`AGENTS.md`（协作总纲 + 宪章 6 条）/ `README.md`（使用手册）/
   `context/`（项目上下文）/ `workspace/`（source + delivery）/ `process/`
-  （任务板 + agent 记忆 + 三件套）/ `logs/`（历史）/ `spec/`（声明式规范）。
-- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）+ `lockfile.py` /
-  `lockfile.md` 常驻；spec 包与构建规则按需从云端模块库拉取
-  （`github.com/The-Daybreaker/project-spec`）；空 spec 时项目以框架形态轻装运转。
+  （任务板 + agent 记忆 + 三件套）/ `logs/`（历史）/ `spec/`（声明式工作流）。
+- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）常驻；spec 内容
+  （`spec.md` + `assets/`）与构建规则按需从云端货架拉取
+  （`github.com/The-Daybreaker/project-spec`）、拉下来自由改；空 spec 时项目
+  以框架形态轻装运转。
 
 ## 前置确认（必须）
 
@@ -37,9 +38,9 @@ version: 0.9.0
      `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
    - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
-     `process/` / `logs/` / `spec/`）；`process/memory.md`、
-     `spec/AGENTS.md`、`spec/lockfile.py`、`spec/lockfile.md` 存在；
-     `_trash/` 未随模板复制进来；
+     `process/` / `logs/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md`
+     存在（`spec/` 出厂只此一件，spec 内容按需才拉）；`_trash/` 未随模板
+     复制进来；
    - **参数**（若指定了 `--name`）：`package.json` 的 `name` 已替换为项目名，
      `version` 保持模板原值不变（不随初始化改动）。
    - **git**：主仓库 `.git` 存在；`git status` 干净；首次提交信息为
@@ -47,7 +48,7 @@ version: 0.9.0
    - **常见问题**：首次提交失败多半是未配置 `git user.name` / `user.email`，让
      用户配置后手动提交；`--no-git` 模式不建 git。
 3. **收尾汇报**：向用户汇报初始化位置、git 仓库，以及下一步建议
-   （首次对话让 agent 冷启动对齐项目背景与目标；需要文档体系/工作流时引入 spec 包；
+   （首次对话让 agent 冷启动对齐项目背景与目标；需要文档体系/工作流时引入 spec；
    配置远端后推送）。
 
 ## 执行红线

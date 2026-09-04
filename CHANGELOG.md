@@ -5,6 +5,27 @@
 
 版本号与模板本体一致（单一事实源：`init-project/assets/project-template/package.json`），当前 0.9.0。
 
+## [Unreleased]
+
+spec 机制单文档化重构（三仓联动）。版本号待用户确认后再定，不随本次
+自动 bump。
+
+### Changed
+
+- 一个 spec 塌成一份 `spec.md` + 同级 `assets/`（产出骨架）；云端库退化
+  为只读货架、拉下来自由改。模板本体 `spec/AGENTS.md` 瘦身为机制说明书，
+  `AGENTS.md`（§一/§二/§六）、`README.md`、`init-project/SKILL.md` 去掉
+  模块 / 锁文件 / registry 口径；发布仓 README「核心理念」spec 段、
+  mermaid、目录结构、「配套仓库」整节改写。
+
+### Removed
+
+- 锁文件三件（`spec/lockfile.py` / `lockfile.md` 及实例化后的
+  `lockfile.json`），冷启动不再跑漂移校验；模块装置（`@模块/`、
+  `MODULE.md` / `module.json` / 每模块 `README`·`CHANGELOG`）、
+  `manifest.json`、`registry.json`、`add.md`（详见配套仓 project-spec 的
+  CHANGELOG）。
+
 ## [0.9.0] - 2026-09-03
 
 云端模块库接入 + spec 模块字段精简 + 仓库结构简化。

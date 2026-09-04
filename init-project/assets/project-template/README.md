@@ -3,8 +3,8 @@
 这是一套面向「人 + AI 助手协作」的通用项目模板，分两层：**框架**是每个
 项目都一样的固定骨架——冷启动链、任务板、AI 助手记忆、人机异步交流、
 git 约定，保证项目什么都不配也能最低限度运转；**spec** 是具体工作流的
-声明式编排，需要时按需从云端模块库拉取，不装 spec 就以框架形态轻装
-运转。根目录 `AGENTS.md` 是协作总纲，本文件是它的精简辅助手册。
+声明式编排（一份 `spec.md` + 产出骨架 `assets/`），需要时按需从云端货架
+拉取、拉下来自由改，不装 spec 就以框架形态轻装运转。根目录 `AGENTS.md` 是协作总纲，本文件是它的精简辅助手册。
 
 ## 写给用户
 
@@ -21,17 +21,17 @@ git 约定，保证项目什么都不配也能最低限度运转；**spec** 是�
    排除 `_trash/`、`.git/`、`__pycache__/`，已有文件只跳过、不覆盖），
    也可以手动复制模板内容；
 2. **首次对话**：AI 会先读根 `AGENTS.md` 完成冷启动，这时和它对齐项目
-   背景与目标；需要具体工作流时按 `spec/AGENTS.md` 的拉取四步选装
-   spec——读云端 `registry.json` 选货、clone 云端仓、复制进 `spec/`、
-   跑 `lockfile.py` 登记来源版本与模块指纹；
-3. **没有现成 spec**：把云端 `build/` 构建规则和模块拉到 `spec/build/`，
-   按 `spec/build/build.md` 自己组装，自建 spec 声明 private 即可。
+   背景与目标；需要具体工作流时按 `spec/AGENTS.md` 的指引选装 spec——
+   浏览云端 `specs/` 选货、clone 云端仓、把 `spec.md` + `assets/` 复制进
+   `spec/<id>/`，之后这份 spec 归你自由改；
+3. **没有现成 spec**：把云端 `build/` 构建规则拉到 `spec/build/`，按
+   `spec/build/build.md` 和 `spec-template/` 母版自己写一份 `spec.md`。
 
 ## 目录速览
 
 | 目录 | 放什么 |
 | --- | --- |
-| `spec/` | 出厂只有机制说明书 `AGENTS.md` + 锁文件工具 `lockfile.py` + 字段规范 `lockfile.md`；spec 包与构建规则按需从云端拉取 |
+| `spec/` | 出厂只有机制说明书 `AGENTS.md`（讲 spec 是什么、怎么拉、怎么读）；spec 内容与构建规则按需从云端货架拉取 |
 | `context/` | 项目上下文文档（PRD / ADR / 知识库等），装什么、骨架由 spec 决定，没有 spec 时为空 |
 | `process/` | 活的状态：`task.md` 任务板、`memory.md` 助手记忆，以及 inbox / pending / reviews 三件套 |
 | `workspace/` | 干活主工作区：`source/` 源产物 + `delivery/` 交付物 |
@@ -42,5 +42,5 @@ git 约定，保证项目什么都不配也能最低限度运转；**spec** 是�
 新会话冷启动按固定顺序「读盘」：根 `AGENTS.md`（目录地图、会话协议、
 宪章 6 条）→ `process/task.md`（进行中 / 下一步 / 阻塞）→
 `process/memory.md`（踩过的坑与验证过的判断）→ 扫三件套；装了 spec
-的项目再按 `spec/AGENTS.md` 跑一次锁文件校验，模块漂移先停下处理。
+的项目再读 `spec/<id>/spec.md` 判定入口、走阶段。
 完整条款以根 `AGENTS.md` 为单一事实源。
