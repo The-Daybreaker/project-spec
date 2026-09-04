@@ -35,12 +35,11 @@ flowchart TB
   CLOUD -. "拉一份下来自由改" .-> SPEC
 ```
 
-## 仓库里的两个技能
+## 仓库里的技能
 
 | 技能 | 干什么 | 何时生效 |
 | --- | --- | --- |
-| **init-project** | 把任意空文件夹初始化成符合模板规范的新项目：复制骨架、替换项目名占位符、初始化 git 并完成首次提交 | 你主动要求初始化项目时 |
-| **agent-rules** | AI 助手的通用行为底线共 6 条：重事实、先对齐再动手、操作风险分级、删除走可恢复路径、回读校验、书写规范 | **只在对话不属于任何项目、且不是纯聊天时**生效；一旦进入某个项目，就以那个项目自己的 `AGENTS.md` 为准 |
+| **init-project** | 兼两个用途：① 把任意空文件夹初始化成符合模板规范的新项目（复制骨架、替换项目名占位符、初始化 git 并首次提交）；② 作为项目外对话的通用行为基线——指向模板本体 `AGENTS.md`「五、规范」的宪章 6 条（重事实、先对齐再动手、操作风险分级、删除走可恢复路径、回读校验、书写规范），只指向不复制、杜绝漂移 | 适用于所有非纯聊天的对话：要开新项目时走①；对话不属于任何项目、且非纯聊天时走②；一旦进入某个项目，就以那个项目自己的 `AGENTS.md` 为准 |
 
 ## 它能帮你解决什么问题
 
@@ -54,7 +53,7 @@ flowchart TB
 - **该确认的确认、该自动的自动**：创建 git 仓库、批量落盘、发布、永久
   删除这类不可逆操作，AI 助手会先展示方案、征得同意再动手；`.gitignore`
   预置常见密钥文件名模式，宁可误伤不可漏收。
-- **一套规范装给所有 AI 助手**：两个技能可以复制到多个 AI 助手的用户级
+- **一套规范装给所有 AI 助手**：技能可以复制到多个 AI 助手的用户级
   技能目录，让它们遵循同一套规则。
 
 ## 快速开始
@@ -65,8 +64,7 @@ flowchart TB
 ### 方式一：安装技能使用（推荐）
 
 把 `init-project/` 整个目录复制到 AI 助手的用户级技能目录（例如 Codex 是
-`~/.codex/skills/`，其他助手见各自文档），建议连同 `agent-rules/` 一起
-装。之后对助手说：
+`~/.codex/skills/`，其他助手见各自文档）。之后对助手说：
 
 > 「用 init-project 技能把 <目标目录> 初始化为一个新项目」
 
@@ -75,8 +73,9 @@ flowchart TB
 逐项回读校验。初始化会创建 git 仓库、批量落盘，属于高风险操作，所以它
 一定会先确认再动手。
 
-`agent-rules/` 建议装到每个常用 AI 助手：它是项目外对话的行为基线，进入
-具体项目后自动让位于项目自己的 `AGENTS.md`。
+把 `init-project/` 装到每个常用 AI 助手：它既能在你要开新项目时初始化，也
+作为项目外对话的行为基线（指向模板宪章 6 条），进入具体项目后自动让位于
+项目自己的 `AGENTS.md`。
 
 ### 方式二：直接运行脚本或手动复制
 
@@ -124,22 +123,20 @@ Project-Template/
 ├── README.md                     # 本文件：门面与使用说明（自洽，读完即可上手）
 ├── CHANGELOG.md                  # 发布版本变更记录
 ├── .gitattributes / .gitignore   # 行尾统一（仓内 LF）与忽略规则
-├── init-project/                 # 项目初始化技能
-│   ├── SKILL.md                  #   技能说明（AI 助手执行清单）
-│   ├── scripts/init_project.py   #   确定性复制与初始化脚本
-│   └── assets/project-template/  #   模板本体（全仓只此一份）
-│       ├── AGENTS.md             #   协作总纲：冷启动入口 + 会话协议 + 宪章 6 条
-│       ├── README.md             #   随新项目分发的使用手册（含「写给用户」提醒）
-│       ├── package.json          #   模板版本与项目名占位
-│       ├── CHANGELOG.md          #   模板变更记录
-│       ├── .editorconfig / .gitattributes / .gitignore  # 编辑器约定、行尾与忽略规则
-│       ├── context/              #   项目上下文文档（装什么由 spec 决定，默认空）
-│       ├── process/              #   任务板 + 助手记忆 + inbox/pending/reviews 三件套
-│       ├── workspace/            #   source（源产物）+ delivery（交付物）
-│       ├── logs/                 #   历史归档（只追加）
-│       └── spec/                 #   spec 机制说明书；spec 内容（spec.md + assets）按需拉取
-└── agent-rules/                  # AI 助手项目外通用行为规范技能
-    └── SKILL.md
+└── init-project/                 # 通用项目模板技能（项目初始化 + 项目外行为基线）
+    ├── SKILL.md                  #   技能说明（两种用途 + 执行清单）
+    ├── scripts/init_project.py   #   确定性复制与初始化脚本
+    └── assets/project-template/  #   模板本体（全仓只此一份）
+        ├── AGENTS.md             #   协作总纲：冷启动入口 + 会话协议 + 宪章 6 条（项目外行为基线的唯一事实源）
+        ├── README.md             #   随新项目分发的使用手册（含「写给用户」提醒）
+        ├── package.json          #   模板版本与项目名占位
+        ├── CHANGELOG.md          #   模板变更记录
+        ├── .editorconfig / .gitattributes / .gitignore  # 编辑器约定、行尾与忽略规则
+        ├── context/              #   项目上下文文档（装什么由 spec 决定，默认空）
+        ├── process/              #   任务板 + 助手记忆 + inbox/pending/reviews 三件套
+        ├── workspace/            #   source（源产物）+ delivery（交付物）
+        ├── logs/                 #   历史归档（只追加）
+        └── spec/                 #   spec 机制说明书；spec 内容（spec.md + assets）按需拉取
 ```
 
 模板里的空目录（如 `context/`）靠 `.gitkeep` 占位才能进入 git；

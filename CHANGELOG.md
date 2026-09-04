@@ -1,14 +1,14 @@
 # CHANGELOG
 
-发布仓库的版本历史（三产物：project-template / init-project / agent-rules）。
+发布仓库的版本历史（两产物：project-template / init-project）。
 模板本体只在 `init-project/assets/project-template/` 存一份。
 
 版本号与模板本体一致（单一事实源：`init-project/assets/project-template/package.json`），当前 0.9.0。
 
 ## [Unreleased]
 
-spec 机制单文档化重构（三仓联动）。版本号待用户确认后再定，不随本次
-自动 bump。
+spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-project。
+版本号待用户确认后再定，不随本次自动 bump。
 
 ### Changed
 
@@ -17,6 +17,9 @@ spec 机制单文档化重构（三仓联动）。版本号待用户确认后再
   `AGENTS.md`（§一/§二/§六）、`README.md`、`init-project/SKILL.md` 去掉
   模块 / 锁文件 / registry 口径；发布仓 README「核心理念」spec 段、
   mermaid、目录结构、「配套仓库」整节改写。
+- `init-project` skill 适用范围扩为所有非纯聊天对话，新增「项目外通用
+  行为基线」用途（指向模板本体 `AGENTS.md`「五、规范」宪章 6 条，只指向
+  不复制）。
 
 ### Removed
 
@@ -25,6 +28,8 @@ spec 机制单文档化重构（三仓联动）。版本号待用户确认后再
   `MODULE.md` / `module.json` / 每模块 `README`·`CHANGELOG`）、
   `manifest.json`、`registry.json`、`add.md`（详见配套仓 project-spec 的
   CHANGELOG）。
+- `agent-rules` skill 整个删除：它与模板宪章是两处副本、必然漂移，其「项目
+  外行为基线」职责并入 `init-project`（指向唯一事实源，杜绝漂移）。
 
 ## [0.9.0] - 2026-09-03
 
