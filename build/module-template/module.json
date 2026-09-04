@@ -9,8 +9,5 @@
 
   "depends_on": [],
 
-  "workspace": {},
-
-  "private": false,
-  "self_implemented": false
+  "workspace": {}
 }
