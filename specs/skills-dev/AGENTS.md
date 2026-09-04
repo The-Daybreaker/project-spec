@@ -12,9 +12,9 @@
 
 「skill 开发」场景的工作流，产出物是 agent skill（SKILL.md 及其
 references / assets 等，具体形态项目自定）。skill 体量小，一个 idea 一次
-就能开发完，没有排期与当期需求层——由 6 个模块按依赖链编排：
+就能开发完，没有排期与当期需求层——由 7 个模块按依赖链编排：
 vision（想法池）→ design（方案）→ development（编写）→ test（实测）→
-audit（审计）→ release（收口）；adr（决策记录）横切。
+audit（审计）→ release（收口），adr（决策记录）横切全局。
 
 ## 二、依赖全景与入口
 
