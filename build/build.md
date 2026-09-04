@@ -106,7 +106,7 @@ spec 包（从云端拉取；单项目单 spec）
 
 ## 七、版本号规则与 CHANGELOG
 
-**版本号（SemVer）**：模块与 spec 的 `version` 遵循语义化版本，格式
+**版本号（SemVer）**：模块、spec 与 build 的 `version` 遵循语义化版本，格式
 `主.次.修订`（如 `0.1.0`）：
 
 - **主版本（首位）**：不兼容的变更才 +1（改了别人依赖的接口 / 行为），+1 时
@@ -124,6 +124,8 @@ Keep a Changelog：Added / Changed / Removed / Fixed）。跨版本迁移时，a
 
 ```
 build/
+  build.json              ← 构建规则层的版本身份（id / name / version / description）
+  CHANGELOG.md            ← 构建规则层的版本变更日志
   build.md                ← 本文件
   spec-template/          ← spec 模板（造新 spec 骨架：AGENTS.md + manifest.json 空例）
   module-template/        ← module 模板（造新模块骨架）

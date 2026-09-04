@@ -21,5 +21,6 @@
     { "id": "test", "name": "测试与验收", "path": "modules/test" },
     { "id": "audit", "name": "审计", "path": "modules/audit" },
     { "id": "release", "name": "收口", "path": "modules/release" }
-  ]
+  ],
+  "build": { "id": "build", "name": "构建规则", "path": "build" }
 }
