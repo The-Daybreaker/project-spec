@@ -15,6 +15,12 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
 
 ### Changed
 
+- 三份 README 按「问题场景 → 设计理念 → 快速开始 → 日常使用 → 深入
+  展开」的新用户叙事线重写：发布仓 README 新增痛点共鸣、协作层/发布层
+  分离与流程/宪章分开的设计理念、冷启动读盘 mermaid；模板本体 README
+  改为面向项目主人的使用手册（协作循环、高频场景、核心文件分工，
+  「写给用户」节原样保留）；配套 project-spec 货架 README 补两层关系图
+  与 software-dev 工作流实例讲解。
 - 一个 spec 塌成一份 `spec.md` + 同级 `assets/`（产出骨架）；云端库退化
   为只读货架、拉下来自由改。模板本体 `spec/AGENTS.md` 瘦身为机制说明书，
   `AGENTS.md`（§一/§二/§六）、`README.md`、`init-project/SKILL.md` 去掉
