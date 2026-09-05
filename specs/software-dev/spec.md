@@ -83,7 +83,7 @@ prd → development → test → audit → release）；查多深以「下游是
   确认理解，不急着落盘；② 引导澄清——用开放、发散问题引导用户发现并澄清真正
   的需求（给谁用、解决什么、为什么现在做、做到什么程度算好），没说清的显式标
   「未定」，不替用户脑补；③ 专门调研——就需求查市场现成做法，调研结果形成一份
-  临时文档给用户过目，认可后归档 `logs/research/`，结论吸收进正文；④ 落盘——
+  临时文档给用户过目，认可后归档 `archive/research/`，结论吸收进正文；④ 落盘——
   聊定后更新 `context/vision.md`，只留需求现状、不留历史，及时写不攒批；
   ⑤ 入池——新想法未排期前一律先进「未排期池」，排期时由用户从池里挑；
   ⑥ 近三期排期表滚动更新。
@@ -113,7 +113,7 @@ prd → development → test → audit → release）；查多深以「下游是
   中取这一期要做的内容，先对齐「这一期做什么」；② 澄清细化——用开放问题聊深
   聊透（每条需求给谁用、解决什么、做到什么程度算好），没说清的显式标「未定」；
   ③ 专门调研——就需求查市场 / 技术现成做法，调研结果形成临时文档给用户过目，
-  认可后归档 `logs/research/`，结论吸收进正文；④ 落盘——聊定一条就覆盖更新
+  认可后归档 `archive/research/`，结论吸收进正文；④ 落盘——聊定一条就覆盖更新
   当期 PRD 一次（历史交给 git）；⑤ 更新状态——交付达标时 PRD 头部状态从「草稿」
   改「开发中」，开发完成时改「定格」；⑥ 交付定格——这期交付后 PRD 定格，新需求
   新开一份。
@@ -127,7 +127,7 @@ prd → development → test → audit → release）；查多深以「下游是
   `assets/decisions-template.md`）+ `history.md`（被取代的决策，默认不读）。
 - **运行过程**：① 决策及时记录——在对话中确定一个重要决策后，马上写进
   `decisions.md` 顶部；② 过程归讨论记录——选路的对比过程（比了哪些路、当时
-  怎么想）写进 `logs/discussion/`，不写进 `decisions.md`；③ 取代——每次写入时
+  怎么想）写进 `archive/discussion/`，不写进 `decisions.md`；③ 取代——每次写入时
   回读全文，发现决策重复或被推翻时，从 `decisions.md` 整段移出、记入
   `history.md` 顶部，加一行「何时被何取代」，旧文不涂改。
 - **规范 / 边界**：`decisions.md` 只放当前仍有效的决策，新决策写在最上面；
@@ -136,7 +136,7 @@ prd → development → test → audit → release）；查多深以「下游是
 
 ### development — 开发执行
 
-- **产出**：`workspace/source/`（代码 / 产物，按任务逐步产出，无模板可实例化）
+- **产出**：`workspace/src/`（代码 / 产物，按任务逐步产出，无模板可实例化）
   + `process/goal.md`（本期目标）。
 - **运行过程**：① 定目标——读相关文档，和用户讨论定出这一期开发的目标，写进
   `process/goal.md`；② 拆任务——把目标拆成任务，记到 `process/task.md`；
@@ -145,7 +145,7 @@ prd → development → test → audit → release）；查多深以「下游是
   （耦合高 / 影响广 / 根基有问题）停下来回讨论；⑤ 及时更新 task 状态，任务完成
   后告知用户完成了哪些、有哪些需 review，需要留验收凭据时在 `process/` 根写
   `review-<简介>.md`（临时件）；用户确认通过后 agent 及时删除该 review 件（历史
-  交给 git）、goal.md 归档 `logs/goal/`。
+  交给 git）、goal.md 归档 `archive/goal/`。
 - **规范 / 边界**：小问题随做随记（记在任务板），做完统一记 review 并反馈；
   大问题判据——耦合高、影响面广、根基有问题，停下来回讨论；git 提交信息遵循
   Conventional Commits（feat / fix / docs 等）。不管审查、发布。
@@ -177,7 +177,7 @@ prd → development → test → audit → release）；查多深以「下游是
 > 本阶段是占空自实现（self_implemented）：云端给骨架、项目自填收口做法。
 > 强依赖 audit（唯一保留的强依赖——收口的是审计放行后的产物）。
 
-- **产出**：交付物落 `workspace/delivery/`；变更日志写 `workspace/CHANGELOG.md`
+- **产出**：交付物落 `workspace/dist/`；变更日志写 `workspace/CHANGELOG.md`
   （给用户的版本日志，随发布）。
 - **运行过程**：① 写 CHANGELOG——把这期做了什么写进 `workspace/CHANGELOG.md`；
   ② 确认收口方式——私有项目本地打 tag、本地安装即发布，公开项目上传 GitHub；

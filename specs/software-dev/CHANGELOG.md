@@ -19,6 +19,10 @@
 - （2026-09-05）development / audit 阶段的验收落点从 `process/reviews/` 改为
   `process/` 根 review 临时件（`review-<简介>.md`，通过后删、不归档 logs）——
   配合模板框架取消三件套（开发仓决策 62）。
+- （2026-09-05）产出落点改用业界惯例名：development 的 `workspace/source/` →
+  `workspace/src/`、release 的 `workspace/delivery/` → `workspace/dist/`；归档
+  路径 `logs/*` → `archive/*`（配合模板框架 logs→archive、workspace 去预置，
+  开发仓决策 63）。
 
 ### Removed
 

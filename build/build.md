@@ -59,8 +59,8 @@ spec/<spec-id>/             ← 拉进项目后（不带 CHANGELOG；spec.md + a
 - **检查点按控制权设**：协作产出段（与用户反复讨论，天然处处确认）不设显式
   检查点；显式检查点只设在控制权交接处（如「实施放行」「收口放行」）。
 - **产出落点沿用框架目录**：阶段产出落在模板框架的既有目录（`context/` 放
-  上下文文档、`workspace/source/` 放源产物、`workspace/delivery/` 放交付物、
-  `process/` 放活的状态、`logs/` 放归档），spec.md 只声明哪个阶段往哪落。
+  上下文文档、`workspace/` 放干活产物与交付物（内部结构如 `src/`、`dist/` 由
+  spec 定）、`process/` 放活状态、`archive/` 放归档），spec.md 只声明哪个阶段往哪落。
 
 ## 四、版本号与 CHANGELOG
 

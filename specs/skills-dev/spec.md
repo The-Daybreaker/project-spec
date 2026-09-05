@@ -104,7 +104,7 @@ development → test → audit → release）；查多深以「下游是否用�
   `assets/decisions-template.md`）+ `history.md`（被取代的决策，默认不读）。
 - **运行过程**：① 决策及时记录——在对话中确定一个重要决策后，马上写进
   `decisions.md` 顶部；② 过程归讨论记录——选路的对比过程（比了哪些路、当时
-  怎么想）写进 `logs/discussion/`，不写进 `decisions.md`；③ 取代——每次写入时
+  怎么想）写进 `archive/discussion/`，不写进 `decisions.md`；③ 取代——每次写入时
   回读全文，发现决策重复或被推翻时，从 `decisions.md` 整段移出、记入
   `history.md` 顶部，加一行「何时被何取代」，旧文不涂改。
 - **规范 / 边界**：`decisions.md` 只放当前仍有效的决策，新决策写在最上面；
@@ -113,7 +113,7 @@ development → test → audit → release）；查多深以「下游是否用�
 
 ### development — 开发执行（编写）
 
-- **产出**：`workspace/source/`（skill 产物：`SKILL.md` 及其 references /
+- **产出**：`workspace/src/`（skill 产物：`SKILL.md` 及其 references /
   assets 等，按任务逐步产出，无模板可实例化）+ `process/goal.md`（本次目标）。
 - **运行过程**：① 定目标——读相关文档，和用户讨论定出这次开发的目标，写进
   `process/goal.md`；② 拆任务——把目标拆成任务，记到 `process/task.md`；
@@ -122,7 +122,7 @@ development → test → audit → release）；查多深以「下游是否用�
   影响广 / 根基有问题）停下来回讨论；⑤ 及时更新 task 状态，任务完成后告知用户
   完成了哪些、有哪些需 review，需要留验收凭据时在 `process/` 根写
   `review-<简介>.md`（临时件）；用户确认通过后 agent 及时删除该 review 件（历史
-  交给 git）、goal.md 归档 `logs/goal/`。
+  交给 git）、goal.md 归档 `archive/goal/`。
 - **规范 / 边界**：小问题随做随记（记在任务板），做完统一记 review 并反馈；
   大问题判据——耦合高、影响面广、根基有问题，停下来回讨论；git 提交信息遵循
   Conventional Commits（feat / fix / docs 等）。不管审查、发布。
@@ -155,7 +155,7 @@ development → test → audit → release）；查多深以「下游是否用�
 > 本阶段是占空自实现（self_implemented）：云端给骨架、项目自填收口做法。
 > 强依赖 audit（唯一保留的强依赖——收口的是审计放行后的产物）。
 
-- **产出**：交付物落 `workspace/delivery/`；变更日志写 `workspace/CHANGELOG.md`
+- **产出**：交付物落 `workspace/dist/`；变更日志写 `workspace/CHANGELOG.md`
   （给用户的版本日志，随发布）。
 - **运行过程**：① 写 CHANGELOG——把这次做了什么写进 `workspace/CHANGELOG.md`；
   ② 确认收口方式——私有项目本地打 tag、本地安装即发布，公开项目上传 GitHub；
