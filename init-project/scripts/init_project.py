@@ -5,9 +5,7 @@
 从本 skill 的 assets/project-template/ 复制模板骨架到目标目录，做确定性初始化：
   1) 复制模板（排除 _trash、.git 等临时内容）；目标目录非空时警告并
      继续——已有文件视为用户声明保留的内容，跳过不覆盖
-  2) 可选替换 package.json 的项目名（仅作用于模板自己落盘的那份；目标
-     目录已有 package.json 时视为保留内容，不改写、只提醒）
-  3) git init + 首次提交（默认分支 main）；git 环节失败以非零退出码反映
+  2) git init + 首次提交（默认分支 main）；git 环节失败以非零退出码反映
 
 安全边界：目标目录已含 .git（即已是 git 仓库）时直接报错退出，不做任何
 git 操作——避免污染用户现有仓库；这种场景应由 agent 逐步接手初始化。
@@ -16,7 +14,6 @@ Stdlib-only，Python 3.9+。
 """
 
 import argparse
-import json
 import shutil
 import subprocess
 import sys
@@ -52,21 +49,6 @@ def _copy_template(target: Path) -> list:
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dst)
     return skipped
-
-
-def _set_project_name(target: Path, name: str) -> None:
-    """把项目名写入模板自己落盘的 package.json（调用方保证它是模板新复制的）。"""
-    pkg = target / "package.json"
-    if not pkg.is_file():
-        return
-    try:
-        data = json.loads(pkg.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as e:
-        print(f"警告：package.json 不是合法 JSON，跳过改名：{e}")
-        return
-    data["name"] = name
-    pkg.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n",
-                   encoding="utf-8")
 
 
 def _git_init(target: Path, branch: str) -> bool:
@@ -123,7 +105,6 @@ def main() -> int:
     _configure_utf8()
     parser = argparse.ArgumentParser(description="把项目模板初始化到新项目目录")
     parser.add_argument("target", help="目标项目目录（空目录，或仅含要保留的文件）")
-    parser.add_argument("--name", help="项目名（写入 package.json，kebab-case）")
     parser.add_argument("--branch", default="main", help="git 默认分支（默认 main）")
     parser.add_argument("--no-git", action="store_true", help="只复制文件，不建 git")
     args = parser.parse_args()
@@ -158,13 +139,6 @@ def main() -> int:
         print("以下文件已存在，跳过（模板不覆盖）：")
         for rel in skipped:
             print(f"  - {rel}")
-    if args.name:
-        # --name 只作用于模板自己落盘的 package.json；用户原有的（在 skipped 里）不改写
-        if "package.json" in skipped:
-            print("提醒：目标目录已有 package.json（视为保留内容），--name 未应用；"
-                  "如需改名请手动处理")
-        else:
-            _set_project_name(target, args.name)
 
     if args.no_git:
         print(f"\n初始化完成：{target}")

@@ -47,16 +47,15 @@ version: 0.9.0
 
 1. 与用户确认目标目录（必须为空，或仅含用户声明保留的文件；**不覆盖已有非模板
    文件**）。
-2. 收集参数：项目名（英文/拼音，kebab-case）、目标目录、默认分支（默认 `main`）。
+2. 收集参数：目标目录、默认分支（默认 `main`）。
 3. 向用户展示初始化方案（落盘哪些文件、创建 git 仓库、首次提交），**获用户确认
    后再执行**（初始化是高风险操作：创建 git 仓库、批量落盘）。
 
 ## 执行流程
 
 1. **运行脚本**（确定性的复制与初始化）：
-   `python <skill>/scripts/init_project.py <目标目录> --name <项目名> [--branch main] [--no-git]`
-   - 脚本复制模板（排除 `_trash/`、`.git/`、`__pycache__/`）、替换 `package.json` 项目名、
-     `git init` + 首次提交；
+   `python <skill>/scripts/init_project.py <目标目录> [--branch main] [--no-git]`
+   - 脚本复制模板（排除 `_trash/`、`.git/`、`__pycache__/`）、`git init` + 首次提交；
      `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
    - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
@@ -64,8 +63,6 @@ version: 0.9.0
      `spec/constitution.md` 存在（`spec/` 出厂有机制说明书 + 规范宪章两件，
      spec 工作流内容按需才拉）；`_trash/` 未随模板
      复制进来；
-   - **参数**（若指定了 `--name`）：`package.json` 的 `name` 已替换为项目名，
-     `version` 保持模板原值不变（不随初始化改动）。
    - **git**：主仓库 `.git` 存在；`git status` 干净；首次提交信息为
      `chore: init from project template`。
    - **常见问题**：首次提交失败多半是未配置 `git user.name` / `user.email`，让

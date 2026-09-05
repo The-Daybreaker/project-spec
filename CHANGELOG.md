@@ -3,13 +3,14 @@
 发布仓库的版本历史（两产物：project-template / init-project）。
 模板本体只在 `init-project/assets/project-template/` 存一份。
 
-版本号与模板本体一致（单一事实源：`init-project/assets/project-template/package.json`），当前 0.9.0。
+版本号与模板本体一致（单一事实源：模板本体 `CHANGELOG.md` 的版本标题），当前 0.9.0。
 
 ## [Unreleased]
 
 spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-project +
 取消三件套（process 重新定性为协作活状态区）+ 目录命名对齐业界惯例
-（logs→archive、workspace 去预置改 spec 驱动）+ 规范拆分出 `spec/constitution.md`。
+（logs→archive、workspace 去预置改 spec 驱动）+ 规范拆分出 `spec/constitution.md`
++ 移除模板 `package.json`（版本标记归 CHANGELOG 独担）。
 版本号待用户确认后再定，不随本次自动 bump。
 
 ### Changed
@@ -54,6 +55,10 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
   CHANGELOG）。
 - `agent-rules` skill 整个删除：它与模板宪章是两处副本、必然漂移，其「项目
   外行为基线」职责并入 `init-project`（指向唯一事实源，杜绝漂移）。
+- 模板本体根 `package.json`：`version` 与 CHANGELOG 版本标题重复（违反单一事实
+  源）、随模块制退休已无脚本读取、对非 Node 项目是杂物；删除后模板版本标记由
+  CHANGELOG 独担，`init_project.py` 去掉 `--name` / `_set_project_name`（详见开发仓
+  决策 65）。
 
 ### Fixed
 

@@ -46,6 +46,11 @@
 - 锁文件三件：`spec/lockfile.py`、`spec/lockfile.md`（及实例化后的
   `lockfile.json`）——spec 拉进项目即自由编辑、无只读副本可锁，防漂移
   校验退休；冷启动不再跑 `lockfile.py --verify`。
+- 根 `package.json`：`version`（0.9.0）与本 CHANGELOG 的版本标题重复、违反单一
+  事实源，且随模块制退休已无脚本读取（原读它的 `build_delivery.py` 早已删除）；
+  对非 Node 项目是杂物，对 Node 项目其 version 也是模板版本而非项目自身版本。
+  删除后模板版本标记由本 CHANGELOG 独担；`init-project/scripts/init_project.py`
+  去掉只服务于它的 `--name` 选项与 `_set_project_name`。
 
 ## [0.9.0] - 2026-09-03
 

@@ -39,7 +39,7 @@ flowchart TB
 
 | 技能 | 干什么 | 何时生效 |
 | --- | --- | --- |
-| **init-project** | 兼两个用途：① 把任意空文件夹初始化成符合模板规范的新项目（复制骨架、替换项目名占位符、初始化 git 并首次提交）；② 作为项目外对话的通用行为基线——指向模板本体 `AGENTS.md`「五、宪章」节与其 `spec/constitution.md`「宪章」节的 6 条（重事实、先对齐再动手、操作风险分级、删除走可恢复路径、回读校验、书写规范），只指向不复制、杜绝漂移 | 适用于所有非纯聊天的对话：要开新项目时走①；对话不属于任何项目、且非纯聊天时走②；一旦进入某个项目，就以那个项目自己的 `AGENTS.md` 为准 |
+| **init-project** | 兼两个用途：① 把任意空文件夹初始化成符合模板规范的新项目（复制骨架、初始化 git 并首次提交）；② 作为项目外对话的通用行为基线——指向模板本体 `AGENTS.md`「五、宪章」节与其 `spec/constitution.md`「宪章」节的 6 条（重事实、先对齐再动手、操作风险分级、删除走可恢复路径、回读校验、书写规范），只指向不复制、杜绝漂移 | 适用于所有非纯聊天的对话：要开新项目时走①；对话不属于任何项目、且非纯聊天时走②；一旦进入某个项目，就以那个项目自己的 `AGENTS.md` 为准 |
 
 ## 它能帮你解决什么问题
 
@@ -68,9 +68,8 @@ flowchart TB
 
 > 「用 init-project 技能把 <目标目录> 初始化为一个新项目」
 
-它会按固定清单执行：先和你确认目标目录、项目名与落盘方案 → 复制模板
-骨架 → 替换 `package.json` 里的项目名 → 初始化 git 并完成首次提交 →
-逐项回读校验。初始化会创建 git 仓库、批量落盘，属于高风险操作，所以它
+它会按固定清单执行：先和你确认目标目录与落盘方案 → 复制模板骨架 →
+初始化 git 并完成首次提交 → 逐项回读校验。初始化会创建 git 仓库、批量落盘，属于高风险操作，所以它
 一定会先确认再动手。
 
 把 `init-project/` 装到每个常用 AI 助手：它既能在你要开新项目时初始化，也
@@ -83,14 +82,14 @@ flowchart TB
 库）：
 
 ```bash
-# 复制模板 + 替换项目名 + 初始化 git 并完成首次提交
-python init-project/scripts/init_project.py <目标目录> --name my-app
+# 复制模板 + 初始化 git 并完成首次提交
+python init-project/scripts/init_project.py <目标目录>
 
 # 可选：指定 git 默认分支（不指定时默认 main）
-python init-project/scripts/init_project.py <目标目录> --name my-app --branch main
+python init-project/scripts/init_project.py <目标目录> --branch main
 
 # 只复制文件，不建 git
-python init-project/scripts/init_project.py <目标目录> --name my-app --no-git
+python init-project/scripts/init_project.py <目标目录> --no-git
 ```
 
 参数逐项说明（与脚本 `--help` 一致）：
@@ -98,7 +97,6 @@ python init-project/scripts/init_project.py <目标目录> --name my-app --no-gi
 | 参数 | 作用 | 默认 |
 | --- | --- | --- |
 | `target`（位置参数） | 目标项目目录；已有文件一律跳过、绝不覆盖；目录已含 `.git` 时报错退出、不做任何 git 操作 | 必填 |
-| `--name` | 项目名（kebab-case），写入 `package.json`；目标目录已有 `package.json` 时不改写、只提醒 | 不改名 |
 | `--branch` | 首次提交所在的 git 默认分支 | `main` |
 | `--no-git` | 只复制文件，跳过 git 初始化与首次提交 | 关闭 |
 
@@ -129,7 +127,6 @@ Project-Template/
     └── assets/project-template/  #   模板本体（全仓只此一份）
         ├── AGENTS.md             #   协作总纲：冷启动入口 + 会话协议 + 宪章强指针（规范正文在 spec/constitution.md）
         ├── README.md             #   随新项目分发的使用手册（含「写给用户」提醒）
-        ├── package.json          #   模板版本与项目名占位
         ├── CHANGELOG.md          #   模板变更记录
         ├── .editorconfig / .gitattributes / .gitignore  # 编辑器约定、行尾与忽略规则
         ├── context/              #   项目上下文文档（装什么由 spec 决定，默认空）
