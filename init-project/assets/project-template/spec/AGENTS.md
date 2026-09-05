@@ -21,7 +21,7 @@
 ## 二、怎么拉一份 spec
 
 货架与模板在同一个公开仓：`github.com/The-Daybreaker/project-spec` 的
-`preset-spec/` 目录（不再是另一个独立仓库）。
+`preset-spec/` 目录。
 
 1. 浏览公开仓 `preset-spec/specs/` 目录选定一个 spec，读它 `spec.md` 开头
    确认场景合适（现有哪些 spec、各管什么，直接看目录，货架 README 不复制清单）；
