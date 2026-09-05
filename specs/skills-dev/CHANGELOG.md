@@ -21,6 +21,9 @@
 - （2026-09-05）vision 阶段 tailor 为「想法池」：去掉软件版特有的近三期
   排期表 / 里程碑 / 演进原则，`assets/vision-template.md` 同步改为想法池骨架
   ——修正此前共享 vision 模块给本 spec 塞进用不上的排期内容的矛盾。
+- （2026-09-05）development / audit 阶段的验收落点从 `process/reviews/` 改为
+  `process/` 根 review 临时件（`review-<简介>.md`，通过后删、不归档 logs）——
+  配合模板框架取消三件套（开发仓决策 62）。
 
 ### Removed
 

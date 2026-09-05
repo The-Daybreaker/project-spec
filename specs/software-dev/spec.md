@@ -143,8 +143,9 @@ prd → development → test → audit → release）；查多深以「下游是
   ③ 开发——得到用户确认后根据目标 + task.md 全权执行，当期任务一次性做完，
   过程中及时做单元测试等自测；④ 反馈——小问题记下继续、做完统一反馈，大问题
   （耦合高 / 影响广 / 根基有问题）停下来回讨论；⑤ 及时更新 task 状态，任务完成
-  后告知用户完成了哪些、有哪些需 review，记进 `process/reviews/`；用户确认通过
-  后 review 文档归档 `logs/reviews/`、goal.md 归档 `logs/goal/`。
+  后告知用户完成了哪些、有哪些需 review，需要留验收凭据时在 `process/` 根写
+  `review-<简介>.md`（临时件）；用户确认通过后 agent 及时删除该 review 件（历史
+  交给 git）、goal.md 归档 `logs/goal/`。
 - **规范 / 边界**：小问题随做随记（记在任务板），做完统一记 review 并反馈；
   大问题判据——耦合高、影响面广、根基有问题，停下来回讨论；git 提交信息遵循
   Conventional Commits（feat / fix / docs 等）。不管审查、发布。
@@ -162,8 +163,8 @@ prd → development → test → audit → release）；查多深以「下游是
 
 ### audit — 审计
 
-- **产出**：审计报告（临时文档，走 review 验收 `process/reviews/`）；审计完成
-  归档 `logs/reviews/`。
+- **产出**：审计报告（作为 review 临时件走验收，落 `process/` 根
+  `review-<简介>.md`）；验收通过后删除（历史交给 git）。
 - **运行过程**：① 自审——先查一遍密钥是否外泄、有没有做需求外的东西、文档和
   代码是否对应；② 独立查——换一个不带开发记忆的独立 agent 再次进行对抗式审查；
   ③ 输出报告——写审计报告、附审计结论，放行或打回，隐患列清单、修复后再查。
