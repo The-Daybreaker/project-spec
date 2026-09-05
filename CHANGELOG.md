@@ -1,6 +1,6 @@
 # CHANGELOG
 
-发布仓库的版本历史（两产物：project-template / init-project）。
+发布仓库的版本历史（两产物：project-spec / init-project）。
 模板本体只在 `init-project/assets/project-template/` 存一份。
 
 版本号与模板本体一致（单一事实源：模板本体 `CHANGELOG.md` 的版本标题），当前 0.9.0。
@@ -11,7 +11,9 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
 取消 inbox/pending/reviews 三个异步目录（process 重新定性为协作当前状态区）+ 目录命名对齐业界惯例
 （logs→archive、workspace 去预置改 spec 驱动）+ 规范拆分出 `spec/constitution.md`
 后又全量迁回 `AGENTS.md` §五（决策 66）+ 两公开仓合并、货架成为同仓
-`preset-spec/`（决策 67）+ 移除模板 `package.json`（版本标记归 CHANGELOG 独担）。
+`preset-spec/`（决策 67）+ 产品英文名 Project-Template 更名 project-spec
+（与公开仓名一致；云端直接复用原 project-spec 仓，两条历史以 fast-forward
+合流）+ 移除模板 `package.json`（版本标记归 CHANGELOG 独担）。
 版本号待用户确认后再定，不随本次自动 bump。
 
 ### Changed
@@ -66,6 +68,13 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
   复制」；货架 README、`build/build.md`、`spec-template/` 与两份 spec 的
   「云端」措辞同步；`preset-spec/.editorconfig` 提升到仓根覆盖全仓（模板
   本体内另带一份，随模板分发给新项目）。
+- 产品英文名 Project-Template 更名 **project-spec**（与公开仓名一致）：
+  模板本体 README 欢迎语同步；云端不采用「改名 Project-Template 仓」的
+  路径，改为直接复用原 `The-Daybreaker/project-spec` 仓——本地合并仓
+  包含两条完整历史且其 main 是旧仓 main 的后代，推送为 fast-forward，
+  模板链与货架链记录全部保留；skill 内部资产目录 `assets/project-template/`
+  是技术路径名，不随产品名改（改名牵动 `init_project.py` 常量且与
+  `preset-spec/` 语义冲突）。
 
 ### Removed
 

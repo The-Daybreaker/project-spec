@@ -52,6 +52,9 @@
 - spec 货架与模板合并为同一个公开仓（决策 67）：spec 拉取来源从「另一个
   云端仓」改为「公开仓的 `preset-spec/` 目录」，`spec/AGENTS.md` §二与本
   README「按需安装工作流（spec）」同步为同仓复制口径。
+- 产品英文名 Project-Template 更名 **project-spec**（与公开仓名一致）：
+  本 README 欢迎语同步；skill 内部资产目录路径名 `assets/project-template/`
+  保持不变（技术路径，非用户可见产品名）。
 
 ### Removed
 
