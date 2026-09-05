@@ -18,6 +18,11 @@ _trash/
 *.pfx
 *.jks
 *.keystore
+*.crt
+*.cer
+*.p7b
+.htpasswd
+*.ovpn
 secrets/
 *credential*
 *secret*

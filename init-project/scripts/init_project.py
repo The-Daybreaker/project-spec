@@ -77,21 +77,46 @@ def _git_init(target: Path, branch: str) -> bool:
         print("错误：未找到 git 命令，无法完成 git 初始化")
         return False
     if r.returncode != 0:
-        print(f"错误：git init 失败：\n{r.stderr.strip()}")
+        # `git init -b` 需要 git >= 2.28，旧版报参数不认识；init 是幂等的，
+        # 直接回退 init + symbolic-ref 置默认分支，不解析报错文本
+        r = _run(target, "git", "init")
+        if r.returncode != 0:
+            print(f"错误：git init 失败：\n{r.stderr.strip()}")
+            return False
+        r = _run(target, "git", "symbolic-ref", "HEAD", f"refs/heads/{branch}")
+        if r.returncode != 0:
+            print(f"错误：无法把默认分支设为 {branch}（本机 git 可能过旧）：\n{r.stderr.strip()}")
+            return False
+        print(f"提醒：git init -b 不可用（git < 2.28），已用 symbolic-ref 把默认分支设为 {branch}")
+    r = _run(target, "git", "add", "-A")
+    if r.returncode != 0:
+        print(f"错误：git add 失败：\n{r.stderr.strip()}")
         return False
-    _run(target, "git", "add", "-A")
+    # 无可提交改动用 status --porcelain 判定（机器可读，不依赖 git 输出语言）
+    r = _run(target, "git", "status", "--porcelain")
+    if r.returncode == 0 and not r.stdout.strip():
+        print("提醒：没有需要提交的改动（目标目录内容已与模板一致），未产生提交")
+        return False
+    # 未配置身份提交必败，前置探测、给精准提示，不从报错文本猜原因
+    if (not _git_config_set(target, "user.name")
+            or not _git_config_set(target, "user.email")):
+        print("警告：git 身份未配置（user.name / user.email），首次提交无法完成；文件已暂存。")
+        print("请先配置后再手动提交，例如：")
+        print('  git config --global user.name "你的名字"')
+        print('  git config --global user.email "you@example.com"')
+        return False
     r = _run(target, "git", "commit", "-m", "chore: init from project template")
     if r.returncode != 0:
-        out = (r.stdout + r.stderr).strip()
-        # 区分「无可提交改动」（重复初始化 / 内容已一致）与「未配置身份」两种失败
-        if ("nothing to commit" in out or "working tree clean" in out
-                or "无文件要提交" in out or "工作区干净" in out):
-            print("提醒：没有需要提交的改动（目标目录内容已与模板一致），未产生提交")
-        else:
-            print("警告：首次提交未完成（可能未配置 git user.name/email），文件已暂存，请手动提交：")
-            print(out)
+        print("警告：首次提交未完成，文件已暂存，请手动提交：")
+        print((r.stdout + r.stderr).strip())
         return False
     return True
+
+
+def _git_config_set(target: Path, key: str) -> bool:
+    """读 git 配置（含 global/system 合并结果），键存在且非空返回 True。"""
+    r = _run(target, "git", "config", "--get", key)
+    return r.returncode == 0 and r.stdout.strip() != ""
 
 
 def main() -> int:

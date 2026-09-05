@@ -1,4 +1,4 @@
-# Python 字节码缓存不入库（跑 spec/lockfile.py 会产生）
+# Python 字节码缓存不入库
 __pycache__/
 *.pyc
 
@@ -19,6 +19,11 @@ _trash/
 *.pfx
 *.jks
 *.keystore
+*.crt
+*.cer
+*.p7b
+.htpasswd
+*.ovpn
 secrets/
 *credential*
 *secret*

@@ -31,6 +31,16 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
 - `agent-rules` skill 整个删除：它与模板宪章是两处副本、必然漂移，其「项目
   外行为基线」职责并入 `init-project`（指向唯一事实源，杜绝漂移）。
 
+### Fixed
+
+- 宪章第 4–6 条序号恢复（与「分类声明」的显式序号约定一致）。
+- `init_project.py` 去掉对 git 本地化输出措辞的依赖：无可提交改动改用
+  `git status --porcelain` 判定，未配置身份改为前置探测并给精准提示；
+  `git add` 检查返回码；`git init -b`（git ≥ 2.28）不可用时回退
+  `git init` + `symbolic-ref` 设置默认分支。
+- 默认 `.gitignore` 密钥文件名模式补 `*.crt` / `*.cer` / `*.p7b` /
+  `.htpasswd` / `*.ovpn`。
+
 ## [0.9.0] - 2026-09-03
 
 云端模块库接入 + spec 模块字段精简 + 仓库结构简化。
