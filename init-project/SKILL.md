@@ -1,9 +1,5 @@
 ---
-name: init-project
-description: 通用项目模板的技能载体，兼两个用途，适用于所有非纯聊天的对话。①项目初始化：当用户要求新建项目、初始化项目仓库/文件夹并意图套用本通用项目模板时，复制模板框架、替换项目占位符、初始化 git 并首次提交。②项目外通用行为基线：当对话不在任何项目/工作区内（无项目 AGENTS.md、不属于已打开的工作区）且有任务/产出/需行动时（编码、写文档、分析、调研、规划、创建/修改/整理文件、事实性问答、执行命令等），读取并遵循 assets/project-template/AGENTS.md（协作总纲）§五「规范」中的宪章条款作为行为基线；规范的唯一事实源是该 AGENTS.md，本 skill 只指向、不复制（避免漂移）。项目内对话以该项目自己的 AGENTS.md 为准；纯闲聊（无任务、无产出、无需行动）除外。
-agent_created: true
-version: 0.9.0
----
+name: init-project description: 通用项目模板的技能载体，兼两个用途，适用于所有非纯聊天的对话。①项目初始化：当用户要求新建项目、初始化项目仓库/文件夹并意图套用本通用项目模板时，复制模板框架、替换项目占位符、初始化 git 并首次提交。②项目外通用行为基线：当对话不在任何项目/工作区内（无项目 AGENTS.md、不属于已打开的工作区）且有任务/产出/需行动时（编码、写文档、分析、调研、规划、创建/修改/整理文件、事实性问答、执行命令等），读取并遵循 assets/project-template/AGENTS.md（协作总纲）§五「规范」中的宪章条款作为行为基线；规范的唯一事实源是该 AGENTS.md，本 skill 只指向、不复制（避免漂移）。项目内对话以该项目自己的 AGENTS.md 为准；纯闲聊（无任务、无产出、无需行动）除外。 agent_created: true version: 0.9.0 ---
 
 # init-project — 通用项目模板技能
 
@@ -11,69 +7,39 @@ version: 0.9.0
 
 本 skill 适用于**所有非纯聊天的对话**，按情境分两种用途：
 
-1. **项目初始化**：对话要新建 / 初始化项目、套用本通用项目模板时，走下面
-   「定位 → 前置确认 → 执行流程 → 执行红线」，把模板复制成一个新项目骨架。
-2. **项目外通用行为基线**：对话**不在任何项目 / 工作区内**（无项目
-   `AGENTS.md`、不属于已打开的工作区）、且有任务 / 产出 / 需行动（编码、写
-   文档、分析、调研、规划、文件操作、事实性问答、执行命令等）时，读取并
-   遵循 `assets/project-template/AGENTS.md`（协作总纲）§五「规范」中的宪章
-   条款，作为本次对话的行为底线。
+1. **项目初始化**：对话要新建 / 初始化项目、套用本通用项目模板时，走下面「定位 → 前置确认 → 执行流程 → 执行红线」，把模板复制成一个新项目骨架。
+2. **项目外通用行为基线**：对话**不在任何项目 / 工作区内**（无项目 `AGENTS.md`、不属于已打开的工作区）、且有任务 / 产出 / 需行动（编码、写文档、分析、调研、规划、文件操作、事实性问答、执行命令等）时，读取并遵循 `assets/project-template/AGENTS.md`（协作总纲）§五「规范」中的宪章条款，作为本次对话的行为底线。
 
 判定顺序：
 
 - **纯闲聊**（无任务、无产出、无需行动）→ 本 skill 不介入。
-- **项目内对话**（在某个有自己 `AGENTS.md` 的项目 / 工作区里）→ 以那个项目
-  自己的 `AGENTS.md` 为准，本 skill 不越位（项目内已含同一套宪章）。
-- **项目外 + 非纯聊天** → 走用途 2，照 `assets/project-template/AGENTS.md`
-  §五「规范」的宪章条款办。
+- **项目内对话**（在某个有自己 `AGENTS.md` 的项目 / 工作区里）→ 以那个项目自己的 `AGENTS.md` 为准，本 skill 不越位（项目内已含同一套宪章）。
+- **项目外 + 非纯聊天** → 走用途 2，照 `assets/project-template/AGENTS.md` §五「规范」的宪章条款办。
 
 ## 定位
 
 > 以下「定位 / 前置确认 / 执行流程 / 执行红线」四节是**用途 1（项目初始化）**的流程。
 
-把内嵌的通用项目模板（`assets/project-template/`）应用到用户指定的项目文件夹，
-生成一个**自洽自足**的项目骨架：任何 agent 从零接手都能按根 `AGENTS.md` 继续开发，
-不依赖本次对话上下文。模板自带：
+把内嵌的通用项目模板（`assets/project-template/`）应用到用户指定的项目文件夹，生成一个**自洽自足**的项目骨架：任何 agent 从零接手都能按根 `AGENTS.md` 继续开发，不依赖本次对话上下文。模板自带：
 
-- **框架结构**：`AGENTS.md`（协作总纲，§五 为用户维护的规范）/ `README.md`（使用手册）/
-  `context/`（项目上下文）/ `workspace/`（干活 + 发布层，结构由 spec / 项目定）/ `process/`
-  （任务板 + agent 记忆 + 临时件）/ `archive/`（历史）/ `spec/`（声明式工作流机制）。
-- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 设计与获取指引）常驻；spec 以
-  自己设计为主，可参考公开仓 `preset-spec/` 最佳实践集
-  （`github.com/The-Daybreaker/project-spec` 仓内 `preset-spec/` 目录）；空 spec
-  时项目以框架形态直接运转。
+- **框架结构**：`AGENTS.md`（协作总纲，§五 为用户维护的规范）/ `README.md`（使用手册）/ `context/`（项目上下文）/ `workspace/`（干活 + 发布层，结构由 spec / 项目定）/ `process/` （任务板 + agent 记忆 + 临时件）/ `archive/`（历史）/ `spec/`（声明式工作流机制）。
+- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 设计与获取指引）常驻；spec 以自己设计为主，可参考公开仓 `preset-spec/` 最佳实践集（`github.com/The-Daybreaker/project-spec` 仓内 `preset-spec/` 目录）；空 spec 时项目以框架形态直接运转。
 
 ## 前置确认（必须）
 
-1. 与用户确认目标目录（必须为空，或仅含用户声明保留的文件；**不覆盖已有非模板
-   文件**）。
+1. 与用户确认目标目录（必须为空，或仅含用户声明保留的文件；**不覆盖已有非模板文件**）。
 2. 收集参数：目标目录、默认分支（默认 `main`）。
-3. 向用户展示初始化方案（落盘哪些文件、创建 git 仓库、首次提交），**获用户确认
-   后再执行**（初始化是高风险操作：创建 git 仓库、批量落盘）。
+3. 向用户展示初始化方案（落盘哪些文件、创建 git 仓库、首次提交），**获用户确认后再执行**（初始化是高风险操作：创建 git 仓库、批量落盘）。
 
 ## 执行流程
 
-1. **运行脚本**（确定性的复制与初始化）：
-   `python <skill>/scripts/init_project.py <目标目录> [--branch main] [--no-git]`
-   - 脚本复制模板（排除 `_trash/`、`.git/`、`__pycache__/`）、`git init` + 首次提交；
-     `--no-git` 仅复制文件（不建 git）。
+1. **运行脚本**（确定性的复制与初始化）： `python <skill>/scripts/init_project.py <目标目录> [--branch main] [--no-git]`
+   - 脚本复制模板（排除 `_trash/`、`.git/`、`__pycache__/`）、`git init` + 首次提交； `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
-   - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
-     `process/` / `archive/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md`
-     存在（`spec/` 出厂只有机制说明书一件，规范在根 `AGENTS.md` §五，
-     spec 工作流内容按需才拉）；`_trash/` 未随模板
-     复制进来；
-   - **git**：主仓库 `.git` 存在；`git status` 干净；首次提交信息为
-     `chore: init from project template`。
-   - **常见问题**：首次提交失败多半是未配置 `git user.name` / `user.email`，让
-     用户配置后手动提交；`--no-git` 模式不建 git。
-3. **收尾汇报**：向用户汇报初始化位置、git 仓库，以及下一步建议
-   （首次对话让 agent 冷启动对齐项目背景与目标；需要文档体系/工作流时引入 spec；
-   配置远端后推送）。若用户需要工作流 spec，引导其按「还原场景 → 场景拆流程 →
-   流程抽象为 spec」的方法论设计：① 还原场景——和用户一起把项目的典型工作
-   场景讲清楚；② 场景拆流程——拆成阶段链与入口档位；③ 流程抽象为 spec——
-   按 `preset-spec/build/spec-template/` 母版写成 `spec.md` 并补 `assets/`。
-   设计时可参考 `preset-spec/specs/` 里的最佳实践，但以用户自己的场景为准。
+   - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` / `process/` / `archive/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md` 存在（`spec/` 出厂只有机制说明书一件，规范在根 `AGENTS.md` §五， spec 工作流内容按需才拉）；`_trash/` 未随模板复制进来；
+   - **git**：主仓库 `.git` 存在；`git status` 干净；首次提交信息为 `chore: init from project template`。
+   - **常见问题**：首次提交失败多半是未配置 `git user.name` / `user.email`，让用户配置后手动提交；`--no-git` 模式不建 git。
+3. **收尾汇报**：向用户汇报初始化位置、git 仓库，以及下一步建议（首次对话让 agent 冷启动对齐项目背景与目标；需要文档体系/工作流时引入 spec；配置远端后推送）。若用户需要工作流 spec，引导其按「还原场景 → 场景拆流程 →流程抽象为 spec」的方法论设计：① 还原场景——和用户一起把项目的典型工作场景讲清楚；② 场景拆流程——拆成阶段链与入口档位；③ 流程抽象为 spec——按 `preset-spec/build/spec-template/` 母版写成 `spec.md` 并补 `assets/`。设计时可参考 `preset-spec/specs/` 里的最佳实践，但以用户自己的场景为准。
 
 ## 执行红线
 
