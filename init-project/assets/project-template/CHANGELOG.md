@@ -29,6 +29,12 @@
   spec 的产出落点改用业界惯例名 `workspace/src/`、`workspace/dist/`，其 `logs/*`
   归档路径改 `archive/*`。本体 `AGENTS.md`、两份 README、`SKILL.md`、
   `process/memory.md`、`spec/build/build.md` 同步。
+- 规范正文从 `AGENTS.md` 拆出到 `spec/constitution.md`（宪章 / 项目级 / 项目
+  自己的规范三节 + 「写给用户」头 + 准入 / 分类前言，条款原样搬运）；`AGENTS.md`
+  §五 收敛为「宪章」强指针节（声明用户可自行修改 / 添加 / 维护 + 指向
+  constitution.md、冷启动必读），§七 并入 constitution.md；冷启动链、§二读盘、
+  §六、目录地图、维护权分区、`spec/AGENTS.md`、`init-project/SKILL.md`（用途②
+  增加 constitution.md 指向）同步。
 
 ### Removed
 

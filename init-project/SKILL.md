@@ -1,6 +1,6 @@
 ---
 name: init-project
-description: 通用项目模板的技能载体，兼两个用途，适用于所有非纯聊天的对话。①项目初始化：当用户要求新建项目、初始化项目仓库/文件夹并意图套用本通用项目模板时，复制模板框架、替换项目占位符、初始化 git 并首次提交。②项目外通用行为基线：当对话不在任何项目/工作区内（无项目 AGENTS.md、不属于已打开的工作区）且有任务/产出/需行动时（编码、写文档、分析、调研、规划、创建/修改/整理文件、事实性问答、执行命令等），读取并遵循 assets/project-template/AGENTS.md「五、规范」的宪章 6 条作为行为基线；这些规范的唯一事实源就是那份 AGENTS.md，本 skill 只指向、不复制（避免漂移）。项目内对话以该项目自己的 AGENTS.md 为准；纯闲聊（无任务、无产出、无需行动）除外。
+description: 通用项目模板的技能载体，兼两个用途，适用于所有非纯聊天的对话。①项目初始化：当用户要求新建项目、初始化项目仓库/文件夹并意图套用本通用项目模板时，复制模板框架、替换项目占位符、初始化 git 并首次提交。②项目外通用行为基线：当对话不在任何项目/工作区内（无项目 AGENTS.md、不属于已打开的工作区）且有任务/产出/需行动时（编码、写文档、分析、调研、规划、创建/修改/整理文件、事实性问答、执行命令等），读取并遵循 assets/project-template/AGENTS.md（协作总纲）与其「五、宪章」节指向的 spec/constitution.md「宪章」节的条款作为行为基线；规范的唯一事实源是 constitution.md，本 skill 只指向、不复制（避免漂移）。项目内对话以该项目自己的 AGENTS.md 为准；纯闲聊（无任务、无产出、无需行动）除外。
 agent_created: true
 version: 0.9.0
 ---
@@ -16,8 +16,8 @@ version: 0.9.0
 2. **项目外通用行为基线**：对话**不在任何项目 / 工作区内**（无项目
    `AGENTS.md`、不属于已打开的工作区）、且有任务 / 产出 / 需行动（编码、写
    文档、分析、调研、规划、文件操作、事实性问答、执行命令等）时，读取并
-   遵循 `assets/project-template/AGENTS.md`「五、规范」里的**宪章 6 条**，
-   作为本次对话的行为底线。
+   遵循 `assets/project-template/AGENTS.md`（协作总纲）与其「五、宪章」节指向的
+   `spec/constitution.md`「宪章」节条款，作为本次对话的行为底线。
 
 判定顺序：
 
@@ -25,7 +25,7 @@ version: 0.9.0
 - **项目内对话**（在某个有自己 `AGENTS.md` 的项目 / 工作区里）→ 以那个项目
   自己的 `AGENTS.md` 为准，本 skill 不越位（项目内已含同一套宪章）。
 - **项目外 + 非纯聊天** → 走用途 2，照 `assets/project-template/AGENTS.md`
-  的宪章办。
+  与其 `spec/constitution.md`「宪章」节办。
 
 ## 定位
 
@@ -35,9 +35,9 @@ version: 0.9.0
 生成一个**自洽自足**的项目骨架：任何 agent 从零接手都能按根 `AGENTS.md` 继续开发，
 不依赖本次对话上下文。模板自带：
 
-- **框架结构**：`AGENTS.md`（协作总纲 + 宪章 6 条）/ `README.md`（使用手册）/
+- **框架结构**：`AGENTS.md`（协作总纲）/ `README.md`（使用手册）/
   `context/`（项目上下文）/ `workspace/`（干活 + 发布层，结构由 spec / 项目定）/ `process/`
-  （任务板 + agent 记忆 + 临时件）/ `archive/`（历史）/ `spec/`（声明式工作流）。
+  （任务板 + agent 记忆 + 临时件）/ `archive/`（历史）/ `spec/`（声明式工作流 + `constitution.md` 规范宪章）。
 - **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）常驻；spec 内容
   （`spec.md` + `assets/`）与构建规则按需从云端货架拉取
   （`github.com/The-Daybreaker/project-spec`）、拉下来自由改；空 spec 时项目
@@ -60,8 +60,9 @@ version: 0.9.0
      `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
    - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
-     `process/` / `archive/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md`
-     存在（`spec/` 出厂只此一件，spec 内容按需才拉）；`_trash/` 未随模板
+     `process/` / `archive/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md`、
+     `spec/constitution.md` 存在（`spec/` 出厂有机制说明书 + 规范宪章两件，
+     spec 工作流内容按需才拉）；`_trash/` 未随模板
      复制进来；
    - **参数**（若指定了 `--name`）：`package.json` 的 `name` 已替换为项目名，
      `version` 保持模板原值不变（不随初始化改动）。
@@ -85,6 +86,6 @@ version: 0.9.0
 
 | 场景 | 读取 |
 |---|---|
-| **项目外对话的行为基线（用途 2）** | `assets/project-template/AGENTS.md`「五、规范」的**宪章 6 条**（唯一事实源，只指向不复制） |
+| **项目外对话的行为基线（用途 2）** | `assets/project-template/AGENTS.md`（协作总纲）+ 其「五、宪章」节指向的 `spec/constitution.md`「宪章」节条款（规范唯一事实源在 constitution.md，只指向不复制） |
 | 模板结构与文件职责（向用户解释模板） | `assets/project-template/AGENTS.md` |
 | 复制与初始化（用途 1，确定性执行） | 直接运行 `scripts/init_project.py` |

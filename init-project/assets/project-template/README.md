@@ -31,7 +31,7 @@
 
 | 目录 | 放什么 |
 | --- | --- |
-| `spec/` | 出厂只有机制说明书 `AGENTS.md`（讲 spec 是什么、怎么拉、怎么读）；spec 内容与构建规则按需从云端货架拉取 |
+| `spec/` | 出厂有机制说明书 `AGENTS.md` + 规范宪章 `constitution.md`（用户维护区、冷启动必读）；spec 工作流内容与构建规则按需从云端货架拉取 |
 | `context/` | 项目上下文文档（PRD / ADR / 知识库等），装什么、骨架由 spec 决定，没有 spec 时为空 |
 | `process/` | 协作的活状态区：常驻的 `task.md` 任务板、`memory.md` 助手记忆，以及笔记 / review 验收件等临时件（用完即清） |
 | `workspace/` | 干活主工作区 + 对外发布层；内部结构由 spec / 项目定（如 `src/` 源码、`dist/` 交付物） |
@@ -39,8 +39,8 @@
 
 ## 协作协议速览
 
-新会话冷启动按固定顺序「读盘」：根 `AGENTS.md`（目录地图、会话协议、
-宪章 6 条）→ 通读 `process/` 全部文件（`task.md` 进行中 / 下一步 / 阻塞、
+新会话冷启动按固定顺序「读盘」：根 `AGENTS.md`（目录地图、会话协议）→
+`spec/constitution.md`（规范 / 宪章，用户维护区）→ 通读 `process/` 全部文件（`task.md` 进行中 / 下一步 / 阻塞、
 `memory.md` 助手记忆，以及笔记 / review 等临时件）；装了 spec 的项目再读
 `spec/<id>/spec.md` 判定入口、走阶段。
 完整条款以根 `AGENTS.md` 为单一事实源。

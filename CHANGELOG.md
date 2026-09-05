@@ -9,7 +9,7 @@
 
 spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-project +
 取消三件套（process 重新定性为协作活状态区）+ 目录命名对齐业界惯例
-（logs→archive、workspace 去预置改 spec 驱动）。
+（logs→archive、workspace 去预置改 spec 驱动）+ 规范拆分出 `spec/constitution.md`。
 版本号待用户确认后再定，不随本次自动 bump。
 
 ### Changed
@@ -34,6 +34,11 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
   保留为「干活 + 发布层」通用声明、内部结构改由 spec / 项目定；配套云端两份
   spec 产出落点改用 `workspace/src/`、`workspace/dist/` 与 `archive/*` 归档路径
   （详见模板本体 CHANGELOG 与开发仓决策 63）。
+- 规范正文从模板 `AGENTS.md` 拆出到新文件 `spec/constitution.md`（宪章 / 项目级 /
+  项目自己的规范三节，条款原样搬运 + 「写给用户」头说明可自由删改增补）；
+  `AGENTS.md` §五 收敛为「宪章」强指针节、§七 并入 constitution.md、冷启动链与
+  读盘加入 constitution.md；`spec/AGENTS.md`、`init-project/SKILL.md`（用途②增加
+  constitution.md 指向）、两份 README 同步（详见开发仓决策 64）。
 
 ### Removed
 
