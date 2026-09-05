@@ -1,10 +1,14 @@
-# Project-Template（通用项目模板）
+# project-spec：通用项目模板 + spec 最佳实践货架
 
-一套**开箱即用、面向「人 + AI 助手协作开发」的通用项目模板**：你说一句话，
-AI 助手就把协作骨架搭好；此后任何 AI 助手接手——哪怕没有上一次的对话记录、
-哪怕换了一家 AI 工具——按固定顺序读一遍项目里的文件，就能恢复项目全貌、
-无缝接着干。全部产物只是 Markdown 与 git，不绑定编程语言，也不绑定任何
-AI 厂商。
+本仓装两样东西：
+
+- **`init-project/`——通用项目模板产品**：一套**开箱即用、面向「人 + AI
+  助手协作开发」的通用项目模板**。你说一句话，AI 助手就把协作骨架搭好；
+  此后任何 AI 助手接手——哪怕没有上一次的对话记录、哪怕换了一家 AI
+  工具——按固定顺序读一遍项目里的文件，就能恢复项目全貌、无缝接着干。
+  全部产物只是 Markdown 与 git，不绑定编程语言，也不绑定任何 AI 厂商。
+- **`preset-spec/`——spec 最佳实践货架**：按场景备好的工作流（软件开发、
+  skill 开发……），需要时从这里复制一份进项目、自由改；它不随模板分发。
 
 ## 你是不是也遇到过这些问题
 
@@ -39,7 +43,7 @@ AI 的对话上下文是临时的：会话一关、上下文一压缩就丢失�
 ```mermaid
 flowchart TD
   S["新会话开始 → 读盘"] --> A["AGENTS.md<br/>协作总纲 · 目录地图"]
-  A --> C["spec/constitution.md<br/>项目宪章（用户维护）"]
+  A --> C["AGENTS.md §五 规范<br/>行为规范（用户维护）"]
   C --> P["process/ 全部文件<br/>任务板 · AI 记忆 · 临时件"]
   P --> Q{"装了 spec？"}
   Q -- 是 --> F["spec.md：判定入口、走阶段"]
@@ -58,21 +62,22 @@ flowchart TD
   操作必须先找人确认」——哪怕项目什么流程都不配，也能最低限度运转。
 - **spec** 是某一类工作的具体流程：分几个阶段、阶段之间怎么依赖、每个
   阶段产出什么，由一份 `spec.md`（加上产出骨架 `assets/`）声明，需要时
-  从配套的云端货架按需拉取、拉下来自由改。
+  从同仓 `preset-spec/` 货架按需复制、拉下来自由改。
 
-框架是底座、每个新项目自带；spec 叠加在框架上、可装可不装；货架在云端，
-项目里用到的都是从货架拉来、之后归项目自由改的副本：
+框架是底座、每个新项目自带；spec 叠加在框架上、可装可不装；货架与模板
+同仓（`preset-spec/`）、不随模板分发，项目里用到的都是从货架复制来、
+之后归项目自由改的副本：
 
 ```mermaid
 flowchart TB
-  CLOUD["云端 spec 货架 project-spec（公开仓）"]
+  SHELF["同仓 preset-spec/ 货架<br/>specs/ 工作流 · build/ 构建规则"]
   subgraph PROJ["初始化出的新项目"]
     direction TB
-    SPEC["spec 层：工作流 spec.md + assets/<br/>按需拉取 · 拉下来自由改 · 可以为空"]
+    SPEC["spec 层：工作流 spec.md + assets/<br/>按需复制 · 拉下来自由改 · 可以为空"]
     FRAME["框架层：协作总纲 · 任务板 · AI 记忆 · 归档 · git 约定<br/>每个项目相同 · 出厂自带"]
     SPEC -. "叠加" .-> FRAME
   end
-  CLOUD -. "浏览选定，拉一份下来" .-> SPEC
+  SHELF -. "浏览选定，复制一份进项目" .-> SPEC
 ```
 
 ### 3. 流程与宪章分开
@@ -82,10 +87,10 @@ flowchart TB
 | 文件 | 角色 | 谁维护 | 变化频率 |
 | --- | --- | --- | --- |
 | `spec/<id>/spec.md` | **流程**：这类活儿分几步、每步怎么走 | 项目自由改、可换 | 因项目而异，高频演进 |
-| `spec/constitution.md` | **宪章**：任何会话都遵守的行为规范 | 用户本人维护 | 少数、稳定 |
-| `AGENTS.md` | **协作协议**：目录地图、读盘写盘规则 | agent 按机制维护 | 跨项目通用 |
+| `AGENTS.md` §五 规范 | **宪章**：任何会话都遵守的行为规范 | 用户本人维护 | 少数、稳定 |
+| `AGENTS.md` 其余各节 | **协作协议**：目录地图、读盘写盘规则 | agent 按机制维护 | 跨项目通用 |
 
-流程再怎么换，宪章不动；想增删自己的协作规矩，只改宪章这一个文件，
+流程再怎么换，宪章不动；想增删自己的协作规矩，只改 `AGENTS.md` §五，
 不用担心被流程调整冲掉。
 
 ### 4. 协作层与发布层分离
@@ -108,9 +113,9 @@ flowchart TB
 
 ### 5. 单一事实源：只指向，不复制
 
-同一条规范只在唯一一个文件里保留全文，其他地方只放引用。例如宪章全文
-只存在于 `spec/constitution.md`，协作总纲和初始化技能都只指向它——从
-根上杜绝「两份副本，改了一处忘改另一处」的漂移。
+同一条规范只在唯一一个文件里保留全文，其他地方只放引用。例如规范全文
+只存在于 `AGENTS.md` §五，使用手册和初始化技能都只指向它——从根上
+杜绝「两份副本，改了一处忘改另一处」的漂移。
 
 ### 6. 渐进式披露与入口分档：别让 AI 携带无用上下文
 
@@ -125,7 +130,7 @@ AI 的上下文窗口是稀缺资源，模板按「什么时候才需要读」�
 
 ## 快速开始
 
-**第 0 步：先获取本仓**——`git clone https://github.com/The-Daybreaker/Project-Template`
+**第 0 步：先获取本仓**——`git clone https://github.com/The-Daybreaker/project-spec`
 （或直接下载 ZIP），下面三种方式都基于仓里的文件。
 
 ### 方式一：安装技能使用（推荐）
@@ -184,8 +189,8 @@ python init-project/scripts/init_project.py <目标目录> --no-git
    同步；踩过的坑、验证过的判断写进 `process/memory.md`；有留存价值的
    历史进 `archive/`，笔记和验收件等临时件用完即清——`process/` 扫
    一眼，永远是项目的当前全貌。
-3. **需要完整流程时，装一份 spec**：按后文「配套仓库：云端 spec 货架」
-   的指引，从云端货架挑选合适的工作流拉进项目，也可以自己写一份；不装
+3. **需要完整流程时，装一份 spec**：按后文「同仓货架：`preset-spec/`」
+   的指引，从本仓货架挑选合适的工作流复制进项目，也可以自己写一份；不装
    spec 也能正常开工。
 4. **发布时，workspace 是唯一对外层**：代码与产物落在 `workspace/`，
    配置远端、推送、打 tag 都由你确认后进行，AI 助手不会擅自发布。
@@ -195,23 +200,27 @@ python init-project/scripts/init_project.py <目标目录> --no-git
 ### 初始化出来的目录结构
 
 ```text
-Project-Template/
+project-spec/
 ├── README.md                     # 本文件：门面与使用说明（自洽，读完即可上手）
 ├── CHANGELOG.md                  # 发布版本变更记录
-├── .gitattributes / .gitignore   # 行尾统一（仓内 LF）与忽略规则
-└── init-project/                 # init-project 技能（项目初始化 + 项目外行为基线）
-    ├── SKILL.md                  #   技能说明（两种用途 + 执行清单）
-    ├── scripts/init_project.py   #   确定性复制与初始化脚本（Python 标准库）
-    └── assets/project-template/  #   模板本体（全仓只此一份）
-        ├── AGENTS.md             #   协作总纲：冷启动入口 + 会话协议 + 宪章必读指引
-        ├── README.md             #   随新项目分发的使用手册（含「写给用户」提醒）
-        ├── CHANGELOG.md          #   模板版本标记：记录本项目初始化自哪版模板
-        ├── .editorconfig / .gitattributes / .gitignore  # 编辑器约定、行尾与忽略规则
-        ├── context/              #   项目上下文文档（装什么由 spec 决定，默认空）
-        ├── process/              #   协作当前状态区：任务板 + AI 记忆 + 笔记/验收临时件
-        ├── workspace/            #   干活产物 + 发布层；内部结构由 spec / 项目定
-        ├── archive/              #   历史归档（只追加）
-        └── spec/                 #   机制说明书 + 宪章；spec 工作流内容按需拉取
+├── .editorconfig / .gitattributes / .gitignore  # 编辑器约定、行尾统一（仓内 LF）与忽略规则
+├── init-project/                 # init-project 技能（项目初始化 + 项目外行为基线）
+│   ├── SKILL.md                  #   技能说明（两种用途 + 执行清单）
+│   ├── scripts/init_project.py   #   确定性复制与初始化脚本（Python 标准库）
+│   └── assets/project-template/  #   模板本体（全仓只此一份）
+│       ├── AGENTS.md             #   协作总纲：冷启动入口 + 会话协议 + §五 规范（用户维护区）
+│       ├── README.md             #   随新项目分发的使用手册（含「写给用户」提醒）
+│       ├── CHANGELOG.md          #   模板版本标记：记录本项目初始化自哪版模板
+│       ├── .editorconfig / .gitattributes / .gitignore  # 编辑器约定、行尾与忽略规则
+│       ├── context/              #   项目上下文文档（装什么由 spec 决定，默认空）
+│       ├── process/              #   协作当前状态区：任务板 + AI 记忆 + 笔记/验收临时件
+│       ├── workspace/            #   干活产物 + 发布层；内部结构由 spec / 项目定
+│       ├── archive/              #   历史归档（只追加）
+│       └── spec/                 #   机制说明书；spec 工作流内容按需从 preset-spec/ 拉取
+└── preset-spec/                  # spec 最佳实践货架（按需取用，不随模板分发）
+    ├── README.md                 #   货架说明：spec 是什么、有什么、怎么消费
+    ├── specs/                    #   按场景备好的工作流（每份 spec.md + assets/）
+    └── build/                    #   构建规则：怎么自己写一份 spec
 ```
 
 模板里的空目录（如 `context/`、`workspace/`）靠 `.gitkeep` 占位才能进入
@@ -221,34 +230,37 @@ git；`.githooks/`、快捷方式等本地开发件不入库，故不在树中�
 
 `init-project` 不只在开新项目时生效。当一段对话**不属于任何项目**（没有
 项目 `AGENTS.md`）、又不是纯聊天（要写代码、写文档、做调研、操作文件
-等）时，它会读取模板协作总纲与宪章 6 条，作为这次对话的行为底线；一旦
-进入某个具体项目，就自动让位于那个项目自己的 `AGENTS.md`。这样你常用
+等）时，它会读取模板协作总纲、以其 §五 规范中的宪章 6 条作为这次对话的
+行为底线；一旦进入某个具体项目，就自动让位于那个项目自己的 `AGENTS.md`。这样你常用
 的每个 AI 助手都遵循同一套规矩，不用反复交代。
 
-### 配套仓库：云端 spec 货架
+### 同仓货架：preset-spec/
 
-工作流 spec 不放在本仓，统一存放在配套公开仓
-**`github.com/The-Daybreaker/project-spec`**。一个 spec 就是**一份
-`spec.md` 主干 + 一个同级 `assets/`（产出文档骨架）**：`spec.md` 声明
-这套工作流适用于什么场景、分几个阶段、阶段怎么衔接、设几档入口、
-哪里设检查点，以及每个阶段的产出落点、运行过程与规范边界；`assets/`
-放各阶段产出文档的参考骨架，`spec.md` 按需指向它。
+工作流 spec 不随模板分发，统一摆在本仓 `preset-spec/` 目录（与模板同仓，
+不再是另一个独立仓库）。一个 spec 就是**一份 `spec.md` 主干 + 一个同级
+`assets/`（产出文档骨架）**：`spec.md` 声明这套工作流适用于什么场景、
+分几个阶段、阶段怎么衔接、设几档入口、哪里设检查点，以及每个阶段的
+产出落点、运行过程与规范边界；`assets/` 放各阶段产出文档的参考骨架，
+`spec.md` 按需指向它。
 
 spec 是高度定制化的东西，拉进项目后大概率要按项目情况改，所以货架
-**不做只读锁定、也没有防漂移校验**——拉一份下来就是你的，自由改
+**不做只读锁定、也没有防漂移校验**——复制一份进项目就是你的，自由改
 （本地演进由 git 记录）。
 
-- **有哪些 spec、各适用于什么场景**：直接看该仓的 `specs/` 目录——每份
-  `spec.md` 开头就写明场景与版本；本 README 不复制清单，免得两处记账、
-  清单过时。
-- **拉一份 spec**：浏览 `specs/` 选定 → clone 云端仓（或下载）→ 把
-  `specs/<id>/` 里的 `spec.md` + `assets/` 复制进项目的 `spec/<id>/` →
-  之后自由改。
-- **自己造 / 改 spec**：把云端 `build/` 拉到项目 `spec/build/`，按
-  `build.md` 和 `spec-template/` 母版写。
+- **有哪些 spec、各适用于什么场景**：直接看 `preset-spec/specs/`
+  目录——每份 `spec.md` 开头就写明场景与版本；本 README 不复制清单，
+  免得两处记账、清单过时。
+- **复制一份 spec**：浏览 `preset-spec/specs/` 选定 → 把
+  `preset-spec/specs/<id>/` 里的 `spec.md` + `assets/` 复制进项目的
+  `spec/<id>/` → 之后自由改（本仓就在手边，无需另 clone；若手头只有
+  装到技能目录的 `init-project/` 副本，再从公开仓下载 `preset-spec/`
+  对应目录即可）。
+- **自己造 / 改 spec**：把 `preset-spec/build/` 复制到项目 `spec/build/`，
+  按 `build.md` 和 `spec-template/` 母版写。
 
-这套机制的说明书随模板出厂，就在新项目的 `spec/AGENTS.md`（讲 spec 是
-什么、怎么拉、怎么读）。
+货架自身的完整说明（spec 是什么、怎么消费、版本约定）见
+`preset-spec/README.md`；这套机制的说明书随模板出厂，就在新项目的
+`spec/AGENTS.md`（讲 spec 是什么、怎么拉、怎么读）。
 
 ### 适合 / 不一定需要这套模板
 
@@ -261,10 +273,11 @@ spec 是高度定制化的东西，拉进项目后大概率要按项目情况改
 ### 进一步阅读
 
 - 初始化后项目根的 `AGENTS.md`：协作协议全文（目录地图、会话协议、
-  process 当前状态区规则、spec 读取约定）。
+  process 当前状态区规则、spec 读取约定），其 §五 是可自由删改、增补
+  自己条款的行为规范。
 - `spec/AGENTS.md`：spec 机制说明书（怎么拉、怎么读、产出文档状态标记
   约定）。
-- `spec/constitution.md`：宪章与项目级规范全文，可自由删改、增补自己
-  的条款。
-- 配套仓 `build/build.md`：怎么自己写一份 spec。
+- `preset-spec/README.md`：货架说明（spec 是什么、货架上有什么、怎么
+  消费）。
+- `preset-spec/build/build.md`：怎么自己写一份 spec。
 - `CHANGELOG.md`：模板版本演进历史。

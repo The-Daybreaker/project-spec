@@ -3,7 +3,7 @@
 > 使用场景：个人长期维护项目中开发 agent skill——产出物是 skill（`SKILL.md`
 > 及其 references / assets 等，具体形式项目自定）。
 >
-> 版本 0.1.0（云端货架版本；拉进项目后自由改，本地以 git 为准）。
+> 版本 0.1.0（货架版本；拉进项目后自由改，本地以 git 为准）。
 >
 > 项目级总纲见仓库根 `AGENTS.md`；spec 机制通则（spec 是什么、怎么拉、
 > 怎么读、状态标记约定）见模板框架 `spec/AGENTS.md`。
@@ -165,7 +165,7 @@ development → test → audit → release）；查多深以「下游是否用�
 
 ### release — 收口
 
-> 本阶段为占位自实现：云端只给骨架，收口做法由项目自行填充。
+> 本阶段为占位自实现：货架只给骨架，收口做法由项目自行填充。
 
 - **产出**：交付物落 `workspace/dist/`；变更日志写 `workspace/CHANGELOG.md`
   （给用户的版本日志，随发布）。

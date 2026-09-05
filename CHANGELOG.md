@@ -10,7 +10,8 @@
 spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-project +
 取消 inbox/pending/reviews 三个异步目录（process 重新定性为协作当前状态区）+ 目录命名对齐业界惯例
 （logs→archive、workspace 去预置改 spec 驱动）+ 规范拆分出 `spec/constitution.md`
-+ 移除模板 `package.json`（版本标记归 CHANGELOG 独担）。
+后又全量迁回 `AGENTS.md` §五（决策 66）+ 两公开仓合并、货架成为同仓
+`preset-spec/`（决策 67）+ 移除模板 `package.json`（版本标记归 CHANGELOG 独担）。
 版本号待用户确认后再定，不随本次自动 bump。
 
 ### Changed
@@ -53,6 +54,18 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
 - 全仓措辞规范化：内部比喻与生造术语统一换成业界通用说法（状态标记、当前
   状态区、必读指引、框架自带文件、渐进式披露、独立审查等），历史 CHANGELOG
   条目同步改写、不改变任何历史事实；不涉及机制变更。
+- 规范正文从 `spec/constitution.md` 全量迁回模板 `AGENTS.md` §五「规范
+  （用户维护区）」并删除该文件（决策 66）：文件头冷启动链 / 维护权分区、
+  §一 目录地图、§二 读盘、§六 读取约定、`init-project/SKILL.md`（用途②与
+  加载规则改指 §五 宪章条款）、两份 README、模板 `spec/AGENTS.md` 全部级联
+  同步；§五 内部小节去编号（避免与顶层「一～六」撞号），三处「本文件」
+  随语境改为「本节」。
+- 原独立云端 spec 货架仓并入本仓、成为同仓 `preset-spec/` 目录（决策 67）：
+  仓根 README 门面改为「模板产品 + 同仓 spec 货架」、clone 地址与目录树
+  同步，全部拉取指引从「clone 另一个仓」改为「从本仓 `preset-spec/`
+  复制」；货架 README、`build/build.md`、`spec-template/` 与两份 spec 的
+  「云端」措辞同步；`preset-spec/.editorconfig` 提升到仓根覆盖全仓（模板
+  本体内另带一份，随模板分发给新项目）。
 
 ### Removed
 

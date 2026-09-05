@@ -1,30 +1,31 @@
-# project-spec — 云端 spec 货架
+# preset-spec/ — spec 最佳实践货架
 
-本仓是 [Project-Template 通用项目模板](https://github.com/The-Daybreaker/Project-Template)
-的配套公开仓。如果说模板提供的是**每个项目都一样的协作骨架**（任务板、
-AI 记忆、冷启动协议、行为宪章），本仓提供的就是**按需取用的工作流**：
-做软件有做软件的流程，开发 skill 有开发 skill 的流程，这些流程统称
-spec，统一摆在这个「货架」上供浏览、取用。
+本目录是 [project-spec 公开仓](https://github.com/The-Daybreaker/project-spec)
+的货架部分，与 `init-project/`（[通用项目模板](../init-project/)）同仓存放。
+如果说模板提供的是**每个项目都一样的协作骨架**（任务板、AI 记忆、冷启动
+协议、行为规范），本目录提供的就是**按需取用的工作流**：做软件有做软件的
+流程，开发 skill 有开发 skill 的流程，这些流程统称 spec，统一摆在这个
+「货架」上供浏览、取用。
 
 ```mermaid
 flowchart TB
-  CLOUD["本仓 project-spec（云端货架）<br/>specs/ 工作流 · build/ 构建规则"]
+  SHELF["同仓 preset-spec/（货架）<br/>specs/ 工作流 · build/ 构建规则"]
   subgraph PROJ["由模板初始化的项目"]
     direction TB
     SPEC["项目 spec/ 下的工作流副本（自由改）"]
     FRAME["框架：协作骨架（出厂自带）"]
     SPEC -. "叠加" .-> FRAME
   end
-  CLOUD -. "浏览选定 → clone → 复制进来" .-> SPEC
+  SHELF -. "浏览选定 → 复制进来" .-> SPEC
 ```
 
-## 为什么工作流要单独成仓
+## 为什么货架不随模板分发
 
 框架和工作流的变化频率完全不同：协作骨架追求稳定、每个项目通用；
 工作流因项目类型而异、高频演进，而且拉进具体项目后几乎一定要按项目
-情况改。所以模板不预置任何工作流，本仓也**只是货架**——不做只读
-锁定、不做防漂移校验、不要求保持同步：**拉一份下来就是你的，自由
-改**，本地演进交给 git 记录。
+情况改。所以模板不预置任何工作流，初始化时 `init_project.py` 也不复制
+本目录；本目录**只是货架**——不做只读锁定、不做防漂移校验、不要求保持
+同步：**复制一份进项目就是你的，自由改**，本地演进交给 git 记录。
 
 ## spec 是什么
 
@@ -62,16 +63,17 @@ development（开发）→ test（测试）→ audit（审计）→ release（�
 即可**——每份 `spec.md` 开头就自报场景与版本。本 README 不复制清单，
 免得两处记账、清单过时。
 
-## 怎么消费本仓
+## 怎么消费本目录
 
-日常干活不在本仓里进行，消费动作发生在**由 Project-Template 初始化
+日常干活不在本目录里进行，消费动作发生在**由 init-project 初始化
 的项目**中。模板出厂时，项目的 `spec/` 目录已自带机制说明书
 `AGENTS.md`（讲 spec 是什么、怎么拉、怎么读）。分两种场景：
 
-### 1. 用现成工作流（拉一份 spec）
+### 1. 用现成工作流（复制一份 spec）
 
 1. 浏览 `specs/` 选定一个 spec，读它 `spec.md` 开头确认场景合适；
-2. clone 本仓到临时目录（或直接下载）；
+2. 本仓就在手边时，直接从本目录复制；只有技能目录里的 `init-project/`
+   副本时，从公开仓下载 `preset-spec/` 需要的目录；
 3. 把 `specs/<id>/` 里的 `spec.md` + `assets/` 复制进项目的
    `spec/<id>/`（`CHANGELOG.md` 是货架的版本历史，可不带——项目
    本地以 git 为准）；
@@ -79,17 +81,17 @@ development（开发）→ test（测试）→ audit（审计）→ release（�
 
 ### 2. 造 / 改 spec
 
-把本仓 `build/` 拉到项目的 `spec/build/`，按 `build.md` 的规则和
+把本目录的 `build/` 复制到项目的 `spec/build/`，按 `build.md` 的规则和
 `spec-template/` 母版写：复制母版 → 写清头部与三段式正文（工作流 /
 概览·入口·检查点 / 各阶段）→ 补 `assets/` 骨架与 CHANGELOG。造好的
-内容可以回流本仓，成为货架上的新版本。
+内容可以回流本目录（向公开仓贡献），成为货架上的新版本。
 
-spec 机制的完整说明书随模板出厂、不在本仓（本仓只放 spec 内容
+spec 机制的完整说明书随模板出厂、不在本目录（本目录只放 spec 内容
 本身）；在项目里读 `spec/AGENTS.md`。
 
 ## 版本约定
 
 每个 spec 的版本写在它 `spec.md` 顶部，变更历史记在同目录
 `CHANGELOG.md`，遵循语义化版本（SemVer）；`build/` 的版本写在
-`build.md` 顶部。spec 拉进项目后归项目自由改，本仓的版本只标
+`build.md` 顶部。spec 拉进项目后归项目自由改，货架版本只标
 「货架上这是哪一版」，供日后对照升级。
