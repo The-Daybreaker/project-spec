@@ -36,8 +36,8 @@ version: 0.9.0
 不依赖本次对话上下文。模板自带：
 
 - **框架结构**：`AGENTS.md`（协作总纲 + 宪章 6 条）/ `README.md`（使用手册）/
-  `context/`（项目上下文）/ `workspace/`（source + delivery）/ `process/`
-  （任务板 + agent 记忆 + 临时件）/ `logs/`（历史）/ `spec/`（声明式工作流）。
+  `context/`（项目上下文）/ `workspace/`（干活 + 发布层，结构由 spec / 项目定）/ `process/`
+  （任务板 + agent 记忆 + 临时件）/ `archive/`（历史）/ `spec/`（声明式工作流）。
 - **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）常驻；spec 内容
   （`spec.md` + `assets/`）与构建规则按需从云端货架拉取
   （`github.com/The-Daybreaker/project-spec`）、拉下来自由改；空 spec 时项目
@@ -60,7 +60,7 @@ version: 0.9.0
      `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
    - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` /
-     `process/` / `logs/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md`
+     `process/` / `archive/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md`
      存在（`spec/` 出厂只此一件，spec 内容按需才拉）；`_trash/` 未随模板
      复制进来；
    - **参数**（若指定了 `--name`）：`package.json` 的 `name` 已替换为项目名，

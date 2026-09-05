@@ -134,8 +134,8 @@ Project-Template/
         ├── .editorconfig / .gitattributes / .gitignore  # 编辑器约定、行尾与忽略规则
         ├── context/              #   项目上下文文档（装什么由 spec 决定，默认空）
         ├── process/              #   协作活状态区：任务板 + 助手记忆 + 笔记/review 等临时件
-        ├── workspace/            #   source（源产物）+ delivery（交付物）
-        ├── logs/                 #   历史归档（只追加）
+        ├── workspace/            #   干活产物 + 发布层；结构由 spec / 项目定（如 src / dist）
+        ├── archive/              #   历史归档（只追加）
         └── spec/                 #   spec 机制说明书；spec 内容（spec.md + assets）按需拉取
 ```
 

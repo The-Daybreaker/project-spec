@@ -22,12 +22,21 @@
   （只声明用途不声明内容）。本体 `AGENTS.md`（§一 / §二 / §三）、`README.md`、
   `init-project/SKILL.md`、`process/memory.md` 与云端 software-dev / skills-dev
   两份 spec 的 development / audit 阶段同步为新口径。
+- 目录命名对齐业界惯例：`logs/` 更名 `archive/`（`logs` 是运行日志的事实标准
+  名、易被工具写入污染归档语义，`archive` 无此撞名）；删除 `workspace/source/`、
+  `workspace/delivery/` 两个预置子目录，`workspace/` 保留为「干活 + 发布层」
+  通用声明、内部结构改由 spec / 项目定；配套云端 software-dev / skills-dev 两份
+  spec 的产出落点改用业界惯例名 `workspace/src/`、`workspace/dist/`，其 `logs/*`
+  归档路径改 `archive/*`。本体 `AGENTS.md`、两份 README、`SKILL.md`、
+  `process/memory.md`、`spec/build/build.md` 同步。
 
 ### Removed
 
 - 三件套目录 `process/inbox/`、`process/pending/`、`process/reviews/`：异步
   交流在同步对话场景下是伪需求，inbox / pending 整个取消，review 降为 process
   临时件；logs 不再镜像这三个子目录。
+- `workspace/source/`、`workspace/delivery/` 预置子目录：框架不再写死工作区
+  结构，改由 spec / 项目按惯例（如 `src/`、`dist/`）自行声明。
 - 锁文件三件：`spec/lockfile.py`、`spec/lockfile.md`（及实例化后的
   `lockfile.json`）——spec 拉进项目即自由编辑、无只读副本可锁，防漂移
   校验退休；冷启动不再跑 `lockfile.py --verify`。

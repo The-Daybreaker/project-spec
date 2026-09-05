@@ -8,7 +8,8 @@
 ## [Unreleased]
 
 spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-project +
-取消三件套（process 重新定性为协作活状态区）。
+取消三件套（process 重新定性为协作活状态区）+ 目录命名对齐业界惯例
+（logs→archive、workspace 去预置改 spec 驱动）。
 版本号待用户确认后再定，不随本次自动 bump。
 
 ### Changed
@@ -28,12 +29,19 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
   声明用途不声明内容）。模板本体 `AGENTS.md`（§一/§二/§三）、两份 README、
   `init-project/SKILL.md`、`process/memory.md`、目录树与配套 project-spec 的
   两份 spec 同步（详见模板本体 CHANGELOG 与开发仓决策 62）。
+- 目录命名对齐业界惯例：`logs/` 更名 `archive/`（避开运行日志标准名的写入
+  污染）；删除 `workspace/source/`、`workspace/delivery/` 预置，`workspace/`
+  保留为「干活 + 发布层」通用声明、内部结构改由 spec / 项目定；配套云端两份
+  spec 产出落点改用 `workspace/src/`、`workspace/dist/` 与 `archive/*` 归档路径
+  （详见模板本体 CHANGELOG 与开发仓决策 63）。
 
 ### Removed
 
 - 三件套目录 `process/inbox/`、`process/pending/`、`process/reviews/`：异步
   交流在同步对话场景下是伪需求，inbox / pending 整个取消，review 降为
   process 临时件；logs 不再镜像这三个子目录。
+- `workspace/source/`、`workspace/delivery/` 预置子目录：框架不再写死工作区
+  结构，改由 spec / 项目按惯例（如 `src/`、`dist/`）自行声明。
 - 锁文件三件（`spec/lockfile.py` / `lockfile.md` 及实例化后的
   `lockfile.json`），冷启动不再跑漂移校验；模块装置（`@模块/`、
   `MODULE.md` / `module.json` / 每模块 `README`·`CHANGELOG`）、
