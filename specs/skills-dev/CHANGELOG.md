@@ -28,6 +28,11 @@
   `workspace/src/`、release 的 `workspace/delivery/` → `workspace/dist/`；归档
   路径 `logs/*` → `archive/*`（配合模板框架 logs→archive、workspace 去预置，
   开发仓决策 63）。
+- （2026-09-05）与 software-dev 同步口径：场景声明收窄为「个人长期维护
+  项目」、「管什么场景」改「使用场景」；§二「依赖全景 · 入口 · 检查点」更名
+  「概览」，阶段链从硬依赖软化为推荐顺序（不强制、可按实际调整），入口
+  「缩放旋钮」更名「流程调节」，回溯线明确为「纳入任务进行核查和调整」；
+  删除 release 阶段「强依赖 audit」表述；各阶段「运行过程」统一为有序列表。
 
 ### Removed
 
