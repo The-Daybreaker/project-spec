@@ -36,7 +36,7 @@ flowchart TB
 | `specs/` | spec 最佳实践：每个 spec 一个目录，内含 `spec.md` + `assets/` + `CHANGELOG.md` |
 | `build/` | 构建规则：`build.md`（怎么写一份 spec.md）+ `spec-template/`（spec.md 骨架母版）；默认不读，只有造 / 改 spec 时才拉 |
 
-**现有哪些 spec、各自适用于什么场景、什么版本，直接浏览 `specs/` 目录即可**——每份 `spec.md` 开头就自报场景与版本。本 README 不复制清单，免得两处记账、清单过时。
+**现有哪些 spec、各自适用于什么场景、什么版本，直接浏览 `specs/` 目录即可**——每份 `spec.md` 开头就自行声明场景与版本。本 README 不复制清单，避免两处维护清单、导致过时。
 
 ## 怎么消费本目录
 

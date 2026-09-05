@@ -24,7 +24,7 @@ version: 0.9.0
 
 > 以下「定位 / 前置确认 / 执行流程 / 执行红线」四节是**用途 1（项目初始化）**的流程。
 
-把内嵌的通用项目模板（`assets/project-template/`）应用到用户指定的项目文件夹，生成一个**自洽自足**的项目骨架：任何 agent 从零接手都能按根 `AGENTS.md` 继续开发，不依赖本次对话上下文。模板自带：
+把内嵌的通用项目模板（`assets/project-template/`）应用到用户指定的项目文件夹，生成一个**自洽且自足**的项目骨架：任何 agent 从零接手都能按根 `AGENTS.md` 继续开发，不依赖本次对话上下文。模板自带：
 
 - **框架结构**：`AGENTS.md`（协作总纲，§四 为用户维护的规范）/ `README.md`（使用手册）/ `context/`（项目上下文）/ `workspace/`（干活 + 发布层，结构由 spec / 项目定）/ `process/` （任务板 + agent 记忆 + 临时件）/ `archive/`（历史）/ `spec/`（声明式工作流机制）。
 - **spec 机制**：`spec/AGENTS.md`（机制说明书 + 设计与获取指引）常驻；spec 以自己设计为主，可参考公开仓 `preset-spec/` 最佳实践集（`github.com/The-Daybreaker/project-spec` 仓内 `preset-spec/` 目录）；空 spec 时项目以框架形态直接运转。

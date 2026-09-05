@@ -23,7 +23,7 @@ spec 落在 `spec/<spec id>/`（`spec.md` + `assets/`）。没有 spec 时项目
 3. 把 `preset-spec/specs/<id>/` 里的 `spec.md` + `assets/` 复制进本目录的 `<id>/`（即 `spec/<id>/`）；`CHANGELOG.md` 是最佳实践集的版本历史，可不带；
 4. 之后这份 `spec.md` 归项目所有，按项目情况自由改（本地演进由 git 记录）。
 
-设计 / 改 spec 的结构规则在 `preset-spec/build/build.md`，默认不读、只在造 / 改时才拉。拉取交 agent 判断执行、不写拉取脚本：拉什么、哪个版本是决策，clone + 复制只是几条命令。
+设计 / 改 spec 的结构规则在 `preset-spec/build/build.md`，默认不读、只在造 / 改时才拉。拉取由 agent 判断执行、不写拉取脚本：拉什么、哪个版本是决策，clone + 复制只是几条命令。
 
 ## 三、spec.md 怎么读
 
