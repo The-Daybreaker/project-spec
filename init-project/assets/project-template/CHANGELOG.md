@@ -15,9 +15,19 @@
   读盘、§六 读取约定）、`README.md`、`init-project/SKILL.md` 同步为新
   口径。配套云端库（project-spec）同步重构：模块装置 / manifest /
   registry 退休。
+- 取消人机异步交流三件套，`process/` 重新定性为「协作活状态区」：常驻件
+  （`task.md` / `memory.md`）+ 临时件（笔记 / `review-<简介>.md`，用完即清）；
+  冷启动改为通读 `process/` 全部文件。review 降为 `process/` 根临时件（通过后
+  删、不归档 logs），何时验收交对话或 spec；`memory.md` 改为 agent 自我维护区
+  （只声明用途不声明内容）。本体 `AGENTS.md`（§一 / §二 / §三）、`README.md`、
+  `init-project/SKILL.md`、`process/memory.md` 与云端 software-dev / skills-dev
+  两份 spec 的 development / audit 阶段同步为新口径。
 
 ### Removed
 
+- 三件套目录 `process/inbox/`、`process/pending/`、`process/reviews/`：异步
+  交流在同步对话场景下是伪需求，inbox / pending 整个取消，review 降为 process
+  临时件；logs 不再镜像这三个子目录。
 - 锁文件三件：`spec/lockfile.py`、`spec/lockfile.md`（及实例化后的
   `lockfile.json`）——spec 拉进项目即自由编辑、无只读副本可锁，防漂移
   校验退休；冷启动不再跑 `lockfile.py --verify`。

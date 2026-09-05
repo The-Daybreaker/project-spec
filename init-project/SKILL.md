@@ -37,7 +37,7 @@ version: 0.9.0
 
 - **框架结构**：`AGENTS.md`（协作总纲 + 宪章 6 条）/ `README.md`（使用手册）/
   `context/`（项目上下文）/ `workspace/`（source + delivery）/ `process/`
-  （任务板 + agent 记忆 + 三件套）/ `logs/`（历史）/ `spec/`（声明式工作流）。
+  （任务板 + agent 记忆 + 临时件）/ `logs/`（历史）/ `spec/`（声明式工作流）。
 - **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）常驻；spec 内容
   （`spec.md` + `assets/`）与构建规则按需从云端货架拉取
   （`github.com/The-Daybreaker/project-spec`）、拉下来自由改；空 spec 时项目

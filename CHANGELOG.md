@@ -7,7 +7,8 @@
 
 ## [Unreleased]
 
-spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-project。
+spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-project +
+取消三件套（process 重新定性为协作活状态区）。
 版本号待用户确认后再定，不随本次自动 bump。
 
 ### Changed
@@ -20,9 +21,19 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
 - `init-project` skill 适用范围扩为所有非纯聊天对话，新增「项目外通用
   行为基线」用途（指向模板本体 `AGENTS.md`「五、规范」宪章 6 条，只指向
   不复制）。
+- 取消人机异步交流三件套，`process/` 重新定性为「协作活状态区」（常驻件
+  task.md / memory.md + 临时件 笔记 / `review-<简介>.md`，用完即清）；冷启动
+  改为通读 `process/` 全部文件；review 降为 process 根临时件（通过后删、不
+  归档 logs），何时验收交对话或 spec；`memory.md` 改为 agent 自我维护区（只
+  声明用途不声明内容）。模板本体 `AGENTS.md`（§一/§二/§三）、两份 README、
+  `init-project/SKILL.md`、`process/memory.md`、目录树与配套 project-spec 的
+  两份 spec 同步（详见模板本体 CHANGELOG 与开发仓决策 62）。
 
 ### Removed
 
+- 三件套目录 `process/inbox/`、`process/pending/`、`process/reviews/`：异步
+  交流在同步对话场景下是伪需求，inbox / pending 整个取消，review 降为
+  process 临时件；logs 不再镜像这三个子目录。
 - 锁文件三件（`spec/lockfile.py` / `lockfile.md` 及实例化后的
   `lockfile.json`），冷启动不再跑漂移校验；模块装置（`@模块/`、
   `MODULE.md` / `module.json` / 每模块 `README`·`CHANGELOG`）、
