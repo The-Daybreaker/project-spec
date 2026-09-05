@@ -21,6 +21,10 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
   改为面向项目主人的使用手册（协作循环、高频场景、核心文件分工，
   「写给用户」节原样保留）；配套 project-spec 货架 README 补两层关系图
   与 software-dev 工作流实例讲解。
+- 同步 spec 新口径（配套 project-spec 阶段链软化）：阶段链由硬依赖改为
+  「推荐推进顺序、不强制」，「缩放旋钮」→「流程调节」，「管什么场景」→
+  「使用场景 / 适用于什么场景」；涉及发布仓 README、模板本体 `AGENTS.md`
+  §六与 `spec/AGENTS.md` §一。
 - 一个 spec 塌成一份 `spec.md` + 同级 `assets/`（产出骨架）；云端库退化
   为只读货架、拉下来自由改。模板本体 `spec/AGENTS.md` 瘦身为机制说明书，
   `AGENTS.md`（§一/§二/§六）、`README.md`、`init-project/SKILL.md` 去掉
