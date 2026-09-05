@@ -1,0 +1,36 @@
+# Python 字节码缓存不入库
+__pycache__/
+*.pyc
+
+# 临时删除区（对话内删除先进这里，任务结束整体进回收站）
+_trash/
+
+*.lnk
+
+# 密钥不入库（常见密钥文件名模式，机械防线，宁可误伤不可漏收）
+# 误伤的文件可显式 git add -f 找回；项目特定的密钥命名由项目自行追加
+.env
+.env.*
+*.env
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+secrets/
+*credential*
+*secret*
+token.json
+*.token
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+.netrc
+_netrc
+.pgpass
+.my.cnf
+.vault-token
+service-account*.json
+*-service-account.json
