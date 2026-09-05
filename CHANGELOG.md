@@ -2,110 +2,40 @@
 
 发布仓库的版本历史（两产物：project-spec / init-project）。模板本体只在 `init-project/assets/project-template/` 存一份。
 
-版本号与模板本体一致（单一事实源：模板本体 `CHANGELOG.md` 的版本标题），当前 0.9.0。
+版本号与模板本体一致（单一事实源：模板本体 `CHANGELOG.md` 的版本标题），当前 1.0.0。1.0.0 之前的全部历史（0.1.0–0.9.0 及开发期 [Unreleased]）归档于开发仓 `dev/archive/changelog-public-pre-1.0.0.md`。
 
-## [Unreleased]
+格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)，本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/spec/v2.0.0.html)。自 1.0.0 起进入稳定期，目录结构与 `AGENTS.md` 协作协议按 SemVer 约束兼容性。
 
-spec 机制单文档化重构 + agent-rules skill 并入 init-project + 取消 inbox/pending/reviews 三个异步目录（process 重新定性为协作当前状态区）+ 目录命名对齐业界惯例（logs→archive、workspace 去预置改 spec 驱动）+ 规范拆分出 `spec/constitution.md` 后又全量迁回 `AGENTS.md` §五（决策 66）+ 两公开仓合并、最佳实践集成为同仓 `preset-spec/`（决策 67）+ 产品英文名 Project-Template 更名 project-spec （与公开仓名一致；直接复用原 project-spec 仓，两条历史以 fast-forward 合流）+ 移除模板 `package.json`（版本标记归 CHANGELOG 独担）。版本号待用户确认后再定，不随本次自动 bump。
+## [1.0.0] - 2026-09-06
 
-### Changed
-
-- 三份 README 按「问题场景 → 设计理念 → 快速开始 → 日常使用 → 深入展开」的新用户叙事线重写：发布仓 README 新增痛点共鸣、协作层/发布层分离与流程/宪章分开的设计理念、冷启动读盘 mermaid；模板本体 README 改为面向项目主人的使用手册（协作循环、高频场景、核心文件分工，「写给用户」节原样保留）；同仓 preset-spec 最佳实践集 README 补两层关系图与 software-dev 工作流实例讲解。
-- 同步 spec 新口径（同仓 preset-spec 阶段链软化）：阶段链由硬依赖改为「推荐推进顺序、不强制」，「缩放旋钮」→「流程调节」，「管什么场景」→「使用场景 / 适用于什么场景」；涉及发布仓 README、模板本体 `AGENTS.md` §六与 `spec/AGENTS.md` §一。
-- 一个 spec 合并为一份 `spec.md` + 同级 `assets/`（产出骨架）；最佳实践集定位为只读参考、拉下来自由改。模板本体 `spec/AGENTS.md` 精简为机制说明书， `AGENTS.md`（§一/§二/§六）、`README.md`、`init-project/SKILL.md` 去掉模块 / 锁文件 / registry 口径；发布仓 README「核心理念」spec 段、 mermaid、目录结构、「配套仓库」整节改写。
-- `init-project` skill 适用范围扩为所有非纯聊天对话，新增「项目外通用行为基线」用途（指向模板本体 `AGENTS.md`「五、规范」宪章 6 条，只指向不复制）。
-- 取消 inbox/pending/reviews 三个异步交流目录，`process/` 重新定性为「协作当前状态区」（常驻件 task.md / memory.md + 临时件 笔记 / `review-<简介>.md`，用完即清）；冷启动改为通读 `process/` 全部文件；review 降为 process 根临时件（通过后删、不归档 logs），何时验收交对话或 spec；`memory.md` 改为 agent 自我维护区（只声明用途不声明内容）。模板本体 `AGENTS.md`（§一/§二/§三）、两份 README、 `init-project/SKILL.md`、`process/memory.md`、目录树与同仓 preset-spec 的两份 spec 同步（详见模板本体 CHANGELOG 与开发仓决策 62）。
-- 目录命名对齐业界惯例：`logs/` 更名 `archive/`（避开运行日志标准名的写入污染）；删除 `workspace/source/`、`workspace/delivery/` 预置，`workspace/` 保留为「干活 + 发布层」通用声明、内部结构改由 spec / 项目定；同仓两份 spec 产出落点改用 `workspace/src/`、`workspace/dist/` 与 `archive/*` 归档路径（详见模板本体 CHANGELOG 与开发仓决策 63）。
-- 规范正文从模板 `AGENTS.md` 拆出到新文件 `spec/constitution.md`（宪章 / 项目级 / 项目自己的规范三节，条款原样搬运 + 「写给用户」头说明可自由删改增补）； `AGENTS.md` §五 收敛为「宪章」必读指引节、§七 并入 constitution.md、冷启动链与读盘加入 constitution.md；`spec/AGENTS.md`、`init-project/SKILL.md`（用途②增加 constitution.md 指向）、两份 README 同步（详见开发仓决策 64）。
-- 全仓措辞规范化：内部比喻与生造术语统一换成业界通用说法（状态标记、当前状态区、必读指引、框架自带文件、渐进式披露、独立审查等），历史 CHANGELOG 条目同步改写、不改变任何历史事实；不涉及机制变更。
-- 规范正文从 `spec/constitution.md` 全量迁回模板 `AGENTS.md` §五「规范（用户维护区）」并删除该文件（决策 66）：文件头冷启动链 / 维护权分区、§一 目录地图、§二 读盘、§六 读取约定、`init-project/SKILL.md`（用途②与加载规则改指 §五 宪章条款）、两份 README、模板 `spec/AGENTS.md` 全部级联同步；§五 内部小节去编号（避免与顶层「一～六」撞号），三处「本文件」随语境改为「本节」。
-- 原独立 spec 最佳实践集仓并入本仓、成为同仓 `preset-spec/` 目录（决策 67）：仓根 README 门面改为「模板产品 + 同仓 spec 最佳实践集」、clone 地址与目录树同步，全部拉取指引从「clone 另一个仓」改为「从本仓 `preset-spec/` 复制」；最佳实践集 README、`build/build.md`、`spec-template/` 与两份 spec 的措辞同步；`preset-spec/.editorconfig` 提升到仓根覆盖全仓（模板本体内另带一份，随模板分发给新项目）。
-- 产品英文名 Project-Template 更名 **project-spec**（与公开仓名一致）：模板本体 README 欢迎语同步；云端不采用「改名 Project-Template 仓」的路径，改为直接复用原 `The-Daybreaker/project-spec` 仓——本地合并仓包含两条完整历史且其 main 是旧仓 main 的后代，推送为 fast-forward，模板链与最佳实践集链记录全部保留；skill 内部资产目录 `assets/project-template/` 是技术路径名，不随产品名改（改名牵动 `init_project.py` 常量且与 `preset-spec/` 语义冲突）。
-
-### Removed
-
-- 异步交流目录 `process/inbox/`、`process/pending/`、`process/reviews/`：异步交流在同步对话场景下是伪需求，inbox / pending 整个取消，review 降为 process 临时件；logs 不再镜像这三个子目录。
-- `workspace/source/`、`workspace/delivery/` 预置子目录：框架不再写死工作区结构，改由 spec / 项目按惯例（如 `src/`、`dist/`）自行声明。
-- 锁文件三类（`spec/lockfile.py` / `lockfile.md` 及实例化后的 `lockfile.json`），冷启动不再跑漂移校验；模块机制（`@模块/`、 `MODULE.md` / `module.json` / 每模块 `README`·`CHANGELOG`）、 `manifest.json`、`registry.json`、`add.md`（详见本仓 preset-spec 的 CHANGELOG）。
-- `agent-rules` skill 整个删除：它与模板宪章是两处副本、必然漂移，其「项目外行为基线」职责并入 `init-project`（指向唯一事实源，杜绝漂移）。
-- 模板本体根 `package.json`：`version` 与 CHANGELOG 版本标题重复（违反单一事实源）、随模块制废弃已无脚本读取、对非 Node 项目是杂物；删除后模板版本标记由 CHANGELOG 独担，`init_project.py` 去掉 `--name` / `_set_project_name`（详见开发仓决策 65）。
-
-### Fixed
-
-- 宪章第 4–6 条序号恢复（与「分类声明」的显式序号约定一致）。
-- `init_project.py` 去掉对 git 本地化输出措辞的依赖：无可提交改动改用 `git status --porcelain` 判定，未配置身份改为前置探测并给精准提示； `git add` 检查返回码；`git init -b`（git ≥ 2.28）不可用时回退 `git init` + `symbolic-ref` 设置默认分支。
-- 默认 `.gitignore` 密钥文件名模式补 `*.crt` / `*.cer` / `*.p7b` / `.htpasswd` / `*.ovpn`。
-
-## [0.9.0] - 2026-09-03
-
-云端模块库接入 + spec 模块字段精简 + 仓库结构简化。
+首个稳定版。经过三代设计（v1 大而全 → v2 构建解耦 → v3 框架 + spec）与开发期多轮自我重构后定型。
 
 ### Added
 
-- 云端模块库：`github.com/The-Daybreaker/project-spec` 作为 spec / 模块唯一事实源（SSOT），仓库结构 `registry.json`（目录索引）+ `build/` + `specs/` + `modules/`；锁文件落地（`lockfile.py` 生成 + 校验，`origin` 记真实路径）。
-
-- spec 的 `AGENTS.md` 锁文件节：引入 spec 的拉取流程 + 冷启动 hash 校验（拉取交 agent，不写拉取脚本）。
-
-- 框架新增 `process/memory.md`：agent 记忆固定文件（踩过的坑与被验证过的判断，冷启动必读；只存当前有效条目，失效归档 `logs/memory/`）。
+- `init-project` 成为唯一 skill，新增「项目外通用行为基线」用途：不属于任何项目的非闲聊对话，读取模板 `AGENTS.md` §四宪章 6 条作为行为底线，进入项目后自动让位于项目自己的 AGENTS.md。
+- 同仓 `preset-spec/` 最佳实践集：两份工作流示例（software-dev 软件开发、skills-dev skill 开发，均为单份 `spec.md` + `assets/`）与 `build/` spec 构建规则；clone 一次拿全，不随模板分发。
+- `process/` 临时件机制：随手笔记与 `review-<简介>.md` 验收件，用完即清、通过后删，历史交给 git。
 
 ### Changed
 
-- 术语全局更名：「地基」→「框架」（语义不变）；文档措辞不再用「七件套」之类清点式表述。
-
-- 口径修订（用户定）：根 README 去「版本与升级 / 给维护者的几条约定」节、模板 README 用户规范瘦身重写为「写给用户」、init-project SKILL 前置确认精简（删「先调研再立项」步骤）。
-
-- 仓库结构简化：模板本体从根目录 `project-template/` 移入 `init-project/assets/project-template/`，全仓只存一份（单一事实源，不再是「根目录本体 + assets 镜像」两层复制）；根目录只剩两个 skill + README + CHANGELOG。
-
-### Removed
-
-- module.json 的 `enable.instantiate` / `disable.keep` 字段（启停运行态由 `manifest.json` 的 entries 表达，字段 12 → 10）。
-
-- 密钥门禁（`scripts/scan_secrets.py` + `.githooks/pre-push`）：模板与本仓不再携带；密钥防护的机械防线只留 .gitignore 的密钥文件名模式，要不要额外门禁由使用者自行决定。
-
-### Fixed
-
-- 审计修补：`lockfile.py` 指纹行尾归一化 + 生成模式保留 fork / private 溯源；`init_project.py` 目标目录非空改为警告并继续（对齐 SKILL）+ 健壮性修正；模板 `.gitignore` 补 `__pycache__`；AGENTS.md「写给用户」节名引用同步；根 README 补 agent 记忆；仓根补 `.gitattributes`。
-
-## [0.8.0] - 2026-09-02
-
-断代版本：模板整体重设计，目录结构全新（旧版项目无法原地升级）。
-
-### Added
-
-- 初始骨架：`AGENTS.md`（协作总纲 + 宪章 6 条）、`README.md`（使用手册）、 `context/`（项目上下文，种类由 spec 决定）、`workspace/`（source + delivery）、`process/`（任务板 + inbox / pending / reviews 三个异步目录）、 `logs/`（历史归档）、`spec/`（声明式规范）。
-
-- spec 机制：构建规则（`spec/build/`：build.md + spec / module 两模板）+ 预置 spec `software-dev`（vision / design / prd / adr / development / test / audit / release 共 8 模块）；空 spec 时项目以框架形态运转。
-
-- 推送前密钥门禁（保留自旧版并参数化）：`scripts/scan_secrets.py` + `.githooks/pre-push`，排除名单外置 `scan_secrets.ignore`（不入库）。
-
-### Changed
-
-- `init-project` skill 重构：内嵌模板镜像，初始化含 hooksPath 配置与回读校验清单（内联 SKILL.md）。
-
-- `agent-rules` skill 重构：模板宪章的项目外精简形式。
-
-- 发布 README 重写（价值主张 / 快速开始 / 目录结构 / 版本说明）。
+- spec 机制单文档化：一个 spec = 一份 `spec.md`（阶段链 + 概览 + 各阶段三段式）+ 同级 `assets/` 产出骨架，渐进式披露。
+- `process/` 重新定性为「协作当前状态区」：常驻件（`task.md` / `memory.md`）原地更新到当前状态，冷启动通读 process/ 全部文件即恢复项目全貌。
+- 目录命名对齐业界惯例：`logs/` → `archive/`（避开运行日志标准名）；删除 `workspace/source/`、`workspace/delivery/` 预置，产出落点改用业界通名 `workspace/src/`、`workspace/dist/`，工作区结构改由 spec / 项目声明。
+- 规范仍在模板 `AGENTS.md` §四「规范（用户维护区）」：曾拆出 `spec/constitution.md`，验证后全量迁回（同一文件内分区足以划清维护权，分文件只增必读跳数）。
+- 三份 README 按「问题场景 → 设计理念 → 快速开始 → 日常使用 → 深入展开」叙事线重写；全文去除手动折行（段落一行写完）；两轮措辞规范化，统一业界通用表达。
+- 产品英文名 Project-Template 更名 **project-spec**（与公开仓名一致，中文名仍为「通用项目模板」）。
 
 ### Removed
 
-- 旧版结构整体移除：`private/` 子仓库、`docs/`、`dist/`、`archive/`、 `.github/workflows/`、`version.json`、`install-targets.json` 及大部分维护脚本。
+- 模块机制整套：模块目录、`MODULE.md` / `module.json` / 每模块 README·CHANGELOG、spec 级 `manifest.json`、云端 `registry.json`——经第二个 spec 验证，跨 spec 模块复用不成立、小模块配整套机制代价大于收益。
+- 锁文件三类（`lockfile.py` / `lockfile.md` / 实例化 `lockfile.json`）：spec 拉进项目即自由编辑，无只读副本可锁。
+- 三个异步交流目录 `process/inbox/`、`process/pending/`、`process/reviews/`：同步对话场景下异步机制是伪需求，请示回归对话、验收降为临时件。
+- `agent-rules` skill：与模板宪章是两处副本、必然漂移，职责并入 init-project（只指向唯一事实源）。
+- 模板本体根 `package.json`：版本与 CHANGELOG 标题重复、对非 Node 项目是杂物，版本标记归 CHANGELOG 独担。
+- `workspace/source/`、`workspace/delivery/` 预置子目录。
 
-## [0.7.1] - 2026-08-28
+### 工程与仓库
 
-接口设计与设计环节补全 + 红线三要素收尾（patch0 + patch1 两次补丁）：设计契约文件夹（架构 / 接口 / 数据 / 安全，适用必做、不适用须声明）；接口契约场景化——用户审场景映射表、不审技术，确认后冻结，验收用例联动；文档质量可持续机制（质量标准 + 反 AI 感清单 + 审计文档质量关）；红线 18 补齐显式三要素，19 条红线三要素终检齐全。
-
-## [0.7.0] - 2026-08-28
-
-防漂移与文档架构改造（断代版本，不向前兼容）：单一事实源三层结构—— 15 条规范事实各有唯一家（事实台账 + FACT/REF/INJECT 锚点机制）；防漂移检查（重复检测 / 摘要限长 / 正文指纹校验）；文档集归一；阶段契约（每阶段必做清单 + 裁剪属性）；需求冲突检测检查点；测试台账；安装目标扩至九处。
-
-## [0.6.0] - 2026-08-27
-
-红线与要求可验证性改造：新增最顶层红线「要求三要素元规范」（所有红线须同时具备意图 / 展示面 / 验收面，自指示范）；新增红线「敏感信息与私有区边界」（密钥内容级扫描 + 推送前安全门禁三层）；「范围克制」与「提问共识」两条红线重写（番茄炒蛋比喻入正文、共识确认机制）；测试正式子阶段与测试报告双区；辩护性措辞扫描；历史泄露处置与全历史身份重写。
-
-## [0.5.2] - 2026-08-27
-
-第九轮全面审计修复收口：新项目首跑即红等 5 项发现全修 + 表述面同类残留清理；防再发机制——开箱即用冒烟自检（初始化 + 回读 + 骨架脚本自检，发版前必绿）。
-
-## [0.1.0 – 0.5.1] - 2026-08-15 ~ 2026-08-27
-
-从首个版本到第四轮审计的演进期：从「通用项目模板 + init-project skill」起步，逐步建立开发前规范（PRD / RFC / ADR / RESEARCH 四类规范文档）、 P1-P5 五阶段工作流、agent-rules skill、Python 维护脚本链、私有区与密钥门禁、安装表与副本校验、agent 提问与共识确认机制等骨架，其间历经多轮全面审计与修复（0.4.2 三域审计处置 16 项、0.5.0 架构重构、0.5.1 版本号改四段式）。
+- 两个公开仓（原发布仓 Project-Template 与原 spec 仓）合并为单一 `project-spec` 仓：迁移分支 `git mv` + `--allow-unrelated-histories` 合并，模板链与最佳实践集链两条历史完整保留；云端 fast-forward 合流，删旧仓前经六步包含性审计、删后复验。
+- 模板本体收敛到 9 个出厂文件（空目录以 .gitkeep 占位）；空 spec 也能以框架形态运转（冷启动、任务板、归档、git 卫生均不读 spec）。
+- 初始化脚本健壮性：改动判定改读 `git status --porcelain`、提交身份前置探测、旧版 git 无 `init -b` 时回退 symbolic-ref；初始化逐项回读校验，已有文件一律跳过不覆盖。
