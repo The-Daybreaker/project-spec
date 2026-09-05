@@ -41,7 +41,7 @@ version: 0.9.0
 - **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）常驻；spec 内容
   （`spec.md` + `assets/`）与构建规则按需从云端货架拉取
   （`github.com/The-Daybreaker/project-spec`）、拉下来自由改；空 spec 时项目
-  以框架形态轻装运转。
+  以框架形态直接运转。
 
 ## 前置确认（必须）
 
