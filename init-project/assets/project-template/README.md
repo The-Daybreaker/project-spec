@@ -54,24 +54,19 @@ AI 助手每次新会话开工，都会按固定顺序**冷启动（读盘）**�
 | 换一个 AI 工具接手 | 无需交代背景，让它先读根 `AGENTS.md` 冷启动即可 |
 | 找历史结论 | 当前有效的决策、方案在 `context/`；被取代的旧内容与过程记录在 `archive/`；更细的历史查 git |
 
-## 按需安装工作流（spec）
+## 按需设计工作流（spec）
 
-框架本身不含任何具体工作流，保证项目「什么都不配也能转」。当你需要
-一套成体系的流程时（例如软件开发的「愿景 → 方案 → 需求 → 开发 → 测试
-→ 审计 → 发布」），从公开仓的 `preset-spec/` 货架取用（模板与货架同仓，
-就在 `github.com/The-Daybreaker/project-spec` 的 `preset-spec/` 目录）：
+框架本身不含任何具体工作流，保证项目「什么都不配也能转」。当你需要一套成体系的流程时（例如软件开发的「愿景 → 方案 → 需求 → 开发 → 测试 → 审计 → 发布」），**以自己设计为主**，可参考公开仓 `preset-spec/` 最佳实践集（模板与最佳实践集同仓，就在 `github.com/The-Daybreaker/project-spec` 的 `preset-spec/` 目录）。
 
-1. **挑选**：浏览公开仓 `preset-spec/specs/` 目录，读某份 `spec.md` 开头
-   确认场景合适；
-2. **取用**：clone 公开仓（或下载需要的目录），把
-   `preset-spec/specs/<id>/` 里的 `spec.md` + `assets/` 复制进本项目的
-   `spec/<id>/`；
-3. **归你所有**：拉下来的 spec 可以按项目情况自由改，本地演进由 git
-   记录，货架不做锁定和漂移校验。
+设计 spec 推荐按「还原场景 → 场景拆流程 → 流程抽象为 spec」的方法论推进：
 
-没有现成合适的 spec 时，把公开仓 `preset-spec/build/` 构建规则复制到
-`spec/build/`，按 `build.md` 和 `spec-template/` 母版自己写一份。完整
-机制说明见本项目 `spec/AGENTS.md`。
+1. **还原场景**：和 AI 助手一起把项目的典型工作场景讲清楚（谁、做什么、产出什么、有什么约束）；
+2. **场景拆流程**：把场景拆成阶段链（推荐推进顺序 + 横切阶段），设几档入口（流程调节）；
+3. **流程抽象为 spec**：把公开仓 `preset-spec/build/` 构建规则复制到 `spec/build/`，按 `build.md` 和 `spec-template/` 母版写成 `spec.md`，按需补 `assets/` 产出骨架。
+
+如果最佳实践集里有场景相近的现成 spec，也可以直接复制一份进项目自由改——浏览 `preset-spec/specs/` 选定 → 把 `spec.md` + `assets/` 复制进本项目的 `spec/<id>/` → 按项目情况修改。拉下来的 spec 归你所有，本地演进由 git 记录，最佳实践集不做锁定和漂移校验。
+
+完整机制说明见本项目 `spec/AGENTS.md`。
 
 ## 目录速览
 
@@ -80,8 +75,8 @@ AI 助手每次新会话开工，都会按固定顺序**冷启动（读盘）**�
 | `AGENTS.md` | 协作总纲，AI 助手的唯一必读入口：目录地图、读盘/写盘协议、process 规则、spec 读取约定；§五 是你维护的行为规范 |
 | `README.md` | 本文件，面向人的使用手册；其中「写给用户」一节由你维护 |
 | `CHANGELOG.md` | **模板自身**的版本标记（本项目初始化自哪版模板，供日后对照）；你项目自己的版本日志日后写在 `workspace/CHANGELOG.md` |
-| `spec/AGENTS.md` | spec 机制说明书：spec 是什么、怎么拉、怎么读 |
-| `spec/<id>/` | 拉下来的具体工作流（`spec.md` + `assets/`），没装时不存在 |
+| `spec/AGENTS.md` | spec 机制说明书：spec 是什么、怎么设计与获取、怎么读 |
+| `spec/<id>/` | 工作流（`spec.md` + `assets/`），自己设计或参考最佳实践集；没装时不存在 |
 | `context/` | 项目上下文文档（愿景 / 方案 / PRD / 决策记录等），装什么、骨架由 spec 决定；没有 spec 时为空 |
 | `process/` | 协作当前状态区：常驻的 `task.md` 任务板、`memory.md` AI 记忆，以及笔记 / `review-*.md` 验收件等临时件（用完即清） |
 | `workspace/` | 干活主工作区 + 对外发布层；内部结构（如 `src/` 源码、`dist/` 交付物）由 spec / 项目定 |

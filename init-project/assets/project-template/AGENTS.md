@@ -24,7 +24,7 @@
 | `process/task.md`     | 任务板：进行中 / 下一步 / 阻塞                             | 自由写            |
 | `process/memory.md` | agent 自我维护的记忆区（只声明用途、内容由 agent 自定；只存当前有效） | 自由写 |
 | `process/` 临时件 | 随手笔记 + `review-<简介>.md` 验收件；用完即清、通过后删 | 自由写 |
-| `spec/`               | 声明式工作流：出厂只有机制说明书 `AGENTS.md`；`spec.md` + `assets/` 按需从公开仓的 `preset-spec/` 货架拉取（指引见 `spec/AGENTS.md`） | spec 机制        |
+| `spec/`               | 声明式工作流：出厂只有机制说明书 `AGENTS.md`；spec 以自己设计为主，可参考公开仓 `preset-spec/` 最佳实践集（指引见 `spec/AGENTS.md`） | spec 机制        |
 | `archive/` | 固有历史：memory 失效条目 + 讨论记录 + 阶段归档（可选件） | 只追加 |
 | `_trash/`             | 临时删除区（已进 .gitignore）                           | 自由写            |
 
@@ -202,6 +202,6 @@ agent 对话上下文之外的持久记录，冷启动必读。本文件**只声
   - **使用规则**（本文件、拉下来的 `spec.md`）默认读——回答「怎么用、怎么
     干活」；
   - **构建规则**（怎么造 / 改 spec）默认不读，需要造 / 改时才从公开仓的
-    `preset-spec/build/` 拉到 `spec/build/`（指引见 `spec/AGENTS.md`）。
+    `preset-spec/build/` 参考复制到 `spec/build/`（指引见 `spec/AGENTS.md`）。
   这样分，是因为使用规则要随时在手，而构建规则只在少数时刻用到，平时读了
   只占上下文。

@@ -1,10 +1,6 @@
 # spec/ — 声明式工作流（spec 机制说明书）
 
-> 结构是框架，工作流是 spec。本目录出厂只有本文件（spec 机制说明 + 拉取
-> 指引）；项目规范在根 `AGENTS.md` §五（用户维护区、冷启动必读）。spec
-> 工作流内容（`spec.md` + `assets/`）从公开仓的 `preset-spec/` 货架按需
-> 拉取、不随模板预置——货架只做展示与供取用，拉下来的 `spec.md` 归项目
-> 自由改。
+> 结构是框架，工作流是 spec。本目录出厂只有本文件（spec 机制说明 + 设计与获取指引）；项目规范在根 `AGENTS.md` §五（用户维护区、冷启动必读）。spec 工作流内容（`spec.md` + `assets/`）**以自己设计为主**，可参考公开仓 `preset-spec/` 最佳实践集——最佳实践集只做展示与供参考，复制进来的 `spec.md` 归项目自由改。
 
 ## 一、spec 是什么
 
@@ -15,25 +11,26 @@
 骨架，`spec.md` 按需指向它（渐进式披露：主文档精炼、用于导航，骨架作为
 附件按需读）。
 
-拉下来的 spec 落在 `spec/<spec id>/`（`spec.md` + `assets/`）。不拉 spec 时
+spec 落在 `spec/<spec id>/`（`spec.md` + `assets/`）。没有 spec 时
 项目以框架形态直接运转——`spec/` 只有本文件一件。
 
-## 二、怎么拉一份 spec
+## 二、怎么设计与获取一份 spec
 
-货架与模板在同一个公开仓：`github.com/The-Daybreaker/project-spec` 的
-`preset-spec/` 目录。
+每个项目的场景不同，**以自己设计为主、最佳实践作参考**。设计 spec 推荐
+按「还原场景 → 场景拆流程 → 流程抽象为 spec」的方法论推进：
 
-1. 浏览公开仓 `preset-spec/specs/` 目录选定一个 spec，读它 `spec.md` 开头
-   确认场景合适（现有哪些 spec、各管什么，直接看目录，货架 README 不复制清单）；
+1. **还原场景**：和用户一起把项目的典型工作场景讲清楚（谁、做什么、产出什么、有什么约束）；
+2. **场景拆流程**：把场景拆成阶段链（推荐推进顺序 + 横切阶段），设几档入口（流程调节）；
+3. **流程抽象为 spec**：把公开仓 `preset-spec/build/` 构建规则复制到本目录的 `build/`，按 `build.md` 和 `spec-template/` 母版写成 `spec.md`（头部 + §一 工作流 + §二 概览·入口·检查点 + §三 各阶段三段式），按需补 `assets/` 产出骨架。
+
+如果最佳实践集里有场景相近的现成 spec，也可以直接复制一份进来自由改：
+
+1. 浏览公开仓 `preset-spec/specs/` 目录选定一个 spec，读它 `spec.md` 开头确认场景合适（现有哪些 spec、各管什么，直接看目录，最佳实践集 README 不复制清单）；
 2. clone 公开仓到临时目录（或只下载需要的目录）；
-3. 把 `preset-spec/specs/<id>/` 里的 `spec.md` + `assets/` 复制进本目录的
-   `<id>/`（即 `spec/<id>/`）；`CHANGELOG.md` 是货架版本历史，可不带；
+3. 把 `preset-spec/specs/<id>/` 里的 `spec.md` + `assets/` 复制进本目录的 `<id>/`（即 `spec/<id>/`）；`CHANGELOG.md` 是最佳实践集的版本历史，可不带；
 4. 之后这份 `spec.md` 归项目所有，按项目情况自由改（本地演进由 git 记录）。
 
-要造 / 改 spec 的结构，把公开仓 `preset-spec/build/` 拉到 `spec/build/`，
-按 `build.md` 和 `spec-template/` 母版操作（构建规则默认不读，只在造 / 改
-时才拉）。拉取交 agent 判断执行、不写拉取脚本：拉什么、哪个版本是决策，
-clone + 复制只是几条命令。
+设计 / 改 spec 的结构规则在 `preset-spec/build/build.md`，默认不读、只在造 / 改时才拉。拉取交 agent 判断执行、不写拉取脚本：拉什么、哪个版本是决策，clone + 复制只是几条命令。
 
 ## 三、spec.md 怎么读
 

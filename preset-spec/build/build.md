@@ -17,7 +17,7 @@
 | 回答什么 | 怎么**写** spec.md | 怎么**用** spec.md |
 | 读者 | 设计 / 修改 spec 的人或 agent | 日常执行任务的人或 agent |
 | 默认读不读 | **默认不读**（只在造 / 改时读） | **默认要读**（每次任务都读） |
-| 落点 | 货架 `build/`（公开仓 `preset-spec/` 下，复制到项目 `spec/build/`） | 项目根 `AGENTS.md`、拉下来的 `spec.md` |
+| 落点 | 最佳实践集 `build/`（公开仓 `preset-spec/` 下，复制到项目 `spec/build/`） | 项目根 `AGENTS.md`、拉下来的 `spec.md` |
 | 命名 | 非 `AGENTS.md`（避免被各软件自动扫描误读） | `AGENTS.md` / `spec.md`（本就该被读到） |
 
 一句话：**构建规则是「说明书怎么写」，使用规则是「说明怎么用」**。
@@ -25,7 +25,7 @@
 ## 二、一份 spec 长什么样
 
 ```
-specs/<spec-id>/            ← 货架上的目录结构（公开仓 preset-spec/ 下）
+specs/<spec-id>/            ← 最佳实践集的目录结构（公开仓 preset-spec/ 下）
 ├── spec.md                 ← 主干：这套工作流的全部内容
 ├── assets/                 ← 各阶段产出文档的参考骨架（按需，部分阶段没有）
 └── CHANGELOG.md            ← 版本变更日志
@@ -71,7 +71,7 @@ spec/<spec-id>/             ← 拉进项目后（不带 CHANGELOG；spec.md + a
 - **CHANGELOG**：每个 spec 带 `CHANGELOG.md`，按版本记录变更（分类参考
   Keep a Changelog：Added / Changed / Removed / Fixed），跨版本迁移先读它。
 - spec 拉进项目后归项目自由改，本地不再背版本号与 CHANGELOG（git 即历史）；
-  货架版本只标「这是哪一版」，供日后对照升级。
+  最佳实践集版本只标「这是哪一版」，供日后对照升级。
 
 ## 五、新建一个 spec
 

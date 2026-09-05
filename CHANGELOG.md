@@ -7,12 +7,12 @@
 
 ## [Unreleased]
 
-spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-project +
+spec 机制单文档化重构 + agent-rules skill 并入 init-project +
 取消 inbox/pending/reviews 三个异步目录（process 重新定性为协作当前状态区）+ 目录命名对齐业界惯例
 （logs→archive、workspace 去预置改 spec 驱动）+ 规范拆分出 `spec/constitution.md`
-后又全量迁回 `AGENTS.md` §五（决策 66）+ 两公开仓合并、货架成为同仓
+后又全量迁回 `AGENTS.md` §五（决策 66）+ 两公开仓合并、最佳实践集成为同仓
 `preset-spec/`（决策 67）+ 产品英文名 Project-Template 更名 project-spec
-（与公开仓名一致；云端直接复用原 project-spec 仓，两条历史以 fast-forward
+（与公开仓名一致；直接复用原 project-spec 仓，两条历史以 fast-forward
 合流）+ 移除模板 `package.json`（版本标记归 CHANGELOG 独担）。
 版本号待用户确认后再定，不随本次自动 bump。
 
@@ -22,14 +22,13 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
   展开」的新用户叙事线重写：发布仓 README 新增痛点共鸣、协作层/发布层
   分离与流程/宪章分开的设计理念、冷启动读盘 mermaid；模板本体 README
   改为面向项目主人的使用手册（协作循环、高频场景、核心文件分工，
-  「写给用户」节原样保留）；配套 project-spec 货架 README 补两层关系图
+  「写给用户」节原样保留）；同仓 preset-spec 最佳实践集 README 补两层关系图
   与 software-dev 工作流实例讲解。
-- 同步 spec 新口径（配套 project-spec 阶段链软化）：阶段链由硬依赖改为
+- 同步 spec 新口径（同仓 preset-spec 阶段链软化）：阶段链由硬依赖改为
   「推荐推进顺序、不强制」，「缩放旋钮」→「流程调节」，「管什么场景」→
   「使用场景 / 适用于什么场景」；涉及发布仓 README、模板本体 `AGENTS.md`
   §六与 `spec/AGENTS.md` §一。
-- 一个 spec 合并为一份 `spec.md` + 同级 `assets/`（产出骨架）；云端库简化
-  为只读货架、拉下来自由改。模板本体 `spec/AGENTS.md` 精简为机制说明书，
+- 一个 spec 合并为一份 `spec.md` + 同级 `assets/`（产出骨架）；最佳实践集定位为只读参考、拉下来自由改。模板本体 `spec/AGENTS.md` 精简为机制说明书，
   `AGENTS.md`（§一/§二/§六）、`README.md`、`init-project/SKILL.md` 去掉
   模块 / 锁文件 / registry 口径；发布仓 README「核心理念」spec 段、
   mermaid、目录结构、「配套仓库」整节改写。
@@ -41,11 +40,11 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
   改为通读 `process/` 全部文件；review 降为 process 根临时件（通过后删、不
   归档 logs），何时验收交对话或 spec；`memory.md` 改为 agent 自我维护区（只
   声明用途不声明内容）。模板本体 `AGENTS.md`（§一/§二/§三）、两份 README、
-  `init-project/SKILL.md`、`process/memory.md`、目录树与配套 project-spec 的
+  `init-project/SKILL.md`、`process/memory.md`、目录树与同仓 preset-spec 的
   两份 spec 同步（详见模板本体 CHANGELOG 与开发仓决策 62）。
 - 目录命名对齐业界惯例：`logs/` 更名 `archive/`（避开运行日志标准名的写入
   污染）；删除 `workspace/source/`、`workspace/delivery/` 预置，`workspace/`
-  保留为「干活 + 发布层」通用声明、内部结构改由 spec / 项目定；配套云端两份
+  保留为「干活 + 发布层」通用声明、内部结构改由 spec / 项目定；同仓两份
   spec 产出落点改用 `workspace/src/`、`workspace/dist/` 与 `archive/*` 归档路径
   （详见模板本体 CHANGELOG 与开发仓决策 63）。
 - 规范正文从模板 `AGENTS.md` 拆出到新文件 `spec/constitution.md`（宪章 / 项目级 /
@@ -62,17 +61,17 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
   加载规则改指 §五 宪章条款）、两份 README、模板 `spec/AGENTS.md` 全部级联
   同步；§五 内部小节去编号（避免与顶层「一～六」撞号），三处「本文件」
   随语境改为「本节」。
-- 原独立云端 spec 货架仓并入本仓、成为同仓 `preset-spec/` 目录（决策 67）：
-  仓根 README 门面改为「模板产品 + 同仓 spec 货架」、clone 地址与目录树
+- 原独立 spec 最佳实践集仓并入本仓、成为同仓 `preset-spec/` 目录（决策 67）：
+  仓根 README 门面改为「模板产品 + 同仓 spec 最佳实践集」、clone 地址与目录树
   同步，全部拉取指引从「clone 另一个仓」改为「从本仓 `preset-spec/`
-  复制」；货架 README、`build/build.md`、`spec-template/` 与两份 spec 的
-  「云端」措辞同步；`preset-spec/.editorconfig` 提升到仓根覆盖全仓（模板
+  复制」；最佳实践集 README、`build/build.md`、`spec-template/` 与两份 spec 的
+  措辞同步；`preset-spec/.editorconfig` 提升到仓根覆盖全仓（模板
   本体内另带一份，随模板分发给新项目）。
 - 产品英文名 Project-Template 更名 **project-spec**（与公开仓名一致）：
   模板本体 README 欢迎语同步；云端不采用「改名 Project-Template 仓」的
   路径，改为直接复用原 `The-Daybreaker/project-spec` 仓——本地合并仓
   包含两条完整历史且其 main 是旧仓 main 的后代，推送为 fast-forward，
-  模板链与货架链记录全部保留；skill 内部资产目录 `assets/project-template/`
+  模板链与最佳实践集链记录全部保留；skill 内部资产目录 `assets/project-template/`
   是技术路径名，不随产品名改（改名牵动 `init_project.py` 常量且与
   `preset-spec/` 语义冲突）。
 
@@ -86,7 +85,7 @@ spec 机制单文档化重构（三仓联动）+ agent-rules skill 并入 init-p
 - 锁文件三类（`spec/lockfile.py` / `lockfile.md` 及实例化后的
   `lockfile.json`），冷启动不再跑漂移校验；模块机制（`@模块/`、
   `MODULE.md` / `module.json` / 每模块 `README`·`CHANGELOG`）、
-  `manifest.json`、`registry.json`、`add.md`（详见配套仓 project-spec 的
+  `manifest.json`、`registry.json`、`add.md`（详见本仓 preset-spec 的
   CHANGELOG）。
 - `agent-rules` skill 整个删除：它与模板宪章是两处副本、必然漂移，其「项目
   外行为基线」职责并入 `init-project`（指向唯一事实源，杜绝漂移）。

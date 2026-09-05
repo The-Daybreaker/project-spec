@@ -38,10 +38,10 @@ version: 0.9.0
 - **框架结构**：`AGENTS.md`（协作总纲，§五 为用户维护的规范）/ `README.md`（使用手册）/
   `context/`（项目上下文）/ `workspace/`（干活 + 发布层，结构由 spec / 项目定）/ `process/`
   （任务板 + agent 记忆 + 临时件）/ `archive/`（历史）/ `spec/`（声明式工作流机制）。
-- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 拉取指引）常驻；spec 内容
-  （`spec.md` + `assets/`）与构建规则按需从公开仓的 `preset-spec/` 货架拉取
-  （`github.com/The-Daybreaker/project-spec` 仓内 `preset-spec/` 目录）、拉下来
-  自由改；空 spec 时项目以框架形态直接运转。
+- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 设计与获取指引）常驻；spec 以
+  自己设计为主，可参考公开仓 `preset-spec/` 最佳实践集
+  （`github.com/The-Daybreaker/project-spec` 仓内 `preset-spec/` 目录）；空 spec
+  时项目以框架形态直接运转。
 
 ## 前置确认（必须）
 
@@ -69,7 +69,11 @@ version: 0.9.0
      用户配置后手动提交；`--no-git` 模式不建 git。
 3. **收尾汇报**：向用户汇报初始化位置、git 仓库，以及下一步建议
    （首次对话让 agent 冷启动对齐项目背景与目标；需要文档体系/工作流时引入 spec；
-   配置远端后推送）。
+   配置远端后推送）。若用户需要工作流 spec，引导其按「还原场景 → 场景拆流程 →
+   流程抽象为 spec」的方法论设计：① 还原场景——和用户一起把项目的典型工作
+   场景讲清楚；② 场景拆流程——拆成阶段链与入口档位；③ 流程抽象为 spec——
+   按 `preset-spec/build/spec-template/` 母版写成 `spec.md` 并补 `assets/`。
+   设计时可参考 `preset-spec/specs/` 里的最佳实践，但以用户自己的场景为准。
 
 ## 执行红线
 

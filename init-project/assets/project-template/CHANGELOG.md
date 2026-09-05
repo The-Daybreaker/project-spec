@@ -16,22 +16,22 @@
   依赖改为「推荐推进顺序、不强制」，「缩放旋钮」→「流程调节」，「管什么
   场景」→「适用于什么场景」。
 - spec 机制单文档化：一个 spec 合并为一份 `spec.md` + 同级 `assets/`（产出
-  骨架）。`spec/AGENTS.md` 精简为机制说明书（spec 是什么 / 怎么拉 /
+  骨架）。`spec/AGENTS.md` 精简为机制说明书（spec 是什么 / 怎么设计与获取 /
   怎么读 / 状态标记约定）；本体 `AGENTS.md`（§一 spec 行、§二 冷启动
   读盘、§六 读取约定）、`README.md`、`init-project/SKILL.md` 同步为新
-  口径。配套云端库（project-spec）同步重构：模块机制 / manifest /
+  口径。同仓 preset-spec 同步重构：模块机制 / manifest /
   registry 废弃。
 - 取消 inbox/pending/reviews 三个异步交流目录，`process/` 重新定性为「协作当前状态区」：常驻件
   （`task.md` / `memory.md`）+ 临时件（笔记 / `review-<简介>.md`，用完即清）；
   冷启动改为通读 `process/` 全部文件。review 降为 `process/` 根临时件（通过后
   删、不归档 logs），何时验收交对话或 spec；`memory.md` 改为 agent 自我维护区
   （只声明用途不声明内容）。本体 `AGENTS.md`（§一 / §二 / §三）、`README.md`、
-  `init-project/SKILL.md`、`process/memory.md` 与云端 software-dev / skills-dev
+  `init-project/SKILL.md`、`process/memory.md` 与同仓 software-dev / skills-dev
   两份 spec 的 development / audit 阶段同步为新口径。
 - 目录命名对齐业界惯例：`logs/` 更名 `archive/`（`logs` 是运行日志的事实标准
   名、易被工具写入污染归档语义，`archive` 无此撞名）；删除 `workspace/source/`、
   `workspace/delivery/` 两个预置子目录，`workspace/` 保留为「干活 + 发布层」
-  通用声明、内部结构改由 spec / 项目定；配套云端 software-dev / skills-dev 两份
+  通用声明、内部结构改由 spec / 项目定；同仓 software-dev / skills-dev 两份
   spec 的产出落点改用业界惯例名 `workspace/src/`、`workspace/dist/`，其 `logs/*`
   归档路径改 `archive/*`。本体 `AGENTS.md`、两份 README、`SKILL.md`、
   `process/memory.md`、`spec/build/build.md` 同步。
@@ -49,8 +49,8 @@
   本 README、`spec/AGENTS.md`、`init-project/SKILL.md` 全部级联同步；§五
   内部小节去编号（避免与顶层「一～六」撞号），三处「本文件」随语境改为
   「本节」。
-- spec 货架与模板合并为同一个公开仓（决策 67）：spec 拉取来源从「另一个
-  云端仓」改为「公开仓的 `preset-spec/` 目录」，`spec/AGENTS.md` §二与本
+- spec 最佳实践集与模板合并为同一个公开仓（决策 67）：spec 拉取来源从「另一个
+  仓」改为「公开仓的 `preset-spec/` 目录」，`spec/AGENTS.md` §二与本
   README「按需安装工作流（spec）」同步为同仓复制口径。
 - 产品英文名 Project-Template 更名 **project-spec**（与公开仓名一致）：
   本 README 欢迎语同步；skill 内部资产目录路径名 `assets/project-template/`
