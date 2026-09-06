@@ -1,6 +1,6 @@
 # spec/ — 声明式工作流（spec 机制说明书）
 
-> 模板是框架，工作流是 spec。本目录出厂有本文件（spec 机制说明 + 设计与获取指引）与 `build/`（构建规则，默认不读、造 / 改 spec 时才用）；项目规范在根 `AGENTS.md` §四（用户维护区、冷启动必读）。spec 工作流内容（`spec.md` + `assets/`）**以自己设计为主**，可参考公开仓 `preset-spec/specs/` 最佳实践集——最佳实践集只做展示与供参考，复制进来的 `spec.md` 归项目自由改。
+> 模板是框架，工作流是 spec。本目录出厂有本文件（spec 机制说明 + 设计与获取指引）与 `build/`（构建规则，默认不读、造 / 改 spec 时才用）；项目规范在根 `AGENTS.md` §四（用户维护区、冷启动必读）。spec 工作流内容（`spec.md` + `assets/`）**以自己设计为主**，可参考公开仓 `preset-spec/` 根目录下的最佳实践集——最佳实践集只做展示与供参考，复制进来的 `spec.md` 归项目自由改。
 
 ## 一、spec 是什么
 
@@ -21,12 +21,12 @@ spec 落在 `spec/<spec id>/`（`spec.md` + `assets/`）。没有 spec 时项目
 
 如果最佳实践集里有场景相近的现成 spec，也可以直接复制一份进来自由改：
 
-1. 浏览公开仓 `preset-spec/specs/` 目录选定一个 spec，读它 `spec.md` 开头确认场景合适（现有哪些 spec、各管什么，直接看目录，最佳实践集 README 不复制清单）；
+1. 浏览公开仓 `preset-spec/` 根目录选定一个 spec（每份 spec 一个目录），读它 `spec.md` 开头确认场景合适（现有哪些 spec、各管什么，直接看目录，最佳实践集 README 不复制清单）；
 2. clone 公开仓到临时目录（或只下载需要的目录）；
-3. 把 `preset-spec/specs/<id>/` 里的 `spec.md` + `assets/` 复制进本目录的 `<id>/`（即 `spec/<id>/`）；`CHANGELOG.md` 是最佳实践集的版本历史，可不带；
+3. 把 `preset-spec/<id>/` 里的 `spec.md` + `assets/` 复制进本目录的 `<id>/`（即 `spec/<id>/`）；`CHANGELOG.md` 是最佳实践集的版本历史，可不带；
 4. 之后这份 `spec.md` 归项目所有，按项目情况自由改（本地演进由 git 记录）。
 
-设计 / 改 spec 的结构规则在本目录 `build/build.md`，默认不读、只在造 / 改时读。参考或复制现成 spec 时才从公开仓 `preset-spec/specs/` 拉取：拉什么、哪个版本是决策，clone + 复制只是几条命令，由 agent 判断执行、不写拉取脚本。
+设计 / 改 spec 的结构规则在本目录 `build/build.md`，默认不读、只在造 / 改时读。参考或复制现成 spec 时才从公开仓 `preset-spec/` 拉取：拉什么、哪个版本是决策，clone + 复制只是几条命令，由 agent 判断执行、不写拉取脚本。
 
 ## 三、spec.md 怎么读
 

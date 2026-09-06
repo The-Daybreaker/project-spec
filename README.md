@@ -41,13 +41,13 @@ flowchart TD
 模板分上下两层，各管一件事：
 
 - **框架**是每个项目都一样的固定骨架：协作总纲、任务板、AI 记忆、历史归档、工作区、git 约定。它回答「状态放在哪、会话中断怎么交接、什么操作必须先找人确认」——哪怕项目什么流程都不配，也能最低限度运转。
-- **spec** 是某一类工作的具体流程：分几个阶段、阶段之间怎么依赖、每个阶段产出什么，由一份 `spec.md`（加上产出骨架 `assets/`）声明。spec 以自己设计为主，也可以从同仓 `preset-spec/specs/` 最佳实践集复制一份进来自由改。
+- **spec** 是某一类工作的具体流程：分几个阶段、阶段之间怎么依赖、每个阶段产出什么，由一份 `spec.md`（加上产出骨架 `assets/`）声明。spec 以自己设计为主，也可以从同仓 `preset-spec/` 最佳实践集复制一份进来自由改。
 
 框架是底座、每个新项目自带（含「怎么写 spec」的构建规则 `spec/build/`，默认不读、造 spec 时才看）；spec 叠加在框架上、可装可不装；最佳实践集与模板同仓（`preset-spec/`）、不随模板分发：
 
 ```mermaid
 flowchart TB
-  SHELF["同仓 preset-spec/ 最佳实践集<br/>specs/ 工作流"]
+  SHELF["同仓 preset-spec/ 最佳实践集<br/>各 spec 直接放根目录"]
   subgraph PROJ["初始化出的新项目"]
     direction TB
     SPEC["spec 层：工作流 spec.md + assets/<br/>自己设计为主 · 可参考最佳实践集 · 可以为空"]
@@ -161,10 +161,11 @@ project-spec/
 │       ├── process/              #   协作当前状态区：任务板 + AI 记忆 + 笔记/验收临时件
 │       ├── workspace/            #   干活产物 + 发布层；内部结构由 spec / 项目定
 │       ├── archive/              #   历史归档（只追加）
-│       └── spec/                 #   机制说明书 AGENTS.md + 构建规则 build/（默认不读）；工作流自写或参考 preset-spec/specs/
+│       └── spec/                 #   机制说明书 AGENTS.md + 构建规则 build/（默认不读）；工作流自写或参考 preset-spec/
 └── preset-spec/                  # spec 最佳实践集（参考用，不随模板分发）
     ├── README.md                 #   最佳实践集说明：spec 是什么、有什么、怎么参考
-    └── specs/                    #   按场景备好的工作流（每份 spec.md + assets/ + CHANGELOG.md）
+    ├── software-dev/             #   按场景备好的工作流（每份 = spec.md + assets/ + CHANGELOG.md，直接放根目录）
+    └── skills-dev/
 ```
 
 模板里的空目录（如 `context/`、`workspace/`）靠 `.gitkeep` 占位才能进入 git；`.githooks/`、快捷方式等本地开发件不入库，故不在树中。
@@ -177,8 +178,8 @@ project-spec/
 
 工作流 spec 不随模板分发，本仓 `preset-spec/` 目录（与模板同仓）放了一些最佳实践供参考。spec 高度定制化、每个项目场景不同，所以**以自己设计为主、最佳实践作参考**；最佳实践集不做只读锁定、也没有防漂移校验——复制一份进项目就是你的，自由改（本地演进由 git 记录）。设计 spec 推荐按「还原场景 → 场景拆流程 → 流程抽象为 spec」三步推进，写法规则随模板出厂（项目的 `spec/build/`）。
 
-- **有哪些最佳实践、各适用于什么场景**：直接看 `preset-spec/specs/` 目录——每份 `spec.md` 开头就写明场景与版本；本 README 不复制清单，避免两处维护清单、导致过时。
-- **参考或复制一份最佳实践**：浏览 `preset-spec/specs/` 选定 → 把 `preset-spec/specs/<id>/` 里的 `spec.md` + `assets/` 复制进项目的 `spec/<id>/`（`CHANGELOG.md` 是最佳实践集的版本历史，可不带）→ 之后自由改（本仓就在手边，无需另 clone；若手头只有装到技能目录的 `init-project/` 副本，再从公开仓下载 `preset-spec/` 对应目录即可）。
+- **有哪些最佳实践、各适用于什么场景**：直接看 `preset-spec/` 根目录——每份 `spec.md` 开头就写明场景与版本；本 README 不复制清单，避免两处维护清单、导致过时。
+- **参考或复制一份最佳实践**：浏览 `preset-spec/` 选定 → 把 `preset-spec/<id>/` 里的 `spec.md` + `assets/` 复制进项目的 `spec/<id>/`（`CHANGELOG.md` 是最佳实践集的版本历史，可不带）→ 之后自由改（本仓就在手边，无需另 clone；若手头只有装到技能目录的 `init-project/` 副本，再从公开仓下载 `preset-spec/` 对应目录即可）。
 - **自己设计 spec**：构建规则随模板出厂（项目的 `spec/build/`：`build.md` + `spec-template/` 母版），直接参照着写，无需另拉。
 
 最佳实践集自身的完整说明见 `preset-spec/README.md`；spec 机制的说明书随模板出厂，就在新项目的 `spec/AGENTS.md`（讲 spec 是什么、怎么设计与获取、怎么读）。

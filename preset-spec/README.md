@@ -4,7 +4,7 @@
 
 ```mermaid
 flowchart TB
-  SHELF["同仓 preset-spec/（最佳实践集）<br/>specs/ 工作流"]
+  SHELF["同仓 preset-spec/（最佳实践集）<br/>各 spec 直接放根目录"]
   subgraph PROJ["由模板初始化的项目"]
     direction TB
     SPEC["项目 spec/ 下的工作流（自己设计为主，可参考最佳实践集）"]
@@ -31,13 +31,11 @@ flowchart TB
 
 ## 最佳实践集里有什么
 
-| 路径 | 是什么 |
-| --- | --- |
-| `specs/` | spec 最佳实践：每个 spec 一个目录，内含 `spec.md` + `assets/` + `CHANGELOG.md` |
+每份 spec 直接放在本目录根下、一个目录一个（如 `software-dev/`、`skills-dev/`），内含 `spec.md` + `assets/` + `CHANGELOG.md`。
 
 构建规则（怎么写一份 spec.md 的 `build.md` + `spec-template/` 骨架母版）随模板出厂，在模板的 `spec/build/`（本仓路径 `init-project/assets/project-template/spec/build/`），默认不读、造 / 改 spec 时参照。
 
-**现有哪些 spec、各自适用于什么场景、什么版本，直接浏览 `specs/` 目录即可**——每份 `spec.md` 开头就自行声明场景与版本。本 README 不复制清单，避免两处维护清单、导致过时。
+**现有哪些 spec、各自适用于什么场景、什么版本，直接浏览本目录即可**——每份 `spec.md` 开头就自行声明场景与版本。本 README 不复制清单，避免两处维护清单、导致过时。
 
 ## 怎么消费本目录
 
@@ -51,13 +49,13 @@ flowchart TB
 2. **场景拆流程**：把场景拆成阶段链（推荐推进顺序 + 横切阶段），设几档入口（流程调节）；
 3. **流程抽象为 spec**：按模板自带的 `spec/build/`（`build.md` 规则 + `spec-template/` 母版）写成 `spec.md`（头部 + §一 工作流 + §二 概览·入口·检查点 + §三 各阶段三段式），按需补 `assets/` 产出骨架。
 
-设计时可以参考 `specs/` 里的现成最佳实践，但不要照搬——以自己项目的场景为准。
+设计时可以参考本目录下的现成最佳实践，但不要照搬——以自己项目的场景为准。
 
 ### 2. 参考或复制一份现成最佳实践
 
-1. 浏览 `specs/` 选定一个 spec，读它 `spec.md` 开头确认场景合适；
-2. 本仓就在手边时，直接从本目录复制；只有技能目录里的 `init-project/` 副本时，从公开仓下载 `preset-spec/` 需要的目录；
-3. 把 `specs/<id>/` 里的 `spec.md` + `assets/` 复制进项目的 `spec/<id>/`（`CHANGELOG.md` 是最佳实践集的版本历史，可不带——项目本地以 git 为准）；
+1. 浏览本目录选定一个 spec，读它 `spec.md` 开头确认场景合适；
+2. 本仓就在手边时，直接从本目录复制；只有技能目录里的 `init-project/` 副本时，从公开仓下载 `preset-spec/` 下对应的 spec 目录；
+3. 把 `<id>/` 里的 `spec.md` + `assets/` 复制进项目的 `spec/<id>/`（`CHANGELOG.md` 是最佳实践集的版本历史，可不带——项目本地以 git 为准）；
 4. 之后这份 spec 归项目所有，按项目情况自由改。
 
 造好的 spec 可以回流本目录（向公开仓贡献），成为最佳实践集的新版本。

@@ -23,7 +23,7 @@ spec/<spec-id>/               ← 项目里一份 spec 的结构
 ├── spec.md                   ← 主干：这套工作流的全部内容
 └── assets/                   ← 各阶段产出文档的参考骨架（按需，部分阶段没有）
 
-preset-spec/specs/<spec-id>/  ← 回流到公开仓最佳实践集时，另带一份 CHANGELOG.md
+preset-spec/<spec-id>/        ← 回流到公开仓最佳实践集时，另带一份 CHANGELOG.md
 ├── spec.md
 ├── assets/
 └── CHANGELOG.md              ← 最佳实践集的版本变更日志（项目本地不需要）
@@ -51,13 +51,13 @@ spec/build/                   ← 本目录：构建规则
 
 ## 四、版本号与 CHANGELOG（只对回流最佳实践集的 spec）
 
-- **版本号（SemVer）**：贡献到公开仓 `preset-spec/specs/` 的 spec，版本写在 `spec.md` 顶部，格式 `主.次.修订`（如 `0.1.0`）——主版本不兼容变更才 +1、次版本向后兼容新增 +1、修订号向后兼容修复 +1；主版本为 0 是开发期，不做兼容承诺。
+- **版本号（SemVer）**：贡献到公开仓 `preset-spec/` 的 spec，版本写在 `spec.md` 顶部，格式 `主.次.修订`（如 `0.1.0`）——主版本不兼容变更才 +1、次版本向后兼容新增 +1、修订号向后兼容修复 +1；主版本为 0 是开发期，不做兼容承诺。
 - **CHANGELOG**：最佳实践集里的每份 spec 带 `CHANGELOG.md`，按版本记录变更（分类参考 Keep a Changelog：Added / Changed / Removed / Fixed），跨版本升级先读它。
 - **项目本地的 spec 不背版本号**：spec 拉进或写进项目后归项目自由改，本地以 git 为历史；版本与 CHANGELOG 只是最佳实践集标「这是哪一版」、供日后对照升级用。本目录（构建规则）自身也不带版本，随模板整体版本走。
 
 ## 五、新建一个 spec
 
-1. 把本目录 `spec-template/` 复制成 `spec/<新 id>/`（要回流贡献到最佳实践集，则复制到公开仓 `preset-spec/specs/<新 id>/`）；
+1. 把本目录 `spec-template/` 复制成 `spec/<新 id>/`（要回流贡献到最佳实践集，则复制到公开仓 `preset-spec/<新 id>/`）；
 2. 把母版里的 `<占位符>` 换成实际内容：按头部 / §一 / §二 / §三 的顺序写 `spec.md`，按需增删阶段小节；
 3. 按需补 `assets/` 产出骨架；回流最佳实践集的另填 `CHANGELOG.md`。
 
