@@ -47,7 +47,7 @@ flowchart TD
 
 ```mermaid
 flowchart TB
-  SHELF["同仓 preset-spec/ 最佳实践集<br/>specs/ 工作流 · build/ 构建规则"]
+  SHELF["同仓 preset-spec/ 最佳实践集<br/>specs/ 工作流"]
   subgraph PROJ["初始化出的新项目"]
     direction TB
     SPEC["spec 层：工作流 spec.md + assets/<br/>自己设计为主 · 可参考最佳实践集 · 可以为空"]
@@ -86,7 +86,7 @@ flowchart TB
 
 ### 6. 渐进式披露与入口分档：别让 AI 携带无用上下文
 
-AI 的上下文窗口是稀缺资源，模板按「什么时候才需要读」给文件分层：协作协议与宪章每次开工必读；spec 的产出骨架（`assets/`）到了对应阶段才读；「怎么编写一份 spec」的构建规则默认不读、需要造流程时才拉。
+AI 的上下文窗口是稀缺资源，模板按「什么时候才需要读」给文件分层：协作协议与宪章每次开工必读；spec 的产出骨架（`assets/`）到了对应阶段才读；「怎么编写一份 spec」的构建规则（`spec/build/`）随模板出厂但默认不读、需要造流程时才看。
 
 同时，每份 spec 都提供**多档入口（流程调节）**：改个错别字只走开发环节，做个小功能走「需求 → 开发 → 测试」，完整一期才走全流程——简单的事不走重流程，复杂的事不漏环节；阶段链是推荐推进顺序，并不强制，可按实际情况调整。
 
@@ -161,11 +161,10 @@ project-spec/
 │       ├── process/              #   协作当前状态区：任务板 + AI 记忆 + 笔记/验收临时件
 │       ├── workspace/            #   干活产物 + 发布层；内部结构由 spec / 项目定
 │       ├── archive/              #   历史归档（只追加）
-│       └── spec/                 #   机制说明书；spec 以自己设计为主，可参考 preset-spec/ 最佳实践集
+│       └── spec/                 #   机制说明书 AGENTS.md + 构建规则 build/（默认不读）；工作流自写或参考 preset-spec/specs/
 └── preset-spec/                  # spec 最佳实践集（参考用，不随模板分发）
     ├── README.md                 #   最佳实践集说明：spec 是什么、有什么、怎么参考
-    ├── specs/                    #   按场景备好的工作流（每份 spec.md + assets/ + CHANGELOG.md）
-    └── build/                    #   构建规则：怎么自己写一份 spec（build.md + spec-template/ + CHANGELOG.md）
+    └── specs/                    #   按场景备好的工作流（每份 spec.md + assets/ + CHANGELOG.md）
 ```
 
 模板里的空目录（如 `context/`、`workspace/`）靠 `.gitkeep` 占位才能进入 git；`.githooks/`、快捷方式等本地开发件不入库，故不在树中。
@@ -182,7 +181,7 @@ spec 是高度定制化的东西，每个项目的场景不同，所以**以自�
 
 - **有哪些最佳实践、各适用于什么场景**：直接看 `preset-spec/specs/` 目录——每份 `spec.md` 开头就写明场景与版本；本 README 不复制清单，避免两处维护清单、导致过时。
 - **参考或复制一份最佳实践**：浏览 `preset-spec/specs/` 选定 → 把 `preset-spec/specs/<id>/` 里的 `spec.md` + `assets/` 复制进项目的 `spec/<id>/` → 之后自由改（本仓就在手边，无需另 clone；若手头只有装到技能目录的 `init-project/` 副本，再从公开仓下载 `preset-spec/` 对应目录即可）。
-- **自己设计 spec**：把 `preset-spec/build/` 复制到项目 `spec/build/`，按 `build.md` 和 `spec-template/` 母版写。
+- **自己设计 spec**：构建规则随模板出厂（项目的 `spec/build/`：`build.md` + `spec-template/` 母版），直接参照着写，无需另拉。
 
 最佳实践集自身的完整说明（spec 是什么、怎么参考、版本约定）见 `preset-spec/README.md`；这套机制的说明书随模板出厂，就在新项目的 `spec/AGENTS.md`（讲 spec 是什么、怎么设计与获取、怎么读）。
 
@@ -196,5 +195,5 @@ spec 是高度定制化的东西，每个项目的场景不同，所以**以自�
 - 初始化后项目根的 `AGENTS.md`：协作协议全文（目录地图、会话协议、 process 当前状态区规则、spec 读取约定），其 §四 是可自由删改、增补自己条款的行为规范。
 - `spec/AGENTS.md`：spec 机制说明书（怎么设计与获取、怎么读、产出文档状态标记约定）。
 - `preset-spec/README.md`：最佳实践集说明（spec 是什么、有什么、怎么参考）。
-- `preset-spec/build/build.md`：怎么自己写一份 spec。
+- 模板内 `spec/build/build.md`（仓内路径 `init-project/assets/project-template/spec/build/build.md`）：怎么自己写一份 spec。
 - `CHANGELOG.md`：本仓版本演进历史。

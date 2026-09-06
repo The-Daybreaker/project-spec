@@ -4,7 +4,7 @@
 
 ```mermaid
 flowchart TB
-  SHELF["同仓 preset-spec/（最佳实践集）<br/>specs/ 工作流 · build/ 构建规则"]
+  SHELF["同仓 preset-spec/（最佳实践集）<br/>specs/ 工作流"]
   subgraph PROJ["由模板初始化的项目"]
     direction TB
     SPEC["项目 spec/ 下的工作流（自己设计为主，可参考最佳实践集）"]
@@ -34,7 +34,8 @@ flowchart TB
 | 路径 | 是什么 |
 | --- | --- |
 | `specs/` | spec 最佳实践：每个 spec 一个目录，内含 `spec.md` + `assets/` + `CHANGELOG.md` |
-| `build/` | 构建规则：`build.md`（怎么写一份 spec.md）+ `spec-template/`（spec.md 骨架母版）；默认不读，只有造 / 改 spec 时才拉 |
+
+构建规则（怎么写一份 spec.md 的 `build.md` + `spec-template/` 骨架母版）随模板出厂，在模板的 `spec/build/`（本仓路径 `init-project/assets/project-template/spec/build/`），默认不读、造 / 改 spec 时参照。
 
 **现有哪些 spec、各自适用于什么场景、什么版本，直接浏览 `specs/` 目录即可**——每份 `spec.md` 开头就自行声明场景与版本。本 README 不复制清单，避免两处维护清单、导致过时。
 
@@ -48,7 +49,7 @@ flowchart TB
 
 1. **还原场景**：和用户一起把项目的典型工作场景讲清楚（谁、做什么、产出什么、有什么约束）；
 2. **场景拆流程**：把场景拆成阶段链（推荐推进顺序 + 横切阶段），设几档入口（流程调节）；
-3. **流程抽象为 spec**：按 `build/spec-template/` 母版写成 `spec.md`（头部 + §一 工作流 + §二 概览·入口·检查点 + §三 各阶段三段式），按需补 `assets/` 产出骨架。
+3. **流程抽象为 spec**：按模板自带的 `spec/build/`（`build.md` 规则 + `spec-template/` 母版）写成 `spec.md`（头部 + §一 工作流 + §二 概览·入口·检查点 + §三 各阶段三段式），按需补 `assets/` 产出骨架。
 
 设计时可以参考 `specs/` 里的现成最佳实践，但不要照搬——以自己项目的场景为准。
 
@@ -59,10 +60,10 @@ flowchart TB
 3. 把 `specs/<id>/` 里的 `spec.md` + `assets/` 复制进项目的 `spec/<id>/`（`CHANGELOG.md` 是最佳实践集的版本历史，可不带——项目本地以 git 为准）；
 4. 之后这份 spec 归项目所有，按项目情况自由改。
 
-要造 / 改 spec 的结构，把本目录的 `build/` 复制到项目的 `spec/build/`，按 `build.md` 的规则和 `spec-template/` 母版写。造好的内容可以回流本目录（向公开仓贡献），成为最佳实践集的新版本。
+造 / 改 spec 的结构规则随模板出厂（项目里的 `spec/build/`：`build.md` + `spec-template/` 母版），直接参照即可，无需从本目录复制。造好的 spec 可以回流本目录（向公开仓贡献），成为最佳实践集的新版本。
 
 spec 机制的完整说明书随模板出厂、不在本目录（本目录只放 spec 内容本身）；在项目里读 `spec/AGENTS.md`。
 
 ## 版本约定
 
-每个 spec 的版本写在它 `spec.md` 顶部，变更历史记在同目录 `CHANGELOG.md`，遵循语义化版本（SemVer）；`build/` 的版本写在 `build.md` 顶部。spec 拉进项目后归项目自由改，最佳实践集版本只标「最佳实践集里这是哪一版」，供日后对照升级。
+每个 spec 的版本写在它 `spec.md` 顶部，变更历史记在同目录 `CHANGELOG.md`，遵循语义化版本（SemVer）。spec 拉进项目后归项目自由改、本地不背版本号（git 即历史）；最佳实践集版本只标「这里面这是哪一版」，供日后对照升级。

@@ -27,7 +27,7 @@ version: 1.0.0
 把内嵌的通用项目模板（`assets/project-template/`）应用到用户指定的项目文件夹，生成一个**自洽且自足**的项目骨架：任何 agent 从零接手都能按根 `AGENTS.md` 继续开发，不依赖本次对话上下文。模板自带：
 
 - **框架结构**：`AGENTS.md`（协作总纲，§四 为用户维护的规范）/ `README.md`（使用手册）/ `context/`（项目上下文）/ `workspace/`（干活 + 发布层，结构由 spec / 项目定）/ `process/` （任务板 + agent 记忆 + 临时件）/ `archive/`（历史）/ `spec/`（声明式工作流机制）。
-- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 设计与获取指引）常驻；spec 以自己设计为主，可参考公开仓 `preset-spec/` 最佳实践集（`github.com/The-Daybreaker/project-spec` 仓内 `preset-spec/` 目录）；空 spec 时项目以框架形态直接运转。
+- **spec 机制**：`spec/AGENTS.md`（机制说明书 + 设计与获取指引）与 `spec/build/`（构建规则：怎么写 spec.md + 骨架母版，默认不读）随模板出厂；spec 以自己设计为主，可参考公开仓 `preset-spec/specs/` 最佳实践集（`github.com/The-Daybreaker/project-spec` 仓内目录）；没有 spec 时项目以框架形态直接运转。
 
 ## 前置确认（必须）
 
@@ -40,10 +40,10 @@ version: 1.0.0
 1. **运行脚本**（确定性的复制与初始化）： `python <skill>/scripts/init_project.py <目标目录> [--branch main] [--no-git]`
    - 脚本复制模板（排除 `_trash/`、`.git/`、`__pycache__/`）、`git init` + 首次提交； `--no-git` 仅复制文件（不建 git）。
 2. **回读校验**（初始化后逐项核对，缺失立即补正）：
-   - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` / `process/` / `archive/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md` 存在（`spec/` 出厂只有机制说明书一件，规范在根 `AGENTS.md` §四， spec 工作流内容按需才拉）；`_trash/` 未随模板复制进来；
+   - **结构**：框架齐全（`AGENTS.md` / `README.md` / `context/` / `workspace/` / `process/` / `archive/` / `spec/`）；`process/memory.md`、`spec/AGENTS.md` 与 `spec/build/` 存在（`spec/` 出厂 = 机制说明书 + 构建规则，规范在根 `AGENTS.md` §四，spec 工作流内容按需自写或拉取）；`_trash/` 未随模板复制进来；
    - **git**：主仓库 `.git` 存在；`git status` 干净；首次提交信息为 `chore: init from project template`。
    - **常见问题**：首次提交失败多半是未配置 `git user.name` / `user.email`，让用户配置后手动提交；`--no-git` 模式不建 git。
-3. **收尾汇报**：向用户汇报初始化位置、git 仓库，以及下一步建议（首次对话让 agent 冷启动对齐项目背景与目标；需要文档体系/工作流时引入 spec；配置远端后推送）。若用户需要工作流 spec，引导其按「还原场景 → 场景拆流程 →流程抽象为 spec」的方法论设计：① 还原场景——和用户一起把项目的典型工作场景讲清楚；② 场景拆流程——拆成阶段链与入口档位；③ 流程抽象为 spec——按 `preset-spec/build/spec-template/` 母版写成 `spec.md` 并补 `assets/`。设计时可参考 `preset-spec/specs/` 里的最佳实践，但以用户自己的场景为准。
+3. **收尾汇报**：向用户汇报初始化位置、git 仓库，以及下一步建议（首次对话让 agent 冷启动对齐项目背景与目标；需要文档体系/工作流时引入 spec；配置远端后推送）。若用户需要工作流 spec，引导其按「还原场景 → 场景拆流程 →流程抽象为 spec」的方法论设计：① 还原场景——和用户一起把项目的典型工作场景讲清楚；② 场景拆流程——拆成阶段链与入口档位；③ 流程抽象为 spec——按模板自带 `spec/build/`（`build.md` 规则 + `spec-template/` 母版）写成 `spec.md` 并补 `assets/`。设计时可参考公开仓 `preset-spec/specs/` 里的最佳实践，但以用户自己的场景为准。
 
 ## 执行红线
 

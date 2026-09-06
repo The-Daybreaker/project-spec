@@ -16,7 +16,8 @@
 | `process/memory.md` | agent 自我维护的记忆区（只声明用途、内容由 agent 自定；只存当前有效） | 自由写 |
 | `process/` 临时件 | 随手笔记 + `review-<简介>.md` 验收件；用完即清、通过后删 | 自由写 |
 | `spec/AGENTS.md` | spec 机制说明书，**冷启动必读**：spec 是什么 / 怎么设计与获取 / spec.md 怎么读 / 状态标记约定 | 只读（机制件） |
-| `spec/<id>/` | 拉取的工作流（`spec.md` + `assets/`），以自己设计为主，可参考公开仓 `preset-spec/` 最佳实践集；没拉取时该目录不存在 | 按 spec |
+| `spec/build/` | 构建规则（`build.md` + `spec-template/` 母版）：怎么写一份 spec.md，**默认不读**，造 / 改 spec 时才参照 | 只读（参照件） |
+| `spec/<id>/` | 拉取或自写的工作流（`spec.md` + `assets/`），以自己设计为主，可参考公开仓 `preset-spec/specs/` 最佳实践集；没拉取时该目录不存在 | 按 spec |
 | `archive/` | 固有历史：memory 失效条目 + 讨论记录 + 阶段归档（可选件） | 只追加 |
 | `_trash/`             | 临时删除区（已进 .gitignore）                           | 自由写            |
 
@@ -132,4 +133,4 @@ agent 对话上下文之外的持久记录，冷启动必读。本文件**只声
 
 - **spec.md 默认读**：拉取的 spec 落在 `spec/<spec id>/spec.md`，是这套工作流的全部内容（阶段、全景、入口、检查点、各阶段产出落点与运行过程）。承担任务先读它判定入口、走阶段——它属「使用规则」，本就该被读到。
 - **assets 按需读**：某阶段要实例化产出文档时，再读 `spec.md` 指向的 `spec/<spec id>/assets/<模板>`；平时不读，节省上下文。
-- **构建规则默认不读**：造 / 改 spec 时才按 `spec/AGENTS.md` 从公开仓 `preset-spec/build/` 参考复制到 `spec/build/`。使用规则（本文件、`spec/AGENTS.md`、拉下来的 `spec.md`）默认读，构建规则只在少数时刻用到、平时不读以节省上下文。
+- **构建规则默认不读**：构建规则（`spec/build/`：`build.md` + `spec-template/` 母版）随模板出厂，造 / 改 spec 时直接参照即可、无需联网拉取；平时不读以节省上下文。
